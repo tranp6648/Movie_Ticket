@@ -6,6 +6,7 @@ import Account from './components/Account/Account';
 import { useState, useEffect  } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Menu from './components/Menu/Menu';
+import AdminPage from './components/Admin/AdminPage';
 import Accountweb from './components/Account/Account';
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path='/Add' element={<AddPillDetail/>}/>
       <Route path='/Menu' element={<Menu/>}/>
     <Route path='/Account' element={<Accountweb/>}/>
+    <Route path='/Admin' element={<AdminPage/>}/>
      </Routes>
    </Router>
   );

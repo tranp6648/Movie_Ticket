@@ -6,6 +6,13 @@
 .elementor-element {
     --widgets-spacing: 20px 20px;
 }
+ .woocommerce-form.woocommerce-form-register p {
+    margin-bottom: 10px;
+}
+
+ .woocommerce-privacy-policy-text {
+    margin-bottom: 15px;
+}
 .elementor-section .elementor-container {
     display: flex;
     margin-right: auto;
@@ -90,7 +97,8 @@ article.post-wrap {
     text-decoration: none;
     visibility: hidden;
 }
- .woocommerce-form .woocommerce-form-row input {
+
+.woocommerce-form .woocommerce-form-row input[type='text'],.woocommerce-form .woocommerce-form-row input[type='password'] {
     min-width: 400px;
     border-radius: 0px;
     padding: 12px 15px;
@@ -98,6 +106,10 @@ article.post-wrap {
     color: #737373;
     border: 1px solid #e0e0e0;
 }
+.custom-swal-container {
+    font-family: 'sans-serif', sans-serif; 
+    /* Add any other styling properties you want */
+  }
  .woocommerce-form .woocommerce-form-row .show-password-input {
     right: 21rem;
 }
