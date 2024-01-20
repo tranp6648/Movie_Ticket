@@ -65,7 +65,7 @@ namespace WebApplication3.Controllers
             return NotFound("Account not found");
         }
 
-                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype });
+                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype,username=existingAccount.Username });
             }
     catch (Exception ex)
     {

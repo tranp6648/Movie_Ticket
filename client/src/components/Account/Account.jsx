@@ -112,7 +112,7 @@ function Account() {
         throw new Error(responseData.message || 'Login failed');
       }
 
-      const {id, accountType } = responseData;
+      const {id, accountType,username } = responseData;
 
       // Additional actions after a successful response
       Swal.fire({
@@ -122,9 +122,9 @@ function Account() {
         timer: 1500,
       }).then(() => {
         if(accountType==0){
-          
-          navigate('/admin');
-          window.location.reload();   
+        
+          navigate('/admin',{ state: { ID:id,username:username } });
+         
         }
       
       });
