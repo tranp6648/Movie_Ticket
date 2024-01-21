@@ -17,5 +17,5 @@ public partial class Movie
 
     public int IdGenre { get; set; }
 
-    public virtual Genre IdNavigation { get; set; } = null!;
+    public virtual Genre IdGenreNavigation { get; set; } = null!;
 }

@@ -81,9 +81,7 @@ public partial class DatabaseContext : DbContext
         {
             entity.ToTable("Category_Movie");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name)
                 .HasMaxLength(200)
                 .IsUnicode(false);
@@ -204,16 +202,14 @@ public partial class DatabaseContext : DbContext
 
         modelBuilder.Entity<Movie>(entity =>
         {
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasColumnType("text");
             entity.Property(e => e.Duration).HasColumnName("duration");
             entity.Property(e => e.IdGenre).HasColumnName("id_genre");
             entity.Property(e => e.Title).HasMaxLength(100);
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Movie)
-                .HasForeignKey<Movie>(d => d.Id)
+            entity.HasOne(d => d.IdGenreNavigation).WithMany(p => p.Movies)
+                .HasForeignKey(d => d.IdGenre)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Movies_Genre");
         });

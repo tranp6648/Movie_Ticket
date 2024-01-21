@@ -11,7 +11,7 @@ import Genre from './components/Genre/Genre';
 import AdminPage from '../src/components/Admin/AdminPage';
 import Movie from './components/Movie/Movie';
 import Accountweb from './components/Account/Account';
-
+import Category_Movie from './components/Category_Movie/Category_Movie';
 function App() {
   return (
    <Router>
@@ -23,6 +23,7 @@ function App() {
     <Route path='/Admin' element={<AdminPage/>}/>
     <Route path='/Movie' element={<Movie/>}/>
     <Route path='/Genre' element={<Genre/>}/>
+    <Route path='/Category_Movie' element={<Category_Movie/>}/>
      </Routes>
    </Router>
   );

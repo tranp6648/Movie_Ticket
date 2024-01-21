@@ -35,21 +35,21 @@ function AdminPage() {
             <img src={image} className="user-image" alt="Logo" />
             {/* You can also add text or other elements alongside the logo */}
             {username}
-&nbsp;
-<i className="fa fa-chevron-circle-down"></i>
+            &nbsp;
+            <i className="fa fa-chevron-circle-down"></i>
           </a>
           {showDropdown && (
-        <div className="dropdown">
-             <a href="#" onClick={() => navigate('/Account')}>
-            <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
-          </a>
-          <a href="/account">
-            <i className="fa fa-user" aria-hidden="true"></i> Account
-          </a>
-       
-          {/* Các mục khác của dropdown có thể được thêm vào đây */}
-        </div>
-      )}
+            <div className="dropdown">
+              <a href="#" onClick={() => navigate('/Account')}>
+                <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
+              </a>
+              <a href="/account">
+                <i className="fa fa-user" aria-hidden="true"></i> Account
+              </a>
+
+              {/* Các mục khác của dropdown có thể được thêm vào đây */}
+            </div>
+          )}
         </nav>
       </header>
 
@@ -78,68 +78,19 @@ function AdminPage() {
               </a>
 
             </li>
+            <li className="active treeview">
+              <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
+                <i class="fas fa-film"></i> <span>Genre</span>
+              </a>
 
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/category', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>category</span>
-              </a>
             </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/Picture', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Picture</span>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
               </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/Provider', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Provider</span>
-              </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/Product', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Product</span>
-              </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/Edit', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Edit</span>
-              </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/WareHouse', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>WareHouse</span>
-              </a>
+
             </li>
 
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Order</span>
-              </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/Transport_fee', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Transport fee</span>
-              </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/AdminBlog', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Blog</span>
-              </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/Category_Post', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Category Blog</span>
-              </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-th"></i> <span>Event</span>
-              </a>
-            </li>
-            <li className="treeview text-white">
-              <a className='cursor-pointer' onClick={() => navigate('/login')}>
-                <i className="fa fa-th"></i> <span>Log out</span>
-              </a>
-            </li>
 
           </ul>
         </section>
@@ -168,7 +119,7 @@ function AdminPage() {
 
               <div className="small-box bg-aqua">
                 <div className="inner">
-                 
+
                   <p>Blog</p>
                 </div>
                 <div className="icon">
@@ -181,7 +132,7 @@ function AdminPage() {
 
               <div className="small-box bg-green">
                 <div className="inner">
-                  
+
                   <p>Order</p>
                 </div>
                 <div className="icon">
@@ -194,7 +145,7 @@ function AdminPage() {
 
               <div className="small-box bg-yellow">
                 <div className="inner">
-              
+
                   <p>User Registrations</p>
                 </div>
                 <div className="icon">
@@ -207,7 +158,7 @@ function AdminPage() {
 
               <div className="small-box bg-red">
                 <div className="inner">
-              
+
                   <p>Unique Visitors</p>
                 </div>
                 <div className="icon">
@@ -227,11 +178,11 @@ function AdminPage() {
 
                 <div className="box-body chat" id="chat-box">
 
-                
+
 
                   {/* Dropdown to select the month */}
                   <label>Select Month:</label>
-               
+
 
                 </div>
                 <div className="box-footer">
@@ -278,10 +229,10 @@ function AdminPage() {
                     <button className="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove"><i className="fa fa-times"></i></button>
                   </div>
                 </div>
-             
+
                 {/* Dropdown to select the month */}
                 <label>Select Month:</label>
-            
+
                 <div className="box-footer clearfix">
                   <button className="pull-right btn btn-default" id="sendEmail">Send <i className="fa fa-arrow-circle-right"></i></button>
                 </div>
@@ -307,7 +258,7 @@ function AdminPage() {
 
                 <div className="box-footer no-border">
 
-              
+
                 </div>
               </div>
 
@@ -338,7 +289,7 @@ function AdminPage() {
                       </tr>
                     </thead>
                     <tbody>
-                     
+
                     </tbody>
 
                   </table>
