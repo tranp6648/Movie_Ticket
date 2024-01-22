@@ -75,6 +75,11 @@ namespace WebApplication3.Controllers
             existMovie.ReleaseDate = addMovie.ReleaseDate;
             existMovie.Duration = addMovie.Duration;
             existMovie.IdGenre = addMovie.IdGenre;
+            var categoryMovie = _dbContext.DetailCategoryMovies.FirstOrDefault(cm => cm.IdMovie == id);
+            if(categoryMovie != null)
+            {
+                categoryMovie.Trailer = addMovie.Trailer;
+            }
             try
             {
                 _dbContext.SaveChanges();
@@ -85,8 +90,7 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal server error");
             }
           
-            //var detailMovie = await //_dbContext.DetailCategoryMovies
-            //.FirstOrDefaultAsync(m => m.IdMovie == id);
+           
 
         }
         [HttpPost("add")]

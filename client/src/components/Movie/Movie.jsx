@@ -21,10 +21,7 @@ function Movie() {
   const ID = location.state?.ID || '';
 
   const navigate = useNavigate();
-  const [updategenre, setupdategenre] = useState(null);
-  const handleupdategenre = (selectedgenre) => {
-    setupdategenre(selectedgenre);
-  }
+  
   const [FormData, setFormData] = useState({
     ReleaseDate: null,
     Title: '',
@@ -36,13 +33,15 @@ function Movie() {
     updateDesction: '',
     updateReleaseDate: null,
     updateduration: '',
-    id: ''
+    id: '',
+    updatetrailer:''
   })
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const MAX_DESCRIPTION_LENGTH = 300;
   const [genres, setGenres] = useState([]);
   const [category, setcategory] = useState([]);
   const [Movie, setMovie] = useState([]);
+ 
   const handleEditClick = (MovieID) => {
     const selectedMovie = Movie.find(Movie => Movie.id == MovieID)
     if (selectedMovie) {
@@ -51,11 +50,17 @@ function Movie() {
       FormData.id = selectedMovie.id;
       FormData.updateReleaseDate = selectedMovie.releaseDate;
       FormData.updateduration = selectedMovie.duration;
-      setupdategenre(selectedMovie.idgenre)
-
+      FormData.updatetrailer=selectedMovie.detailCategoryMovies.length > 0 ? selectedMovie.detailCategoryMovies[0].trailer : 'No Trailer';
+      setupdategenre(selectedMovie.idgenre);
+     
     }
+  
     setPopupVisibility(true)
-
+    console.log(updategenre)
+  }
+  const [updategenre, setupdategenre] = useState(null);
+  const handleupdategenre = (selectedgenre) => {
+    setupdategenre(selectedgenre);
   }
   useEffect(() => {
     const fetchdata = async () => {
@@ -194,7 +199,7 @@ function Movie() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: FormData.updateTittle, description: FormData.updateDesction, releaseDate: FormData.updateReleaseDate, duration: FormData.updateduration, idGenre: updategenre.value }),
+        body: JSON.stringify({ title: FormData.updateTittle, description: FormData.updateDesction, releaseDate: FormData.updateReleaseDate, duration: FormData.updateduration, idGenre: updategenre,trailer:FormData.updatetrailer }),
       })
       if (response.ok) {
         Swal.fire({
@@ -565,6 +570,11 @@ function Movie() {
                       value={updategenre}
                       isOptionSelected={(option) => option.value === updategenre}
                     />
+
+                  </div>
+                  <div className="form-group">
+                    <label >Trailer</label>
+                    <input type='text' value={FormData.updatetrailer} onChange={(e) => setFormData({ ...FormData, updatetrailer: e.target.value })} name='NameCategory' className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
 
                   </div>
                 </div>
