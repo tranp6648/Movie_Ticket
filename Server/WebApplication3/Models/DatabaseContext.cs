@@ -43,7 +43,7 @@ public partial class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=PHONG;Database=MovieTicket;user id=sa;password=123456789;trusted_connection=true;encrypt=false");
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=PHONG;Database=MovieTicket;user id=sa;password=123456;trusted_connection=true;encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -128,12 +128,11 @@ public partial class DatabaseContext : DbContext
 
         modelBuilder.Entity<DetailCategoryMovie>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Detail_category_movie");
+            entity.ToTable("Detail_category_movie");
 
             entity.HasIndex(e => e.IdMovie, "IX_Detail_category_movie");
 
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdCategory).HasColumnName("ID_Category");
             entity.Property(e => e.IdMovie).HasColumnName("ID_movie");
             entity.Property(e => e.Picture)
@@ -144,14 +143,12 @@ public partial class DatabaseContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("trailer");
 
-            entity.HasOne(d => d.IdCategoryNavigation).WithMany()
+            entity.HasOne(d => d.IdCategoryNavigation).WithMany(p => p.DetailCategoryMovies)
                 .HasForeignKey(d => d.IdCategory)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Detail_category_movie_Category_Movie");
 
-            entity.HasOne(d => d.IdMovieNavigation).WithMany()
+            entity.HasOne(d => d.IdMovieNavigation).WithMany(p => p.DetailCategoryMovies)
                 .HasForeignKey(d => d.IdMovie)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Detail_category_movie_Movies");
         });
 

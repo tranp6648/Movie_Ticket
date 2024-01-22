@@ -5,15 +5,17 @@ namespace WebApplication3.Models;
 
 public partial class DetailCategoryMovie
 {
-    public int IdMovie { get; set; }
+    public int? IdMovie { get; set; }
 
-    public int IdCategory { get; set; }
+    public int? IdCategory { get; set; }
 
-    public string Picture { get; set; } = null!;
+    public string? Picture { get; set; }
 
-    public string Trailer { get; set; } = null!;
+    public string? Trailer { get; set; }
 
-    public virtual CategoryMovie IdCategoryNavigation { get; set; } = null!;
+    public int Id { get; set; }
 
-    public virtual Movie IdMovieNavigation { get; set; } = null!;
+    public virtual CategoryMovie? IdCategoryNavigation { get; set; }
+
+    public virtual Movie? IdMovieNavigation { get; set; }
 }

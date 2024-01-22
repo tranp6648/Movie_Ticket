@@ -15,13 +15,15 @@ namespace WebApplication3.Controllers
             _dbContext = dbContext;
         }
         [HttpGet("getCategoryMovie")]
-        public async Task<ActionResult<IEnumerable<CategoryMovie>>> getCategoryMovie()
+        public async Task<ActionResult<IEnumerable<CategoryMovie>>> GetCategoryMovies()
         {
             try
             {
-                var CategoryMovie = await _dbContext.CategoryMovies.ToListAsync();
-                return Ok(CategoryMovie);
+                var categoryMovies = await _dbContext.CategoryMovies
+             .Select(x => new CategoryMovie { Id = x.Id, Name = x.Name })
+             .ToListAsync();
 
+                return Ok(categoryMovies);
             }
             catch (Exception ex)
             {
