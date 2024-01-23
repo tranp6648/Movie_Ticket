@@ -13,6 +13,8 @@ import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 import Genre from '../Genre/Genre';
+import Pagination from 'react-paginate';
+import 'react-paginate/theme/basic/react-paginate.css';
 function Movie() {
 
   const [IsClosingPopup, setIsClosingPopup] = useState(false);
@@ -21,7 +23,7 @@ function Movie() {
   const ID = location.state?.ID || '';
 
   const navigate = useNavigate();
-  
+
   const [FormData, setFormData] = useState({
     ReleaseDate: null,
     Title: '',
@@ -34,14 +36,14 @@ function Movie() {
     updateReleaseDate: null,
     updateduration: '',
     id: '',
-    updatetrailer:''
+    updatetrailer: ''
   })
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const MAX_DESCRIPTION_LENGTH = 300;
   const [genres, setGenres] = useState([]);
   const [category, setcategory] = useState([]);
   const [Movie, setMovie] = useState([]);
- 
+  const [currentPage, setCurrentPage] = useState(0);
   const handleEditClick = (MovieID) => {
     const selectedMovie = Movie.find(Movie => Movie.id == MovieID)
     if (selectedMovie) {
@@ -50,15 +52,16 @@ function Movie() {
       FormData.id = selectedMovie.id;
       FormData.updateReleaseDate = selectedMovie.releaseDate;
       FormData.updateduration = selectedMovie.duration;
-      FormData.updatetrailer=selectedMovie.detailCategoryMovies.length > 0 ? selectedMovie.detailCategoryMovies[0].trailer : 'No Trailer';
+      FormData.updatetrailer = selectedMovie.detailCategoryMovies.length > 0 ? selectedMovie.detailCategoryMovies[0].trailer : 'No Trailer';
       setupdategenre(selectedMovie.idgenre);
-     
+
     }
-  
+
     setPopupVisibility(true)
     console.log(updategenre)
   }
   const [updategenre, setupdategenre] = useState(null);
+  const [perPage, setperPage] = useState(5);
   const handleupdategenre = (selectedgenre) => {
     setupdategenre(selectedgenre);
   }
@@ -88,7 +91,13 @@ function Movie() {
   const handleClosepopup = () => {
     setIsClosingPopup(true);
     setTimeout(() => {
+      FormData.updateDesction = '';
+      FormData.updateTittle = ''
       FormData.id = '';
+      FormData.updateReleaseDate = null;
+      FormData.updateduration = '';
+      FormData.updatetrailer = '';
+      setupdategenre(null);
       setPopupVisibility(false)
       setIsClosingPopup(false)
     }, 500);
@@ -168,6 +177,43 @@ function Movie() {
       return `${minutes} minute`
     }
   }
+  const deleteSubmit = async (CategoryID) => {
+    try {
+      const confirmation = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      });
+      if (confirmation.isConfirmed) {
+        const response = await axios.post(`http://localhost:5231/api/Movie/delete/${CategoryID}`);
+        if (response.status === 200) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Deletion successful',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
+          setMovie(response.data);
+
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Deletion failed',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+  const [searchTerm, setSearchtem] = useState('');
   const [selectedgenre, setSelectedgenre] = useState(null);
   const handleGenreChange = (selectedgenre) => {
     setSelectedgenre(selectedgenre);
@@ -199,7 +245,7 @@ function Movie() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: FormData.updateTittle, description: FormData.updateDesction, releaseDate: FormData.updateReleaseDate, duration: FormData.updateduration, idGenre: updategenre,trailer:FormData.updatetrailer }),
+        body: JSON.stringify({ title: FormData.updateTittle, description: FormData.updateDesction, releaseDate: FormData.updateReleaseDate, duration: FormData.updateduration, idGenre: updategenre, trailer: FormData.updatetrailer }),
       })
       if (response.ok) {
         Swal.fire({
@@ -208,6 +254,16 @@ function Movie() {
           showConfirmButton: false,
           timer: 1500,
         })
+        FormData.updateDesction = '';
+        FormData.updateTittle = ''
+        FormData.id = '';
+        FormData.updateReleaseDate = null;
+        FormData.updateduration = '';
+        FormData.updatetrailer = '';
+        setupdategenre(null);
+        setPopupVisibility(false);
+        const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
+          setMovie(response.data);
       }
     } catch (error) {
       console.log(error.message)
@@ -255,7 +311,17 @@ function Movie() {
           Picture: null,
           trailer: ''
         })
+        FormData.trailer='';
+        FormData.ReleaseDate=null;
+        FormData.Title='';
+        FormData.duration='';
+      setSelectedgenre(null);
+        setSelectedcategory(null);
+       
         document.getElementById('imageInput').value = '';
+        const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
+        setMovie(response.data);
+
       }
 
     } catch (error) {
@@ -266,6 +332,17 @@ function Movie() {
 
 
   }
+  const filteredGender = Movie.filter(gen =>
+
+    gen.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOflastgen = (currentPage + 1) * perPage;
+  const indexOfFirtgen = indexOflastgen - perPage;
+  const currentGender = filteredGender.slice(indexOfFirtgen, indexOflastgen)
+  const handlePageclick = (data) => {
+    setCurrentPage(data.selected);
+  };
 
   return (
     <div>
@@ -438,7 +515,7 @@ function Movie() {
                 </div>
                 <div className="flex items-center space-x-4 float-left flex-1 mb-2 ml-2">
                   <label for="search" className="text-gray-600">Search</label>
-                  <input type="text" id="search" name="search" placeholder="Enter your search term" className="border border-gray-300 px-3 py-1 rounded-md focus:outline-none focus:border-blue-500" />
+                  <input type="text" id="search" name="search" placeholder="Enter your search term" value={searchTerm} onChange={(e) => setSearchtem(e.target.value)} className="border border-gray-300 px-3 py-1 rounded-md focus:outline-none focus:border-blue-500" />
 
                 </div>
 
@@ -461,7 +538,7 @@ function Movie() {
                       </tr>
                     </thead>
                     <tbody>
-                      {Movie.map((Movies, index) => (
+                      {currentGender.map((Movies, index) => (
                         <tr key={Movies.id}>
                           <td>{index + 1}</td>
                           <td>{Movies.title}</td>
@@ -477,14 +554,33 @@ function Movie() {
                             : 'No Category'} width="100" height="100" style={{ objectFit: 'cover' }} alt="" /></td>
                           <td><a target='_blank' href={Movies.detailCategoryMovies.length > 0 ? Movies.detailCategoryMovies[0].trailer : 'No Trailer'}>{Movies.detailCategoryMovies.length > 0 ? Movies.detailCategoryMovies[0].trailer : 'No Trailer'} </a></td>
                           <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditClick(Movies.id)}>Edit</button></td>
-                          <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" >Remove</button></td>
+                          <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>deleteSubmit(Movies.id)}>Remove</button></td>
                         </tr>
                       ))}
                       <tr></tr>
                     </tbody>
 
                   </table>
+                  <Pagination
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    pageCount={Math.ceil(filteredGender.length / perPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageclick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
 
+                  />
                 </div>
               </div>
               {/* Additional boxes go here */}

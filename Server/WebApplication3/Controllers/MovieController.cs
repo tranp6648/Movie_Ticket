@@ -11,9 +11,9 @@ namespace WebApplication3.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-       private IWebHostEnvironment _webHostEnvironment;
+        private IWebHostEnvironment _webHostEnvironment;
         private readonly DatabaseContext _dbContext;
-        public MovieController(DatabaseContext dbContext,IWebHostEnvironment _hostEnvironment)
+        public MovieController(DatabaseContext dbContext, IWebHostEnvironment _hostEnvironment)
         {
             _dbContext = dbContext;
             _webHostEnvironment = _hostEnvironment;
@@ -54,7 +54,7 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpPost("update/{id}")]
-        public  IActionResult UpdateMovie(int id,[FromBody] updateMovie addMovie)
+        public IActionResult UpdateMovie(int id, [FromBody] updateMovie addMovie)
         {
             if (addMovie == null)
             {
@@ -76,7 +76,7 @@ namespace WebApplication3.Controllers
             existMovie.Duration = addMovie.Duration;
             existMovie.IdGenre = addMovie.IdGenre;
             var categoryMovie = _dbContext.DetailCategoryMovies.FirstOrDefault(cm => cm.IdMovie == id);
-            if(categoryMovie != null)
+            if (categoryMovie != null)
             {
                 categoryMovie.Trailer = addMovie.Trailer;
             }
@@ -89,9 +89,44 @@ namespace WebApplication3.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
-          
-           
 
+
+
+        }
+        [HttpPost("delete/{id}")]
+        public IActionResult DeleteMovie(int id)
+        {
+
+            var categoryMovie = _dbContext.DetailCategoryMovies.FirstOrDefault(cm => cm.IdMovie == id);
+            var Movie = _dbContext.Movies.Find(id);
+            if (Movie == null)
+            {
+                return NotFound("Movie not found");
+            }
+            try
+            {
+                if (categoryMovie != null)
+                {
+                    _dbContext.DetailCategoryMovies.Remove(categoryMovie);
+                }
+                _dbContext.Movies.Remove(Movie);
+                _dbContext.SaveChanges();
+                DeletePictureFromFolder(id, _webHostEnvironment.WebRootPath);
+                return Ok("Movie deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+        }
+        private void DeletePictureFromFolder(int movieID, string webRootPath)
+        {
+            string imagePath = Path.Combine(webRootPath, "image", $"movie_{movieID}_picture.png");
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
         }
         [HttpPost("add")]
         public IActionResult AddMovie([FromBody] AddMovie addMovie)
@@ -119,9 +154,9 @@ namespace WebApplication3.Controllers
                 DetailCategoryMovie detailCategoryMovie = new DetailCategoryMovie
                 {
                     IdMovie = movieId,
-                    IdCategory=addMovie.idcategory,
-                  Picture=imagePath,
-                  Trailer=addMovie.Trailer,
+                    IdCategory = addMovie.idcategory,
+                    Picture = imagePath,
+                    Trailer = addMovie.Trailer,
 
                 };
                 _dbContext.DetailCategoryMovies.Add(detailCategoryMovie);
@@ -141,7 +176,7 @@ namespace WebApplication3.Controllers
         {
             return new Movie
             {
-                
+
                 Title = addMovie.Title,
                 Description = addMovie.Description,
                 ReleaseDate = addMovie.ReleaseDate,
@@ -161,34 +196,35 @@ namespace WebApplication3.Controllers
       .Select(m => new
       {
           // Specify the properties you want to include in the projection
-          id=m.Id,
+          id = m.Id,
           Title = m.Title,
-          ReleaseDate=m.ReleaseDate,
-          duration= m.Duration,
-          description=m.Description,
-          idgenre=m.IdGenreNavigation.Id,
-       GenreName =m.IdGenreNavigation.Name,
+          ReleaseDate = m.ReleaseDate,
+          duration = m.Duration,
+          description = m.Description,
+          idgenre = m.IdGenreNavigation.Id,
+          GenreName = m.IdGenreNavigation.Name,
           DetailCategoryMovies = m.DetailCategoryMovies.Select(d => new
           {
-            
+
               Id = d.Id,
-              
+
               IdCategoryNavigation = new
               {
-                  Name=d.IdCategoryNavigation.Name,
-                  
-                  
+                  Name = d.IdCategoryNavigation.Name,
+
+
               },
-              Picture=d.Picture,
+              Picture = d.Picture,
               Trailer = d.Trailer
           }),
-          
+
 
       })
       .ToListAsync();
                 return Ok(movies);
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
