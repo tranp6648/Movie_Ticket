@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jbeH+AcCUc6EYdXL7ZTJpE8GgHN1D6DnbPvFBRX6dTM=",
+  "Hash": "QWOmiBr7y7hn9PnPSXMfQj3bOeti8KTejIoXyJsCMeo=",
   "Source": "WebApplication3",
   "BasePath": "_content/WebApplication3",
   "Mode": "Default",
@@ -15,5 +15,44 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_59_picture.png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "image/movie_59_picture.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\image\\movie_59_picture.png"
+    },
+    {
+      "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_60_picture.png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "image/movie_60_picture.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\image\\movie_60_picture.png"
+    }
+  ]
 }

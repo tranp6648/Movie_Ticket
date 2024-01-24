@@ -18,6 +18,62 @@ namespace WebApplication3.Controllers
         {
             _dbContext = dbContext;
         }
+        [HttpPost("updateAccount/{id}")]
+        public async Task<ActionResult<IEnumerable<Account>>> UpdateAccount(int id, [FromBody] UpdateAccount account)
+        {
+            try
+            {
+                if (account == null)
+                {
+                    return BadRequest("Invalid data");
+                }
+
+                // Check if the specified account with 'id' exists
+                var existAccount = await _dbContext.Accounts.FindAsync(id);
+                if (existAccount == null)
+                {
+                    return NotFound("Account not found");
+                }
+
+                // Check if the updated username already exists in other accounts
+                if (_dbContext.Accounts.Any(g => g.Username == account.Username ))
+                {
+                    return BadRequest(new { message = "Username already exists" });
+                }
+
+                // Update account properties
+                existAccount.Username = account.Username;
+                existAccount.FullName = account.FullName;
+                existAccount.Email = account.Email;
+                existAccount.Phone = account.Phone;
+                existAccount.Birthday = account.Birthday;
+
+                // Save changes to the database
+                await _dbContext.SaveChangesAsync();
+
+                // Retrieve all accounts after the update
+                var allAccounts = await _dbContext.Accounts.ToListAsync();
+
+                // Return the updated accounts
+                return Ok(allAccounts);
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions and return a 500 Internal Server Error
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("getAccount/{id}")]
+        public async Task<ActionResult<IEnumerable<Account>>> getAccount(int id)
+        {
+            Account account = await _dbContext.Accounts.FindAsync(id);
+            if(account == null)
+            {
+                return NotFound();  
+            }
+            return Ok(account);
+        }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAll()
         {

@@ -43,7 +43,7 @@ function AdminPage() {
               <a href="#" onClick={() => navigate('/Account')}>
                 <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
               </a>
-              <a href="/account">
+              <a onClick={() => navigate('/Edit', { state: { username: username, ID: ID } })}>
                 <i className="fa fa-user" aria-hidden="true"></i> Account
               </a>
 

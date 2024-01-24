@@ -1,8 +1,12 @@
 {
   "Files": [
     {
-      "Id": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_54_picture.png",
-      "PackagePath": "staticwebassets\\image\\movie_54_picture.png"
+      "Id": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_59_picture.png",
+      "PackagePath": "staticwebassets\\image\\movie_59_picture.png"
+    },
+    {
+      "Id": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_60_picture.png",
+      "PackagePath": "staticwebassets\\image\\movie_60_picture.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebApplication3.Microsoft.AspNetCore.StaticWebAssets.props",
