@@ -13,6 +13,9 @@ import Movie from './components/Movie/Movie';
 import Accountweb from './components/Account/Account';
 import Category_Movie from './components/Category_Movie/Category_Movie';
 import Edit from './components/Edit/Edit';
+import Cinema from './components/Cinema/Cinema';
+import AllMovies from './components/AllMovies/AllMovies';
+import Footer from './components/footer/FooterHome';
 function App() {
   return (
    <Router>
@@ -26,6 +29,9 @@ function App() {
     <Route path='/Genre' element={<Genre/>}/>
     <Route path='/Category_Movie' element={<Category_Movie/>}/>
     <Route path='/Edit' element={<Edit/>}/>
+    <Route path='/Cinema' element={<Cinema/>}/>
+    <Route path='/AllMovie' element={<AllMovies/>}/>
+    <Route path='/footer' element={<Footer/>}/>
      </Routes>
    </Router>
   );

@@ -33,6 +33,8 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<DetailSeatAuditorium> DetailSeatAuditoriums { get; set; }
 
+    public virtual DbSet<District> Districts { get; set; }
+
     public virtual DbSet<Genre> Genres { get; set; }
 
     public virtual DbSet<Movie> Movies { get; set; }
@@ -43,7 +45,7 @@ public partial class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=PHONG;Database=MovieTicket;user id=sa;password=123456;trusted_connection=true;encrypt=false");
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=PHONG;Database=MovieTicket;user id=sa;password=123456789;trusted_connection=true;encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -100,9 +102,7 @@ public partial class DatabaseContext : DbContext
         modelBuilder.Entity<Cinema>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.District)
-                .HasMaxLength(100)
-                .IsUnicode(false);
+            entity.Property(e => e.District).HasMaxLength(100);
             entity.Property(e => e.Location)
                 .HasMaxLength(100)
                 .IsUnicode(false)
@@ -121,8 +121,8 @@ public partial class DatabaseContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.City)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .HasMaxLength(100)
+                .IsUnicode(false)
                 .HasColumnName("city");
         });
 
@@ -154,19 +154,18 @@ public partial class DatabaseContext : DbContext
 
         modelBuilder.Entity<DetailCityBranch>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Detail_City_Branch");
+            entity.ToTable("Detail_City_Branch");
 
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdBranch).HasColumnName("id_Branch");
             entity.Property(e => e.IdCinema).HasColumnName("id_Cinema");
 
-            entity.HasOne(d => d.IdBranchNavigation).WithMany()
+            entity.HasOne(d => d.IdBranchNavigation).WithMany(p => p.DetailCityBranches)
                 .HasForeignKey(d => d.IdBranch)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Detail_City_Branch_Cinema_Branches");
 
-            entity.HasOne(d => d.IdCinemaNavigation).WithMany()
+            entity.HasOne(d => d.IdCinemaNavigation).WithMany(p => p.DetailCityBranches)
                 .HasForeignKey(d => d.IdCinema)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Detail_City_Branch_Cinemas");
@@ -185,6 +184,25 @@ public partial class DatabaseContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("seat_name");
             entity.Property(e => e.Status).HasColumnName("status");
+        });
+
+        modelBuilder.Entity<District>(entity =>
+        {
+            entity.ToTable("District");
+
+            entity.Property(e => e.Id)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("ID");
+            entity.Property(e => e.Idcity).HasColumnName("IDCity");
+            entity.Property(e => e.NameDistrict)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.IdcityNavigation).WithMany(p => p.Districts)
+                .HasForeignKey(d => d.Idcity)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_District_Cinema_Branches");
         });
 
         modelBuilder.Entity<Genre>(entity =>

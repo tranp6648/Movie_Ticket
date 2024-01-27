@@ -8,4 +8,8 @@ public partial class CinemaBranch
     public int Id { get; set; }
 
     public string City { get; set; } = null!;
+
+    public virtual ICollection<DetailCityBranch> DetailCityBranches { get; set; } = new List<DetailCityBranch>();
+
+    public virtual ICollection<District> Districts { get; set; } = new List<District>();
 }

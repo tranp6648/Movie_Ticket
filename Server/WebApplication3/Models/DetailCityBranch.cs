@@ -9,6 +9,8 @@ public partial class DetailCityBranch
 
     public int IdBranch { get; set; }
 
+    public int Id { get; set; }
+
     public virtual CinemaBranch IdBranchNavigation { get; set; } = null!;
 
     public virtual Cinema IdCinemaNavigation { get; set; } = null!;
