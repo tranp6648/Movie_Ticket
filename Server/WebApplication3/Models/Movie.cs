@@ -17,6 +17,8 @@ public partial class Movie
 
     public int IdGenre { get; set; }
 
+    public virtual ICollection<DetailActorMovie> DetailActorMovies { get; set; } = new List<DetailActorMovie>();
+
     public virtual ICollection<DetailCategoryMovie> DetailCategoryMovies { get; set; } = new List<DetailCategoryMovie>();
 
     public virtual Genre IdGenreNavigation { get; set; } = null!;

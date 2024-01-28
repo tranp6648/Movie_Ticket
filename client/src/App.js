@@ -16,6 +16,8 @@ import Edit from './components/Edit/Edit';
 import Cinema from './components/Cinema/Cinema';
 import AllMovies from './components/AllMovies/AllMovies';
 import Footer from './components/footer/FooterHome';
+import Actor from './components/Actor/Actor';
+import Detail from './components/Detail/Detail';
 function App() {
   return (
    <Router>
@@ -32,6 +34,8 @@ function App() {
     <Route path='/Cinema' element={<Cinema/>}/>
     <Route path='/AllMovie' element={<AllMovies/>}/>
     <Route path='/footer' element={<Footer/>}/>
+    <Route path='/actor' element={<Actor/>}/>
+    <Route path='/Detail' element={<Detail/>}/>
      </Routes>
    </Router>
   );

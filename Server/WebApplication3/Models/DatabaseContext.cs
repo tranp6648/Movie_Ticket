@@ -17,6 +17,8 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<Account> Accounts { get; set; }
 
+    public virtual DbSet<Actor> Actors { get; set; }
+
     public virtual DbSet<Auditorium> Auditoriums { get; set; }
 
     public virtual DbSet<CategoryMovie> CategoryMovies { get; set; }
@@ -26,6 +28,8 @@ public partial class DatabaseContext : DbContext
     public virtual DbSet<Cinema> Cinemas { get; set; }
 
     public virtual DbSet<CinemaBranch> CinemaBranches { get; set; }
+
+    public virtual DbSet<DetailActorMovie> DetailActorMovies { get; set; }
 
     public virtual DbSet<DetailCategoryMovie> DetailCategoryMovies { get; set; }
 
@@ -69,6 +73,27 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Actor>(entity =>
+        {
+            entity.ToTable("Actor");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Bio)
+                .HasColumnType("text")
+                .HasColumnName("bio");
+            entity.Property(e => e.Image)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("image");
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Nationality)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("nationality");
         });
 
         modelBuilder.Entity<Auditorium>(entity =>
@@ -124,6 +149,28 @@ public partial class DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("city");
+        });
+
+        modelBuilder.Entity<DetailActorMovie>(entity =>
+        {
+            entity.ToTable("Detail_Actor_Movie");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdActor).HasColumnName("ID_Actor");
+            entity.Property(e => e.IdMovie).HasColumnName("ID_Movie");
+            entity.Property(e => e.Role)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.IdActorNavigation).WithMany(p => p.DetailActorMovies)
+                .HasForeignKey(d => d.IdActor)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Detail_Actor_Movie_Actor");
+
+            entity.HasOne(d => d.IdMovieNavigation).WithMany(p => p.DetailActorMovies)
+                .HasForeignKey(d => d.IdMovie)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Detail_Actor_Movie_Movies");
         });
 
         modelBuilder.Entity<DetailCategoryMovie>(entity =>

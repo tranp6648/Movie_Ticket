@@ -6,7 +6,9 @@
     padding: 30px 40px 30px 40px;
     z-index: 9999;
     background-color: #000000;
-    position: relative;
+    position: fixed; /* Thiết lập vị trí cố định */
+    top: 0; /* Hiển thị phía dưới trang */
+    width: 100%;
 }
 .elementor-section .elementor-container {
     display: flex;

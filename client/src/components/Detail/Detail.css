@@ -1,0 +1,325 @@
+.row_site{
+    max-width: 1190px;
+}
+ .container_site {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.ova_movie_single {
+    margin: 110px 0;
+}
+.ova_movie_single .top-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+.ova_movie_single .top-content .movie-title {
+    margin: 0 0 8px 0;
+    font-size: 34px;
+    color: #000000;
+
+    font-weight: bold;
+    clear: both;
+}
+.ova_movie_single .top-content .categories-and-time {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    line-height: 1.3;
+}
+.ova_movie_single .top-content .movie-category a {
+    color: #737373;
+}
+.ova_movie_single .top-content .btn-booking, .ova_movie_single .top-content .btn-custom-link {
+    font-size: 15px;
+    border-radius: 0;
+    padding: 17px 51px;
+    border: 1px solid;
+    border-radius: 0px;
+    
+    font-size: 1em;
+    border-color: #d96c2c;
+    background-color: #d96c2c;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+}
+.ova_movie_single .top-content .btn-booking:hover{
+    background-color: transparent;
+    border-color: #d96c2c;
+    color: #d96c2c;
+}
+.ova_movie_single .movie-media {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+.ova_movie_single .movie-media .movie-gallery.gallery_blur {
+    position: relative;
+}
+.ova_movie_single .movie-media .movie-gallery {
+    width: 100%;
+    max-width: 367px;
+}
+.ova_movie_single .movie-media .gallery-fancybox {
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    color: #d96c2c;
+}
+.ova_movie_single .movie-media .gallery-fancybox:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    
+    opacity: 0.25;
+}
+.ova_movie_single .movie-media .movie-featured-image {
+    position: relative;
+    width: 100%;
+}
+.ova_movie_single .movie-media .gallery-fancybox:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.25;
+}
+.ova_movie_single .movie-media img {
+    display: block;
+    width: 100%;
+    height: 517px;
+    object-fit: cover;
+    max-width: 100%;
+}
+.ova_movie_single .movie-media .btn-trailer-video-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.ova_movie_single .movie-media .btn-trailer-video {
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    background-color: transparent;
+}
+@keyframes lineScale {
+    0%{
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+  
+    60%{
+        transform: translate(-50%, -50%) scale(1.0);
+    }
+    
+    80%{
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    
+    100%{
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+  }
+  .ova_movie_single .movie-media .text-trailer {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    position: absolute;
+    bottom: 29%;
+    right: 52%;
+    
+    font-size: 24px;
+    line-height: 1.4;
+    color: #fff;
+}
+.ova_movie_single .movie-media .text-trailer i {
+    margin: 0 0 12px 12px;
+    display: inline-flex;
+    font-size: 18px;
+    transform: rotate(-51deg);
+}
+.ova_movie_single .info-list {
+    margin: 0 0 35px 0;
+    padding: 0 0 35px 0;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: 0.25fr 0.25fr;
+    column-gap: 80px;
+    row-gap: 10px;
+    border-bottom: 1px solid #E0E0E0
+}
+.ova_movie_single .movie-cast, .ova_movie_single .movie-related {
+    margin-bottom: 47px;
+}
+.ova_movie_single .movie-title-h2.cast-title {
+    margin-bottom: 30px;
+    line-height: 1.21;
+    color: #000000;
+    font-weight: bold;
+    clear: both;
+}
+.mb-movie-cast-list.four_column {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.mb-movie-cast-list {
+    display: grid;
+    gap: 30px;
+}
+.mb-movie-cast-list .movie-cast-item {
+    display: flex;
+    align-items: center;
+}
+.mb-movie-cast-list .movie-cast-item .cast-thumbnail {
+    margin-right: 20px;
+}
+.mb-movie-cast-list .movie-cast-item .cast-info .cast-name {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #000000;
+    font-weight: bold;
+    clear: both;
+}
+.mb-movie-cast-list .movie-cast-item .cast-info .cast-description {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.86em;
+    color: #737373;
+}
+.ova_movie_single .movie-title-h2 {
+    margin: 0 0 22px 0;
+    font-size: 30px;
+    color: #000000;
+    font-weight: bold;
+    clear: both;
+}
+.ova_movie_single .movie-cast, .ova_movie_single .movie-related {
+    margin-bottom: 47px;
+}
+.ova_movie_single .movie-title-h2 {
+    margin: 0 0 22px 0;
+    font-size: 30px;
+    color: #000000;
+    font-weight: bold;
+    clear: both;
+}
+.main-content p{
+    line-height: 1.86em;
+    color: #737373;
+    font-size: 16px;
+    margin: 0 0 2em;
+}
+.mb-movie-cast-list .movie-cast-item .cast-thumbnail img {
+    display: block;
+    width: 100px;
+    min-width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    max-width: 100%;
+}
+.ova_movie_single .movie-title-h2 {
+    margin: 0 0 22px 0;
+    font-size: 30px;
+}
+.ova_movie_single .info-list .item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+.ova_movie_single .info-list .item .title {
+    min-width: 33%;
+    margin: 0;
+    font-size: 16px;
+    color: #000000;
+    font-weight: bold;
+}
+.ova_movie_single .info-list .item .value {
+    line-height: 1.3;
+    color: #737373;
+    font-size: 16px;
+}
+.ova_movie_single .info-list .item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+.ova_movie_single .movie-media .btn-trailer-video:before {
+    transition: all 2.5s linear;
+    cursor: pointer;
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: #d96c2c;
+    z-index: 1;
+    animation: lineScale 2.8s linear infinite;
+}
+.ova_movie_single .movie-media .btn-trailer-video:after {
+    transition: all 2.3s linear;
+    cursor: pointer;
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 140%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+    animation: lineScale 2.8s linear infinite;
+}
+.ova_movie_single .movie-media .gallery-fancybox {
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    color: #d96c2c;
+}
+.ova_movie_single .movie-media img {
+    display: block;
+    width: 100%;
+    height: 517px;
+    object-fit: cover;
+    max-width: 100%;
+}
+.ova_movie_single .movie-media .movie-gallery.gallery_blur .gallery-fancybox .blur-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1.2;
+    color: #fff;
+}
+.ova_movie_single .movie-media .btn-trailer-video i {
+    transition: all 0.3s ease;
+    display: inline-flex;
+    font-size: 24px;
+    color: #fff;
+    z-index: 1;
+}
