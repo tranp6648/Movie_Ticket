@@ -1,7 +1,40 @@
+import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import FooterHome from "../footer/FooterHome";
 import './Detail.css'
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 function Detail() {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const ID = location.state?.ID || '';
+    console.log(ID)
+    const [popup, setpopup] = useState(false);
+    const handlepoup = () => {
+        setpopup(!popup);
+    }
+    const popupContentStyle = {
+        display: 'flex',
+        animation: 'fadeDown 0.5s ease-out',
+    };
+    const closepopup = {
+        display: 'none',
+        animation: 'fadeUp 0.5s ease-out', // Specify the animation properties
+    };
+    const [DetailMovie, setDetailMovie] = useState([]);
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5231/api/DetailMovie/ShowDetail/${ID}`)
+                setDetailMovie(response.data);
+                console.log(response.data)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchdata();
+    }, [])
     return (
         <div>
             <Menu />
@@ -25,61 +58,81 @@ function Detail() {
                 <div className="container_site">
                     <div className="ova_movie_single">
                         <div className="top-content">
-                            <div className="movie-heading">
-                                <h1 className="movie-title">
-                                    Love Nightmare
-                                </h1>
-                                <div className="categories-and-time">
-                                    <div className="movie-category">
-                                        <a href="">Adventure</a>
+                            {DetailMovie.map((detail, index) => (
+                                <div className="movie-heading">
+                                    <h1 className="movie-title">
+                                        {detail.title}
+                                    </h1>
+                                    <div className="categories-and-time">
+                                        <div className="movie-category">
+                                            <a href="">{detail.genreName}</a>
+                                        </div>
+                                        <div className="separator">/</div>
+                                        <span className="running-time" style={{ color: '#737373' }}>
+                                            {detail.duration} Mins
+                                        </span>
                                     </div>
-                                    <div className="separator">/</div>
-                                    <span className="running-time" style={{ color: '#737373' }}>
-                                        170 Mins
-                                    </span>
                                 </div>
-                            </div>
+                            ))}
+
                             <button className="btn btn-booking">
                                 Get Ticket    </button>
                         </div>
-                        <div className="movie-media has-trailer">
-                            <div className="movie-gallery gallery_blur">
-                                <a href="" className="gallery-fancybox">
-                                    <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/img-3-gallery-slide.jpg" alt="" />
+                        {DetailMovie.map((detail, index) => (
+                            <div className="movie-media has-trailer">
+                                <div className="movie-gallery gallery_blur">
+                                    <a href="" className="gallery-fancybox">
+                                        <img src={detail.detailCategoryMovies.length > 0
+                                            ? `http://localhost:5231/${detail.detailCategoryMovies[0].picture}`
+                                            : 'No Category'} alt="" width="100" height="100" style={{ objectFit: 'cover' }} />
 
-                                </a>
-                            </div>
-                            <div className="movie-featured-image">
-                                <a href="" className="gallery-fancybox">
-                                    <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/movie-image-03.jpg" alt="" />
-                                </a>
-                                <div className="btn-trailer-video-wrapper">
-                                    <div className="btn-video btn-trailer-video">
-                                        <i class="fas fa-play"></i>
-                                    </div>
+                                    </a>
                                 </div>
-                                <span className="text-trailer">
+                                <div className="movie-featured-image">
+                                    <a href="" className="gallery-fancybox">
+                                        <img src={detail.detailCategoryMovies.length > 0
+                                            ? `http://localhost:5231/${detail.detailCategoryMovies[0].picture}`
+                                            : 'No Category'} alt="" width="100" height="100" style={{ objectFit: 'cover' }} />
+                                    </a>
+                                    <div className="btn-trailer-video-wrapper" onClick={() => handlepoup()}>
+                                        <div className="btn-video btn-trailer-video">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                    </div>
+                                    <span className="text-trailer">
 
-                                    Watch the Trailer
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </span>
+                                        Watch the Trailer
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
+                        ))}
+
+
                         <ul className="info-list">
-                            <li className="item item-0 mb-[11px]">
-                                <h4 className="title">
-                                    Director:
-                                </h4>
-                                <span className="value">
-                                    Christine Eve                                    </span>
-                            </li>
-                            <li className="item item-2">
-                                <h4 className="title">
-                                    Preimier:
-                                </h4>
-                                <span className="value">
-                                    14, March 2023                                   </span>
-                            </li>
+                            {DetailMovie.map((detail, index) => (
+                                <li className="item item-0 mb-[11px]">
+                                    <h4 className="title">
+                                        Director:
+                                    </h4>
+                                    <span className="value">
+                                        {detail.director}                                    </span>
+                                </li>
+
+                            ))}
+                            {DetailMovie.map((detail, index) => (
+                                <li className="item item-0 mb-[11px]">
+                                    <h4 className="title">
+                                        Preimier:
+                                    </h4>
+                                    <span className="value">
+                                        {new Date(detail.releaseDate).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}                            </span>
+                                </li>
+
+                            ))}
+
+
+
                             <li className="item item-3">
                                 <h4 className="title">
                                     Writer:
@@ -87,129 +140,193 @@ function Detail() {
                                 <span className="value">
                                     Aleesha Rose                                   </span>
                             </li>
-                            <li className="item item-4">
-                                <h4 className="title">
-                                    Time:
-                                </h4>
-                                <span className="value">
-                                    170 Mins                                   </span>
-                            </li>
+                            {DetailMovie.map((detail, index) => (
+                                <li className="item item-4">
+                                    <h4 className="title">
+                                        Time:
+                                    </h4>
+                                    <span className="value">
+                                        {detail.duration} Mins                                   </span>
+                                </li>
+
+                            ))}
+
                         </ul>
                         <div className="movie-cast">
                             <h2 className="movie-title-h2 cast-title">
                                 Top Cast
                             </h2>
                             <div className="mb-movie-cast-list four_column">
-                                <div className="movie-cast-item">
-                                    <div className="cast-thumbnail">
-                                        <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/cast-01.jpg" alt="" />
-                                    </div>
-                                    <div className="cast-info">
-                                        <h2 className="cast-name">Millie Brown</h2>
-                                        <p className="cast-description">
-                                            as Eleven                </p>
-                                    </div>
-                                </div>
-                                <div className="movie-cast-item">
-                                    <div className="cast-thumbnail">
-                                        <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/cast-02.jpg" alt="" />
-                                    </div>
-                                    <div className="cast-info">
-                                        <h2 className="cast-name">Finn Wolfhard</h2>
-                                        <p className="cast-description">
+                                {DetailMovie.map((detail, index) => (
+                                    <div key={detail.id} className="movie-cast-item">
+                                        {detail.detailActor.map((actor, actorIndex) => (
+                                            <div> <div className="cast-thumbnail">
 
-                                            as Mike Wheeler                               </p>
-                                    </div>
-                                </div>
-                                <div className="movie-cast-item">
-                                    <div className="cast-thumbnail">
-                                        <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/cast-03.jpg" alt="" />
-                                    </div>
-                                    <div className="cast-info">
-                                        <h2 className="cast-name">Winona Ryder</h2>
-                                        <p className="cast-description">
+                                                <img
+                                                    src={detail.detailActor.length > 0
+                                                        ? `http://localhost:5231/${actor.idActorMovie.image}`
+                                                        : 'No Category'} width="100" height="100" style={{ objectFit: 'cover' }}
+                                                    alt={`Image of ${detail.detailActor.name}`}
+                                                />
+
+                                                <div className="cast-info mt-[8px]">
+                                                    <h2 className="cast-name">{actor.idActorMovie.name}</h2>
+                                                    <p className="cast-description">as {actor.role}</p>
+                                                </div></div>
 
 
-                                            as Joyce Byers                                              </p>
+                                            </div>
+                                        ))}
+
                                     </div>
-                                </div>
-                                <div className="movie-cast-item">
-                                    <div className="cast-thumbnail">
-                                        <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/cast-04.jpg" alt="" />
-                                    </div>
-                                    <div className="cast-info">
-                                        <h2 className="cast-name">David Harbour</h2>
-                                        <p className="cast-description">
+                                ))}
 
 
 
-                                            as Jim Hopper                                                          </p>
-                                    </div>
-                                </div>
-                                <div className="movie-cast-item">
-                                    <div className="cast-thumbnail">
-                                        <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/cast-05.jpg" alt="" />
-                                    </div>
-                                    <div className="cast-info">
-                                        <h2 className="cast-name">Gaten Matarazo</h2>
-                                        <p className="cast-description">
 
 
 
-                                            as Ted Wheeler                                                                         </p>
-                                    </div>
-                                </div>
-                                <div className="movie-cast-item">
-                                    <div className="cast-thumbnail">
-                                        <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/cast-06.jpg" alt="" />
-                                    </div>
-                                    <div className="cast-info">
-                                        <h2 className="cast-name">Natalia Dyer</h2>
-                                        <p className="cast-description">
 
-                                            as Nancy Wheeler                                                                                        </p>
-                                    </div>
-                                </div>
-                                <div className="movie-cast-item">
-                                    <div className="cast-thumbnail">
-                                        <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/cast-07.jpg" alt="" />
-                                    </div>
-                                    <div className="cast-info">
-                                        <h2 className="cast-name">Caleb Laughlin</h2>
-                                        <p className="cast-description">
-
-                                            as Lucas Sinclair                                                                                                      </p>
-                                    </div>
-                                </div>
-                                <div className="movie-cast-item">
-                                    <div className="cast-thumbnail">
-                                        <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/cast-08.jpg" alt="" />
-                                    </div>
-                                    <div className="cast-info">
-                                        <h2 className="cast-name">Sadie Sink</h2>
-                                        <p className="cast-description">
-
-
-                                            as Max Mayfield                                                                                                                    </p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div className="main-content">
                             <h2 className="movie-title-h2 story-title">
                                 Story Line
                             </h2>
-                            <p>In a small town where everyone knows everyone, a peculiar incident starts a chain of events that leads to a child’s disappearance, which begins to tear at the fabric of an otherwise-peaceful community. Dark government agencies and seemingly malevolent supernatural forces converge on the town, while a few of the locals begin to understand that more is going on than meets the eye.</p>
+                            {DetailMovie.map((detail, index) => (
+                                <p dangerouslySetInnerHTML={{ __html: detail.description }} />
+                            ))}
+
                         </div>
                         <div className="movie-related">
                             <h2 className="movie-title-h2 related-title">
                                 More Movies Like This
                             </h2>
+                            <div className="mb-movie-list mb-movie-list-template1 four_column">
+                                <div className="mb-movie-item item-template1">
+                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
+                                        <div className="movie-image">
+                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/movie-image-09-768x513.jpg" alt="" />
+                                        </div>
+                                    </a>
+                                    <div className="movie-info">
+                                        <div className="categories-and-time">
+                                            <div className="movie-category">
+                                                <a href="">Thriller</a>
+                                            </div>
+                                            <div className="separator">/</div>
+                                            <span className="running-time">180 mins</span>
+                                        </div>
+                                        <a href="">
+                                            <h3 className="movie-title font-bold">
+                                                The Scariest Dream				</h3>
+                                        </a>
+                                        <button className="btn btn-booking">
+                                            Get Ticket    </button>
+                                    </div>
+                                </div>
+                                <div className="mb-movie-item item-template1">
+                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
+                                        <div className="movie-image">
+                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/movie-image-07-768x519.jpg" alt="" />
+                                        </div>
+                                    </a>
+                                    <div className="movie-info">
+                                        <div className="categories-and-time">
+                                            <div className="movie-category">
+                                                <a href="">Thriller</a>
+                                            </div>
+                                            <div className="separator">/</div>
+                                            <span className="running-time">180 mins</span>
+                                        </div>
+                                        <a href="">
+                                            <h3 className="movie-title font-bold">
+
+                                                Alis Keep Walking								</h3>
+                                        </a>
+                                        <button className="btn btn-booking mr-[10px]">
+                                            Get Ticket   </button>
+
+                                    </div>
+                                </div>
+                                <div className="mb-movie-item item-template1">
+                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
+                                        <div className="movie-image">
+                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/movie-image-05-768x520.jpg" alt="" />
+                                        </div>
+                                    </a>
+                                    <div className="movie-info">
+                                        <div className="categories-and-time">
+                                            <div className="movie-category">
+                                                <a href="">Thriller</a>
+                                            </div>
+                                            <div className="separator">/</div>
+                                            <span className="running-time">180 mins</span>
+                                        </div>
+                                        <a href="">
+                                            <h3 className="movie-title font-bold">
+
+
+                                                The Seventh Day											</h3>
+                                        </a>
+                                        <button className="btn btn-booking mr-[10px]">
+                                            Get Ticket   </button>
+
+                                    </div>
+                                </div>
+                                <div className="mb-movie-item item-template1">
+                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
+                                        <div className="movie-image">
+                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/movie-image-04-768x513.jpg" alt="" />
+                                        </div>
+                                    </a>
+                                    <div className="movie-info">
+                                        <div className="categories-and-time">
+                                            <div className="movie-category">
+                                                <a href="">Thriller</a>
+                                            </div>
+                                            <div className="separator">/</div>
+                                            <span className="running-time">180 mins</span>
+                                        </div>
+                                        <a href="">
+                                            <h3 className="movie-title font-bold">
+
+                                                Behind the Mask														</h3>
+                                        </a>
+                                        <button className="btn btn-booking mr-[10px]">
+                                            Get Ticket   </button>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <FooterHome></FooterHome>
+            <div id="mb_trailer_video_popup" style={popup ? { ...closepopup, ...popupContentStyle } : closepopup} className="mb_trailer_video_popup">
+
+
+                <div className="modal-content2">
+                    {popup && DetailMovie.map((detail, index) => (
+                        <video width="1100" height="700" controls autoPlay >
+                            <source src={detail.detailCategoryMovies.length > 0
+                                ? `http://localhost:5231/${detail.detailCategoryMovies[0].trailer}`
+                                : 'No Category'} type="video/mp4" />
+
+                        </video>
+                    ))}
+
+
+
+                </div>
+
+
+
+                <div className="close">
+                    <button style={{ position: 'absolute', top: '21px', color: 'white' }} onClick={() => handlepoup()}><i className="fa fa-close" style={{ fontSize: '41px', right: '108px' }}></i></button>
+                </div>
+            </div>
         </div>
 
 

@@ -139,6 +139,63 @@ namespace WebApplication3.Controllers
             }
            
         }
+        [HttpGet("ShowMovie/{id}")]
+        public async Task<ActionResult<IEnumerable<Movie>>> ShowMovie(int id)
+        {
+            try
+            {
+                var actor = await _dbContext.Movies.Include(m => m.DetailCategoryMovies).ThenInclude(d => d.IdCategoryNavigation).Include(m => m.DetailActorMovies).ThenInclude(d => d.IdActorNavigation).Where(a => a.DetailActorMovies.Any(d => d.IdActor == id)).Select(m => new
+                {
+                    Title = m.Title,
+                    duration = m.Duration,
+                    GenreName = m.IdGenreNavigation.Name,
+                    DetailCategoryMovies = m.DetailCategoryMovies.Select(d => new
+                    {
+                        Picture = d.Picture,
+                    }),
+                }).ToArrayAsync();
+                return Ok(actor);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("DetailActor/{id}")]
+        public async Task<ActionResult<IEnumerable<Actor>>> DetailActor(int id)
+        {
+            try
+            {
+                var actor = await _dbContext.Actors.Where(m=>m.Id==id).Include(m => m.DetailActorMovies).ThenInclude(d => d.IdMovieNavigation).Select(m => new
+                {
+                    id = m.Id,
+                    name = m.Name,
+                    image = m.Image,
+                    Nationally = m.Nationality,
+                    Birthday = m.Birthday,
+                    bio = m.Bio,
+                    DetailActorMovie = m.DetailActorMovies.Select(d => new
+                    {
+                        Id = d.Id,
+                        IDMovieNavigation = new
+                        {
+                            Name = d.IdMovieNavigation.Title,
+                            GenreName=d.IdMovieNavigation.IdGenreNavigation.Name,
+                            duration=d.IdMovieNavigation.Duration,
+                            DetailMovieCategory = d.IdMovieNavigation.DetailCategoryMovies.Select(p => new
+                            {
+                                picture=p.Picture,
+                            })
+                        }
+                    })
+                }).ToListAsync();
+                return Ok(actor);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
         [HttpGet("ShowActor")]
         public async Task<ActionResult<IEnumerable<Actor>>> GetActor()
         {

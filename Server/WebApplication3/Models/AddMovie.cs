@@ -16,5 +16,6 @@
         public int idcategory { get; set; }
         public string Picture { get; set; }
         public string Trailer { get; set; }
+        public string Director { get; set; } = null!;
     }
 }

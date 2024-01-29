@@ -219,6 +219,92 @@
     font-weight: bold;
     clear: both;
 }
+.mb-movie-list.four_column {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.mb-movie-list.mb-movie-list-template1 {
+    column-gap: 20px;
+}
+.mb-movie-list {
+    display: grid;
+    gap: 30px;
+}
+.mb-movie-item.item-template1 {
+    transition: all 0.5s ease;
+    border: 5px solid transparent;
+}
+.mb-movie-item.item-template1 .movie-image {
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.2);
+}
+.mb-movie-item.item-template1 .movie-image img {
+    transition: all 0.5s ease;
+    display: block;
+    width: 100%;
+    height: 389px;
+    object-fit: cover;
+    transform: scale3d(1.05, 1.05, 1.05);
+}
+.mb-movie-item.item-template1 .movie-image:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, black 0%, rgba(0, 0, 0, 0) 65%);
+}
+.mb_trailer_video_popup {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.75);
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 99999;
+}
+
+.mb-movie-item {
+    position: relative;
+}
+.modal-container-detail{
+    line-height: 0;
+    width: 85%;
+    max-height: 90%;
+    max-width: 1500px;
+    position: relative;
+}
+@keyframes fadeDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px); /* Adjust the distance you want to move down */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px); /* Adjust the distance you want to move up */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+.mb_trailer_video_popup .modal-container-detail .modal-class{
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    padding-top: 56.25%;
+}
 .main-content p{
     line-height: 1.86em;
     color: #737373;

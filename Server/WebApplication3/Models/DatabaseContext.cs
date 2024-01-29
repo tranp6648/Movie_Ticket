@@ -266,6 +266,9 @@ public partial class DatabaseContext : DbContext
         {
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasColumnType("text");
+            entity.Property(e => e.Director)
+                .HasMaxLength(300)
+                .IsUnicode(false);
             entity.Property(e => e.Duration).HasColumnName("duration");
             entity.Property(e => e.IdGenre).HasColumnName("id_genre");
             entity.Property(e => e.Title).HasMaxLength(100);

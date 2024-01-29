@@ -75,11 +75,8 @@ namespace WebApplication3.Controllers
             existMovie.ReleaseDate = addMovie.ReleaseDate;
             existMovie.Duration = addMovie.Duration;
             existMovie.IdGenre = addMovie.IdGenre;
-            var categoryMovie = _dbContext.DetailCategoryMovies.FirstOrDefault(cm => cm.IdMovie == id);
-            if (categoryMovie != null)
-            {
-                categoryMovie.Trailer = addMovie.Trailer;
-            }
+            existMovie.Director = addMovie.Director;
+           
             try
             {
                 _dbContext.SaveChanges();
@@ -151,12 +148,13 @@ namespace WebApplication3.Controllers
                 _dbContext.SaveChanges();
                 int movieId = movieToAdd.Id;
                 string imagePath = SavePictureToFolder(addMovie.Picture, movieId, _webHostEnvironment.WebRootPath);
+                string trailerPath = SaveVideoToFolder(addMovie.Trailer, movieId, _webHostEnvironment.WebRootPath);
                 DetailCategoryMovie detailCategoryMovie = new DetailCategoryMovie
                 {
                     IdMovie = movieId,
                     IdCategory = addMovie.idcategory,
                     Picture = imagePath,
-                    Trailer = addMovie.Trailer,
+                    Trailer = trailerPath,
 
                 };
                 _dbContext.DetailCategoryMovies.Add(detailCategoryMovie);
@@ -170,7 +168,40 @@ namespace WebApplication3.Controllers
                 return BadRequest($"Error adding movie: {ex.Message}");
             }
         }
+        private string SaveVideoToFolder(string base64String, int movieId, string webrootpath)
+        {
+            if (base64String.StartsWith("data:video"))
+            {
+                base64String = base64String.Split(',')[1];
+            }
 
+            // Ensure correct padding
+            base64String = base64String.PadRight((base64String.Length + 3) & ~3, '=');
+
+            try
+            {
+                byte[] pictureBytes = Convert.FromBase64String(base64String);
+                string folderPath = Path.Combine(webrootpath, "videos");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string filename = $"movie_{movieId}_picture.mp4";
+                string filepath = Path.Combine(folderPath, filename);
+
+                System.IO.File.WriteAllBytes(filepath, pictureBytes);
+
+                return Path.Combine("videos", filename);
+            }
+            catch (FormatException ex)
+            {
+                // Log the exception or handle it appropriately
+                Console.WriteLine($"Error converting Base64 string: {ex.Message}");
+                return null;  // or throw an exception, return an error code, etc.
+            }
+        }
         // Example method for mapping properties from AddMovie to Movie
         private Movie MapAddMovieToMovie(AddMovie addMovie)
         {
@@ -181,7 +212,8 @@ namespace WebApplication3.Controllers
                 Description = addMovie.Description,
                 ReleaseDate = addMovie.ReleaseDate,
                 Duration = addMovie.Duration,
-                IdGenre = addMovie.IdGenre
+                IdGenre = addMovie.IdGenre,
+                Director=addMovie.Director
                 // Map other properties as needed
             };
         }
@@ -200,7 +232,8 @@ namespace WebApplication3.Controllers
           Title = m.Title,
           ReleaseDate = m.ReleaseDate,
           duration = m.Duration,
-          description = m.Description,
+          director = m.Director,
+          description=m.Description,
           idgenre = m.IdGenreNavigation.Id,
           GenreName = m.IdGenreNavigation.Name,
           DetailCategoryMovies = m.DetailCategoryMovies.Select(d => new
