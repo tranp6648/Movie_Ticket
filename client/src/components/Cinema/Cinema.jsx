@@ -9,6 +9,7 @@ import '../Admin/admin.css';
 import Pagination from 'react-paginate';
 import 'react-paginate/theme/basic/react-paginate.css';
 import Select from 'react-select';
+
 function Cinema() {
 
 
@@ -529,6 +530,8 @@ function Cinema() {
           </div>
         )}
             </div>
+       
+            
         </div>
 
 

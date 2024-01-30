@@ -30,13 +30,15 @@ function Movie() {
     DescriptionL: '',
     duration: '',
     Picture: null,
-    trailer: '',
+    trailer: null,
     updateTittle: '',
     updateDesction: '',
     updateReleaseDate: null,
     updateduration: '',
     id: '',
-    updatetrailer: ''
+    Director:'',
+    updateDirector:''
+    
   })
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const MAX_DESCRIPTION_LENGTH = 300;
@@ -49,10 +51,11 @@ function Movie() {
     if (selectedMovie) {
       FormData.updateDesction = selectedMovie.description;
       FormData.updateTittle = selectedMovie.title;
+      FormData.updateDirector=selectedMovie.director
       FormData.id = selectedMovie.id;
       FormData.updateReleaseDate = selectedMovie.releaseDate;
       FormData.updateduration = selectedMovie.duration;
-      FormData.updatetrailer = selectedMovie.detailCategoryMovies.length > 0 ? selectedMovie.detailCategoryMovies[0].trailer : 'No Trailer';
+     
       setupdategenre(selectedMovie.idgenre);
 
     }
@@ -96,7 +99,7 @@ function Movie() {
       FormData.id = '';
       FormData.updateReleaseDate = null;
       FormData.updateduration = '';
-      FormData.updatetrailer = '';
+
       setupdategenre(null);
       setPopupVisibility(false)
       setIsClosingPopup(false)
@@ -236,6 +239,20 @@ function Movie() {
       reader.readAsDataURL(file);
     }
   };
+  const handletrailer = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({
+          ...FormData,
+          trailer: reader.result, // base64-encoded string
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const handleUpdateSubmit = async (event) => {
     event.preventDefault();
 
@@ -245,7 +262,7 @@ function Movie() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: FormData.updateTittle, description: FormData.updateDesction, releaseDate: FormData.updateReleaseDate, duration: FormData.updateduration, idGenre: updategenre, trailer: FormData.updatetrailer }),
+        body: JSON.stringify({ title: FormData.updateTittle, description: FormData.updateDesction, releaseDate: FormData.updateReleaseDate, duration: FormData.updateduration, idGenre: updategenre,director:FormData.updateDirector }),
       })
       if (response.ok) {
         Swal.fire({
@@ -259,7 +276,7 @@ function Movie() {
         FormData.id = '';
         FormData.updateReleaseDate = null;
         FormData.updateduration = '';
-        FormData.updatetrailer = '';
+        FormData.updateDirector=''
         setupdategenre(null);
         setPopupVisibility(false);
         const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
@@ -281,7 +298,7 @@ function Movie() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: FormData.Title, description: FormData.DescriptionL, releaseDate: FormData.ReleaseDate, duration: FormData.duration, idGenre: selectedgenre.value, idcategory: selectedcategory.value, Picture: FormData.Picture, trailer: FormData.trailer }),
+        body: JSON.stringify({ title: FormData.Title, description: FormData.DescriptionL, releaseDate: FormData.ReleaseDate, duration: FormData.duration, idGenre: selectedgenre.value, idcategory: selectedcategory.value, Picture: FormData.Picture, trailer: FormData.trailer,director:FormData.Director }),
       })
       if (!response.ok) {
         const responseBody = await response.json();
@@ -315,10 +332,12 @@ function Movie() {
         FormData.ReleaseDate=null;
         FormData.Title='';
         FormData.duration='';
+        FormData.Director=''
       setSelectedgenre(null);
         setSelectedcategory(null);
        
         document.getElementById('imageInput').value = '';
+        document.getElementById('trailer').value = '';
         const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
         setMovie(response.data);
 
@@ -416,7 +435,7 @@ function Movie() {
           </section>
           <section className="content">
             <div className="row">
-              <div className="box box-primary" style={{ maxHeight: '802px' }}>
+              <div className="box box-primary" style={{ Height: 'auto' }}>
                 <div className="box-header">
                   <h3 className="box-title">Movie</h3>
                 </div>
@@ -452,6 +471,11 @@ function Movie() {
                         ]}
 
                       />
+
+                    </div>
+                    <div className="form-group">
+                      <label >Director</label>
+                      <input name='NameCategory' value={FormData.Director} onChange={(e) => setFormData({ ...FormData, Director: e.target.value })} className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
 
                     </div>
                     <div className="form-group">
@@ -496,7 +520,7 @@ function Movie() {
                     </div>
                     <div className="form-group">
                       <label >Trailer</label>
-                      <input type='text' value={FormData.trailer} onChange={(e) => setFormData({ ...FormData, trailer: e.target.value })} name='NameCategory' className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
+                      <input type='file' id="trailer" onChange={(e) => handletrailer(e)} name='NameCategory' className="form-control" placeholder="Enter Name Category" />
 
                     </div>
 
@@ -526,7 +550,7 @@ function Movie() {
                       <tr>
                         <th>#</th>
                         <th>title</th>
-                        <th>Description</th>
+                        <th>director</th>
                         <th>ReleaseDate</th>
                         <th>Duration</th>
                         <th>Genre</th>
@@ -541,8 +565,9 @@ function Movie() {
                       {currentGender.map((Movies, index) => (
                         <tr key={Movies.id}>
                           <td>{index + 1}</td>
+                          
                           <td>{Movies.title}</td>
-                          <td dangerouslySetInnerHTML={{ __html: Movies.description }} />
+                          <td>{Movies.director}</td>
                           <td>{new Date(Movies.releaseDate).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                           <td>{formatDuration(Movies.duration)}</td>
                           <td>{Movies.genreName}</td>
@@ -552,7 +577,7 @@ function Movie() {
                           <td><img src={Movies.detailCategoryMovies.length > 0
                             ? `http://localhost:5231/${Movies.detailCategoryMovies[0].picture}`
                             : 'No Category'} width="100" height="100" style={{ objectFit: 'cover' }} alt="" /></td>
-                          <td><a target='_blank' href={Movies.detailCategoryMovies.length > 0 ? Movies.detailCategoryMovies[0].trailer : 'No Trailer'}>{Movies.detailCategoryMovies.length > 0 ? Movies.detailCategoryMovies[0].trailer : 'No Trailer'} </a></td>
+                          <td><a target='_blank' href={Movies.detailCategoryMovies.length > 0 ? `http://localhost:5231/${Movies.detailCategoryMovies[0].trailer}`  : 'No Trailer'}>{Movies.detailCategoryMovies.length > 0 ? Movies.detailCategoryMovies[0].trailer : 'No Trailer'} </a></td>
                           <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditClick(Movies.id)}>Edit</button></td>
                           <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>deleteSubmit(Movies.id)}>Remove</button></td>
                         </tr>
@@ -615,6 +640,11 @@ function Movie() {
 
                   </div>
                   <div className="form-group">
+                    <label className='float-left'>Director</label>
+                    <input name='UpdateNameCategory' value={FormData.updateDirector} onChange={(e) => setFormData({ ...FormData, updateDirector: e.target.value })} className="form-control" />
+
+                  </div>
+                  <div className="form-group">
                     <label className='float-left'>Title</label>
                     <br />
                     <ReactQuill
@@ -668,11 +698,7 @@ function Movie() {
                     />
 
                   </div>
-                  <div className="form-group">
-                    <label >Trailer</label>
-                    <input type='text' value={FormData.updatetrailer} onChange={(e) => setFormData({ ...FormData, updatetrailer: e.target.value })} name='NameCategory' className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
-
-                  </div>
+                 
                 </div>
 
                 <div className="box-footer">

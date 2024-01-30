@@ -12,6 +12,57 @@
 .mb-movie-list.four_column {
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+.mb-button-filter-ajax.mb-date-tabs li {
+    margin: 5px 10px;
+    cursor: pointer;
+}
+.mb-date-tabs li .day {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    height: 48px;
+    width: 77px;
+    color: #717171;
+    cursor: pointer;
+    border: 2px solid #fdfcf0;
+    border-radius: 5px;
+}
+.mb-date-tabs li {
+    display: inline-block;
+    border: 2px solid #fff;
+    border-radius: 5px;
+}
+.mb-button-filter-ajax.mb-date-tabs {
+    margin-bottom: 35px;
+    padding: 0;
+    border-bottom: none;
+    text-align: center;
+}
+.mb-date-tabs li .day span.D_m_day span {
+    color: #717171;
+    font-size: 16px;
+    line-height: 1;
+}
+.mb-date-tabs li.current {
+    border-color: #222;
+}
+.mb-date-tabs li .day span strong {
+    color: #717171;
+    font-size: 32px;
+    font-weight: 500;
+}
+.mb-date-tabs li .day span.D_m_day span {
+    color: #717171;
+    font-size: 16px;
+    line-height: 1;
+}
+.mb-date-tabs li .day span.D_m_day {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .mb-movie-item {
     transition: all 0.5s ease;
     border: 5px solid transparent;

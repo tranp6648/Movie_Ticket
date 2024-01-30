@@ -4785,19 +4785,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\tranp\\.nuget\\packages\\": {}
+    "C:\\Users\\LENOVO\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
+      "projectUniqueName": "D:\\VisualStudioCode\\movie_ticket1\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
       "projectName": "WebApplication3",
-      "projectPath": "D:\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
-      "packagesPath": "C:\\Users\\tranp\\.nuget\\packages\\",
-      "outputPath": "D:\\Movie_Ticket\\Server\\WebApplication3\\obj\\",
+      "projectPath": "D:\\VisualStudioCode\\movie_ticket1\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
+      "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
+      "outputPath": "D:\\VisualStudioCode\\movie_ticket1\\Movie_Ticket\\Server\\WebApplication3\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\tranp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

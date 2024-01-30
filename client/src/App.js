@@ -18,6 +18,11 @@ import AllMovies from './components/AllMovies/AllMovies';
 import Footer from './components/footer/FooterHome';
 import Layout from './components/Layout/layout';
 import Homepage from './components/Homepage/Homepage';
+import Actor from './components/Actor/Actor';
+import Detail from './components/Detail/Detail';
+import MovieActor from './components/MovieActor/MovieActor';
+import DetailActor from './components/DetailActor/DetailActor';
+import Cart from './components/Cart/Cart';
 function App() {
   return (
    <Router>
@@ -37,6 +42,11 @@ function App() {
     <Route path='/layout' element={<Layout/>}>
       <Route index element={<Homepage/>}/>
     </Route>
+    <Route path='/actor' element={<Actor/>}/>
+    <Route path='/Detail/:id' element={<Detail/>}/>
+    <Route path='/MovieActor' element={<MovieActor/>}/>
+    <Route path='/DetailActor/:id' element={<DetailActor/>}/>
+    <Route path='/Cart' element={<Cart/>}/>
      </Routes>
    </Router>
   );

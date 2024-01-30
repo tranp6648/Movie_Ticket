@@ -35,7 +35,11 @@ app.UseHttpsRedirection();
 
 // Enable CORS
 app.UseCors("ReactPolicy");
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    ServeUnknownFileTypes = true,
+    DefaultContentType = "application/octet-stream"
+});
 app.UseAuthorization();
 
 app.MapControllers();
