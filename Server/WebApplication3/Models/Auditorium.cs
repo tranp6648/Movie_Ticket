@@ -9,5 +9,9 @@ public partial class Auditorium
 
     public string Name { get; set; } = null!;
 
+    public int IdCinema { get; set; }
+
+    public virtual Cinema IdCinemaNavigation { get; set; } = null!;
+
     public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
 }

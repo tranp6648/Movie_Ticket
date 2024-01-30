@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
+
 import FooterHome from "../footer/FooterHome";
 import './Detail.css'
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,7 +10,20 @@ function Detail() {
     const location = useLocation();
 
     const ID = location.state?.ID || '';
-    console.log(ID)
+    const [Actor, setActor] = useState([]);
+
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5231/api/Actor/DetailActorMovie/${ID}`);
+                setActor(response.data)
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchdata();
+    }, [])
     const [popup, setpopup] = useState(false);
     const handlepoup = () => {
         setpopup(!popup);
@@ -28,7 +42,7 @@ function Detail() {
             try {
                 const response = await axios.get(`http://localhost:5231/api/DetailMovie/ShowDetail/${ID}`)
                 setDetailMovie(response.data);
-                console.log(response.data)
+
             } catch (error) {
                 console.log(error);
             }
@@ -38,7 +52,7 @@ function Detail() {
     return (
         <div>
             <Menu />
-            <div style={{ height: '100px', marginTop: '97px' }}>
+            <div style={{ height: '296px', marginTop: '5px' }}>
                 <div className="breadcrumb-area">
                     <div className="container">
                         <div className="breadcrumb-content">
@@ -157,35 +171,21 @@ function Detail() {
                                 Top Cast
                             </h2>
                             <div className="mb-movie-cast-list four_column">
-                                {DetailMovie.map((detail, index) => (
-                                    <div key={detail.id} className="movie-cast-item">
-                                        {detail.detailActor.map((actor, actorIndex) => (
-                                            <div> <div className="cast-thumbnail">
+                                {Actor.map((actor, index) => (
+                                    <div className="movie-cast-item">
 
-                                                <img
-                                                    src={detail.detailActor.length > 0
-                                                        ? `http://localhost:5231/${actor.idActorMovie.image}`
-                                                        : 'No Category'} width="100" height="100" style={{ objectFit: 'cover' }}
-                                                    alt={`Image of ${detail.detailActor.name}`}
-                                                />
-
-                                                <div className="cast-info mt-[8px]">
-                                                    <h2 className="cast-name">{actor.idActorMovie.name}</h2>
-                                                    <p className="cast-description">as {actor.role}</p>
-                                                </div></div>
-
-
-                                            </div>
-                                        ))}
-
+                                        <div className="cast-thumbnail">
+                                            <img src={`http://localhost:5231/${actor.image}`} alt="" />
+                                        </div>
+                                        <div className="cast-info">
+                                            <h4 className="cast-name">{actor.name}</h4>
+                                            <p className="cast-description">
+                                                {actor.detailActor.length > 0
+                                                    ? actor.detailActor[0].role
+                                                    : 'No Category'}             </p>
+                                        </div>
                                     </div>
                                 ))}
-
-
-
-
-
-
 
                             </div>
                         </div>
@@ -325,6 +325,257 @@ function Detail() {
 
                 <div className="close">
                     <button style={{ position: 'absolute', top: '21px', color: 'white' }} onClick={() => handlepoup()}><i className="fa fa-close" style={{ fontSize: '41px', right: '108px' }}></i></button>
+                </div>
+            </div>
+            <div id="mb_booking_popup" className="mb_booking_popup">
+                <div className="mb-bp-container">
+                    <div className="mb-bp-content">
+                        <ul className="toggle-tabs mb-date-tabs">
+                            <li className="current">
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                        <dl className="collateral-tabs">
+                            <dd className="tab-container current">
+                                <div className="tab-content mb-showtimes">
+                                    <div className="mb-tabs-cities">
+                                        <ul className="toggle-tabs">
+                                            <li className="mb-city-name current">
+                                                <span>New York</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="collateral-tabs">
+                                        <dd className="tab-container current">
+                                            <div className="tab-content mb-room-types">
+                                                <ul className="toggle-tabs">
+                                                    <li className="mb-room-type-name current">
+                                                        3D                                </li>
+                                                        <li className="mb-room-type-name">
+                                                            2D
+                                                        </li>
+                                                </ul>
+                                                <dl className="collateral-tabs">
+                                                    <dd className="tab-container current">
+                                                        <div className="tab-content showtimes">
+                                                            <div className="mb-venue">
+                                                                <div className="venue-name mb-[11px]">
+                                                                    <h3>Binghamton</h3>
+                                                                </div>
+                                                                <div className="mb-room-name mb-[11px]  ">
+                                                                    <h4>IMAX</h4>
+                                                                </div>
+                                                                <ul className="mb-tab-showtime">
+                                                                    <li className="item">
+                                                                        <a href="">
+                                                                            <span>9:30 am</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>

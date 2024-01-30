@@ -15,6 +15,8 @@ public partial class Cinema
 
     public string District { get; set; } = null!;
 
+    public virtual ICollection<Auditorium> Auditoria { get; set; } = new List<Auditorium>();
+
     public virtual ICollection<DetailCityBranch> DetailCityBranches { get; set; } = new List<DetailCityBranch>();
 
     public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();

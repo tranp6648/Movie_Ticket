@@ -43,7 +43,7 @@ function DetailActor() {
     return (
         <div>
             <Menu />
-            <div style={{ height: '100px', marginTop: '97px' }}>
+            <div style={{ height: '296px', marginTop: '5px'}}>
                 <div className="breadcrumb-area">
                     <div className="container">
                         <div className="breadcrumb-content">

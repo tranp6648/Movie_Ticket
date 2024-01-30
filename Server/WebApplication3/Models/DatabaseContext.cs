@@ -99,9 +99,15 @@ public partial class DatabaseContext : DbContext
         modelBuilder.Entity<Auditorium>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdCinema).HasColumnName("ID_cinema");
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.IdCinemaNavigation).WithMany(p => p.Auditoria)
+                .HasForeignKey(d => d.IdCinema)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Auditoriums_Cinemas");
         });
 
         modelBuilder.Entity<CategoryMovie>(entity =>
@@ -231,6 +237,16 @@ public partial class DatabaseContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("seat_name");
             entity.Property(e => e.Status).HasColumnName("status");
+
+            entity.HasOne(d => d.IdAuditoriumsNavigation).WithMany()
+                .HasForeignKey(d => d.IdAuditoriums)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detail_seat_Auditoriums_Auditoriums");
+
+            entity.HasOne(d => d.IdSeatNavigation).WithMany()
+                .HasForeignKey(d => d.IdSeat)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detail_seat_Auditoriums_seat");
         });
 
         modelBuilder.Entity<District>(entity =>
@@ -295,10 +311,10 @@ public partial class DatabaseContext : DbContext
         modelBuilder.Entity<Showtime>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Endtime).HasColumnType("datetime");
             entity.Property(e => e.IdAuditoriums).HasColumnName("id_Auditoriums");
             entity.Property(e => e.IdCinema).HasColumnName("id_Cinema");
-            entity.Property(e => e.Starttime).HasColumnType("datetime");
+            entity.Property(e => e.IdMovie).HasColumnName("ID_Movie");
+            entity.Property(e => e.Time).HasColumnType("datetime");
 
             entity.HasOne(d => d.IdAuditoriumsNavigation).WithMany(p => p.Showtimes)
                 .HasForeignKey(d => d.IdAuditoriums)
@@ -309,6 +325,11 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdCinema)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Showtimes_Cinemas");
+
+            entity.HasOne(d => d.IdMovieNavigation).WithMany(p => p.Showtimes)
+                .HasForeignKey(d => d.IdMovie)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Showtimes_Movies");
         });
 
         OnModelCreatingPartial(modelBuilder);

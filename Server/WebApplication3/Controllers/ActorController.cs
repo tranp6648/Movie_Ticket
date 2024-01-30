@@ -92,6 +92,7 @@ namespace WebApplication3.Controllers
                 return null;  // or throw an exception, return an error code, etc.
             }
         }
+       
         [HttpGet("GetMovie")]
         public async Task<ActionResult<IEnumerable<Actor>>> GetMovie()
         {
@@ -139,6 +140,35 @@ namespace WebApplication3.Controllers
             }
            
         }
+        [HttpGet("DetailActorMovie/{id}")]
+        public async Task<ActionResult<IEnumerable<Actor>>> ShowActor(int id)
+        {
+            try
+            {
+                var actors = await _dbContext.Actors
+                    .Include(m => m.DetailActorMovies)
+                    .ThenInclude(d => d.IdActorNavigation)
+                    .Where(a => a.DetailActorMovies.Any(d => d.IdMovieNavigation.Id == id))
+                    .Select(m => new 
+                    {
+                        Name = m.Name,
+                        Image = m.Image,
+                        DetailActor=m.DetailActorMovies.Select(d => new
+                        {
+                            Role = d.Role,
+                        }),
+                    })
+                    .ToListAsync();
+
+                return Ok(actors);
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception appropriately
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
         [HttpGet("ShowMovie/{id}")]
         public async Task<ActionResult<IEnumerable<Movie>>> ShowMovie(int id)
         {
