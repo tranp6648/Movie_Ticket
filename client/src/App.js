@@ -16,13 +16,15 @@ import Edit from './components/Edit/Edit';
 import Cinema from './components/Cinema/Cinema';
 import AllMovies from './components/AllMovies/AllMovies';
 import Footer from './components/footer/FooterHome';
+import Layout from './components/Layout/layout';
+import Homepage from './components/Homepage/Homepage';
 function App() {
   return (
    <Router>
      <Routes>
-      <Route path='/' element={<HomePillDetail/>}/>
-      <Route path='/Add' element={<AddPillDetail/>}/>
-      <Route path='/Menu' element={<Menu/>}/>
+    <Route path='/' element={<HomePillDetail/>}/>
+    <Route path='/Add' element={<AddPillDetail/>}/>
+    <Route path='/Menu' element={<Menu/>}/>
     <Route path='/Account' element={<Accountweb/>}/>
     <Route path='/Admin' element={<AdminPage/>}/>
     <Route path='/Movie' element={<Movie/>}/>
@@ -32,6 +34,9 @@ function App() {
     <Route path='/Cinema' element={<Cinema/>}/>
     <Route path='/AllMovie' element={<AllMovies/>}/>
     <Route path='/footer' element={<Footer/>}/>
+    <Route path='/layout' element={<Layout/>}>
+      <Route index element={<Homepage/>}/>
+    </Route>
      </Routes>
    </Router>
   );

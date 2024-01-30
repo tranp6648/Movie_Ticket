@@ -1,9 +1,24 @@
 import './Menu.css'
+import { useState,useEffect } from 'react';
 function Menu(){
+    const [isSticky, setIsSticky] = useState(false);
+
+    // Xử lý sự kiện cuộn trang
+    const handleScroll = () => {
+        const scrollTop = window.scrollY;
+        setIsSticky(scrollTop > 0); // Nếu scroll > 0, set isSticky thành true
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     return(
         <div>
-            <section className="elementor-section elementor-top-section elementor-element elementor-element-453658a elementor-section-full_width elementor-section-content-middle header_sticky mobile_sticky sticky_bg_dark elementor-section-height-default elementor-section-height-default">
-            <div className='elementor-container elementor-column-gap-no'>
+ <section className={`elementor-section elementor-top-section elementor-element elementor-element-453658a elementor-section-full_width elementor-section-content-middle ${isSticky ? 'header_sticky sticky_bg_dark' : 'sticky_bg_transparent'} elementor-section-height-default elementor-section-height-default`}><div className='elementor-container elementor-column-gap-no'>
                 <div className='elementor-widget-wrap elementor-element-populated'>
                     <div className='elementor-element elementor-element-f2fecd8 elementor-widget elementor-widget-ova_logo'>
                        

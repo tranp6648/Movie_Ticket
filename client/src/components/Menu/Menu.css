@@ -14,6 +14,34 @@
     margin-left: auto;
     position: relative;
 }
+.menu-container {
+    background-color: rgba(255, 255, 255, 0.5); /* Trong suốt với độ mờ 50% */
+    /* Thêm các style khác nếu cần */
+  }
+  .sticky_bg_transparent {
+    background-color: rgba(255, 255, 255, 0.5); /* Trong suốt với độ mờ 50% */
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+.sticky_bg_dark {
+    background-color: #000; /* Nền màu đen khi cuộn trang */
+    transition: background-color 0.3s ease-in-out;
+}
+.elementor-section.elementor-top-section {
+    background-color: transparent; /* Trong suốt */
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Style của menu khi cuộn trang */
+.header_sticky.sticky_bg_dark {
+    background-color: rgba(0, 0, 0, 0.7); /* Đen với độ mờ */
+}
+
+/* Style của menu khi không cuộn trang */
+.header_sticky.sticky_bg_transparent {
+    background-color: transparent; /* Trong suốt */
+}
 @media (min-width: 768px){
 .elementor-column.elementor-col-100, .elementor-column[data-col="100"] {
     width: 100%;
@@ -325,4 +353,19 @@ button.menu-toggle {
 }
 .elementor-element {
     --widgets-spacing: 20px 20px;
+}
+//------------------------------------
+.elementor-section {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Style cho thanh điều hướng khi sticky */
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Màu bạn muốn khi sticky */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Để tạo độ bóng */
+    z-index: 1000; /* Đảm bảo navbar ở trên cùng */
 }
