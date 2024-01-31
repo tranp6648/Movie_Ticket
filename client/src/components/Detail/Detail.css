@@ -148,8 +148,37 @@
     line-height: 1.4;
     color: #fff;
 }
+.ova_movie_single .movie-media .btn-trailer-video:hover:before {
+    transition: all 0.3s linear;
+    background-color: #fff;
+}
+.ova_movie_single .movie-media .btn-trailer-video:hover i {
+    transition: all 0.3s ease;
+    color: #d96c2c;
+}
+.mb_booking_popup .mb-bp-container .mb-close {
+    position: absolute;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 50%;
+    background-color: #d96c2c;
+    color: #FFFFFF;
+    top: -15px;
+    right: -15px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -ms-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
 .mb_booking_popup {
-    display: block;
+    display: none;
     position: fixed;
     z-index: 9999;
     padding: 100px;

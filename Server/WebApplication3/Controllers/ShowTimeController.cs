@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
@@ -23,7 +24,7 @@ namespace WebApplication3.Controllers
                 return NotFound("Show time not found");
             }
             _dbContext.Showtimes.Remove(Showtimes123);
-            _dbContext.SaveChanges();
+            _dbContext.SaveChanges();   
             return Ok("Remove successfully");
         }
         [HttpPost("Update/{id}")]
@@ -33,7 +34,8 @@ namespace WebApplication3.Controllers
             {
                 var existingGenre =  _dbContext.Showtimes.Find(id);
                 DateTime vietnamTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(genre.Time, "SE Asia Standard Time");
-
+                DateTime Endtime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(genre.Endtime, "SE Asia Standard Time");
+                string fEndtime = Endtime.ToString("yyyy-MM-dd HH:mm:ss");
                 // Format the DateTime as a string in Vietnamese datetime format
                 string formattedTime = vietnamTime.ToString("yyyy-MM-dd HH:mm:ss");
                 if(_dbContext.Showtimes.Any(a => a.Time == vietnamTime))
@@ -41,6 +43,8 @@ namespace WebApplication3.Controllers
                     return BadRequest(new { message = "Failed update time" });
                 }
                 existingGenre.Time =vietnamTime;
+                
+                existingGenre.Endtime = Endtime;
                 _dbContext.SaveChanges();
                 return Ok("Showtime Update successfully");
             }
@@ -49,7 +53,53 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpGet("GetInfo/{Datetime}/{ID}")]
+        public async Task<ActionResult<IEnumerable<Showtime>>> getDate(DateTime datetime,int id)
+        {
+            try
+            {
+                // Assuming a.Time is of type DateTime
+
+
+                var Info = await _dbContext.Showtimes
+     .Where(a => a.Time.Year == datetime.Year && a.Time.Month == datetime.Month && a.Time.Day == datetime.Day && a.IdMovie==id).Select(m => new
+     {
+         Auth=m.IdAuditoriumsNavigation.Name,
+         Time=m.Time,
+         Cinema=m.IdAuditoriumsNavigation.IdCinemaNavigation.Name
+     })
+     .ToListAsync();
+
+                return Ok(Info);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+        [HttpGet("Gettime/{id}")]
+        public async Task<ActionResult<IEnumerable<Showtime>>> getshowtime(int id)
+        {
+            try
+            {
+                DateTime currentDate = DateTime.Now;
+                DateTime endDate = currentDate.AddDays(10);
+
+                var showtimes = await _dbContext.Showtimes
+                    .Where(a => a.Time >= currentDate && a.Endtime <= endDate && a.IdMovieNavigation.Id==id)
+                    .Select(m => new
+                    {
+                        Time = m.Time,
+                    })
+                    .ToListAsync();
+                return Ok(showtimes);
+            }
+            catch (Exception ex){
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
         [HttpGet("ShowShowtime")]
+           
         public async Task<ActionResult<IEnumerable<Showtime>>> getShow()
         {
             try
@@ -59,9 +109,10 @@ namespace WebApplication3.Controllers
                     ID=d.Id,
                     Time=d.Time,
                     NameMovie=d.IdMovieNavigation.Title,
+                    duration=d.IdMovieNavigation.Duration,
                     NameAuthor=d.IdAuditoriumsNavigation.Name,
-                    Cinema=d.IdCinemaNavigation.Name,
-                    District=d.IdCinemaNavigation.District
+                    Cinema=d.IdAuditoriumsNavigation.IdCinemaNavigation.Name,
+                    District=d.IdAuditoriumsNavigation.IdCinemaNavigation.District
                 }).ToListAsync();
                 return Ok(show);
             }catch(Exception ex)
@@ -74,23 +125,33 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                if (addshowtime == null)
-                {
-                    return BadRequest("Invalid movie data");
-                }
-                if(_dbContext.Showtimes.Any(a=>a.Time==addshowtime.Time && a.IdAuditoriums==addshowtime.IdAuditoriums && a.IdMovie==addshowtime.IdMovie)) {
-                    return BadRequest(new { message = "This branch does not have this cinema" });
-                }
                 DateTime vietnamTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(addshowtime.Time, "SE Asia Standard Time");
 
                 // Format the DateTime as a string in Vietnamese datetime format
                 string formattedTime = vietnamTime.ToString("yyyy-MM-dd HH:mm:ss");
+                DateTime Endtime= TimeZoneInfo.ConvertTimeBySystemTimeZoneId(addshowtime.Endtime, "SE Asia Standard Time");
+                string fEndtime = Endtime.ToString("yyyy-MM-dd HH:mm:ss");
+                if (addshowtime == null)
+                {
+                    return BadRequest("Invalid movie data");
+                }
+                if (_dbContext.Showtimes.Any(a => a.Endtime >= DateTime.Now && a.IdAuditoriums == addshowtime.IdAuditoriums))
+                {
+                    return BadRequest(new { message = "This branch does not have this cinema" });
+
+                }
+                if (_dbContext.Showtimes.Any(a=>a.IdAuditoriums == addshowtime.IdAuditoriums))
+                    {
+                    return BadRequest(new { message = "This branch does not have this cinema" });
+                }
+
                 var showtimeAdd = new Showtime
                 {
                     Time = vietnamTime,
+                    Endtime = Endtime,
                     IdAuditoriums = addshowtime.IdAuditoriums,
                     IdMovie = addshowtime.IdMovie,
-                    IdCinema=addshowtime.IdCinema
+                  
                 };
                 _dbContext.Showtimes.Add(showtimeAdd);
                 _dbContext.SaveChanges();
@@ -162,6 +223,7 @@ namespace WebApplication3.Controllers
                 {
                     ID = m.Id,
                     Name = m.Title,
+                    duration=m.Duration
                 }).ToListAsync();
                 return Ok(Movies);
             }

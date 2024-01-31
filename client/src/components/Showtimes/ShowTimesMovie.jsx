@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { Form, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { format } from 'date-fns-tz';
+import { format, addMinutes } from 'date-fns-tz'; // Incorrect import
+import { addMinutes as addMinutesOriginal } from 'date-fns'; // Correct import for addMinutes
 
 import { useLocation } from 'react-router-dom';
 import ReactQuill from 'react-quill';
@@ -43,6 +44,7 @@ function ShowTimesMovie() {
     setTimeout(() => {
       FormData.id='';
 setUpdatedate(null)
+FormData.duration=''
       setPopupVisibility(false)
       setIsClosingPopup(false)
     }, 500);
@@ -53,6 +55,8 @@ setUpdatedate(null)
     const selectedMovie = showTime.find(Movie => Movie.id == MovieID)
 if(selectedMovie){
   FormData.id=selectedMovie.id;
+  FormData.duration=selectedMovie.duration;
+
   setUpdatedate(new Date(selectedMovie.time))
 }
     setPopupVisibility(true)
@@ -148,8 +152,8 @@ fetchdata()
     fetchdata();
   },[])
   const [FormData, setFormData] = useState({
-    id:''
-    
+    id:'',
+    duration:''
   })
   const [perPage, setperPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
@@ -201,9 +205,11 @@ fetchdata()
   }
   const handleSubmit=async (event) => {
     event.preventDefault();
-
+   
+    const newDate = addMinutesOriginal(selectedDate, IsMovie.duration);
     const formattedDate = format(selectedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
-console.log(selectedAuth.value)
+
+const formattedDate1=format(newDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
 
    try{
     const response = await fetch('http://localhost:5231/api/ShowTime/add', {
@@ -211,7 +217,7 @@ console.log(selectedAuth.value)
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ time:new Date(formattedDate),idAuditoriums:selectedAuth.value,idCinema:Isselect.value,idMovie:IsMovie.value,idCity:selectedcity.value }),
+      body: JSON.stringify({ time:new Date(formattedDate),idAuditoriums:selectedAuth.value,idCinema:Isselect.value,idMovie:IsMovie.value,endtime:new Date(formattedDate1) }),
     })
     if(!response.ok){
       const responseBody = await response.json();
@@ -235,6 +241,8 @@ console.log(selectedAuth.value)
       setselectedcity(null);
       setIsselect(null);
       setselectedAuth(null);
+      FormData.duration='';
+      FormData.id=''
       const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
       setShowTime(response.data)
     }
@@ -245,15 +253,18 @@ console.log(selectedAuth.value)
   }
  const handleUpdate=async(event)=>{
   event.preventDefault();
+    
   const formattedDate = format(UpdateDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
-
+  const newDate = addMinutesOriginal(UpdateDate, FormData.duration);
+  const formattedDate1 = format(newDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
+  
   try{
 const response=await fetch(`http://localhost:5231/api/ShowTime/Update/${FormData.id}`,{
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
   },
-  body:JSON.stringify({time:new Date(formattedDate)})
+  body:JSON.stringify({time:new Date(formattedDate),endtime:new Date(formattedDate1)})
 })
 if(!response.ok){
   const responseBody = await response.json();
@@ -366,7 +377,7 @@ const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime"
                     {/* Form fields go here */}
                     <div className="form-group">
                       <label >Movie</label>
-                      <Select options={Movie.map(movie => ({ value: movie.id, label: movie.name }))}  onChange={(selectedOption) => handleMovie(selectedOption)}
+                      <Select options={Movie.map(movie => ({ value: movie.id, label: movie.name,duration:movie.duration }))}  onChange={(selectedOption) => handleMovie(selectedOption)}
                       value={IsMovie}/>
 
                     </div>

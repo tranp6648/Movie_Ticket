@@ -39,6 +39,8 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<District> Districts { get; set; }
 
+    public virtual DbSet<Event> Events { get; set; }
+
     public virtual DbSet<Genre> Genres { get; set; }
 
     public virtual DbSet<Movie> Movies { get; set; }
@@ -268,6 +270,20 @@ public partial class DatabaseContext : DbContext
                 .HasConstraintName("FK_District_Cinema_Branches");
         });
 
+        modelBuilder.Entity<Event>(entity =>
+        {
+            entity.ToTable("Event");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.BannerUrl)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Description).HasColumnType("text");
+            entity.Property(e => e.Title)
+                .HasMaxLength(250)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<Genre>(entity =>
         {
             entity.ToTable("Genre");
@@ -311,8 +327,8 @@ public partial class DatabaseContext : DbContext
         modelBuilder.Entity<Showtime>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Endtime).HasColumnType("datetime");
             entity.Property(e => e.IdAuditoriums).HasColumnName("id_Auditoriums");
-            entity.Property(e => e.IdCinema).HasColumnName("id_Cinema");
             entity.Property(e => e.IdMovie).HasColumnName("ID_Movie");
             entity.Property(e => e.Time).HasColumnType("datetime");
 
@@ -320,11 +336,6 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdAuditoriums)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Showtimes_Auditoriums");
-
-            entity.HasOne(d => d.IdCinemaNavigation).WithMany(p => p.Showtimes)
-                .HasForeignKey(d => d.IdCinema)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Showtimes_Cinemas");
 
             entity.HasOne(d => d.IdMovieNavigation).WithMany(p => p.Showtimes)
                 .HasForeignKey(d => d.IdMovie)
