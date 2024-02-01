@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vzvhJA9rCwG893L2ZpfLsVhZgzQ7JSY7pD9oc24oc+Q=",
+  "Hash": "zm/yQteVI0Phflgq+92FJ83EfwleuFHLiK2B2cz24qc=",
   "Source": "WebApplication3",
   "BasePath": "_content/WebApplication3",
   "Mode": "Default",
@@ -53,25 +53,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\image\\Actor_63_picture.png"
-    },
-    {
-      "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_2_picture.png",
-      "SourceId": "WebApplication3",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
-      "BasePath": "_content/WebApplication3",
-      "RelativePath": "image/Event_2_picture.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\image\\Event_2_picture.png"
     },
     {
       "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_3_picture.png",
@@ -150,12 +131,12 @@
       "OriginalItemSpec": "wwwroot\\image\\Event_6_picture.png"
     },
     {
-      "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_7_picture.png",
+      "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_9_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
-      "RelativePath": "image/Event_7_picture.png",
+      "RelativePath": "image/Event_9_picture.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -166,7 +147,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\image\\Event_7_picture.png"
+      "OriginalItemSpec": "wwwroot\\image\\Event_9_picture.png"
     },
     {
       "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_2_picture.png",

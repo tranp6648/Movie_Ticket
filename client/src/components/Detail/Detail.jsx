@@ -11,6 +11,8 @@ function Detail() {
     const location = useLocation();
 
     const ID = location.state?.ID || '';
+    const IDAccount = location.state?.IDAccount || '';
+    
     const [Actor, setActor] = useState([]);
     const [time, settime] = useState([]);
     const [Detail, setDetail] = useState([]);
@@ -114,6 +116,18 @@ function Detail() {
         fetchData();
 
     }, [selectedTime,id]);
+    const handleUpdate=async (ID,IDAccount)=>{
+        try{
+            const response=await axios.post(`http://localhost:5231/api/CardSet/Addstatus/${ID}/${IDAccount}`);
+            if(response.status==200){
+                console.log("Response Data:", response.data);
+                navigate(`/Cart/${ID}`, { state: { ID: ID, IDAccount: IDAccount } });
+
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
     const popupContentStyle = {
         display: 'flex',
         animation: 'fadeDown 0.5s ease-out',
@@ -599,8 +613,8 @@ function Detail() {
                                                                     </div>
                                                                     <ul className="mb-tab-showtime">
                                                                         <li className="item">
-                                                                            <a href="">
-                                                                                <span>{formatTime(info.time)}</span>
+                                                                            <a onClick={()=>handleUpdate(info.id,IDAccount)}>
+                                                                                <span >{formatTime(info.time)}</span>
                                                                             </a>
                                                                         </li>
                                                                     </ul>

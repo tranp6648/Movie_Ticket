@@ -105,16 +105,17 @@ function Category_Movie() {
                             timer: 1500,
                         });
                     }
-                } else {
+                } else if(response.ok) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Update Category Movie success',
                         showConfirmButton: false,
                         timer: 1500,
                     })
-                    setPopupVisibility(false)
+                   
                     const categoryfrom = await axios.get('http://localhost:5231/api/CategoryMovie/getCategoryMovie');
                     setCategoryMovie(categoryfrom.data);
+                    setPopupVisibility(false)
                 }
 
             } catch (error) {

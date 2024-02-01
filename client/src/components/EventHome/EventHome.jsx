@@ -1,7 +1,35 @@
+import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import FooterHome from "../footer/FooterHome";
 import './EventHome.css'
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 function EventHome() {
+    const navigate=useNavigate();
+    const [Event, setEvent] = useState([]);
+    useEffect(() => {
+        const response = async () => {
+            try {
+                const response = await axios.get("http://localhost:5231/api/Event/Show");
+                setEvent(response.data);
+                console.log(response.data)
+            } catch (error) {
+                console.log(error);
+            }
+
+        }
+        response();
+    }, [])
+    const formatDay = (dateString) => {
+        const dateObj = new Date(dateString);
+        const options = { day: '2-digit' };
+        return dateObj.toLocaleDateString('en-US', options);
+    }
+    const formatWeek = (dateString) => {
+        const dateObj = new Date(dateString);
+        const options = { weekday: 'short' };
+        return dateObj.toLocaleDateString('en-US', options);
+    }
     return (
         <div>
             <Menu></Menu>
@@ -21,81 +49,55 @@ function EventHome() {
                 </div>
 
             </div>
-            <div className="elementor elementor-70" style={{ height: '296px', marginTop: '177px',marginBottom:'281px' }}>
+            <div className="elementor elementor-3421" style={{ marginTop: '146px' }}>
                 <section className="elementor-section elementor-top-section elementor-element elementor-element-56ee83c elementor-section-boxed elementor-section-height-default elementor-section-height-default">
                     <div className="elementor-container elementor-column-gap-default">
                         <div className="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-b3cdce9">
-                            <div className="elementor-widget-wrap elementor-element-populated" id="Wrap">
-                                <div className="elementor-element elementor-element-2e11853 elementor-widget elementor-widget-ova_events">
-                                    <div className="elementor-widget-container">
-                                        <div className="ovaev-event-element version_2">
-                                            <div className="container-event">
-                                                <div id="main-event" className="content-event">
-                                                    <div className="archive_event col3">
-                                                        <div className="ovaev-content">
-                                                            <div className="type2">
-                                                                <div className="desc">
-                                                                    <div className="event-thumbnail" style={{ backgroundImage: 'url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/Event02.jpg)' }}>
-                                                                        <a href="">
-                                                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/Event02.jpg" alt="" />
-                                                                        </a>
-                                                                    </div>
-                                                                    <div className="event_post">
-                                                                        <div className="date-event">
-                                                                            <span className="date" style={{ fontFamily: 'Space Grotesk' }}>
-                                                                                12 Feb, 2025	</span>
-                                                                        </div>
-                                                                        <h2 className="second_font event_title">
-                                                                            <a href="https://demo.ovatheme.com/aovis/event/the-story-love-movie-oscar-event/">
-
-                                                                                The Story Love Movie Oscar Event
-                                                                            </a>
-                                                                        </h2>
-                                                                        <div className="time-event">
-                                                                            <div className="wrapper1">
-                                                                                <div className="time equal-date">
-                                                                                    <span className="icon-time">
-                                                                                        <i className="fas fa-clock icon_event"></i>
-                                                                                    </span>
-                                                                                    <span className="time-date-child">
-                                                                                        <span className="date-child">
-
-                                                                                            17:00 - 21:00
-                                                                                        </span>
-                                                                                    </span>
-                                                                                </div>
-                                                                                <label className="Timing">Timing</label>
-                                                                            </div>
-                                                                            <div className="wrapper1">
-                                                                                <div className="venue">
-                                                                                    <i className="fas fa-map-marker-alt icon_event"></i>
-                                                                                    <span className="number">New York</span>
-                                                                                </div>
-                                                                               <label htmlFor="">Location</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="">
-                                                                            <div className="icon">
-                                                                                <i className="ovaicon-next-4"></i>
-                                                                            </div>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
+                            <div className="elementor-widget-wrap elementor-element-populated" >
+                                <div class="elementor-widget-container">
+                                    <div className="ovaev-event-element version_1" style={{ width: '193vh' }}>
+                                        {Event.map((event,index)=>(
+                                            <div className="item">
+                                            <div className="date-time_title">
+                                                <div className="date-start">
+                                                    <span>{formatDay(event.startDate)}</span>
+                                                    <span>{formatWeek(event.startDate)}</span>
+                                                </div>
+                                                <div className="time_title">
+                                                    <div className="time-venue">
+                                                        <div className="time">
+                                                            <span className="icon-time" style={{ marginRight: '5px' }}>
+                                                                <i className="fas fa-clock icon_event" style={{ color: '#d96c2c' }}></i>
+                                                            </span>
+                                                            <span style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>{new Date(event.startDate).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} - {new Date(event.endDate).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                                                         </div>
+
+                                                    </div>
+                                                    <div className="title">
+                                                        <a href="" className="second_font font-bold" onClick={()=>navigate(`/DetailEvent/${event.id}`,{ state: { ID:event.id } })}>
+
+                                                           {event.title}
+                                                        </a>
                                                     </div>
                                                 </div>
+                                               
+
                                             </div>
+                                            <div className="ovaev-booking-btn">
+                                                    <a href="" >Visit</a>
+                                                </div>
                                         </div>
+                                        ))}
+                                        
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
-           <FooterHome ></FooterHome>
+            <FooterHome ></FooterHome>
         </div>
     )
 }

@@ -239,7 +239,7 @@ function Event() {
                 },
                 body: JSON.stringify({
                     Title: FormData.UpdateTittle,
-                    Description: FormData.UpdateDescription,
+                  
                     StartDate: FormData.UpdateStartDay,
                     EndDate: FormData.updateEndDay,
                    
@@ -387,7 +387,21 @@ function Event() {
                                                 value={FormData.Description}
                                                 onChange={handleDescriptionChange}
                                                 placeholder='Enter Description'
-
+                                                modules={{
+                                                    toolbar: [
+                                                      [{ 'header': [1, 2, false] }],
+                                                      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                                      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                                                      ['link', 'image'],
+                                                      ['clean']
+                                                    ],
+                                                  }}
+                                                  formats={[
+                                                    'header',
+                                                    'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                                    'list', 'bullet', 'indent',
+                                                    'link', 'image'
+                                                  ]}
 
                                             />
 
@@ -517,19 +531,7 @@ function Event() {
                                             <input className="form-control" value={FormData.UpdateTittle} onChange={(e) => setFormdata({ ...FormData, UpdateTittle: e.target.value })} id="exampleInputEmail1" placeholder="Enter Name Genre" />
 
                                         </div>
-                                        <div className="form-group">
-                                            <label >Description</label>
-                                            <ReactQuill
-                                                theme="snow"
-                                                value={FormData.UpdateDescription}
-                                                onChange={handleUpdateChange}
-                                                placeholder='Enter Description'
-
-
-                                            />
-
-
-                                        </div>
+                                
                                         <div className="form-group">
                                             <label >Start Date</label>
                                             <DatePicker name='Birthday' dateFormat="dd/MM/yyyy"

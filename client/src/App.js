@@ -26,6 +26,7 @@ import Cart from './components/Cart/Cart';
 import ShowTimes from './components/Showtimes/ShowTimesMovie';
 import Event from './components/Event/Event';
 import EventHome from './components/EventHome/EventHome';
+import DetailEvent from './components/DetailEvent/DetailEvent';
 function App() {
   return (
    <Router>
@@ -49,10 +50,11 @@ function App() {
     <Route path='/Detail/:id' element={<Detail/>}/>
     <Route path='/MovieActor' element={<MovieActor/>}/>
     <Route path='/DetailActor/:id' element={<DetailActor/>}/>
-    <Route path='/Cart' element={<Cart/>}/>
+    <Route path='/Cart/:id' element={<Cart/>}/>
     <Route path='/Showtimes' element={<ShowTimes/>}/>
     <Route path='/Event' element={<Event/>}/>
     <Route path='/EventHome' element={<EventHome/>}/>
+    <Route path='/DetailEvent/:id' element={<DetailEvent/>}/>
      </Routes>
    </Router>
   );
