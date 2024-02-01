@@ -12,4 +12,8 @@ public partial class DetailSeatAuditorium
     public int Status { get; set; }
 
     public string SeatName { get; set; } = null!;
+
+    public virtual Auditorium IdAuditoriumsNavigation { get; set; } = null!;
+
+    public virtual Seat IdSeatNavigation { get; set; } = null!;
 }

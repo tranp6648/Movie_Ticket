@@ -14,6 +14,29 @@ namespace WebApplication3.Controllers
         {
             _dbContext = dbContext;
         }
+        [HttpGet("ShowMostMovie")]
+        public async Task<ActionResult<IEnumerable<Movie>>> ShowMostMovie()
+        {
+            try
+            {
+                var Movie = await _dbContext.Movies.Include(i => i.DetailActorMovies).ThenInclude(d => d.IdMovieNavigation).Select(m => new
+                {
+                    id=m.Id,
+                    NameGenre=m.IdGenreNavigation.Name,
+                    duration=m.Duration,
+                    Name=m.Title,
+                    DetailMovie = m.DetailCategoryMovies.Select(p => new
+                    {
+                        Picture=p.Picture,
+                    })
+                }).Take(4).ToListAsync();
+                return Ok(Movie);
+            }catch(Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpGet("ShowDetail/{ID}")]
         public async Task<ActionResult<IEnumerable<Actor>>> GetDetail(int ID)
         {

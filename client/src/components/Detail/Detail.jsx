@@ -1,19 +1,119 @@
 import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
+import Swal from 'sweetalert2';
 import FooterHome from "../footer/FooterHome";
 import './Detail.css'
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { format } from 'date-fns-tz';
 function Detail() {
     const navigate = useNavigate();
     const location = useLocation();
 
     const ID = location.state?.ID || '';
-    console.log(ID)
+    const [Actor, setActor] = useState([]);
+    const [time, settime] = useState([]);
+    const [Detail, setDetail] = useState([]);
+    const [id,setid]=useState("");
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const response = await axios.get("http://localhost:5231/api/DetailMovie/ShowMostMovie");
+                setDetail(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchdata();
+    }, [])
+    useEffect(() => {
+        const fetchdate = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5231/api/ShowTime/Gettime/${id}`);
+                settime(response.data)
+                if (response.data.length > 0) {
+                    setSelectedTime(response.data[0].time);
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchdate();
+    }, [id])
+    const formatMonth = (dateString) => {
+        const dateObj = new Date(dateString);
+        const options = { month: 'short' };
+        return dateObj.toLocaleDateString('en-US', options);
+    };
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5231/api/Actor/DetailActorMovie/${ID}`);
+                setActor(response.data)
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchdata();
+    }, [])
     const [popup, setpopup] = useState(false);
     const handlepoup = () => {
         setpopup(!popup);
     }
+    const formatDay = (dateString) => {
+        const dateObj = new Date(dateString);
+        const options = { day: '2-digit' };
+        return dateObj.toLocaleDateString('en-US', options);
+    }
+    const formatWeek = (dateString) => {
+        const dateObj = new Date(dateString);
+        const options = { weekday: 'short' };
+        return dateObj.toLocaleDateString('en-US', options);
+    }
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [Info, setInfo] = useState([]);
+    const [popupinfo, setpopupinfo] = useState(false);
+    const Closepopupinfo=()=>{
+        setpopupinfo(!popupinfo)
+        setid("");
+    }
+    const handlepopupinfo = async (id) => {
+      
+           
+            setid(id)
+        
+     
+            const response = await axios.get(`http://localhost:5231/api/ShowTime/Gettime/${id}`);
+            settime(response.data);
+            if(response.data.length<=0){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'This Movie not time',
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+            }else{
+                setpopupinfo(!popupinfo)
+                setSelectedTime(response.data[0].time);
+            }
+       
+    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5231/api/ShowTime/GetInfo/${selectedTime}/${id}`);
+                setInfo(response.data)
+                console.log(Info)
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+
+    }, [selectedTime,id]);
     const popupContentStyle = {
         display: 'flex',
         animation: 'fadeDown 0.5s ease-out',
@@ -28,17 +128,20 @@ function Detail() {
             try {
                 const response = await axios.get(`http://localhost:5231/api/DetailMovie/ShowDetail/${ID}`)
                 setDetailMovie(response.data);
-                console.log(response.data)
+
             } catch (error) {
                 console.log(error);
             }
         }
         fetchdata();
     }, [])
+    const formatTime = (date) => {
+        return format(new Date(date), 'h:mm a', { timeZone: 'UTC' });
+    };
     return (
         <div>
             <Menu />
-            <div style={{ height: '100px', marginTop: '97px' }}>
+            <div style={{ height: '296px', marginTop: '5px' }}>
                 <div className="breadcrumb-area">
                     <div className="container">
                         <div className="breadcrumb-content">
@@ -75,7 +178,7 @@ function Detail() {
                                 </div>
                             ))}
 
-                            <button className="btn btn-booking">
+                            <button className="btn btn-booking" onClick={() => handlepopupinfo(ID)}>
                                 Get Ticket    </button>
                         </div>
                         {DetailMovie.map((detail, index) => (
@@ -157,35 +260,21 @@ function Detail() {
                                 Top Cast
                             </h2>
                             <div className="mb-movie-cast-list four_column">
-                                {DetailMovie.map((detail, index) => (
-                                    <div key={detail.id} className="movie-cast-item">
-                                        {detail.detailActor.map((actor, actorIndex) => (
-                                            <div> <div className="cast-thumbnail">
+                                {Actor.map((actor, index) => (
+                                    <div className="movie-cast-item">
 
-                                                <img
-                                                    src={detail.detailActor.length > 0
-                                                        ? `http://localhost:5231/${actor.idActorMovie.image}`
-                                                        : 'No Category'} width="100" height="100" style={{ objectFit: 'cover' }}
-                                                    alt={`Image of ${detail.detailActor.name}`}
-                                                />
-
-                                                <div className="cast-info mt-[8px]">
-                                                    <h2 className="cast-name">{actor.idActorMovie.name}</h2>
-                                                    <p className="cast-description">as {actor.role}</p>
-                                                </div></div>
-
-
-                                            </div>
-                                        ))}
-
+                                        <div className="cast-thumbnail">
+                                            <img src={`http://localhost:5231/${actor.image}`} alt="" />
+                                        </div>
+                                        <div className="cast-info">
+                                            <h4 className="cast-name">{actor.name}</h4>
+                                            <p className="cast-description">
+                                                {actor.detailActor.length > 0
+                                                    ? actor.detailActor[0].role
+                                                    : 'No Category'}             </p>
+                                        </div>
                                     </div>
                                 ))}
-
-
-
-
-
-
 
                             </div>
                         </div>
@@ -203,101 +292,33 @@ function Detail() {
                                 More Movies Like This
                             </h2>
                             <div className="mb-movie-list mb-movie-list-template1 four_column">
-                                <div className="mb-movie-item item-template1">
-                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
-                                        <div className="movie-image">
-                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/movie-image-09-768x513.jpg" alt="" />
-                                        </div>
-                                    </a>
-                                    <div className="movie-info">
-                                        <div className="categories-and-time">
-                                            <div className="movie-category">
-                                                <a href="">Thriller</a>
+                                {Detail.map((De, index) => (
+                                    <div className="mb-movie-item item-template1">
+                                        <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
+                                            <div className="movie-image">
+                                                <img src={De.detailMovie.length > 0
+                            ? `http://localhost:5231/${De.detailMovie[0].picture}`
+                            : 'No Category'} alt="" />
                                             </div>
-                                            <div className="separator">/</div>
-                                            <span className="running-time">180 mins</span>
-                                        </div>
-                                        <a href="">
-                                            <h3 className="movie-title font-bold">
-                                                The Scariest Dream				</h3>
                                         </a>
-                                        <button className="btn btn-booking">
-                                            Get Ticket    </button>
-                                    </div>
-                                </div>
-                                <div className="mb-movie-item item-template1">
-                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
-                                        <div className="movie-image">
-                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/movie-image-07-768x519.jpg" alt="" />
-                                        </div>
-                                    </a>
-                                    <div className="movie-info">
-                                        <div className="categories-and-time">
-                                            <div className="movie-category">
-                                                <a href="">Thriller</a>
+                                        <div className="movie-info">
+                                            <div className="categories-and-time">
+                                                <div className="movie-category">
+                                                    <a href="">{De.nameGenre}</a>
+                                                </div>
+                                                <div className="separator">/</div>
+                                                <span className="running-time">{De.duration} mins</span>
                                             </div>
-                                            <div className="separator">/</div>
-                                            <span className="running-time">180 mins</span>
+                                            <a href="">
+                                                <h3 className="movie-title font-bold">
+                                                    {De.name}			</h3>
+                                            </a>
+                                            <button className="btn btn-booking" onClick={()=>handlepopupinfo(De.id)}>
+                                                Get Ticket    </button>
                                         </div>
-                                        <a href="">
-                                            <h3 className="movie-title font-bold">
-
-                                                Alis Keep Walking								</h3>
-                                        </a>
-                                        <button className="btn btn-booking mr-[10px]">
-                                            Get Ticket   </button>
-
                                     </div>
-                                </div>
-                                <div className="mb-movie-item item-template1">
-                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
-                                        <div className="movie-image">
-                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/movie-image-05-768x520.jpg" alt="" />
-                                        </div>
-                                    </a>
-                                    <div className="movie-info">
-                                        <div className="categories-and-time">
-                                            <div className="movie-category">
-                                                <a href="">Thriller</a>
-                                            </div>
-                                            <div className="separator">/</div>
-                                            <span className="running-time">180 mins</span>
-                                        </div>
-                                        <a href="">
-                                            <h3 className="movie-title font-bold">
+                                ))}
 
-
-                                                The Seventh Day											</h3>
-                                        </a>
-                                        <button className="btn btn-booking mr-[10px]">
-                                            Get Ticket   </button>
-
-                                    </div>
-                                </div>
-                                <div className="mb-movie-item item-template1">
-                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
-                                        <div className="movie-image">
-                                            <img src="https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/movie-image-04-768x513.jpg" alt="" />
-                                        </div>
-                                    </a>
-                                    <div className="movie-info">
-                                        <div className="categories-and-time">
-                                            <div className="movie-category">
-                                                <a href="">Thriller</a>
-                                            </div>
-                                            <div className="separator">/</div>
-                                            <span className="running-time">180 mins</span>
-                                        </div>
-                                        <a href="">
-                                            <h3 className="movie-title font-bold">
-
-                                                Behind the Mask														</h3>
-                                        </a>
-                                        <button className="btn btn-booking mr-[10px]">
-                                            Get Ticket   </button>
-
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -325,6 +346,278 @@ function Detail() {
 
                 <div className="close">
                     <button style={{ position: 'absolute', top: '21px', color: 'white' }} onClick={() => handlepoup()}><i className="fa fa-close" style={{ fontSize: '41px', right: '108px' }}></i></button>
+                </div>
+            </div>
+            <div id="mb_booking_popup" className="mb_booking_popup" style={popupinfo ? { ...closepopup, ...popupContentStyle } : closepopup}>
+                <div className="mb-bp-container">
+                    <div className="mb-bp-content">
+                        <ul className="toggle-tabs mb-date-tabs">
+                            {time.map((timemap, index) => (
+                                <li className={`${selectedTime == timemap.time ? "current" : ''}`} onClick={() => setSelectedTime(prevTime => (prevTime === timemap.time ? null : timemap.time))}>
+                                    <div className="day">
+                                        <span className="D_m_day">
+                                            <span className="D_m_day">
+                                                {formatMonth(timemap.time)}
+                                            </span>
+                                            <span className="D_day">{formatWeek(timemap.time)}</span>
+                                        </span>
+                                        <div className="d_day">
+                                            <strong>{formatDay(timemap.time)}</strong>
+                                        </div>
+                                    </div>
+
+                                </li>
+                            ))}
+                            {/*                         
+                            <li className="current">
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li >
+                                <div className="day">
+                                    <span className="D_m_day">
+                                        <span className="D_m_day">
+                                            03
+                                        </span>
+                                        <span className="D_day">Thu</span>
+                                    </span>
+                                    <div className="d_day">
+                                        <strong>05</strong>
+                                    </div>
+                                </div>
+
+                            </li> */}
+                        </ul>
+                        <dl className="collateral-tabs">
+                            <dd className="tab-container current">
+                                <div className="tab-content mb-showtimes">
+                                    <div className="mb-tabs-cities">
+                                        <ul className="toggle-tabs">
+                                            <li className="mb-city-name current">
+                                                <span>New York</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="collateral-tabs">
+                                        <dd className="tab-container current">
+                                            <div className="tab-content mb-room-types">
+                                                <ul className="toggle-tabs">
+                                                    <li className="mb-room-type-name current">
+                                                        3D                                </li>
+                                                    <li className="mb-room-type-name">
+                                                        2D
+                                                    </li>
+                                                </ul>
+                                                <dl className="collateral-tabs">
+                                                    <dd className="tab-container current">
+                                                        <div className="tab-content showtimes">
+                                                            {Info.map((info, index) => (
+                                                                <div className="mb-venue">
+                                                                    <div className="venue-name mb-[11px]">
+                                                                        <h3>{info.auth}</h3>
+                                                                    </div>
+                                                                    <div className="mb-room-name mb-[11px]  ">
+                                                                        <h4>IMAX</h4>
+                                                                    </div>
+                                                                    <ul className="mb-tab-showtime">
+                                                                        <li className="item">
+                                                                            <a href="">
+                                                                                <span>{formatTime(info.time)}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            ))}
+
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div className="mb-close" onClick={() => Closepopupinfo()}>X</div>
                 </div>
             </div>
         </div>
