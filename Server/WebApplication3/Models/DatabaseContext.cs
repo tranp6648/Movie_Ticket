@@ -49,7 +49,7 @@ public partial class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=PHONG;Database=MovieTicket;user id=sa;password=123456789;trusted_connection=true;encrypt=false");
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=Kyos22;Database=Movie;user id=sa;password=123456;trusted_connection=true;encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
