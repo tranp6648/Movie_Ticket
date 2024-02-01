@@ -1,0 +1,49 @@
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width:100%;
+  /* Thêm các thuộc tính khác cho giao diện của popup */
+}
+
+.popup-content1 {
+  background: white;
+  width: 1000px;
+  height: 600px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Thêm các thuộc tính khác cho giao diện của nội dung trong popup */
+}
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+.room-setup-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Khoảng cách giữa các ô nhập liệu */
+  margin-bottom: 10px; /* Khoảng cách giữa các ô nhập liệu và nút submit */
+}
+
+.room-setup-item {
+  display: flex;
+  align-items: center; /* Căn chỉnh các item theo trục dọc */
+  max-width: 100px;
+  height: 50px;
+  background-color: aquamarine;
+}
+.room-setup-item label {
+  margin-right: 5px; /* Khoảng cách giữa label và ô nhập liệu */
+}
+
+.room-setup-item input {
+  flex-grow: 1; /* Cho phép ô nhập liệu mở rộng để lấp đầy không gian còn lại */
+  max-width: 100px; /* Đặt chiều rộng tối đa cho ô nhập liệu */
+  
+}
+
+.submit-container {
+  display: flex;
+  justify-content: flex-end; /* Đẩy nút submit về phía bên phải */
+}

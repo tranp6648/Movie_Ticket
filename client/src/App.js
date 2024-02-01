@@ -26,6 +26,10 @@ import Cart from './components/Cart/Cart';
 import ShowTimes from './components/Showtimes/ShowTimesMovie';
 import Event from './components/Event/Event';
 import EventHome from './components/EventHome/EventHome';
+import Superadmin from './components/Superadmin/Superadmin';
+import CreateCinema from './components/Superadmin/createCinema/CreateCinema';
+import HomeSuperadmin from './components/Superadmin/HomeSuperadmin';
+import DetailCinema from './components/Superadmin/DetailCinema/DetailCinema';
 function App() {
   return (
    <Router>
@@ -44,6 +48,13 @@ function App() {
     <Route path='/footer' element={<Footer/>}/>
     <Route path='/layout' element={<Layout/>}>
       <Route index element={<Homepage/>}/>
+    </Route>
+    <Route path='/superadmin/' element={<Superadmin/>}>
+      <Route index element={<HomeSuperadmin/>}/>
+      <Route path='createCinema' element={<CreateCinema/>}/>
+      <Route path='detailCinema' element={<DetailCinema/>}/>
+
+
     </Route>
     <Route path='/actor' element={<Actor/>}/>
     <Route path='/Detail/:id' element={<Detail/>}/>
