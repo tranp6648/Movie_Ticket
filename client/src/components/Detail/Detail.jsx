@@ -104,10 +104,12 @@ function Detail() {
     }
     useEffect(() => {
         const fetchData = async () => {
+           
             try {
                 const response = await axios.get(`http://localhost:5231/api/ShowTime/GetInfo/${selectedTime}/${id}`);
                 setInfo(response.data)
-                console.log(Info)
+                console.log(selectedTime)
+                
             } catch (error) {
                 console.log(error);
             }
@@ -116,9 +118,9 @@ function Detail() {
         fetchData();
 
     }, [selectedTime,id]);
-    const handleUpdate=async (ID,IDAccount)=>{
+    const handleUpdate=async (ID,IDAccount,idTime)=>{
         try{
-            const response=await axios.post(`http://localhost:5231/api/CardSet/Addstatus/${ID}/${IDAccount}`);
+            const response=await axios.post(`http://localhost:5231/api/CardSet/Addstatus/${ID}/${IDAccount}/${idTime    }`);
             if(response.status==200){
                 console.log("Response Data:", response.data);
                 navigate(`/Cart/${ID}`, { state: { ID: ID, IDAccount: IDAccount } });
@@ -613,7 +615,7 @@ function Detail() {
                                                                     </div>
                                                                     <ul className="mb-tab-showtime">
                                                                         <li className="item">
-                                                                            <a onClick={()=>handleUpdate(info.id,IDAccount)}>
+                                                                            <a onClick={()=>handleUpdate(info.id,IDAccount,info.idTime)}>
                                                                                 <span >{formatTime(info.time)}</span>
                                                                             </a>
                                                                         </li>

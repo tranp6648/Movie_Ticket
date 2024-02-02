@@ -13,7 +13,11 @@ public partial class DetailAccountSeat
 
     public int? Status { get; set; }
 
+    public int? Idshowtime { get; set; }
+
     public virtual SeatAccount? IdAccountSeatNavigation { get; set; }
 
     public virtual SeatMovie? IdSeatNavigation { get; set; }
+
+    public virtual Showtime? IdshowtimeNavigation { get; set; }
 }

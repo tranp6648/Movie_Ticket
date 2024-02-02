@@ -21,5 +21,7 @@ public partial class Account
 
     public int Accounttype { get; set; }
 
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
     public virtual ICollection<SeatAccount> SeatAccounts { get; set; } = new List<SeatAccount>();
 }

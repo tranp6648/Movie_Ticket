@@ -65,6 +65,7 @@ namespace WebApplication3.Controllers
      .Where(a => a.Time.Year == datetime.Year && a.Time.Month == datetime.Month && a.Time.Day == datetime.Day && a.IdMovie==id).Select(m => new
      {
          id=m.IdAuditoriumsNavigation.Id,
+         idTime=m.Id,
          Auth=m.IdAuditoriumsNavigation.Name,
          Time=m.Time,
          Cinema=m.IdAuditoriumsNavigation.IdCinemaNavigation.Name

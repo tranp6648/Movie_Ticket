@@ -14,8 +14,8 @@ namespace WebApplication3.Controllers
         {
             _dbContext = dbContext;
         }
-        [HttpPost("Addstatus/{id}/{idAccount}")]
-        public IActionResult AddStatus(int id, int idAccount)
+        [HttpPost("Addstatus/{id}/{idAccount}/{idshowtime}")]
+        public IActionResult AddStatus(int id, int idAccount,int idshowtime)
         {
             try
             {
@@ -63,6 +63,7 @@ namespace WebApplication3.Controllers
                             IdSeat = seatId,
                             IdAccountSeat = idseat,
                             Status = 0,
+                            Idshowtime=idshowtime
                         };
                         _dbContext.DetailAccountSeats.Add(detailAccountSeat);
                     }

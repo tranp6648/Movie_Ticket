@@ -37,7 +37,7 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<DetailCityBranch> DetailCityBranches { get; set; }
 
-    public virtual DbSet<DetailSeatAccount> DetailSeatAccounts { get; set; }
+    public virtual DbSet<DetailOrder> DetailOrders { get; set; }
 
     public virtual DbSet<District> Districts { get; set; }
 
@@ -46,6 +46,8 @@ public partial class DatabaseContext : DbContext
     public virtual DbSet<Genre> Genres { get; set; }
 
     public virtual DbSet<Movie> Movies { get; set; }
+
+    public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<SeatAccount> SeatAccounts { get; set; }
 
@@ -170,6 +172,7 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdAccountSeat).HasColumnName("id_Account_Seat");
             entity.Property(e => e.IdSeat).HasColumnName("id_Seat");
+            entity.Property(e => e.Idshowtime).HasColumnName("IDShowtime");
             entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasOne(d => d.IdAccountSeatNavigation).WithMany(p => p.DetailAccountSeats)
@@ -179,6 +182,10 @@ public partial class DatabaseContext : DbContext
             entity.HasOne(d => d.IdSeatNavigation).WithMany(p => p.DetailAccountSeats)
                 .HasForeignKey(d => d.IdSeat)
                 .HasConstraintName("FK_Detail_Account_Seat_SeatMovie");
+
+            entity.HasOne(d => d.IdshowtimeNavigation).WithMany(p => p.DetailAccountSeats)
+                .HasForeignKey(d => d.Idshowtime)
+                .HasConstraintName("FK_Detail_Account_Seat_Showtimes");
         });
 
         modelBuilder.Entity<DetailActorMovie>(entity =>
@@ -248,27 +255,23 @@ public partial class DatabaseContext : DbContext
                 .HasConstraintName("FK_Detail_City_Branch_Cinemas");
         });
 
-        modelBuilder.Entity<DetailSeatAccount>(entity =>
+        modelBuilder.Entity<DetailOrder>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Detail_Seat_Account");
+            entity.ToTable("DetailOrder");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("ID");
-            entity.Property(e => e.Idaccount).HasColumnName("IDAccount");
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Idorder).HasColumnName("IDorder");
             entity.Property(e => e.Idseat).HasColumnName("IDSeat");
 
-            entity.HasOne(d => d.IdaccountNavigation).WithMany()
-                .HasForeignKey(d => d.Idaccount)
+            entity.HasOne(d => d.IdorderNavigation).WithMany(p => p.DetailOrders)
+                .HasForeignKey(d => d.Idorder)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Detail_Seat_Account_Seat_Account");
+                .HasConstraintName("FK_DetailOrder_Order");
 
-            entity.HasOne(d => d.IdseatNavigation).WithMany()
+            entity.HasOne(d => d.IdseatNavigation).WithMany(p => p.DetailOrders)
                 .HasForeignKey(d => d.Idseat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Detail_Seat_Account_SeatMovie");
+                .HasConstraintName("FK_DetailOrder_SeatMovie");
         });
 
         modelBuilder.Entity<District>(entity =>
@@ -329,6 +332,23 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdGenre)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Movies_Genre");
+        });
+
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.ToTable("Order");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdAccount).HasColumnName("ID_Account");
+            entity.Property(e => e.OrderCode)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("order_code");
+
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.IdAccount)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Order_Account");
         });
 
         modelBuilder.Entity<SeatAccount>(entity =>
