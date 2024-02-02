@@ -276,7 +276,7 @@ function Account() {
               </p>
               <button type="submit" className='woocommerce-button button woocommerce-form-login__submit' >Log in</button>
               <p className='woocommerce-LostPassword lost_password'>
-                <a href="">Lost your password?</a>
+                <a onClick={()=>navigate('/Forgot')}>Lost your password?</a>
               </p>
             </form>
           </>
