@@ -357,22 +357,22 @@ function Account() {
         </div>
       )}
       <Menu />
-      <div style={{ height: '100px',marginTop:'97px' }}>
-        <div className="breadcrumb-area">
-          <div className="container">
-            <div className="breadcrumb-content">
-              <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>My Order</h2>
-              <ul>
-                <li>
-                  <a href="" style={{ textDecoration: 'none' }}>Home</a>
-                </li>
-                <li className="active">My Order</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+      <div style={{ height: '296px', marginTop: '5px' }}>
+                <div className="breadcrumb-area">
+                    <div className="container">
+                        <div className="breadcrumb-content">
+                            <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>Account</h2>
+                            <ul>
+                                <li>
+                                    <a href="" style={{ textDecoration: 'none' }}>Home</a>
+                                </li>
+                                <li className="active">Account</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-      </div>
+            </div>
 
 
       <div className='row_site' style={{ paddingTop: '160px', fontWeight: '600' }}>

@@ -554,3 +554,5 @@ D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\refint\WebApplication3.d
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.genruntimeconfig.cache
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\ref\WebApplication3.dll
+D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\PayPal.dll

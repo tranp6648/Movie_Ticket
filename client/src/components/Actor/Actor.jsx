@@ -22,7 +22,8 @@ function Actor() {
 
     const navigate = useNavigate();
 
-
+    const today = new Date();
+    const maxBirthdate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 
     const [perPage, setperPage] = useState(5);
     const [searchTerm, setSearchtem] = useState('');
@@ -45,6 +46,26 @@ function Actor() {
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
         animation: 'flipleft 0.5s', // Default animation
     };
+    const [errors, setErrors] = useState({});
+    const validateInput = (filename, value) => {
+        const newErrors = { ...errors }
+        if (filename == 'Name') {
+            newErrors[filename] = value.trim() === '' ? 'Name is required' : '';
+        } else if (filename == 'Nationally') {
+            newErrors[filename] = value == null ? 'Nationally is required' : '';
+        } else if (filename == 'Picture') {
+            newErrors[filename] = value == null ? 'Picture is required' : '';
+        } else if (filename == 'Birthday') {
+            newErrors[filename] = value == null ? 'Birthday is required' : '';
+        } else if (filename == 'Pio') {
+            newErrors[filename] = value.trim() === '' ? 'Pio is required' : '';
+        } else if (filename == 'updateName') {
+            newErrors[filename] = value.trim() === '' ? 'Name is required' : '';
+        } else if (filename == 'updateNationally') {
+            newErrors[filename] = value == null ? 'Nationally is required' : '';
+        }
+        setErrors(newErrors)
+    }
     const [showDropdown, setShowDropdown] = useState(false);
     const handleDropdownToggle = () => {
         setShowDropdown(!showDropdown);
@@ -86,46 +107,65 @@ function Actor() {
         Bio: '',
         NameAdd: '',
         Role: '',
-        UpdateBio: '',
-        updateBirthday:null,
-        updateName:''
+
+        updateBirthday: null,
+        updateName: ''
 
     })
     const [selectedMovie, setselectedMovie] = useState(null);
     const handleupdateNationally = (seletedNation) => {
         setisupdatenationally(seletedNation)
     }
-    const handleupdate=async(event)=>{
+    const handleupdate = async (event) => {
         event.preventDefault();
-     
-        try {
-            const response = await fetch(`http://localhost:5231/api/Actor/update/${FormData.id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name: FormData.updateName,nationality:updatenationally,birthday:FormData.updateBirthday,bio:FormData.UpdateBio })
-            })
-            if (response.ok) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'update Actor success',
-                    showConfirmButton: false,
-                    timer: 1500,
+        if (FormData.updateName == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Name is required',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else {
+            try {
+                const response = await fetch(`http://localhost:5231/api/Actor/update/${FormData.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: FormData.updateName, nationality: updatenationally, birthday: FormData.updateBirthday })
                 })
-                setselectedMovie(null);
-                FormData.id = '';
-                FormData.updateBirthday=null;
-                FormData.updateName='';
-                FormData.updatenationally='';
-                FormData.UpdateBio=''
-                const response = await axios.get("http://localhost:5231/api/Actor/ShowActor")
-                setActor(response.data);
-                setisPopupVisibleEdit(false);
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'update Actor success',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    setselectedMovie(null);
+                    FormData.id = '';
+                    FormData.updateBirthday = null;
+                    FormData.updateName = '';
+                    FormData.updatenationally = '';
+
+                    const response = await axios.get("http://localhost:5231/api/Actor/ShowActor")
+                    setActor(response.data);
+                    setisPopupVisibleEdit(false);
+                } else {
+                    const responseBody = await response.json();
+                    if (responseBody.message) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: responseBody.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
+
     }
     const handleupdateMovie = (selectedNation) => {
         setselectedMovie(selectedNation);
@@ -134,10 +174,10 @@ function Actor() {
         const selectedMovie = Actor.find(Movie => Movie.id == MovieID)
         if (selectedMovie) {
             setisupdatenationally(selectedMovie.nationally)
-            FormData.UpdateBio = selectedMovie.bio;
-            FormData.id=selectedMovie.id;
-            FormData.updateBirthday=selectedMovie.birthday;
-            FormData.updateName=selectedMovie.name;
+
+            FormData.id = selectedMovie.id;
+            FormData.updateBirthday = selectedMovie.birthday;
+            FormData.updateName = selectedMovie.name;
         }
         setisPopupVisibleEdit(true);
     }
@@ -146,7 +186,7 @@ function Actor() {
         if (selectedMovie) {
             FormData.id = MovieID
             FormData.NameAdd = selectedMovie.name
-            
+
         }
 
         setPopupVisibility(true)
@@ -157,19 +197,19 @@ function Actor() {
         setTimeout(() => {
 
             setisupdatenationally(null);
-            FormData.id="";
-            FormData.updateName='';
-            FormData.UpdateBio="";
-            FormData.updatenationally='';
-            FormData.updateBirthday=null;
+            FormData.id = "";
+            FormData.updateName = '';
+            FormData.UpdateBio = "";
+            FormData.updatenationally = '';
+            FormData.updateBirthday = null;
             setisPopupVisibleEdit(false)
             setIsClosingEdit(false)
         }, 500);
     }
-    const filterActor=Actor.filter(gen =>
+    const filterActor = Actor.filter(gen =>
 
         gen.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+    );
     const handleClosepopup = () => {
         setIsClosingPopup(true);
         setTimeout(() => {
@@ -180,10 +220,10 @@ function Actor() {
             setIsClosingPopup(false)
         }, 500);
     }
-const handleupdatedate=(date)=>{
-    const formattedDate = date.toISOString().split('T')[0];
-    setFormData({ ...FormData, updateBirthday: formattedDate });
-}
+    const handleupdatedate = (date) => {
+        const formattedDate = date.toISOString().split('T')[0];
+        setFormData({ ...FormData, updateBirthday: formattedDate });
+    }
     const handleDateChange = (date) => {
 
         const formattedDate = date.toISOString().split('T')[0];
@@ -193,14 +233,25 @@ const handleupdatedate=(date)=>{
         const file = e.target.files[0];
 
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFormData({
-                    ...FormData,
-                    Picture: reader.result, // base64-encoded string
-                });
-            };
-            reader.readAsDataURL(file);
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setFormData({
+                        ...FormData,
+                        Picture: reader.result, // base64-encoded string
+                    });
+                };
+                reader.readAsDataURL(file);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Please select a valid image file',
+                    showConfirmButton: false,
+                    timer: 1500,
+                })
+                document.getElementById('imageInput').value = '';
+            }
+
         }
     };
     const nationalityOptions = [
@@ -323,60 +374,55 @@ const handleupdatedate=(date)=>{
 
 
     };
-    const handleudpateBiochange=(value)=>{
-        setFormData({
-            ...FormData,
-            UpdateBio: value
-        })
-    }
+
     const deleteSubmit = async (CategoryID) => {
         try {
-          const confirmation = await Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-          });
-    
-          if (confirmation.isConfirmed) {
-            const response = await axios.post(`http://localhost:5231/api/Actor/delete/${CategoryID}`);
-    
-            if (response.status === 200) {
-              Swal.fire({
-                icon: 'success',
-                title: 'Deletion successful',
+            const confirmation = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+            });
+
+            if (confirmation.isConfirmed) {
+                const response = await axios.post(`http://localhost:5231/api/Actor/delete/${CategoryID}`);
+
+                if (response.status === 200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deletion successful',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    const response = await axios.get("http://localhost:5231/api/Actor/ShowActor")
+                    setActor(response.data);
+                } else {
+                    const responseBody = await response.json();
+
+                    if (responseBody.message) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: responseBody.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                }
+            }
+        } catch (error) {
+            console.log(error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to delete actor',
                 showConfirmButton: false,
                 timer: 1500,
-              });
-              const response = await axios.get("http://localhost:5231/api/Actor/ShowActor")
-              setActor(response.data);
-            } else {
-              const responseBody = await response.json();
-    
-              if (responseBody.message) {
-                Swal.fire({
-                  icon: 'error',
-                  title: responseBody.message,
-                  showConfirmButton: false,
-                  timer: 1500,
-                });
-              }
-            }
-          }
-        } catch (error) {
-          console.log(error.message);
-          Swal.fire({
-            icon: 'error',
-            title: 'Failed to delete actor',
-            showConfirmButton: false,
-            timer: 1500,
-          });
+            });
         }
-      };
-    
+    };
+
     const handleAddMovie = async (event) => {
         event.preventDefault();
         try {
@@ -426,7 +472,7 @@ const handleupdatedate=(date)=>{
                 FormData.Birthday = null;
                 FormData.Picture = null;
                 FormData.Actor = '';
-                FormData.Bio='';
+                FormData.Bio = '';
                 setSelectedNation(null);
                 const response = await axios.get("http://localhost:5231/api/Actor/ShowActor")
                 setActor(response.data);
@@ -437,10 +483,10 @@ const handleupdatedate=(date)=>{
     }
     const handlePageclick = (data) => {
         setCurrentPage(data.selected);
-      };
+    };
     const indexOflastgen = (currentPage + 1) * perPage;
-  const indexOfFirtgen = indexOflastgen - perPage;
-  const currentGender = filterActor.slice(indexOfFirtgen, indexOflastgen)
+    const indexOfFirtgen = indexOflastgen - perPage;
+    const currentGender = filterActor.slice(indexOfFirtgen, indexOflastgen)
     return (
         <div>
 
@@ -531,7 +577,7 @@ const handleupdatedate=(date)=>{
                     </section>
                     <section className="content">
                         <div className="row">
-                            <div className="box box-primary" style={{ maxHeight: '542px' }}>
+                            <div className="box box-primary" style={{ maxHeight: 'auto' }}>
                                 <div className="box-header">
                                     <h3 className="box-title">Actor</h3>
                                 </div>
@@ -540,15 +586,20 @@ const handleupdatedate=(date)=>{
                                         {/* Form fields go here */}
                                         <div className="form-group">
                                             <label >Name</label>
-                                            <input className="form-control" value={FormData.Name} onChange={(e) => setFormData({ ...FormData, Name: e.target.value })} id="exampleInputEmail1" placeholder="Enter Name Actor" />
-
+                                            <input className="form-control" value={FormData.Name} onChange={(e) => setFormData({ ...FormData, Name: e.target.value })} id="exampleInputEmail1" placeholder="Enter Name Actor" onBlur={() => validateInput('Name', FormData.Name)} />
+                                            {errors.Name && (
+                                                <p className="text-red-500 text-sm italic">{errors.Name}</p>
+                                            )}
                                         </div>
                                         <div className="form-group">
                                             <label >Nationally</label>
                                             <Select options={nationalityOptions.map(nation => ({ value: nation.value, label: nation.label }))}
                                                 value={selectedNation} onChange={(selectedoption) => handleupdateNation(selectedoption)}
+                                                onBlur={() => validateInput('Nationally', selectedNation)}
                                             />
-
+                                            {errors.Nationally && (
+                                                <p className="text-red-500 text-sm italic">{errors.Nationally}</p>
+                                            )}
                                         </div>
                                         <div className='form-group'>
                                             <label htmlFor="">Picture</label>
@@ -558,16 +609,26 @@ const handleupdatedate=(date)=>{
                                                 onChange={(e) => handleFileChange(e)}
                                                 className="form-control"
                                                 id='imageInput'
+                                                onBlur={() => validateInput('Picture', FormData.Picture)}
                                             />
+                                            {errors.Picture && (
+                                                <p className="text-red-500 text-sm italic">{errors.Picture}</p>
+                                            )}
                                         </div>
                                         <div className="form-group">
                                             <label >Birthday</label>
                                             <br />
                                             <DatePicker name='Birthday' selected={FormData.Birthday ? new Date(FormData.Birthday) : null} onChange={handleDateChange} dateFormat="dd/MM/yyyy"
                                                 className="form-control"
+                                                onBlur={() => validateInput('Birthday', FormData.Birthday)}
                                                 placeholderText="Enter Birthday"
+                                                minDate={maxBirthdate}
+                                                showYearDropdown
                                             // Cannot select a date before startDate
                                             />
+                                            {errors.Birthday && (
+                                                <p className="text-red-500 text-sm italic">{errors.Birthday}</p>
+                                            )}
                                         </div>
                                         <div className="form-group">
                                             <label >Bio</label>
@@ -576,9 +637,12 @@ const handleupdatedate=(date)=>{
                                                 theme="snow"
                                                 value={FormData.Bio} onChange={handleDescriptionChange}
                                                 placeholder='Enter Bio'
-
+                                                onBlur={() => validateInput('Pio', FormData.Bio)}
 
                                             />
+                                            {errors.Pio && (
+                                                <p className="text-red-500 text-sm italic">{errors.Pio}</p>
+                                            )}
                                         </div>
                                     </div>
 
@@ -630,7 +694,7 @@ const handleupdatedate=(date)=>{
                                                         : 'No Category'}</td>
                                                     <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditClick(actor.id)}>Add Movie Actor</button></td>
                                                     <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditupdate(actor.id)}>Edit</button></td>
-                                                    <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>deleteSubmit(actor.id)}>Remove</button></td>
+                                                    <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => deleteSubmit(actor.id)}>Remove</button></td>
                                                 </tr>
                                             ))}
 
@@ -638,25 +702,25 @@ const handleupdatedate=(date)=>{
 
                                     </table>
                                     <Pagination
-                    previousLabel={'previous'}
-                    nextLabel={'next'}
-                    breakLabel={'...'}
-                    pageCount={Math.ceil(filterActor.length / perPage)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageclick}
-                    containerClassName={'pagination'}
-                    activeClassName={'active'}
-                    previousClassName={'page-item'}
-                    previousLinkClassName={'page-link'}
-                    nextClassName={'page-item'}
-                    nextLinkClassName={'page-link'}
-                    breakClassName={'page-item'}
-                    breakLinkClassName={'page-link'}
-                    pageClassName={'page-item'}
-                    pageLinkClassName={'page-link'}
+                                        previousLabel={'previous'}
+                                        nextLabel={'next'}
+                                        breakLabel={'...'}
+                                        pageCount={Math.ceil(filterActor.length / perPage)}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={handlePageclick}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                        previousClassName={'page-item'}
+                                        previousLinkClassName={'page-link'}
+                                        nextClassName={'page-item'}
+                                        nextLinkClassName={'page-link'}
+                                        breakClassName={'page-item'}
+                                        breakLinkClassName={'page-link'}
+                                        pageClassName={'page-item'}
+                                        pageLinkClassName={'page-link'}
 
-                  />
+                                    />
 
                                 </div>
                             </div>
@@ -732,8 +796,10 @@ const handleupdatedate=(date)=>{
                                     {/* Form fields go here */}
                                     <div className="form-group">
                                         <label className='float-left'>Name</label>
-                                        <input name='UpdateNameCategory' className="form-control" value={FormData.updateName}  onChange={(e) => setFormData({ ...FormData, updateName: e.target.value })} />
-
+                                        <input name='UpdateNameCategory' className="form-control" onBlur={() => validateInput('updateName', FormData.updateName)} value={FormData.updateName} onChange={(e) => setFormData({ ...FormData, updateName: e.target.value })} />
+                                        {errors.updateName && (
+                                            <p className="text-red-500 text-sm italic">{errors.updateName}</p>
+                                        )}
                                     </div>
                                     <div className="form-group">
                                         <label className='float-left '>Nationally</label>
@@ -741,49 +807,24 @@ const handleupdatedate=(date)=>{
                                         <Select options={nationalityOptions.map(nation => ({ value: nation.value, label: nation.label }))}
                                             onChange={selectedOption => handleupdateNationally(selectedOption)}
                                             value={updatenationally}
+                                            onBlur={() => validateInput('updateNationally', updatenationally)}
                                             isOptionSelected={(option) => option.label === updatenationally}
                                         />
-
+                                        {errors.updateNationally && (
+                                            <p className="text-red-500 text-sm italic">{errors.updateNationally}</p>
+                                        )}
                                     </div>
                                     <div className="form-group">
                                         <label className='float-left'>Birthday</label>
 
                                         <DatePicker name='Birthday' selected={FormData.updateBirthday ? new Date(FormData.updateBirthday) : null} onChange={handleupdatedate} dateFormat="dd/MM/yyyy"
-                                                className="form-control"
-                                                placeholderText="Enter Birthday"
-                                            // Cannot select a date before startDate
-                                            
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label className='float-left'>Pio</label>
-                                        <br />
-                                        <ReactQuill
-                                            theme="snow"
-                                            value={FormData.UpdateBio}
-                                            placeholder='Enter Pio'
-                                        onChange={handleudpateBiochange}
-                                            modules={{
-                                                toolbar: [
-                                                    [{ 'header': [1, 2, false] }],
-                                                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-                                                    ['link', 'image'],
-                                                    ['clean']
-                                                ],
-                                            }}
-                                            formats={[
-                                                'header',
-                                                'bold', 'italic', 'underline', 'strike', 'blockquote',
-                                                'list', 'bullet', 'indent',
-                                                'link', 'image'
-                                            ]}
+                                            className="form-control"
+                                            placeholderText="Enter Birthday"
+                                        // Cannot select a date before startDate
 
                                         />
-
-                                        
-
                                     </div>
+
 
 
                                 </div>

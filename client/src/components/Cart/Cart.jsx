@@ -5,11 +5,26 @@ import Menu from "../Menu/Menu";
 import ReactDOM from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import VNPayButtonComponent from "../Paypal/Paypal";
+import { PayPalButton } from "react-paypal-button-v2";
 
 function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
+  const handleVNPaySuccess = (paymentDetails) => {
+    // Handle VNPay success
+    console.log('VNPay payment success:', paymentDetails);
+  };
 
+  const handleVNPayError = (error) => {
+    // Handle VNPay error
+    console.error('VNPay payment error:', error);
+  };
+
+const handlePaymentError = (error) => {
+    // Handle payment error
+    console.error('Payment error:', error);
+};
   const ID = location.state?.ID || '';
   const [seat, setSeat] = useState([]);
   const [Info, setInfo] = useState([]);
@@ -184,7 +199,7 @@ function Cart() {
                                       </div>
                                     </div>
                                     <div className="info-sub-price">
-                                    ${totalPrice.toFixed(0)}
+                                      ${totalPrice.toFixed(0)}
                                     </div>
                                   </div>
                                   <div className="item-info area-item area-id-Area2">
@@ -202,7 +217,7 @@ function Cart() {
                                       </span>
                                     </div>
                                     <div className="info-sub-price">
-                                  10.000$
+                                      10.000$
                                     </div>
                                   </div>
                                 </div>
@@ -222,10 +237,12 @@ function Cart() {
                             <div className="load-more">
                               <div className="lds-spinner"></div>
                             </div>
-                            <a href="" id="btn-checkout">
-                              Proceed to checkout    </a>
+                            <VNPayButtonComponent amount={`${totalPrice.toFixed(0)}`} onSuccess={handleVNPaySuccess} onError={handleVNPayError} />
+                         
                           </div>
+                         
                         </div>
+                        
                       </div>
                     </div>
                   </div>

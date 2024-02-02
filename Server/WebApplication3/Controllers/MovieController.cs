@@ -60,7 +60,7 @@ namespace WebApplication3.Controllers
             {
                 return BadRequest("Invalid movie data");
             }
-            if (_dbContext.Movies.Any(a => a.Title == addMovie.Title))
+            if (_dbContext.Movies.Any(a => a.Title == addMovie.Title && a.Id != id))
             {
                 return BadRequest(new { message = "Tittle already exists" });
             }
@@ -71,7 +71,6 @@ namespace WebApplication3.Controllers
             }
 
             existMovie.Title = addMovie.Title;
-            existMovie.Description = addMovie.Description;
             existMovie.ReleaseDate = addMovie.ReleaseDate;
             existMovie.Duration = addMovie.Duration;
             existMovie.IdGenre = addMovie.IdGenre;

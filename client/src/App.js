@@ -27,6 +27,7 @@ import ShowTimes from './components/Showtimes/ShowTimesMovie';
 import Event from './components/Event/Event';
 import EventHome from './components/EventHome/EventHome';
 import DetailEvent from './components/DetailEvent/DetailEvent';
+import Forgot from './components/Forgot/Forgot';
 function App() {
   return (
    <Router>
@@ -55,6 +56,7 @@ function App() {
     <Route path='/Event' element={<Event/>}/>
     <Route path='/EventHome' element={<EventHome/>}/>
     <Route path='/DetailEvent/:id' element={<DetailEvent/>}/>
+    <Route path='/Forgot' element={<Forgot/>}/>
      </Routes>
    </Router>
   );
