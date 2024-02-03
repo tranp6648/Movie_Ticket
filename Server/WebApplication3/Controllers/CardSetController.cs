@@ -102,13 +102,14 @@ namespace WebApplication3.Controllers
              }
          }
         
-        [HttpGet("ShowInfoCard/{id}")]
-        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowInfoCard(int id)
+        [HttpGet("ShowInfoCard/{id}/{idCinema}/{idShowtime}")]
+        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowInfoCard(int id,int idCinema,int idShowtime)
         {
             try
             {
-                var name = await _dbContext.DetailAccountSeats.Where(d => d.IdAccountSeatNavigation.IdAccount == id && d.Status==1).Select(m => new
+                var name = await _dbContext.DetailAccountSeats.Where(d => d.IdAccountSeatNavigation.IdAccount == id && d.Status==1 && d.IdSeatNavigation.IdAuditoriums==idCinema && d.Idshowtime==idShowtime).Select(m => new
                 {
+                    id=m.IdSeat,
                     Name = m.IdSeatNavigation.SeatName,
                     Price=m.IdSeatNavigation.IdCategorySeatNavigation.Price,
                 }).ToListAsync();
@@ -118,12 +119,12 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
-        [HttpGet("ShowCard/{id}/{IDAccount}")]
-        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowCard(int id,int IDAccount)
+        [HttpGet("ShowCard/{id}/{IDAccount}/{idshowtime}")]
+        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowCard(int id,int IDAccount,int idshowtime)
         {
             try
             {
-                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount).Select(m => new
+                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount && d.Idshowtime==idshowtime && (d.Status==0 || d.Status==1)).Select(m => new
                 {
                    
                    id=m.Id,

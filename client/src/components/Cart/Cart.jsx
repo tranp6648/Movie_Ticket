@@ -11,9 +11,39 @@ import { PayPalButton } from "react-paypal-button-v2";
 function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
-  const handleVNPaySuccess = (paymentDetails) => {
-    // Handle VNPay success
-    console.log('VNPay payment success:', paymentDetails);
+  const IDAccount = location.state?.IDAccount || '';    
+  const handleVNPaySuccess = async (Payment) => {
+    try{
+      const response=await fetch(`http://localhost:5231/api/Order/Add/${Info.map(item => item.id)}`,{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+      },
+      body:JSON.stringify({
+        totalPrice:totalPrice.toFixed(0),
+        idAccount:IDAccount,
+        idseat:Info.map(item => item.id)
+      }),
+      });
+      if(response.ok){
+        Swal.fire({
+          icon: 'success',
+          title: "Add  successfully",
+          showConfirmButton: false,
+          timer: 1500,
+      });
+      const response = await axios.get(`http://localhost:5231/api/CardSet/ShowCard/${ID}/${IDAccount}/${IDtime}`);
+        setSeat(response.data)
+        const responsedata = await axios.get(`http://localhost:5231/api/CardSet/ShowInfoCard/${IDAccount}/${ID}/${IDtime}`);
+        setInfo(responsedata.data)
+   
+        const calculatedTotalPrice = responsedata.data.reduce((acc, item) => acc + item.price, 0);
+        setTotalPrice(calculatedTotalPrice);
+      }
+    } catch(error){
+      console.log(error);
+    }
+    
   };
 
   const handleVNPayError = (error) => {
@@ -26,14 +56,16 @@ const handlePaymentError = (error) => {
     console.error('Payment error:', error);
 };
   const ID = location.state?.ID || '';
+  const IDtime = location.state?.IDtime || '';
   const [seat, setSeat] = useState([]);
   const [Info, setInfo] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5231/api/CardSet/ShowInfoCard/${IDAccount}`);
+        const response = await axios.get(`http://localhost:5231/api/CardSet/ShowInfoCard/${IDAccount}/${ID}/${IDtime}`);
         setInfo(response.data)
+        
         const calculatedTotalPrice = response.data.reduce((acc, item) => acc + item.price, 0);
         setTotalPrice(calculatedTotalPrice);
       } catch (error) {
@@ -46,16 +78,16 @@ const handlePaymentError = (error) => {
     const fetchdata = async () => {
       try {
 
-        const response = await axios.get(`http://localhost:5231/api/CardSet/ShowCard/${ID}/${IDAccount}`);
+        const response = await axios.get(`http://localhost:5231/api/CardSet/ShowCard/${ID}/${IDAccount}/${IDtime}`);
         setSeat(response.data)
-
+        console.log(response.data)
       } catch (error) {
         console.log(error)
       }
     }
     fetchdata();
   }, [])
-  const IDAccount = location.state?.IDAccount || '';
+
   const [hoveredSeat, setHoveredSeat] = useState(null);
   const [activeSeats, setActiveSeats] = useState([]);
   const [active, setActive] = useState(null);
@@ -71,10 +103,11 @@ const handlePaymentError = (error) => {
     try {
       const response = await axios.post(`http://localhost:5231/api/CardSet/updateSeat/${id}`);
       if (response.status == 200) {
-        const response = await axios.get(`http://localhost:5231/api/CardSet/ShowCard/${ID}/${IDAccount}`);
+        const response = await axios.get(`http://localhost:5231/api/CardSet/ShowCard/${ID}/${IDAccount}/${IDtime}`);
         setSeat(response.data)
-        const responsedata = await axios.get(`http://localhost:5231/api/CardSet/ShowInfoCard/${IDAccount}`);
+        const responsedata = await axios.get(`http://localhost:5231/api/CardSet/ShowInfoCard/${IDAccount}/${ID}/${IDtime}`);
         setInfo(responsedata.data)
+   
         const calculatedTotalPrice = responsedata.data.reduce((acc, item) => acc + item.price, 0);
         setTotalPrice(calculatedTotalPrice);
       }
@@ -237,7 +270,13 @@ const handlePaymentError = (error) => {
                             <div className="load-more">
                               <div className="lds-spinner"></div>
                             </div>
-                            <VNPayButtonComponent amount={`${totalPrice.toFixed(0)}`} onSuccess={handleVNPaySuccess} onError={handleVNPayError} />
+                            {seat.length > 0 && (
+  <VNPayButtonComponent 
+    amount={`${totalPrice.toFixed(0)}`} 
+    onSuccess={handleVNPaySuccess} 
+    onError={handleVNPayError} 
+  />
+)}  
                          
                           </div>
                          

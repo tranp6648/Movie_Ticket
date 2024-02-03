@@ -120,10 +120,10 @@ function Detail() {
     }, [selectedTime,id]);
     const handleUpdate=async (ID,IDAccount,idTime)=>{
         try{
-            const response=await axios.post(`http://localhost:5231/api/CardSet/Addstatus/${ID}/${IDAccount}/${idTime    }`);
+            const response=await axios.post(`http://localhost:5231/api/CardSet/Addstatus/${ID}/${IDAccount}/${idTime}`);
             if(response.status==200){
                 console.log("Response Data:", response.data);
-                navigate(`/Cart/${ID}`, { state: { ID: ID, IDAccount: IDAccount } });
+                navigate(`/Cart/${ID}`, { state: { ID: ID, IDAccount: IDAccount,IDtime:idTime } });
 
             }
         }catch(error){
