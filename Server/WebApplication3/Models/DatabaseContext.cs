@@ -55,6 +55,10 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<Showtime> Showtimes { get; set; }
 
+    public virtual DbSet<UserVoucher> UserVouchers { get; set; }
+
+    public virtual DbSet<Voucher> Vouchers { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=PHONG;Database=MovieTicket;user id=sa;password=123456789;trusted_connection=true;encrypt=false");
@@ -172,6 +176,8 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdAccountSeat).HasColumnName("id_Account_Seat");
             entity.Property(e => e.IdSeat).HasColumnName("id_Seat");
+            entity.Property(e => e.IdShowtime).HasColumnName("ID_Showtime");
+            entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasOne(d => d.IdAccountSeatNavigation).WithMany(p => p.DetailAccountSeats)
                 .HasForeignKey(d => d.IdAccountSeat)
@@ -180,6 +186,10 @@ public partial class DatabaseContext : DbContext
             entity.HasOne(d => d.IdSeatNavigation).WithMany(p => p.DetailAccountSeats)
                 .HasForeignKey(d => d.IdSeat)
                 .HasConstraintName("FK_Detail_Account_Seat_SeatMovie");
+
+            entity.HasOne(d => d.IdShowtimeNavigation).WithMany(p => p.DetailAccountSeats)
+                .HasForeignKey(d => d.IdShowtime)
+                .HasConstraintName("FK_Detail_Account_Seat_Showtimes");
         });
 
         modelBuilder.Entity<DetailActorMovie>(entity =>
@@ -367,12 +377,10 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdAuditoriums).HasColumnName("id_Auditoriums");
             entity.Property(e => e.IdCategorySeat).HasColumnName("id_category_seat");
-            entity.Property(e => e.IdShowtime).HasColumnName("ID_showtime");
             entity.Property(e => e.SeatName)
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("seat_name");
-            entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasOne(d => d.IdAuditoriumsNavigation).WithMany(p => p.SeatMovies)
                 .HasForeignKey(d => d.IdAuditoriums)
@@ -383,10 +391,6 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdCategorySeat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SeatMovie_Category_Seat");
-
-            entity.HasOne(d => d.IdShowtimeNavigation).WithMany(p => p.SeatMovies)
-                .HasForeignKey(d => d.IdShowtime)
-                .HasConstraintName("FK_SeatMovie_Showtimes");
         });
 
         modelBuilder.Entity<Showtime>(entity =>
@@ -406,6 +410,34 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdMovie)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Showtimes_Movies");
+        });
+
+        modelBuilder.Entity<UserVoucher>(entity =>
+        {
+            entity.ToTable("UserVoucher");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdAccount).HasColumnName("idAccount");
+            entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
+
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.UserVouchers)
+                .HasForeignKey(d => d.IdAccount)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserVoucher_Account");
+
+            entity.HasOne(d => d.Voucher).WithMany(p => p.UserVouchers)
+                .HasForeignKey(d => d.VoucherId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserVoucher_Vouchers");
+        });
+
+        modelBuilder.Entity<Voucher>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Code)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("code");
         });
 
         OnModelCreatingPartial(modelBuilder);

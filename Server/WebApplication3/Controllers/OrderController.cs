@@ -40,10 +40,10 @@ namespace WebApplication3.Controllers
 
             foreach (var seatAccount in order.IdSeat)
             {
-                var seats = _dbContext.DetailAccountSeats.Where(b => b.IdSeat == seatAccount && b.IdSeatNavigation.Status == 1).ToList();
+                var seats = _dbContext.DetailAccountSeats.Where(b => b.IdSeat == seatAccount && b.Status == 1).ToList();
                 foreach (var seat in seats)
                 {
-                    seat.IdSeatNavigation.Status = 2;
+                    seat.Status = 2;
                 }
             }
 

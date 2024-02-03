@@ -28,6 +28,7 @@ import Event from './components/Event/Event';
 import EventHome from './components/EventHome/EventHome';
 import DetailEvent from './components/DetailEvent/DetailEvent';
 import Forgot from './components/Forgot/Forgot';
+import Voucher from './components/Voucher/Voucher';
 function App() {
   return (
    <Router>
@@ -57,6 +58,7 @@ function App() {
     <Route path='/EventHome' element={<EventHome/>}/>
     <Route path='/DetailEvent/:id' element={<DetailEvent/>}/>
     <Route path='/Forgot' element={<Forgot/>}/>
+    <Route path='/Voucher' element={<Voucher/>}/>
      </Routes>
    </Router>
   );
