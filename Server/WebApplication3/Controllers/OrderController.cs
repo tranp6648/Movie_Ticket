@@ -13,7 +13,7 @@ namespace WebApplication3.Controllers
         {
             _dbContext = dbContext;
         }
-        [HttpPost("Add/{id}")]
+        [HttpPost("Add")]
         public IActionResult AddOrder(int id,[FromBody] Addorder order)
         {
             var random=new Random();
@@ -36,11 +36,15 @@ namespace WebApplication3.Controllers
                 };
                 _dbContext.DetailOrders.Add(detailorder);
             }
-            var seats = _dbContext.DetailAccountSeats.Where(b => b.IdSeat == id && b.Status == 1).ToList();
+            _dbContext.SaveChanges();
 
-            foreach (var seat in seats)
+            foreach (var seatAccount in order.IdSeat)
             {
-                seat.Status = 2;
+                var seats = _dbContext.DetailAccountSeats.Where(b => b.IdSeat == seatAccount && b.IdSeatNavigation.Status == 1).ToList();
+                foreach (var seat in seats)
+                {
+                    seat.IdSeatNavigation.Status = 2;
+                }
             }
 
             _dbContext.SaveChanges();

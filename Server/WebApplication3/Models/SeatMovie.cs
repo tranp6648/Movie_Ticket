@@ -13,6 +13,10 @@ public partial class SeatMovie
 
     public int IdAuditoriums { get; set; }
 
+    public int? IdShowtime { get; set; }
+
+    public int? Status { get; set; }
+
     public virtual ICollection<DetailAccountSeat> DetailAccountSeats { get; set; } = new List<DetailAccountSeat>();
 
     public virtual ICollection<DetailOrder> DetailOrders { get; set; } = new List<DetailOrder>();
@@ -20,4 +24,6 @@ public partial class SeatMovie
     public virtual Auditorium IdAuditoriumsNavigation { get; set; } = null!;
 
     public virtual CategorySeat IdCategorySeatNavigation { get; set; } = null!;
+
+    public virtual Showtime? IdShowtimeNavigation { get; set; }
 }

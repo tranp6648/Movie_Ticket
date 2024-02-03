@@ -172,8 +172,6 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdAccountSeat).HasColumnName("id_Account_Seat");
             entity.Property(e => e.IdSeat).HasColumnName("id_Seat");
-            entity.Property(e => e.Idshowtime).HasColumnName("IDShowtime");
-            entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasOne(d => d.IdAccountSeatNavigation).WithMany(p => p.DetailAccountSeats)
                 .HasForeignKey(d => d.IdAccountSeat)
@@ -182,10 +180,6 @@ public partial class DatabaseContext : DbContext
             entity.HasOne(d => d.IdSeatNavigation).WithMany(p => p.DetailAccountSeats)
                 .HasForeignKey(d => d.IdSeat)
                 .HasConstraintName("FK_Detail_Account_Seat_SeatMovie");
-
-            entity.HasOne(d => d.IdshowtimeNavigation).WithMany(p => p.DetailAccountSeats)
-                .HasForeignKey(d => d.Idshowtime)
-                .HasConstraintName("FK_Detail_Account_Seat_Showtimes");
         });
 
         modelBuilder.Entity<DetailActorMovie>(entity =>
@@ -373,10 +367,12 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdAuditoriums).HasColumnName("id_Auditoriums");
             entity.Property(e => e.IdCategorySeat).HasColumnName("id_category_seat");
+            entity.Property(e => e.IdShowtime).HasColumnName("ID_showtime");
             entity.Property(e => e.SeatName)
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("seat_name");
+            entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasOne(d => d.IdAuditoriumsNavigation).WithMany(p => p.SeatMovies)
                 .HasForeignKey(d => d.IdAuditoriums)
@@ -387,6 +383,10 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdCategorySeat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SeatMovie_Category_Seat");
+
+            entity.HasOne(d => d.IdShowtimeNavigation).WithMany(p => p.SeatMovies)
+                .HasForeignKey(d => d.IdShowtime)
+                .HasConstraintName("FK_SeatMovie_Showtimes");
         });
 
         modelBuilder.Entity<Showtime>(entity =>

@@ -14,7 +14,7 @@ function Cart() {
   const IDAccount = location.state?.IDAccount || '';    
   const handleVNPaySuccess = async (Payment) => {
     try{
-      const response=await fetch(`http://localhost:5231/api/Order/Add/${Info.map(item => item.id)}`,{
+      const response=await fetch(`http://localhost:5231/api/Order/Add`,{
         method:'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const handlePaymentError = (error) => {
       try {
         const response = await axios.get(`http://localhost:5231/api/CardSet/ShowInfoCard/${IDAccount}/${ID}/${IDtime}`);
         setInfo(response.data)
-        
+        console.log(response.data)
         const calculatedTotalPrice = response.data.reduce((acc, item) => acc + item.price, 0);
         setTotalPrice(calculatedTotalPrice);
       } catch (error) {

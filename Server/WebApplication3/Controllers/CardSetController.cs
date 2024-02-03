@@ -14,8 +14,8 @@ namespace WebApplication3.Controllers
         {
             _dbContext = dbContext;
         }
-        [HttpPost("Addstatus/{id}/{idAccount}/{idshowtime}")]
-        public IActionResult AddStatus(int id, int idAccount,int idshowtime)
+        [HttpPost("Addstatus/{id}/{idAccount}")]
+        public IActionResult AddStatus(int id, int idAccount)
         {
             try
             {
@@ -62,8 +62,7 @@ namespace WebApplication3.Controllers
                         {
                             IdSeat = seatId,
                             IdAccountSeat = idseat,
-                            Status = 0,
-                            Idshowtime=idshowtime
+                           
                         };
                         _dbContext.DetailAccountSeats.Add(detailAccountSeat);
                     }
@@ -86,7 +85,7 @@ namespace WebApplication3.Controllers
              {
                  var seat = _dbContext.DetailAccountSeats.Find(id);
                  if (seat != null) {
-                     seat.Status = (seat.Status == 0) ? 1 : 0;
+                     seat.IdSeatNavigation.Status = (seat.IdSeatNavigation.Status == 0) ? 1 : 0;
                      _dbContext.SaveChanges();
                      return Ok("seat status updated successfully");
                  }
@@ -107,10 +106,11 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var name = await _dbContext.DetailAccountSeats.Where(d => d.IdAccountSeatNavigation.IdAccount == id && d.Status==1 && d.IdSeatNavigation.IdAuditoriums==idCinema && d.Idshowtime==idShowtime).Select(m => new
+                var name = await _dbContext.DetailAccountSeats.Where(d => d.IdAccountSeatNavigation.IdAccount == id && d.IdSeatNavigation.Status==1 && d.IdSeatNavigation.IdAuditoriums==idCinema && d.IdSeatNavigation.IdShowtime==idShowtime).Select(m => new
                 {
                     id=m.IdSeat,
                     Name = m.IdSeatNavigation.SeatName,
+                    idtime=m.IdSeatNavigation.Id,
                     Price=m.IdSeatNavigation.IdCategorySeatNavigation.Price,
                 }).ToListAsync();
                 return Ok(name);
@@ -124,14 +124,14 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount && d.Idshowtime==idshowtime && (d.Status==0 || d.Status==1)).Select(m => new
+                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount && d.IdSeatNavigation.IdShowtime==idshowtime && (d.IdSeatNavigation.Status==0 || d.IdSeatNavigation.Status == 1)).Select(m => new
                 {
                    
                    id=m.Id,
                     seatName=m.IdSeatNavigation.SeatName,
                     categoryseat=m.IdSeatNavigation.IdCategorySeatNavigation.Price,
                     NameCategory=m.IdSeatNavigation.IdCategorySeatNavigation.Name,
-                    status=m.Status
+                    status=m.IdSeatNavigation.Status
                    
                 }).ToListAsync();
                 return Ok(seat);
