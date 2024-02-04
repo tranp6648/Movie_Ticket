@@ -255,6 +255,16 @@ function CheckOutCart() {
                                                             </div>
                                                     </li>
                                                 </ul>
+                                                <div className="form-row place-order">
+                                                    <div className="woocommerce-terms-and-conditions-wrapper">
+                                                        <div className="woocommerce-privacy-policy-text">
+                                                            <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our </p>
+                                                            <a href="" className="woocommerce-privacy-policy-link" style={{color:'#d96c2c',textDecoration:'none',background:'transparent'}}>privacy policy</a>
+                                                            .
+                                                        </div>
+                                                    </div>
+                                                    <button id="place_order" className="button alt" style={{float:'right',backgroundColor:'#333'}} value={'Place order'}>Place order</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
