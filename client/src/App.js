@@ -29,6 +29,7 @@ import EventHome from './components/EventHome/EventHome';
 import DetailEvent from './components/DetailEvent/DetailEvent';
 import Forgot from './components/Forgot/Forgot';
 import Voucher from './components/Voucher/Voucher';
+import CheckOutCart from './components/Checkout/CheckOutCart';
 function App() {
   return (
    <Router>
@@ -59,6 +60,7 @@ function App() {
     <Route path='/DetailEvent/:id' element={<DetailEvent/>}/>
     <Route path='/Forgot' element={<Forgot/>}/>
     <Route path='/Voucher' element={<Voucher/>}/>
+    <Route path='/CheckOut' element={<CheckOutCart/>}/>
      </Routes>
    </Router>
   );

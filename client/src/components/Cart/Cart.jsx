@@ -7,43 +7,44 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import VNPayButtonComponent from "../Paypal/Paypal";
 import { PayPalButton } from "react-paypal-button-v2";
+import FooterHome from "../footer/FooterHome";
 
 function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
-  const IDAccount = location.state?.IDAccount || '';    
+  const IDAccount = location.state?.IDAccount || '';
   const handleVNPaySuccess = async (Payment) => {
-    try{
-      const response=await fetch(`http://localhost:5231/api/Order/Add`,{
-        method:'POST',
+    try {
+      const response = await fetch(`http://localhost:5231/api/Order/Add`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-      },
-      body:JSON.stringify({
-        totalPrice:totalPrice.toFixed(0),
-        idAccount:IDAccount,
-        idseat:Info.map(item => item.id)
-      }),
+        },
+        body: JSON.stringify({
+          totalPrice: totalPrice.toFixed(0),
+          idAccount: IDAccount,
+          idseat: Info.map(item => item.id)
+        }),
       });
-      if(response.ok){
+      if (response.ok) {
         Swal.fire({
           icon: 'success',
           title: "Add  successfully",
           showConfirmButton: false,
           timer: 1500,
-      });
-      const response = await axios.get(`http://localhost:5231/api/CardSet/ShowCard/${ID}/${IDAccount}/${IDtime}`);
+        });
+        const response = await axios.get(`http://localhost:5231/api/CardSet/ShowCard/${ID}/${IDAccount}/${IDtime}`);
         setSeat(response.data)
         const responsedata = await axios.get(`http://localhost:5231/api/CardSet/ShowInfoCard/${IDAccount}/${ID}/${IDtime}`);
         setInfo(responsedata.data)
-   
+
         const calculatedTotalPrice = responsedata.data.reduce((acc, item) => acc + item.price, 0);
         setTotalPrice(calculatedTotalPrice);
       }
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
-    
+
   };
 
   const handleVNPayError = (error) => {
@@ -51,10 +52,10 @@ function Cart() {
     console.error('VNPay payment error:', error);
   };
 
-const handlePaymentError = (error) => {
+  const handlePaymentError = (error) => {
     // Handle payment error
     console.error('Payment error:', error);
-};
+  };
   const ID = location.state?.ID || '';
   const IDtime = location.state?.IDtime || '';
   const [seat, setSeat] = useState([]);
@@ -93,6 +94,10 @@ const handlePaymentError = (error) => {
   const [active, setActive] = useState(null);
   const rows = 8; // Specify the number of rows
   const columns = 9; // Specify the number of columns
+  const [Copon, setCopon] = useState(false);
+  const OpenCopen = () => {
+    setCopon(!Copon)
+  }
   const handleSeatHover = (seatdata) => {
     setHoveredSeat(seatdata);
   };
@@ -107,7 +112,7 @@ const handlePaymentError = (error) => {
         setSeat(response.data)
         const responsedata = await axios.get(`http://localhost:5231/api/CardSet/ShowInfoCard/${IDAccount}/${ID}/${IDtime}`);
         setInfo(responsedata.data)
-   
+
         const calculatedTotalPrice = responsedata.data.reduce((acc, item) => acc + item.price, 0);
         setTotalPrice(calculatedTotalPrice);
       }
@@ -162,20 +167,24 @@ const handlePaymentError = (error) => {
   return (
     <div>
       <Menu></Menu>
-      <div style={{ height: '100px', marginTop: '97px' }}>
-        <div className="breadcrumb-area">
-          <div className="container">
-            <div className="breadcrumb-content">
-              <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>Cart</h2>
-              <ul>
-                <li>
-                  <a href="" style={{ textDecoration: 'none' }}>Home</a>
-                </li>
-                <li className="active">Cart</li>
-              </ul>
+      <div style={{ height: '296px', marginTop: '5px' }}>
+                <div className="breadcrumb-area">
+                    <div className="container">
+                        <div className="breadcrumb-content">
+                            <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>Cart</h2>
+                            <ul>
+                                <li>
+                                    <a href="" style={{ textDecoration: 'none' }}>Home</a>
+                                </li>
+                                <li className="active">Cart</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
-        </div>
+      <div style={{ height: '100px', marginTop: '97px' }}>
+       
         <div className="elementor elementor-3729">
           <section name="" className="elementor-section elementor-top-section elementor-element elementor-element-757a1704 elementor-section-boxed elementor-section-height-default elementor-section-height-default" id="">
             <div className="elementor-container elementor-column-gap-default">
@@ -263,25 +272,36 @@ const handlePaymentError = (error) => {
                           </div>
                         </div>
                         <div className="cart-discount">
-                          <a href="" className="cart-discount-btn">Enter Discount Code</a>
-                        </div>
-                        <div className="cart-checkout">
-                          <div className="submit-load-more">
-                            <div className="load-more">
-                              <div className="lds-spinner"></div>
+                          <a className="cart-discount-btn cursor-pointer" style={{ display: `${Copon == true ? 'none' : ''}` }} onClick={() => OpenCopen()}>Enter Discount Code</a>
+                          <div className="form-discount" style={{ display: `${Copon == true ? 'flex' : ''}` }}>
+                            <div className="input-discount-code">
+                              <input type="text" className="discount-code" placeholder="DISCOUNT CODE" />
+                              <i className="dashicons-before dashicons-update-alt"></i>
                             </div>
-                            {seat.length > 0 && (
+                            <button className="cart-discount-submit-code">Apply</button>
+                            <i className="fas fa-times" id="cart-discount-close" onClick={() => setCopon(!Copon)}></i>
+                          </div>
+                        </div>
+                        <div className={`cart-checkout ${Info.length > 0 ? '' : 'mb-disable'}`} style={{marginBottom:'161px'}}>
+                          <div className="submit-load-more">
+                            <div className="load-more" >
+                              <div className="lds-spinner"></div>
+                              
+                            </div>
+                            {/* {seat.length > 0 && (
   <VNPayButtonComponent 
     amount={`${totalPrice.toFixed(0)}`} 
     onSuccess={handleVNPaySuccess} 
     onError={handleVNPayError} 
   />
 )}  
-                         
+                          */}
+                            <a href="" id="btn-checkout">
+                              Proceed to checkout    </a>
                           </div>
-                         
+
                         </div>
-                        
+
                       </div>
                     </div>
                   </div>
@@ -290,8 +310,9 @@ const handlePaymentError = (error) => {
             </div>
           </section>
         </div>
-
+        <FooterHome ></FooterHome>
       </div>
+    
     </div>
   )
 

@@ -154,6 +154,55 @@ ol [type=checkbox] {
 .unactive{
   background-color: var(--ui-cinema-seat-bg, var(--GrayCanvas)) !important;
 }
+ .cart-sidebar .cart-discount .form-discount {
+  display: none;
+  position: relative;
+  flex-wrap: wrap;
+}
+ .cart-sidebar .cart-discount .form-discount .input-discount-code {
+  position: relative;
+  width: calc(100% - 110px);
+}
+ .cart-sidebar .cart-discount .form-discount #cart-discount-close {
+  position: absolute;
+  left: 100%;
+  top: -10px;
+  cursor: pointer;
+  color: #666;
+  padding: 10px;
+}
+ .cart-sidebar .cart-discount .form-discount .cart-discount-submit-code {
+  width: 100px;
+  height: 40px;
+  margin-left: 10px;
+  background-color: #90ba3e;
+  border: 1px solid #90ba3e;
+  border-radius: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+ .cart-sidebar .cart-discount .form-discount .input-discount-code .discount-code {
+  font-size: 14px;
+  color: #333;
+  width: 100%;
+  border: 1px solid #828181;
+  border-radius: 0;
+  height: 40px;
+  padding: 0 10px;
+
+    box-sizing: border-box;
+    font-weight: normal;
+    outline: 0;
+    transition: all ease-in-out 0.3s;
+    font-size: 1em;
+}
+ .cart-sidebar .cart-checkout.mb-disable {
+  opacity: 0.5;
+}
 .popup {
   position: absolute;
   background-color: #fff;

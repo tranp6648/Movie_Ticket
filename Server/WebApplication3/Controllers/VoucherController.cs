@@ -38,5 +38,62 @@ namespace WebApplication3.Controllers
                 return BadRequest($"Error adding Voucher: {ex.Message}");
             }
         }
+        [HttpPost("delete/{id}")]
+        public IActionResult DeleteVoucher(int id)
+        {
+            try
+            {
+                var voucher = _dbContext.Vouchers.Find(id);
+                _dbContext.Vouchers.Remove(voucher);
+                _dbContext.SaveChanges();
+                return Ok("Remove Voucher successfully");
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+        [HttpPost("update/{id}")]
+        public IActionResult updateVoucher(int id, [FromBody] AddVoucher updateVoucher)
+        {
+            try
+            {
+                var voucher=_dbContext.Vouchers.Find(id);
+                if(_dbContext.Vouchers.Any(d=>d.StartDate==updateVoucher.StartDate && d.DiscountPercent==updateVoucher.DiscountPercent && d.ExpireDate==updateVoucher.ExpireDate && d.MinPrice==updateVoucher.MinPrice && d.Quatity == updateVoucher.Quatity))
+                {
+                    return BadRequest(new { message = "Voucher Code is exists" });
+                }
+                voucher.StartDate=updateVoucher.StartDate;
+                voucher.ExpireDate=updateVoucher.ExpireDate;
+                voucher.Quatity=updateVoucher.Quatity;
+                voucher.MinPrice=updateVoucher.MinPrice;
+                voucher.ExpireDate= updateVoucher.ExpireDate;
+                _dbContext.SaveChanges();
+                return Ok("Update successfully");
+            }catch( Exception ex )
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+        [HttpGet("ShowVoucher")]
+        public async Task<ActionResult<IEnumerable<Voucher>>> ShowVoucher()
+        {
+            try
+            {
+                var voucher = _dbContext.Vouchers.Select(m => new
+                {
+                    ID = m.Id,
+                    voucherCode=m.Code,
+                    DiscountPercent = m.DiscountPercent,
+                    ExpireDate = m.ExpireDate,
+                    MinPrice = m.MinPrice,
+                    Quatity = m.Quatity,
+                    startDate = m.StartDate,
+                });
+                return Ok(voucher);
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }
