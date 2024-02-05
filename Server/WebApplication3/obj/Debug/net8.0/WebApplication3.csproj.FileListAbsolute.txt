@@ -554,3 +554,14 @@ D:\VisualStudioCode\movie_ticket1\Movie_Ticket\Server\WebApplication3\obj\Debug\
 D:\VisualStudioCode\movie_ticket1\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb
 D:\VisualStudioCode\movie_ticket1\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.genruntimeconfig.cache
 D:\VisualStudioCode\movie_ticket1\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\ref\WebApplication3.dll
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.csproj.AssemblyReference.cache
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.GeneratedMSBuildEditorConfig.editorconfig
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.AssemblyInfoInputs.cache
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.AssemblyInfo.cs
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.csproj.CoreCompileInputs.cache
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.MvcApplicationPartsAssemblyInfo.cs
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.MvcApplicationPartsAssemblyInfo.cache
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.sourcelink.json
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.dll
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\refint\WebApplication3.dll
+D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb

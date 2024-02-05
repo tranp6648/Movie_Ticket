@@ -208,10 +208,33 @@ function DetailCinema() {
 
   const [quantityRoom,setQuantityRoom] = useState(0);
 
+  const handleQuantityRoomChange = (e) => {
+    const value = parseInt(e.target.value,10);
+    if(value < 1 || value > 10){
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Quantity',
+            text: 'Please enter a number greater than 0 and less than 10'
+        });
+        setQuantityRoom(0);
+    }else{
+        setQuantityRoom(value);
+    }
+  }
+ 
+
   const [setupRoomPopupVisible, setSetupRoomPopupVisible] = useState(false);
 
   const handleOpenSetupRoom = () => {
-    setSetupRoomPopupVisible(true);
+    if(quantityRoom < 1 || quantityRoom >10){
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Quantity',
+            text: 'Please enter a number greater than 0 and less than 10'
+        });
+    }else{
+        setSetupRoomPopupVisible(true);
+    }
   };
   const handleSubmitRooms = (e) => {
     e.preventDefault();
@@ -219,6 +242,11 @@ function DetailCinema() {
     // Ví dụ: Gửi dữ liệu đến server hoặc cập nhật state
     console.log('Room information submitted');
   };
+  const [activeTab,setActiveTab] = useState(0);
+
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  }
     return (
         <div>
 
@@ -364,7 +392,7 @@ function DetailCinema() {
               
               <div className="form-group">
                     <label className='float-left'>Select Room Quantity</label>
-                    <input type='number' value={quantityRoom}  onChange={(e)=>setQuantityRoom(e.target.value)} className="form-control" />
+                    <input type='number' value={quantityRoom}  onChange={handleQuantityRoomChange} className="form-control" />
                    
                   </div>
                   <div className='flex justify-center'>
@@ -376,30 +404,32 @@ function DetailCinema() {
         )}
 
 {setupRoomPopupVisible && (
-          <div className="popup-container ">
-
-            <div className="popup-content1 " style={IsClosingPopup ? { ...popupContentStyle1, ...closingAnimation } : popupContentStyle1}>
+          <div className="popup-container">
+          <div className="popup-content1">
               <div className='flex justify-end'>
-                <button onClick={()=> setSetupRoomPopupVisible(false)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded float-right "><i className="fas fa-times"></i></button>
+                  <button onClick={() => setSetupRoomPopupVisible(false)} className="close-btn">X</button>
               </div>
-
-              <form className="form-container">
-                <div className="room-setup-container">
-                    {Array.from({ length: quantityRoom }, (_, i) => (
-                    <div key={i} className="room-setup-item">
-                        <label>Room {i + 1}: </label>
-                        {/* <input type="text" placeholder={`Room ${i + 1} Name`} /> */}
-                        {/* Thêm các thông tin khác bạn muốn thu thập cho mỗi rạp */}
-                    </div>
-                    ))}
-                </div>
-                <div className="submit-container">
-                    <button type="submit" className="submit-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">Next</button>
-                </div>
-                    </form>
-
-            </div>
+              {/* Menu các rạp */}
+              <div className="tabs">
+                  {Array.from({ length: quantityRoom }).map((_, i) => (
+                      <button
+                          key={i}
+                          className={`tab-item ${i === activeTab ? 'active' : ''}`}
+                          onClick={() => handleTabClick(i)}
+                      >
+                          Room {i + 1}
+                      </button>
+                  ))}
+              </div>
+              {/* Nội dung tương ứng với rạp được chọn */}
+              <div className="tab-content">
+                  <h2 className='text-black'>Content for Room {activeTab + 1}</h2>
+                  {/* Đây là nơi bạn có thể thêm form hoặc thông tin chi tiết cho từng rạp */}
+              </div>
+              <button onClick={() => setSetupRoomPopupVisible(false)} className="close-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">Next</button>
+              
           </div>
+      </div>
         )}
 
 
