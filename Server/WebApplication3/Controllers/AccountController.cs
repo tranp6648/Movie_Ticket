@@ -99,6 +99,37 @@ namespace WebApplication3.Controllers
                 return BitConverter.ToString(hashedBytes).Replace("-","").ToLower();
             }
         }
+        [HttpPost("Forgot/{forgot}")]
+        public async Task<ActionResult<int>> Forgot(string forgot)
+        {
+            try
+            {
+                var existingAccount = await _dbContext.Accounts
+  .Where(a => a.Email == forgot || a.Username == forgot)
+  .FirstOrDefaultAsync();
+              
+
+                
+
+                // Check if it's an email or username
+              
+                if (existingAccount != null)
+                {
+                    existingAccount.Password = HashPasswordMD5(existingAccount.Username);
+                    _dbContext.SaveChanges();
+                    SendEmail(existingAccount.Email, "Reset Information", $"Username:{existingAccount.Username}\n Password:{existingAccount.Username}");
+                }
+                else
+                {
+                    return BadRequest(new { message = "Account Is not Exists" });
+                }
+                return Ok(new { message = "Password reset instructions sent successfully" });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
         [HttpPost("Login")]
        public async Task<ActionResult<int>> Login([FromBody] LoginAccount account)
 {

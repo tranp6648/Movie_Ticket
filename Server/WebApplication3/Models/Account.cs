@@ -20,4 +20,10 @@ public partial class Account
     public string FullName { get; set; } = null!;
 
     public int Accounttype { get; set; }
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual ICollection<SeatAccount> SeatAccounts { get; set; } = new List<SeatAccount>();
+
+    public virtual ICollection<UserVoucher> UserVouchers { get; set; } = new List<UserVoucher>();
 }

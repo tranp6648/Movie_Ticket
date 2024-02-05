@@ -1,0 +1,75 @@
+.page article.post-wrap {
+    display: flow-root;
+}
+article.post-wrap {
+    margin-bottom: 70px;
+}
+.woocommerce-account .woocommerce::after, .woocommerce-account .woocommerce::before {
+    content: " ";
+    display: table;
+}
+.woocommerce form .form-row-first, .woocommerce form .form-row-last, .woocommerce-page form .form-row-first, .woocommerce-page form .form-row-last {
+    width: 47%;
+    overflow: visible;
+}
+.woocommerce form .form-row label {
+    line-height: 2;
+}
+.woocommerce form .form-row label, .woocommerce-page form .form-row label {
+    display: block;
+    font-weight: 400;
+}
+.woocommerce form .form-row::after, .woocommerce form .form-row::before, .woocommerce-page form .form-row::after, .woocommerce-page form .form-row::before {
+    content: " ";
+    display: table;
+}
+.woocommerce form .form-row input.input-text, .woocommerce form .form-row textarea {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    outline: 0;
+    line-height: normal;
+}
+.woocommerce-form-row  input{
+    border-radius: 0px;
+    padding: 12px 15px;
+    border-color: #e0e0e0;
+    background-color: #ffffff;
+    color: #737373;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    font-weight: normal;
+    outline: 0;
+    transition: all ease-in-out 0.3s;
+    font-size: 1em;
+}
+.woocommerce a.button, .woocommerce button.button, .woocommerce input.button, .woocommerce a.checkout-button, .woocommerce #review_form #submit {
+    line-height: 1.5em;
+    border-radius: 0px;
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.woocommerce-Button{
+    font-size: 100%;
+    margin: 0;
+    line-height: 1;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    overflow: visible;
+    padding: 0.618em 1em;
+    font-weight: 700;
+    border-radius: 3px;
+    left: auto;
+    color: #515151;
+    background-color: #e9e6ed;
+    border: 0;
+    display: inline-block;
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+}

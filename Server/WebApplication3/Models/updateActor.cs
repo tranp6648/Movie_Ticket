@@ -7,6 +7,5 @@
         public string? Nationality { get; set; }
         public DateOnly? Birthday { get; set; }
 
-        public string? Bio { get; set; }
     }
 }

@@ -51,7 +51,7 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpPost("updateCategory/{id}")]
-        public async Task<ActionResult<IEnumerable<CategoryMovie>>> UpdateCategory(int id,[FromBody]  CategoryMovie updateCategory)
+        public IActionResult UpdateCategory(int id,[FromBody]  CategoryMovie updateCategory)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace WebApplication3.Controllers
                 {
                     return BadRequest("Invalid data");
                 }
-                var existCategory = await _dbContext.CategoryMovies.FindAsync(id);
+                var existCategory =  _dbContext.CategoryMovies.Find(id);
                 if (existCategory == null)
                 {
                     return NotFound("Genre not found");
@@ -69,9 +69,9 @@ namespace WebApplication3.Controllers
                     return BadRequest(new { message = "Category Movie name already exists" });
                 }
                 existCategory.Name = updateCategory.Name;
-                await _dbContext.SaveChangesAsync();
-                var allCategory = await _dbContext.CategoryMovies.ToListAsync();
-                return Ok(allCategory);
+                 _dbContext.SaveChangesAsync();
+              
+                return Ok("Update successfully");
             }catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");

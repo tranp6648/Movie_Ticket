@@ -29,13 +29,15 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<CinemaBranch> CinemaBranches { get; set; }
 
+    public virtual DbSet<DetailAccountSeat> DetailAccountSeats { get; set; }
+
     public virtual DbSet<DetailActorMovie> DetailActorMovies { get; set; }
 
     public virtual DbSet<DetailCategoryMovie> DetailCategoryMovies { get; set; }
 
     public virtual DbSet<DetailCityBranch> DetailCityBranches { get; set; }
 
-    public virtual DbSet<DetailSeatAuditorium> DetailSeatAuditoriums { get; set; }
+    public virtual DbSet<DetailOrder> DetailOrders { get; set; }
 
     public virtual DbSet<District> Districts { get; set; }
 
@@ -45,13 +47,21 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<Movie> Movies { get; set; }
 
-    public virtual DbSet<Seat> Seats { get; set; }
+    public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<SeatAccount> SeatAccounts { get; set; }
+
+    public virtual DbSet<SeatMovie> SeatMovies { get; set; }
 
     public virtual DbSet<Showtime> Showtimes { get; set; }
 
+    public virtual DbSet<UserVoucher> UserVouchers { get; set; }
+
+    public virtual DbSet<Voucher> Vouchers { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=Kyos22;Database=Movie;user id=sa;password=123456;trusted_connection=true;encrypt=false");
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=PHONG;Database=MovieTicket;user id=sa;password=123456789;trusted_connection=true;encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -159,6 +169,29 @@ public partial class DatabaseContext : DbContext
                 .HasColumnName("city");
         });
 
+        modelBuilder.Entity<DetailAccountSeat>(entity =>
+        {
+            entity.ToTable("Detail_Account_Seat");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdAccountSeat).HasColumnName("id_Account_Seat");
+            entity.Property(e => e.IdSeat).HasColumnName("id_Seat");
+            entity.Property(e => e.IdShowtime).HasColumnName("ID_Showtime");
+            entity.Property(e => e.Status).HasColumnName("status");
+
+            entity.HasOne(d => d.IdAccountSeatNavigation).WithMany(p => p.DetailAccountSeats)
+                .HasForeignKey(d => d.IdAccountSeat)
+                .HasConstraintName("FK_Detail_Account_Seat_detail_Seat_Account");
+
+            entity.HasOne(d => d.IdSeatNavigation).WithMany(p => p.DetailAccountSeats)
+                .HasForeignKey(d => d.IdSeat)
+                .HasConstraintName("FK_Detail_Account_Seat_SeatMovie");
+
+            entity.HasOne(d => d.IdShowtimeNavigation).WithMany(p => p.DetailAccountSeats)
+                .HasForeignKey(d => d.IdShowtime)
+                .HasConstraintName("FK_Detail_Account_Seat_Showtimes");
+        });
+
         modelBuilder.Entity<DetailActorMovie>(entity =>
         {
             entity.ToTable("Detail_Actor_Movie");
@@ -226,29 +259,23 @@ public partial class DatabaseContext : DbContext
                 .HasConstraintName("FK_Detail_City_Branch_Cinemas");
         });
 
-        modelBuilder.Entity<DetailSeatAuditorium>(entity =>
+        modelBuilder.Entity<DetailOrder>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("detail_seat_Auditoriums");
+            entity.ToTable("DetailOrder");
 
-            entity.Property(e => e.IdAuditoriums).HasColumnName("id_Auditoriums");
-            entity.Property(e => e.IdSeat).HasColumnName("id_seat");
-            entity.Property(e => e.SeatName)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("seat_name");
-            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Idorder).HasColumnName("IDorder");
+            entity.Property(e => e.Idseat).HasColumnName("IDSeat");
 
-            entity.HasOne(d => d.IdAuditoriumsNavigation).WithMany()
-                .HasForeignKey(d => d.IdAuditoriums)
+            entity.HasOne(d => d.IdorderNavigation).WithMany(p => p.DetailOrders)
+                .HasForeignKey(d => d.Idorder)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_detail_seat_Auditoriums_Auditoriums");
+                .HasConstraintName("FK_DetailOrder_Order");
 
-            entity.HasOne(d => d.IdSeatNavigation).WithMany()
-                .HasForeignKey(d => d.IdSeat)
+            entity.HasOne(d => d.IdseatNavigation).WithMany(p => p.DetailOrders)
+                .HasForeignKey(d => d.Idseat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_detail_seat_Auditoriums_seat");
+                .HasConstraintName("FK_DetailOrder_SeatMovie");
         });
 
         modelBuilder.Entity<District>(entity =>
@@ -311,17 +338,59 @@ public partial class DatabaseContext : DbContext
                 .HasConstraintName("FK_Movies_Genre");
         });
 
-        modelBuilder.Entity<Seat>(entity =>
+        modelBuilder.Entity<Order>(entity =>
         {
-            entity.ToTable("seat");
+            entity.ToTable("Order");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.IdCategorySeat).HasColumnName("id_category_Seat");
+            entity.Property(e => e.IdAccount).HasColumnName("ID_Account");
+            entity.Property(e => e.OrderCode)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("order_code");
 
-            entity.HasOne(d => d.IdCategorySeatNavigation).WithMany(p => p.Seats)
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.IdAccount)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Order_Account");
+        });
+
+        modelBuilder.Entity<SeatAccount>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_detail_seat_Auditoriums_1");
+
+            entity.ToTable("Seat_Account");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdAccount).HasColumnName("ID_Account");
+
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.SeatAccounts)
+                .HasForeignKey(d => d.IdAccount)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detail_seat_Auditoriums_Account1");
+        });
+
+        modelBuilder.Entity<SeatMovie>(entity =>
+        {
+            entity.ToTable("SeatMovie");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdAuditoriums).HasColumnName("id_Auditoriums");
+            entity.Property(e => e.IdCategorySeat).HasColumnName("id_category_seat");
+            entity.Property(e => e.SeatName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("seat_name");
+
+            entity.HasOne(d => d.IdAuditoriumsNavigation).WithMany(p => p.SeatMovies)
+                .HasForeignKey(d => d.IdAuditoriums)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SeatMovie_Auditoriums");
+
+            entity.HasOne(d => d.IdCategorySeatNavigation).WithMany(p => p.SeatMovies)
                 .HasForeignKey(d => d.IdCategorySeat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_seat_seat");
+                .HasConstraintName("FK_SeatMovie_Category_Seat");
         });
 
         modelBuilder.Entity<Showtime>(entity =>
@@ -341,6 +410,34 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdMovie)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Showtimes_Movies");
+        });
+
+        modelBuilder.Entity<UserVoucher>(entity =>
+        {
+            entity.ToTable("UserVoucher");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdAccount).HasColumnName("idAccount");
+            entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
+
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.UserVouchers)
+                .HasForeignKey(d => d.IdAccount)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserVoucher_Account");
+
+            entity.HasOne(d => d.Voucher).WithMany(p => p.UserVouchers)
+                .HasForeignKey(d => d.VoucherId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UserVoucher_Vouchers");
+        });
+
+        modelBuilder.Entity<Voucher>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Code)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("code");
         });
 
         OnModelCreatingPartial(modelBuilder);

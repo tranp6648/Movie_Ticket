@@ -9,5 +9,7 @@ public partial class CategorySeat
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
+    public double Price { get; set; }
+
+    public virtual ICollection<SeatMovie> SeatMovies { get; set; } = new List<SeatMovie>();
 }

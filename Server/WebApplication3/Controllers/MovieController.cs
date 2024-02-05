@@ -60,7 +60,7 @@ namespace WebApplication3.Controllers
             {
                 return BadRequest("Invalid movie data");
             }
-            if (_dbContext.Movies.Any(a => a.Title == addMovie.Title))
+            if (_dbContext.Movies.Any(a => a.Title == addMovie.Title && a.Id != id))
             {
                 return BadRequest(new { message = "Tittle already exists" });
             }
@@ -71,7 +71,6 @@ namespace WebApplication3.Controllers
             }
 
             existMovie.Title = addMovie.Title;
-            existMovie.Description = addMovie.Description;
             existMovie.ReleaseDate = addMovie.ReleaseDate;
             existMovie.Duration = addMovie.Duration;
             existMovie.IdGenre = addMovie.IdGenre;
@@ -93,8 +92,9 @@ namespace WebApplication3.Controllers
         [HttpPost("delete/{id}")]
         public IActionResult DeleteMovie(int id)
         {
-
+            var showtime = _dbContext.Showtimes.FirstOrDefault(cm => cm.IdMovie == id);
             var categoryMovie = _dbContext.DetailCategoryMovies.FirstOrDefault(cm => cm.IdMovie == id);
+            var detailActor = _dbContext.DetailActorMovies.FirstOrDefault(cm => cm.IdMovie == id);
             var Movie = _dbContext.Movies.Find(id);
             if (Movie == null)
             {
@@ -106,9 +106,18 @@ namespace WebApplication3.Controllers
                 {
                     _dbContext.DetailCategoryMovies.Remove(categoryMovie);
                 }
+                if(detailActor != null)
+                {
+                    return BadRequest(new { message = "Movie Delete Failed" });
+                }
+                if(showtime != null)
+                {
+                    return BadRequest(new { message = "Movie Delete Failed" });
+                }
                 _dbContext.Movies.Remove(Movie);
                 _dbContext.SaveChanges();
                 DeletePictureFromFolder(id, _webHostEnvironment.WebRootPath);
+                DeleteMovie(id, _webHostEnvironment.WebRootPath);
                 return Ok("Movie deleted successfully");
             }
             catch (Exception ex)
@@ -116,6 +125,14 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
 
+        }
+        private void DeleteMovie(int movieID,string webRootPath)
+        {
+            string imagePath = Path.Combine(webRootPath, "videos", $"movie_{movieID}_picture.mp4");
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
         }
         private void DeletePictureFromFolder(int movieID, string webRootPath)
         {

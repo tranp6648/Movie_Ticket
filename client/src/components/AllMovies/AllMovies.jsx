@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import Menu from "../Menu/Menu";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './AllMovies.css';
 import Pagination from 'react-paginate';
 import FooterHome from "../footer/FooterHome";
@@ -9,6 +9,9 @@ function AllMovies() {
     const navigate=useNavigate();
     const [Movies, setMovies] = useState([]);
     const [perPage, setperPage] = useState(5);
+    const location = useLocation();
+
+    const ID = location.state?.ID || '';
 
     const [activeIndex, setActiveIndex] = useState(null);
     const [filteredMovies, setFilteredMovies] = useState([]);
@@ -173,7 +176,7 @@ function AllMovies() {
                                         <div className="mb-movie-list mb-movie-list-template1 four_column">
                                             {filteredMovies.map((Movies, index) => (
                                                 <div className="mb-movie-item item-template1">
-                                                    <a onClick={()=>navigate(`/Detail/${Movies.id}`,{ state: { ID:Movies.id } })} style={{ boxShadow: 'none', textDecoration: 'none' }}>
+                                                    <a onClick={()=>navigate(`/Detail/${Movies.id}`,{ state: { ID:Movies.id,IDAccount:ID } })} style={{ boxShadow: 'none', textDecoration: 'none' }}>
                                                         <div className="movie-image">
                                                             <img src={Movies.detailCategoryMovies.length > 0
                                                                 ? `http://localhost:5231/${Movies.detailCategoryMovies[0].picture}`

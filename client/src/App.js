@@ -30,6 +30,10 @@ import Superadmin from './components/Superadmin/Superadmin';
 import CreateCinema from './components/Superadmin/createCinema/CreateCinema';
 import HomeSuperadmin from './components/Superadmin/HomeSuperadmin';
 import DetailCinema from './components/Superadmin/DetailCinema/DetailCinema';
+import DetailEvent from './components/DetailEvent/DetailEvent';
+import Forgot from './components/Forgot/Forgot';
+import Voucher from './components/Voucher/Voucher';
+import CheckOutCart from './components/Checkout/CheckOutCart';
 function App() {
   return (
    <Router>
@@ -60,10 +64,14 @@ function App() {
     <Route path='/Detail/:id' element={<Detail/>}/>
     <Route path='/MovieActor' element={<MovieActor/>}/>
     <Route path='/DetailActor/:id' element={<DetailActor/>}/>
-    <Route path='/Cart' element={<Cart/>}/>
+    <Route path='/Cart/:id' element={<Cart/>}/>
     <Route path='/Showtimes' element={<ShowTimes/>}/>
     <Route path='/Event' element={<Event/>}/>
     <Route path='/EventHome' element={<EventHome/>}/>
+    <Route path='/DetailEvent/:id' element={<DetailEvent/>}/>
+    <Route path='/Forgot' element={<Forgot/>}/>
+    <Route path='/Voucher' element={<Voucher/>}/>
+    <Route path='/CheckOut' element={<CheckOutCart/>}/>
      </Routes>
    </Router>
   );

@@ -51,6 +51,19 @@ namespace WebApplication3.Controllers
                 return null;  // or throw an exception, return an error code, etc.
             }
         }
+        [HttpGet("event/{id}")]
+        public async Task<ActionResult<IEnumerable<Event>>> DetailEvent(int id)
+        {
+            try
+            {
+                var Event = await _dbContext.Events.Where(d=>d.Id==id).ToListAsync();
+                return Ok(Event);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
         [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
@@ -96,7 +109,7 @@ namespace WebApplication3.Controllers
                 existEvent.Title = @event.Title;
                 existEvent.StartDate = @event.StartDate;
                 existEvent.EndDate = @event.EndDate;
-                existEvent.Description = @event.Description;
+                
 
                 _dbContext.SaveChanges();
                 return Ok("Event updated successfully");

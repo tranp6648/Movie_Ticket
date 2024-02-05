@@ -130,7 +130,6 @@ namespace WebApplication3.Controllers
                 existActor.Name = updateactor.Name;
                 existActor.Nationality = updateactor.Nationality;
                 existActor.Birthday = updateactor.Birthday;
-                existActor.Bio = updateactor.Bio;
                 _dbContext.SaveChanges();
                 return Ok("Actor Update successfully");
             }

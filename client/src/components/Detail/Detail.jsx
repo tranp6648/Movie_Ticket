@@ -11,6 +11,8 @@ function Detail() {
     const location = useLocation();
 
     const ID = location.state?.ID || '';
+    const IDAccount = location.state?.IDAccount || '';
+    
     const [Actor, setActor] = useState([]);
     const [time, settime] = useState([]);
     const [Detail, setDetail] = useState([]);
@@ -102,10 +104,12 @@ function Detail() {
     }
     useEffect(() => {
         const fetchData = async () => {
+           
             try {
                 const response = await axios.get(`http://localhost:5231/api/ShowTime/GetInfo/${selectedTime}/${id}`);
                 setInfo(response.data)
-                console.log(Info)
+                console.log(selectedTime)
+                
             } catch (error) {
                 console.log(error);
             }
@@ -114,6 +118,18 @@ function Detail() {
         fetchData();
 
     }, [selectedTime,id]);
+    const handleUpdate=async (ID,IDAccount,idTime)=>{
+        try{
+            const response=await axios.post(`http://localhost:5231/api/CardSet/Addstatus/${ID}/${IDAccount}/${idTime}`);
+            if(response.status==200){
+                console.log("Response Data:", response.data);
+                navigate(`/Cart/${ID}`, { state: { ID: ID, IDAccount: IDAccount,IDtime:idTime } });
+
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
     const popupContentStyle = {
         display: 'flex',
         animation: 'fadeDown 0.5s ease-out',
@@ -599,8 +615,8 @@ function Detail() {
                                                                     </div>
                                                                     <ul className="mb-tab-showtime">
                                                                         <li className="item">
-                                                                            <a href="">
-                                                                                <span>{formatTime(info.time)}</span>
+                                                                            <a onClick={()=>handleUpdate(info.id,IDAccount,info.idTime)}>
+                                                                                <span >{formatTime(info.time)}</span>
                                                                             </a>
                                                                         </li>
                                                                     </ul>

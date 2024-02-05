@@ -13,5 +13,7 @@ public partial class Auditorium
 
     public virtual Cinema IdCinemaNavigation { get; set; } = null!;
 
+    public virtual ICollection<SeatMovie> SeatMovies { get; set; } = new List<SeatMovie>();
+
     public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
 }

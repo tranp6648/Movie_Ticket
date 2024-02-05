@@ -32,13 +32,13 @@ function Movie() {
     Picture: null,
     trailer: null,
     updateTittle: '',
-    updateDesction: '',
+  
     updateReleaseDate: null,
     updateduration: '',
     id: '',
-    Director:'',
-    updateDirector:''
-    
+    Director: '',
+    updateDirector: ''
+
   })
   const [isPopupVisible, setPopupVisibility] = useState(false);
   const MAX_DESCRIPTION_LENGTH = 300;
@@ -49,13 +49,13 @@ function Movie() {
   const handleEditClick = (MovieID) => {
     const selectedMovie = Movie.find(Movie => Movie.id == MovieID)
     if (selectedMovie) {
-      FormData.updateDesction = selectedMovie.description;
+      
       FormData.updateTittle = selectedMovie.title;
-      FormData.updateDirector=selectedMovie.director
+      FormData.updateDirector = selectedMovie.director
       FormData.id = selectedMovie.id;
       FormData.updateReleaseDate = selectedMovie.releaseDate;
       FormData.updateduration = selectedMovie.duration;
-     
+
       setupdategenre(selectedMovie.idgenre);
 
     }
@@ -145,12 +145,7 @@ function Movie() {
         ...FormData,
         updateDesction: value
       })
-    } else {
-      setFormData({
-        ...FormData,
-        updateDesction: value.substring(0, MAX_DESCRIPTION_LENGTH),
-      })
-    }
+    } 
 
   };
   const popupContentStyle = {
@@ -180,6 +175,30 @@ function Movie() {
       return `${minutes} minute`
     }
   }
+  const [errors, setErrors] = useState({});
+  const validateInput = (fieldname, value) => {
+    const newErrors = { ...errors }
+    if (fieldname === 'Title') {
+      newErrors[fieldname] = value.trim() === '' ? 'Title is required' : '';
+    } else if (fieldname === "Description") {
+      newErrors[fieldname] = value.trim() === '' ? 'Description is required' : '';
+    } else if (fieldname === "Director") {
+      newErrors[fieldname] = value.trim() === '' ? 'Director is required' : '';
+    } else if (fieldname === "ReleaseDate") {
+      newErrors[fieldname] = value == null ? 'ReleaseDate is required' : '';
+    } else if (fieldname === "duration") {
+      newErrors[fieldname] = value.trim() === '' ? 'Duration is required' : '';
+    } else if (fieldname === 'genre') {
+      newErrors[fieldname] = value == null ? 'Genre is required' : '';
+    } else if (fieldname === "category") {
+      newErrors[fieldname] = value == null ? 'Category is required' : '';
+    }else if(fieldname==='picture'){
+      newErrors[fieldname] = value == null ? 'Picture is required' : '';
+    }else if(fieldname==='trailer'){
+      newErrors[fieldname] = value == null ? 'Trailer is required' : '';
+    }
+    setErrors(newErrors)
+  }
   const deleteSubmit = async (CategoryID) => {
     try {
       const confirmation = await Swal.fire({
@@ -204,6 +223,7 @@ function Movie() {
           setMovie(response.data);
 
         } else {
+          const responseBody = await response.json();
           Swal.fire({
             icon: 'error',
             title: 'Deletion failed',
@@ -213,7 +233,12 @@ function Movie() {
         }
       }
     } catch (error) {
-      console.log(error.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Deletion failed',
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   }
   const [searchTerm, setSearchtem] = useState('');
@@ -229,28 +254,49 @@ function Movie() {
     const file = e.target.files[0];
 
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({
-          ...FormData,
-          Picture: reader.result, // base64-encoded string
-        });
-      };
-      reader.readAsDataURL(file);
+      if(file.type.startsWith('image/')){
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData({
+            ...FormData,
+            Picture: reader.result, // base64-encoded string
+          });
+        };
+        reader.readAsDataURL(file);
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Please select a valid image file',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        document.getElementById('imageInput').value = '';
+      }
     }
   };
   const handletrailer = (e) => {
     const file = e.target.files[0];
 
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({
-          ...FormData,
-          trailer: reader.result, // base64-encoded string
+      if(file.type.startsWith('video/')){
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData({
+            ...FormData,
+            trailer: reader.result, // base64-encoded string
+          });
+        };
+        reader.readAsDataURL(file);
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: "Please select a valid video file",
+          showConfirmButton: false,
+          timer: 1500,
         });
-      };
-      reader.readAsDataURL(file);
+        document.getElementById('trailer').value = '';
+      }
+     
     }
   };
   const handleUpdateSubmit = async (event) => {
@@ -262,7 +308,7 @@ function Movie() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: FormData.updateTittle, description: FormData.updateDesction, releaseDate: FormData.updateReleaseDate, duration: FormData.updateduration, idGenre: updategenre,director:FormData.updateDirector }),
+        body: JSON.stringify({ title: FormData.updateTittle, releaseDate: FormData.updateReleaseDate, duration: FormData.updateduration, idGenre: updategenre, director: FormData.updateDirector }),
       })
       if (response.ok) {
         Swal.fire({
@@ -271,16 +317,26 @@ function Movie() {
           showConfirmButton: false,
           timer: 1500,
         })
-        FormData.updateDesction = '';
+     
         FormData.updateTittle = ''
         FormData.id = '';
         FormData.updateReleaseDate = null;
         FormData.updateduration = '';
-        FormData.updateDirector=''
+        FormData.updateDirector = ''
         setupdategenre(null);
         setPopupVisibility(false);
         const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
-          setMovie(response.data);
+        setMovie(response.data);
+      }else{
+        const responseBody = await response.json();
+        if (responseBody.message) {
+            Swal.fire({
+                icon: 'error',
+                title: responseBody.message || 'Failed to add genre',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
       }
     } catch (error) {
       console.log(error.message)
@@ -289,65 +345,75 @@ function Movie() {
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if(FormData.Title==='' || FormData.DescriptionL==='' || FormData.Director==='' || FormData.ReleaseDate===null || FormData.duration==='' || selectedgenre==null || selectedcategory==null || FormData.Picture==null || FormData.trailer==null){
+      Swal.fire({
+        icon: 'error',
+        title: "Please complete all information",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }else{
+      try {
 
-    try {
 
-
-      const response = await fetch('http://localhost:5231/api/Movie/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title: FormData.Title, description: FormData.DescriptionL, releaseDate: FormData.ReleaseDate, duration: FormData.duration, idGenre: selectedgenre.value, idcategory: selectedcategory.value, Picture: FormData.Picture, trailer: FormData.trailer,director:FormData.Director }),
-      })
-      if (!response.ok) {
-        const responseBody = await response.json();
-        if (responseBody.message) {
+        const response = await fetch('http://localhost:5231/api/Movie/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title: FormData.Title, description: FormData.DescriptionL, releaseDate: FormData.ReleaseDate, duration: FormData.duration, idGenre: selectedgenre.value, idcategory: selectedcategory.value, Picture: FormData.Picture, trailer: FormData.trailer, director: FormData.Director }),
+        })
+        if (!response.ok) {
+          const responseBody = await response.json();
+          if (responseBody.message) {
+            Swal.fire({
+              icon: 'error',
+              title: responseBody.message || 'Failed to add genre',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+  
+  
+        } else {
+  
           Swal.fire({
-            icon: 'error',
-            title: responseBody.message || 'Failed to add genre',
+            icon: 'success',
+            title: 'Add Genre success',
             showConfirmButton: false,
             timer: 1500,
-          });
+          })
+          setFormData({
+            ReleaseDate: null,
+            Title: '',
+            DescriptionL: '',
+            duration: '',
+            Picture: null,
+            trailer: ''
+          })
+          FormData.trailer = '';
+          FormData.ReleaseDate = null;
+          FormData.Title = '';
+          FormData.duration = '';
+          FormData.Director = ''
+          setSelectedgenre(null);
+          setSelectedcategory(null);
+  
+          document.getElementById('imageInput').value = '';
+          document.getElementById('trailer').value = '';
+          const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
+          setMovie(response.data);
+  
         }
-
-
-      } else {
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Add Genre success',
-          showConfirmButton: false,
-          timer: 1500,
-        })
-        setFormData({
-          ReleaseDate: null,
-          Title: '',
-          DescriptionL: '',
-          duration: '',
-          Picture: null,
-          trailer: ''
-        })
-        FormData.trailer='';
-        FormData.ReleaseDate=null;
-        FormData.Title='';
-        FormData.duration='';
-        FormData.Director=''
-      setSelectedgenre(null);
-        setSelectedcategory(null);
-       
-        document.getElementById('imageInput').value = '';
-        document.getElementById('trailer').value = '';
-        const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
-        setMovie(response.data);
-
+  
+      } catch (error) {
+        console.log(error.message)
+  
+  
       }
-
-    } catch (error) {
-      console.log(error.message)
-
-
     }
+
+   
 
 
   }
@@ -425,7 +491,7 @@ function Movie() {
         <div className="content-wrapper">
           <section className="content-header">
             <h1>
-              Category
+             Movie
 
             </h1>
             <ol className="breadcrumb">
@@ -444,13 +510,16 @@ function Movie() {
                     {/* Form fields go here */}
                     <div className="form-group">
                       <label >Title</label>
-                      <input name='NameCategory' value={FormData.Title} onChange={(e) => setFormData({ ...FormData, Title: e.target.value })} className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
-
+                      <input name='NameCategory' onBlur={() => validateInput('Title', FormData.Title)} value={FormData.Title} onChange={(e) => setFormData({ ...FormData, Title: e.target.value })} className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
+                      {errors.Title && (
+                        <p className="text-red-500 text-sm italic">{errors.Title}</p>
+                      )}
                     </div>
                     <div className="form-group">
                       <label >Description</label>
                       <ReactQuill
                         theme="snow"
+                        onBlur={() => validateInput('Description', FormData.DescriptionL)}
                         value={FormData.DescriptionL}
                         onChange={handleDescriptionChange}
                         placeholder='Enter Description'
@@ -471,43 +540,59 @@ function Movie() {
                         ]}
 
                       />
-
+                      {errors.Description && (
+                        <p className="text-red-500 text-sm italic">{errors.Description}</p>
+                      )}
                     </div>
                     <div className="form-group">
                       <label >Director</label>
-                      <input name='NameCategory' value={FormData.Director} onChange={(e) => setFormData({ ...FormData, Director: e.target.value })} className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
-
+                      <input onBlur={() => validateInput('Director', FormData.Director)} name='NameCategory' value={FormData.Director} onChange={(e) => setFormData({ ...FormData, Director: e.target.value })} className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
+                      {errors.Director && (
+                        <p className="text-red-500 text-sm italic">{errors.Director}</p>
+                      )}
                     </div>
                     <div className="form-group">
                       <label >ReleaseDate</label>
                       <br />
                       <DatePicker name='Birthday' selected={FormData.ReleaseDate ? new Date(FormData.ReleaseDate) : null} onChange={handleDateChange} dateFormat="dd/MM/yyyy"
-
+                        onBlur={() => validateInput('ReleaseDate', FormData.ReleaseDate)}
                         className="form-control"
+                        minDate={new Date()}
                         placeholderText="Select Release Date"
                       // Cannot select a date before startDate
                       />
+                      {errors.ReleaseDate && (
+                        <p className="text-red-500 text-sm italic">{errors.ReleaseDate}</p>
+                      )}
                     </div>
                     <div className="form-group">
                       <label >Duration</label>
-                      <input type='number' value={FormData.duration} onChange={(e) => setFormData({ ...FormData, duration: e.target.value })} name='NameCategory' className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
-
+                      <input type='number' onBlur={() => validateInput('duration', FormData.duration)} value={FormData.duration} onChange={(e) => setFormData({ ...FormData, duration: e.target.value })} name='NameCategory' className="form-control" id="exampleInputEmail1" placeholder="Enter Name Category" />
+                      {errors.duration && (
+                        <p className="text-red-500 text-sm italic">{errors.duration}</p>
+                      )}
                     </div>
                     <div className="form-group">
                       <label >Genre</label>
                       <Select options={genres.map(genres => ({ value: genres.id, label: genres.name }))}
                         onChange={(selectedoption) => handleGenreChange(selectedoption)}
                         value={selectedgenre}
+                        onBlur={() => validateInput('genre', selectedgenre)}
                       />
-
+                      {errors.genre && (
+                        <p className="text-red-500 text-sm italic">{errors.genre}</p>
+                      )}
                     </div>
                     <div className="form-group">
                       <label >Category</label>
                       <Select options={category.map(genres => ({ value: genres.id, label: genres.name }))}
                         onChange={(selectedoption) => handleCategoryChange(selectedoption)}
+                        onBlur={() => validateInput('category', selectedcategory)}
                         value={selectedcategory}
                       />
-
+                      {errors.category && (
+                        <p className="text-red-500 text-sm italic">{errors.category}</p>
+                      )}
                     </div>
                     <div className='form-group'>
                       <label htmlFor="">Picture</label>
@@ -516,12 +601,18 @@ function Movie() {
                         onChange={(e) => handleFileChange(e)}
                         className="form-control"
                         id='imageInput'
+                        onBlur={() => validateInput('picture', FormData.Picture)}
                       />
+                      {errors.picture && (
+                        <p className="text-red-500 text-sm italic">{errors.picture}</p>
+                      )}
                     </div>
                     <div className="form-group">
                       <label >Trailer</label>
-                      <input type='file' id="trailer" onChange={(e) => handletrailer(e)} name='NameCategory' className="form-control" placeholder="Enter Name Category" />
-
+                      <input type='file'  onBlur={() => validateInput('trailer', FormData.trailer)} id="trailer" onChange={(e) => handletrailer(e)} name='NameCategory' className="form-control" placeholder="Enter Name Category" />
+                      {errors.trailer && (
+                        <p className="text-red-500 text-sm italic">{errors.trailer}</p>
+                      )}
                     </div>
 
                   </div>
@@ -565,7 +656,7 @@ function Movie() {
                       {currentGender.map((Movies, index) => (
                         <tr key={Movies.id}>
                           <td>{index + 1}</td>
-                          
+
                           <td>{Movies.title}</td>
                           <td>{Movies.director}</td>
                           <td>{new Date(Movies.releaseDate).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
@@ -577,9 +668,9 @@ function Movie() {
                           <td><img src={Movies.detailCategoryMovies.length > 0
                             ? `http://localhost:5231/${Movies.detailCategoryMovies[0].picture}`
                             : 'No Category'} width="100" height="100" style={{ objectFit: 'cover' }} alt="" /></td>
-                          <td><a target='_blank' href={Movies.detailCategoryMovies.length > 0 ? `http://localhost:5231/${Movies.detailCategoryMovies[0].trailer}`  : 'No Trailer'}>{Movies.detailCategoryMovies.length > 0 ? Movies.detailCategoryMovies[0].trailer : 'No Trailer'} </a></td>
+                          <td><a target='_blank' href={Movies.detailCategoryMovies.length > 0 ? `http://localhost:5231/${Movies.detailCategoryMovies[0].trailer}` : 'No Trailer'}>{Movies.detailCategoryMovies.length > 0 ? Movies.detailCategoryMovies[0].trailer : 'No Trailer'} </a></td>
                           <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditClick(Movies.id)}>Edit</button></td>
-                          <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>deleteSubmit(Movies.id)}>Remove</button></td>
+                          <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => deleteSubmit(Movies.id)}>Remove</button></td>
                         </tr>
                       ))}
                       <tr></tr>
@@ -644,33 +735,7 @@ function Movie() {
                     <input name='UpdateNameCategory' value={FormData.updateDirector} onChange={(e) => setFormData({ ...FormData, updateDirector: e.target.value })} className="form-control" />
 
                   </div>
-                  <div className="form-group">
-                    <label className='float-left'>Title</label>
-                    <br />
-                    <ReactQuill
-                      theme="snow"
-                      value={FormData.updateDesction}
-                      onChange={handlepudateDescriptionChange}
-                      placeholder='Enter Description'
-                      modules={{
-                        toolbar: [
-                          [{ 'header': [1, 2, false] }],
-                          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                          [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-                          ['link', 'image'],
-                          ['clean']
-                        ],
-                      }}
-                      formats={[
-                        'header',
-                        'bold', 'italic', 'underline', 'strike', 'blockquote',
-                        'list', 'bullet', 'indent',
-                        'link', 'image'
-                      ]}
-
-                    />
-
-                  </div>
+                
                   <div className="form-group">
                     <label className='float-left'>Release Date</label>
 
@@ -698,7 +763,7 @@ function Movie() {
                     />
 
                   </div>
-                 
+
                 </div>
 
                 <div className="box-footer">

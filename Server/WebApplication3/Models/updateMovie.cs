@@ -4,7 +4,6 @@
     {
         public string Title { get; set; } = null!;
 
-        public string Description { get; set; } = null!;
         public string Director { get; set; } = null!;
 
         public DateOnly ReleaseDate { get; set; }
