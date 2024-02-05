@@ -247,18 +247,18 @@
     line-height: 1;
     font-family: 'Space Grotesk';
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes .mb-venue {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes .mb-venue {
     padding: 15px 0 10px;
     border-bottom: 1px solid #222222;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes .mb-room-name h4 {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes .mb-room-name h4 {
     margin: 0;
     font-size: 14px;
     font-weight: 500;
     color: #222;
     font-family: 'Space Grotesk';
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes ul.mb-tab-showtime li {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes ul.mb-tab-showtime li {
     display: inline-block;
     border: 1px solid #cbcabe;
     color: #222;
@@ -271,33 +271,33 @@
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes ul.mb-tab-showtime li span {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes ul.mb-tab-showtime li span {
     font-size: 14px;
     color: #222;
     font-family: 'Space Grotesk';
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes ul.mb-tab-showtime li:hover {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes ul.mb-tab-showtime li:hover {
     border-color: #222;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes ul.mb-tab-showtime li a {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes ul.mb-tab-showtime li a {
     display: block;
     padding: 5px 15px;
     text-decoration: none;
     color: #d96c2c;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes ul.mb-tab-showtime {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes ul.mb-tab-showtime {
     padding: 0;
     margin: 0 0 15px;
     list-style: none;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes .mb-venue h3 {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes .mb-venue h3 {
     margin: 0;
     font-size: 20px;
     font-weight: 600;
     color: #636363;
     font-family: Space Grotesk;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types .showtimes {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types .showtimes {
     padding: 0 40px;
 }
 .mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs {
@@ -306,17 +306,17 @@
 .mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container.current {
     display: block;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content .mb-room-types ul.toggle-tabs {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1 .mb-room-types ul.toggle-tabs {
     padding: 20px 40px;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content.mb-showtimes .toggle-tabs .mb-city-name.current, .mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content.mb-showtimes .toggle-tabs .mb-room-type-name.current {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1.mb-showtimes .toggle-tabs .mb-city-name.current, .mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1.mb-showtimes .toggle-tabs .mb-room-type-name.current {
     background-color: #222;
     color: #FFF;
 }
 .mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs {
     margin: 0;
 }
-.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content.mb-showtimes .toggle-tabs .mb-city-name, .mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content.mb-showtimes .toggle-tabs .mb-room-type-name {
+.mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1.mb-showtimes .toggle-tabs .mb-city-name, .mb_booking_popup .mb-bp-container .mb-bp-content .collateral-tabs .tab-container .tab-content1.mb-showtimes .toggle-tabs .mb-room-type-name {
     border-radius: 5px;
     padding: 5px 10px;
     cursor: pointer;

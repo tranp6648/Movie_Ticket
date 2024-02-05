@@ -584,7 +584,7 @@ function Detail() {
                         </ul>
                         <dl className="collateral-tabs">
                             <dd className="tab-container current">
-                                <div className="tab-content mb-showtimes">
+                                <div className="tab-content1 mb-showtimes">
                                     <div className="mb-tabs-cities">
                                         <ul className="toggle-tabs">
                                             <li className="mb-city-name current">
@@ -594,7 +594,7 @@ function Detail() {
                                     </div>
                                     <div className="collateral-tabs">
                                         <dd className="tab-container current">
-                                            <div className="tab-content mb-room-types">
+                                            <div className="tab-content1 mb-room-types">
                                                 <ul className="toggle-tabs">
                                                     <li className="mb-room-type-name current">
                                                         3D                                </li>
@@ -604,7 +604,7 @@ function Detail() {
                                                 </ul>
                                                 <dl className="collateral-tabs">
                                                     <dd className="tab-container current">
-                                                        <div className="tab-content showtimes">
+                                                        <div className="tab-content1 showtimes">
                                                             {Info.map((info, index) => (
                                                                 <div className="mb-venue">
                                                                     <div className="venue-name mb-[11px]">

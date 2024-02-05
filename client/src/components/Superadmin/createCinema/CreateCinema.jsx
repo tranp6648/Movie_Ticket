@@ -1,16 +1,16 @@
-import image12 from '../images/1917.jpg';
+import image12 from '../../images/1917.jpg';
 import { useEffect, useState } from 'react';
 import { Form, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import ReactQuill from 'react-quill';
-import '../Admin/admin.css';
+
 import Pagination from 'react-paginate';
 import 'react-paginate/theme/basic/react-paginate.css';
 import Select from 'react-select';
 
-function Cinema() {
+function CreateCinema() {
 
 
     const location = useLocation();
@@ -263,6 +263,7 @@ function Cinema() {
         console.log(error.message)
     }
   }
+  
     return (
         <div>
 
@@ -271,37 +272,7 @@ function Cinema() {
 
 
 
-                <header className="main-header" style={{ zIndex: '20' }}>
-
-                    <a href="index2.html" className="logo"><b>Admin</b>LTE</a>
-
-                    <nav className="navbar navbar-static-top" role="navigation">
-                        <a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button">
-                            <span className="sr-only">Toggle navigation</span>
-                        </a>
-
-                        
-                        <a className="navbar-brand cursor-pointer" onClick={handleDropdownToggle}>
-                            <img src={image12} className="user-image" alt="Logo" />
-                            {/* You can also add text or other elements alongside the logo */}
-                            {username}
-                            &nbsp;
-                            <i className="fa fa-chevron-circle-down"></i>
-                        </a>
-                        {showDropdown && (
-                            <div className="dropdown">
-                                <a href="#" onClick={() => navigate('/Account')}>
-                                    <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
-                                </a>
-                                <a href="/account">
-                                    <i className="fa fa-user" aria-hidden="true"></i> Account
-                                </a>
-
-                                {/* Các mục khác của dropdown có thể được thêm vào đây */}
-                            </div>
-                        )}
-                    </nav>
-                </header>
+             
 
                 <aside className="main-sidebar " style={{ zIndex: '10' }}>
 
@@ -377,7 +348,7 @@ function Cinema() {
 
                                         </div>
                                         <div className="form-group">
-                                            <label >Branches</label>
+                                            <label >City</label>
                                             <Select options={Branches.map(genres => ({ value: genres.id, label: genres.city }))}
                                                 onChange={(selectedOption) => handleBracher(selectedOption)}
                                                 value={selectedBrancher}
@@ -538,4 +509,4 @@ function Cinema() {
 
     )
 }
-export default Cinema;
+export default CreateCinema;

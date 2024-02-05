@@ -392,7 +392,7 @@ function Account() {
                   <div className='u-columns col2-set'>
                     <div className='u-column1 col-1' style={{ width: '48%' }}>
                       <h2>Login</h2>
-                      <div className="tab-content hiraola-tab_content">
+                      <div className=" hiraola-tab_content">
                         <div id="Login" className={`tab-pane ${ActiveTab === 'Login' ? 'active show' : ''}`}>
                           {renderTabContent()}
                         </div>
