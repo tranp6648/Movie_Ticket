@@ -13,6 +13,8 @@ function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
   const IDAccount = location.state?.IDAccount || '';
+  const [total,settotal]=useState(0);
+ 
   const handleVNPaySuccess = async (Payment) => {
     try {
       const response = await fetch(`http://localhost:5231/api/Order/Add`, {
@@ -164,6 +166,9 @@ function Cart() {
 
     return result;
   };
+  useEffect(()=>{
+    settotal(totalPrice.toFixed(0))
+  },[totalPrice])
   return (
     <div>
       <Menu></Menu>
@@ -268,7 +273,7 @@ function Cart() {
                           </div>
                           <div className="total-cart-info">
                             <span className="text">Total</span>
-                            <span className="total-price">  ${totalPrice.toFixed(0)}</span>
+                            <span className="total-price">  ${total}</span>
                           </div>
                         </div>
                         <div className="cart-discount">
@@ -296,7 +301,7 @@ function Cart() {
   />
 )}  
                           */}
-                            <a href="" id="btn-checkout">
+                            <a className="cursor-pointer" onClick={()=>navigate(`/checkout`,{ state: { ID:IDAccount,IDtime:IDtime,IDAuth:ID,total:total } })}  id="btn-checkout">
                               Proceed to checkout    </a>
                           </div>
 

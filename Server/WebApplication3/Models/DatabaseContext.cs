@@ -29,6 +29,8 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<CinemaBranch> CinemaBranches { get; set; }
 
+    public virtual DbSet<City> Cities { get; set; }
+
     public virtual DbSet<DetailAccountSeat> DetailAccountSeats { get; set; }
 
     public virtual DbSet<DetailActorMovie> DetailActorMovies { get; set; }
@@ -38,8 +40,6 @@ public partial class DatabaseContext : DbContext
     public virtual DbSet<DetailCityBranch> DetailCityBranches { get; set; }
 
     public virtual DbSet<DetailOrder> DetailOrders { get; set; }
-
-    public virtual DbSet<District> Districts { get; set; }
 
     public virtual DbSet<Event> Events { get; set; }
 
@@ -70,12 +70,18 @@ public partial class DatabaseContext : DbContext
             entity.ToTable("Account");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Address)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.FullName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.FullName).HasMaxLength(250);
+            entity.Property(e => e.IdCity).HasColumnName("id_city");
+            entity.Property(e => e.OrderNote)
+                .HasMaxLength(255)
+                .HasDefaultValueSql("(NULL)")
+                .HasComment("");
             entity.Property(e => e.Password)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -85,6 +91,13 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.ZipCode)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.IdCityNavigation).WithMany(p => p.Accounts)
+                .HasForeignKey(d => d.IdCity)
+                .HasConstraintName("FK_Account_city");
         });
 
         modelBuilder.Entity<Actor>(entity =>
@@ -167,6 +180,17 @@ public partial class DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("city");
+        });
+
+        modelBuilder.Entity<City>(entity =>
+        {
+            entity.ToTable("city");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(150);
+            entity.Property(e => e.Type)
+                .HasMaxLength(150)
+                .HasColumnName("type");
         });
 
         modelBuilder.Entity<DetailAccountSeat>(entity =>
@@ -278,36 +302,17 @@ public partial class DatabaseContext : DbContext
                 .HasConstraintName("FK_DetailOrder_SeatMovie");
         });
 
-        modelBuilder.Entity<District>(entity =>
-        {
-            entity.ToTable("District");
-
-            entity.Property(e => e.Id)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("ID");
-            entity.Property(e => e.Idcity).HasColumnName("IDCity");
-            entity.Property(e => e.NameDistrict)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
-            entity.HasOne(d => d.IdcityNavigation).WithMany(p => p.Districts)
-                .HasForeignKey(d => d.Idcity)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_District_Cinema_Branches");
-        });
-
         modelBuilder.Entity<Event>(entity =>
         {
             entity.ToTable("Event");
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.BannerUrl)
-                .HasMaxLength(255)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Description).HasColumnType("text");
             entity.Property(e => e.Title)
-                .HasMaxLength(250)
+                .HasMaxLength(100)
                 .IsUnicode(false);
         });
 
@@ -348,6 +353,7 @@ public partial class DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("order_code");
+            entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.IdAccount)

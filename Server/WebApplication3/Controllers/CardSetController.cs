@@ -121,6 +121,7 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
+       
         [HttpGet("ShowCard/{id}/{IDAccount}/{idshowtime}")]
         public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowCard(int id,int IDAccount,int idshowtime)
         {

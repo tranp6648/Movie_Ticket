@@ -30,6 +30,7 @@ import DetailEvent from './components/DetailEvent/DetailEvent';
 import Forgot from './components/Forgot/Forgot';
 import Voucher from './components/Voucher/Voucher';
 import CheckOutCart from './components/Checkout/CheckOutCart';
+import Order from './components/Order';
 function App() {
   return (
    <Router>
@@ -61,6 +62,7 @@ function App() {
     <Route path='/Forgot' element={<Forgot/>}/>
     <Route path='/Voucher' element={<Voucher/>}/>
     <Route path='/CheckOut' element={<CheckOutCart/>}/>
+    <Route path='/Order' element={<Order/>}/>
      </Routes>
    </Router>
   );

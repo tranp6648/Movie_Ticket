@@ -21,6 +21,16 @@ public partial class Account
 
     public int Accounttype { get; set; }
 
+    public string? ZipCode { get; set; }
+
+    public string? Address { get; set; }
+
+    public int? IdCity { get; set; }
+
+    public string? OrderNote { get; set; }
+
+    public virtual City? IdCityNavigation { get; set; }
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual ICollection<SeatAccount> SeatAccounts { get; set; } = new List<SeatAccount>();
