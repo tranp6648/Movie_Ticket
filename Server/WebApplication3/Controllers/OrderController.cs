@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
@@ -12,6 +13,24 @@ namespace WebApplication3.Controllers
         public OrderController(DatabaseContext dbContext)
         {
             _dbContext = dbContext;
+        }
+        [HttpGet("View")]
+        public async Task<ActionResult<IEnumerable<Order>>> ShowOrder()
+        {
+            try
+            {
+                var order = await _dbContext.Orders.Select(m => new
+                {
+                    orderCode = m.OrderCode,
+                    User = m.IdAccountNavigation.Username,
+                    Payment = m.Payment,
+                    Dateorder=m.OrderDate
+                }).ToListAsync();
+                return Ok(order);
+            }catch (Exception ex)
+            {
+                return Ok("Add order successfully");
+            }
         }
         [HttpPost("Add")]
         public IActionResult AddOrder(int id,[FromBody] Addorder order)

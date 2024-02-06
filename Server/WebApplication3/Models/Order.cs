@@ -13,6 +13,10 @@ public partial class Order
 
     public int IdAccount { get; set; }
 
+    public int Payment { get; set; }
+
+    public DateTime OrderDate { get; set; }
+
     public virtual ICollection<DetailOrder> DetailOrders { get; set; } = new List<DetailOrder>();
 
     public virtual Account IdAccountNavigation { get; set; } = null!;

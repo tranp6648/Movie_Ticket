@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\tranp\source\repos\WebApplication3\WebApplication3\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\tranp\source\repos\WebApplication3\WebApplication3\bin\Debug\net8.0\appsettings.json
 C:\Users\tranp\source\repos\WebApplication3\WebApplication3\bin\Debug\net8.0\WebApplication3.exe
@@ -414,6 +415,8 @@ D:\VisualStudioCode\movie_ticket1\Movie_Ticket\Server\WebApplication3\obj\Debug\
 D:\VisualStudioCode\movie_ticket1\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb
 D:\VisualStudioCode\movie_ticket1\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.genruntimeconfig.cache
 D:\VisualStudioCode\movie_ticket1\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\ref\WebApplication3.dll
+=======
+>>>>>>> 0d1514024bf7eb79a685be894cf7bf5dbb49702a
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\appsettings.Development.json
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\appsettings.json
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\WebApplication3.staticwebassets.runtime.json
@@ -451,6 +454,8 @@ D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Microsoft.OpenApi.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Mono.TextTemplating.dll
+D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\PayPal.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -554,6 +559,7 @@ D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\refint\WebApplication3.d
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.genruntimeconfig.cache
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\ref\WebApplication3.dll
+<<<<<<< HEAD
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Newtonsoft.Json.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\PayPal.dll
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\appsettings.Development.json
@@ -698,3 +704,5 @@ D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.dll
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\refint\WebApplication3.dll
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb
+=======
+>>>>>>> 0d1514024bf7eb79a685be894cf7bf5dbb49702a

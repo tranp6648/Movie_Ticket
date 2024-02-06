@@ -1,9 +1,286 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import Select from 'react-select';
-import './Checkout.css'
+import './Checkout.css';
+import Swal from 'sweetalert2';
+import VNPayButtonComponent from "../Paypal/Paypal";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+
 function CheckOutCart() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [isselectedRadio, setisselectedRadio] = useState(false);
+    const IDAccount = location.state?.ID || '';
+    const IDTime = location.state?.IDtime || '';
+    const IDAuth = location.state?.IDAuth || '';
+    const total = location.state?.total || '';
+    const [totalorder, settotalorder] = useState(0);
+    const [DetailVoucher, setDetailVoucher] = useState([]);
+    const handleVNPayError = (error) => {
+        // Handle VNPay error
+        console.error('VNPay payment error:', error);
+    };
+    useEffect(() => {
+        const fetchData = async () => {
+
+            try {
+                const response = await axios.get(`http://localhost:5231/api/CheckOut/GetVoucherAccount`)
+                setDetailVoucher(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData();
+    }, [])
+    useEffect(() => {
+        settotalorder(total);
+    }, [])
+   
+    const [Movie, setMovie] = useState([]);
+    const [seat, setseat] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+
+            try {
+                const response = await axios.get(`http://localhost:5231/api/CheckOut/ShowSeat/${IDAuth}/${IDAccount}/${IDTime}`)
+                setseat(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData();
+    }, [])
+    useEffect(() => {
+        const fetchData = async () => {
+
+            try {
+                const response = await axios.get(`http://localhost:5231/api/CheckOut/showInFoCard/${IDAuth}/${IDAccount}/${IDTime}`)
+                setMovie(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData();
+    }, [])
+
+    const handleUpdate = async () => {
+
+        try {
+
+            const response = await fetch(`http://localhost:5231/api/CheckOut/addOrder/${IDAccount}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    zipCode: FormData.ZipCode,
+
+                    address: FormData.Address,
+                    idCity: selectedCity?.value || selectedCity, // Use selectedCity.value,
+                    orderNote: FormData.OrderNote,
+                    fullName: FormData.FullName,
+                    email: FormData.Email,
+                    phone: FormData.Phone,
+                    totalPrice: totalorder,
+                    idAccount: IDAccount,
+                    idSeat: seat.map(item => item.id),
+                    idVoucher: selectedidvoucher.map(item => item)
+                }),
+            });
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Add order successfully",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
     const [show, setshow] = useState(false);
+    const [city, setcity] = useState([]);
+    const [voucher, setvoucher] = useState([]);
+    const [FormData, setFormData] = useState({
+        ZipCode: '',
+        Address: '',
+        OrderNote: '',
+        FullName: '',
+        Phone: '',
+        Email: '',
+        check: ''
+    })
+    const handlechange=(event)=>{
+        setFormData({ ...FormData, Email: event.target.value });
+    }
+    const [Email,setEmail]=useState('');
+    const [selectedVouchers, setSelectedVouchers] = useState([]);
+    const [selectedidvoucher, setselectedidvoucher] = useState([]);
+    const [unactive, setunactive] = useState(false);
+    const handleCheck = async () => {
+        const matchingCharge = voucher.find((charge) => charge.code === FormData.check);
+        const match = DetailVoucher.find(
+            (change) =>
+                (change.idAccount === IDAccount && change.iDvoucher !== matchingCharge.id) ||
+                (change.idAccount !== IDAccount && change.iDvoucher !== matchingCharge.id)
+        );
+        console.log(match)
+        if (matchingCharge.minprice <= totalorder && !selectedVouchers.includes(FormData.check) && match !== undefined) {
+            const discountAmount = (matchingCharge.discountPercent / 100) * totalorder;
+            const updatedTotalOrder = totalorder - discountAmount;
+
+            console.log(updatedTotalOrder);
+
+            settotalorder(updatedTotalOrder);
+
+            console.log(matchingCharge.id);
+            // Add the selected voucher to the list
+            setSelectedVouchers([...selectedVouchers, FormData.check]);
+            setselectedidvoucher([...selectedidvoucher, matchingCharge.id]);
+
+        } else if (matchingCharge.minprice > totalorder) {
+            Swal.fire({
+                icon: 'error',
+                title: "Total orders have not been reduced enough",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else if (selectedVouchers.includes(FormData.check)) {
+            // Handle the case where the voucher is already selected
+            Swal.fire({
+                icon: 'error',
+                title: "Voucher has already been selected",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: "Voucher is not exists",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
+
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get('http://localhost:5231/ApplyVoucher');
+            setvoucher(response.data);
+        }
+        fetchData();
+    }, [])
+    const [selectedCity, setselectedCity] = useState(null);
+    const handleCategoryChange = (selectedCategory) => {
+        setselectedCity(selectedCategory);
+    }
+    const [Account, setAccount] = useState([]);
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const response = await fetch(`http://localhost:5231/api/CheckOut/getAccount/${IDAccount}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setAccount(data)
+                    setFormData({
+                        FullName: data.fullName || '',
+                        ZipCode: data.zipcode || '',
+                        Phone: data.phone || '',
+                        Email: data.email || '',
+                        Address: data.streetAddress || ''
+                    })
+                    setselectedCity(data.iDcity);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchdata();
+    }, [IDAccount])
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const response = await axios.get("http://localhost:5231/api/CheckOut/city");
+                setcity(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchdata();
+    }, [])
+    
+    
+   
+    
+    const handlePaypal = async (details) => {
+        try {
+            await Promise.all([
+                new Promise(async (resolve) => {
+                  // Gọi setFormData
+                  await setFormData((prevFormData) => {
+                    console.log('Inside setFormData callback - Updated FormData:', prevFormData);
+                    // Thực hiện xử lý cập nhật dữ liệu trong callback này nếu cần
+                    resolve(prevFormData);
+                    return prevFormData;
+                  });
+                }),
+                new Promise(async (resolve) => {
+                  // Gọi setselectedCity
+                  await setselectedCity((prevCity) => {
+                    console.log('Inside setselectedCity callback - Updated City:', prevCity);
+                    // Thực hiện xử lý cập nhật dữ liệu trong callback này nếu cần
+                    resolve(prevCity);
+                    return prevCity;
+                  });
+                }),
+              ])
+              .then(async ([updatedFormData, updatedCity]) => {
+                  // Log dữ liệu sau khi đã được cập nhật
+                  try {
+
+                    const response = await fetch(`http://localhost:5231/api/CheckOut/PaymentByPaypal/${IDAccount}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            zipCode: updatedFormData.ZipCode,
+        
+                            address: updatedFormData.Address,
+                            idCity: updatedCity?.value || updatedCity, // Use selectedCity.value,
+                            orderNote: updatedFormData.OrderNote,
+                            fullName: updatedFormData.FullName,
+                            email: updatedFormData.Email,
+                            phone: updatedFormData.Phone,
+                            totalPrice: totalorder,
+                            idAccount: IDAccount,
+                            idSeat: seat.map(item => item.id),
+                            idVoucher: selectedidvoucher.map(item => item)
+                        }),
+                    });
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "Add order successfully",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+                })
+      
+          // Log FormData sau khi đã được cập nhật
+         
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    
     return (
         <div>
             <Menu></Menu>
@@ -45,10 +322,10 @@ function CheckOutCart() {
                                 <form action="" className="checkout_coupon woocommerce-form-coupon" style={{ height: '144px', transition: 'all ease 0.5s', display: `${show ? '' : 'none'}` }}>
                                     <p style={{ color: '#737373', marginBottom: '13px' }}>If you have a coupon code, please apply it below.</p>
                                     <p className="form-row form-row-first">
-                                        <input type="text" className="input-text" name="coupon_code" placeholder="Coupon code" />
+                                        <input type="text" className="input-text" value={FormData.check} onChange={(e) => setFormData({ ...FormData, check: e.target.value })} name="coupon_code" placeholder="Coupon code" />
                                     </p>
                                     <p className="form-row form-row-last" style={{ float: 'right' }}>
-                                        <button type="submit" className="apply_coupon" value={'Apply coupon'}>Apply coupon</button>
+                                        <button type="button" onClick={() => handleCheck()} className="apply_coupon" style={{ opacity: `${unactive ? '0.5' : ''}` }} disabled={unactive} value={'Apply coupon'}>Apply coupon</button>
                                     </p>
                                 </form>
                                 <form action="" className="checkout woocommerce-checkout">
@@ -57,49 +334,33 @@ function CheckOutCart() {
                                             <div className="woocommerce-billing-fields">
                                                 <h3 style={{ textTransform: 'uppercase', fontSize: '1.2em', marginTop: '0' }}>Billing details</h3>
                                                 <div className="woocommerce-billing-fields__field-wrapper">
-                                                    <p className="form-row form-row-first validate-required" id="billing_first_name_field">
+                                                    <p className="form-row form-row-first validate-required" id="billing_first_name_field" style={{ width: '100%' }}>
                                                         <label htmlFor="">
-                                                            First name &nbsp;
+                                                            Full name &nbsp;
                                                             <abbr title="" className="required" style={{ visibility: 'visible' }}>*</abbr>
                                                         </label>
                                                         <span className="woocommerce-input-wrapper">
-                                                            <input className="input-text" />
+                                                            <input className="input-text" value={FormData.FullName} onChange={(e) => setFormData({ ...FormData, FullName: e.target.value })} />
                                                         </span>
                                                     </p>
-                                                    <p className="form-row form-row-last validate-required" id="billing_first_name_field">
-                                                        <label htmlFor="">
-                                                            Last name &nbsp;
-                                                            <abbr title="" className="required" style={{ visibility: 'visible' }}>*</abbr>
-                                                        </label>
-                                                        <span className="woocommerce-input-wrapper">
-                                                            <input className="input-text" />
-                                                        </span>
-                                                    </p>
+
                                                     <p className="form-row form-row-wide woocommerce-validated" style={{ order: '3' }}>
                                                         <label htmlFor="">
-                                                            Company name &nbsp;
-                                                            <span className="optional">(optional)</span>
-                                                        </label>
-                                                        <span className="woocommerce-input-wrapper">
-                                                            <input className="input-text" />
-                                                        </span>
-                                                    </p>
-                                                    <p className="form-row form-row-wide address-field update_totals_on_change validate-required" style={{ order: '7' }}>
-                                                        <label htmlFor="">
-                                                            Country / Region &nbsp;
+                                                            ZIP Code &nbsp;
                                                             <abbr title="" className="required" style={{ visibility: 'visible' }}>*</abbr>
                                                         </label>
                                                         <span className="woocommerce-input-wrapper">
-                                                            <Select></Select>
+                                                            <input className="input-text" value={FormData.ZipCode} onChange={(e) => setFormData({ ...FormData, ZipCode: e.target.value })} />
                                                         </span>
                                                     </p>
-                                                    <p className="form-row address-field validate-required form-row-wide" style={{ order: '8' }}>
+
+                                                    <p className="form-row address-field validate-required form-row-wide" style={{ order: '11' }}>
                                                         <label htmlFor="">
                                                             Street address&nbsp;
                                                             <abbr title="" className="required" style={{ visibility: 'visible' }}>*</abbr>
                                                         </label>
                                                         <span className="woocommerce-input-wrapper">
-                                                            <input type="text" className="input-text " placeholder="House number and street name" />
+                                                            <input type="text" value={FormData.Address} onChange={(e) => setFormData({ ...FormData, Address: e.target.value })} className="input-text " placeholder="House number and street name" />
                                                         </span>
                                                     </p>
                                                     <p className="form-row address-field validate-required form-row-wide" style={{ order: '10' }}>
@@ -108,25 +369,19 @@ function CheckOutCart() {
                                                             <abbr title="" className="required" style={{ visibility: 'visible' }}>*</abbr>
                                                         </label>
                                                         <div className="woocommerce-input-wrapper">
-                                                            <input type="text" className="input-text" />
+                                                            <Select options={city.map(genres => ({ value: genres.id, label: genres.name }))} onChange={(selectedoption) => handleCategoryChange(selectedoption)}
+                                                                value={selectedCity} isOptionSelected={(option) => option.value === selectedCity}
+                                                            ></Select>
                                                         </div>
                                                     </p>
-                                                    <p className="form-row address-field validate-required validate-state form-row-wide" style={{ order: '11' }}>
-                                                        <label htmlFor="">
-                                                            State&nbsp;
-                                                            <abbr title="" className="required" style={{ visibility: 'visible' }}>*</abbr>
-                                                        </label>
-                                                        <span className="woocommerce-input-wrapper">
-                                                            <Select></Select>
-                                                        </span>
-                                                    </p>
+
                                                     <p className="form-row form-row-wide validate-required validate-phone" style={{ order: '4', width: '50%', paddingRight: '10px' }}>
                                                         <label htmlFor="">
                                                             Phone &nbsp;
                                                             <abbr title="" className="required" style={{ visibility: 'visible' }}>*</abbr>
                                                         </label>
                                                         <span className="woocommerce-input-wrapper">
-                                                            <input type="text" className="input-text" />
+                                                            <input type="text" value={FormData.Phone} onChange={(e) => setFormData({ ...FormData, Phone: e.target.value })} className="input-text" />
                                                         </span>
                                                     </p>
                                                     <p className="form-row form-row-wide validate-required validate-email" style={{ order: '5', width: '50%', paddingLeft: '10px' }}>
@@ -135,7 +390,7 @@ function CheckOutCart() {
                                                             <abbr title="" className="required" style={{ visibility: 'visible' }}>*</abbr>
                                                         </label>
                                                         <span className="woocommerce-input-wrapper">
-                                                            <input type="text" className="input-text" />
+                                                            <input type="text" className="input-text" value={FormData.Email} onChange={handlechange}/>
                                                         </span>
                                                     </p>
 
@@ -155,7 +410,7 @@ function CheckOutCart() {
                                                             <span className="optional">(optional)</span>
                                                         </label>
                                                         <span className="woocommerce-input-wrapper">
-                                                            <textarea name="" className="input-text " id="" cols="5" rows="2" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                                            <textarea name="" value={FormData.OrderNote} onChange={(e) => setFormData({ ...FormData, OrderNote: e.target.value })} className="input-text " id="" cols="5" rows="2" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                                         </span>
                                                     </p>
                                                 </div>
@@ -173,25 +428,25 @@ function CheckOutCart() {
                                                 <tbody>
                                                     <tr className="cart_item">
                                                         <td className="product-name">
-                                                            <a href="" style={{ color: '#000000', borderBottom: '1px solid #d96c2c', fontWeight: 'normal' }}>The Witcher Season 2</a>
+                                                            <a href="" style={{ color: '#000000', borderBottom: '1px solid #d96c2c', fontWeight: 'normal', fontFamily: 'Space Grotesk' }}>{Movie.movie || ''}</a>
                                                             &nbsp;
                                                             <strong className="product-quantity" style={{ color: '#737373' }}> &nbsp;× 1</strong>
                                                             <dl className="variation">
                                                                 <dt className="variation-Date" style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>Date:</dt>
                                                                 <dd className="variation-Date">
-                                                                    <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>05-03-2026 7:30 am</p>
+                                                                    <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>{new Date(Movie.date).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric' })}</p>
                                                                 </dd>
                                                                 <dt className="variation-Date" style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>Room:</dt>
                                                                 <dd className="variation-Date">
-                                                                    <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>IMAX</p>
+                                                                    <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>{Movie.room}</p>
                                                                 </dd>
                                                                 <dt className="variation-Date" style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>Seat:</dt>
                                                                 <dd className="variation-Date">
-                                                                    <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>G24</p>
+                                                                    <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}> {seat.map(movie => movie.name).join(', ')}</p>
                                                                 </dd>
                                                                 <dt className="variation-Date" style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>Address:</dt>
                                                                 <dd className="variation-Date">
-                                                                    <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>San Francisco, California</p>
+                                                                    <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>{Movie.address}</p>
                                                                 </dd>
                                                             </dl>
                                                         </td>
@@ -201,7 +456,7 @@ function CheckOutCart() {
                                                                     <span className="woocommerce-Price-currencySymbol">
                                                                         $
                                                                     </span>
-                                                                    40.00
+                                                                    {total}
                                                                 </bdi>
                                                             </span>
                                                         </td>
@@ -229,7 +484,7 @@ function CheckOutCart() {
                                                                     <span className="woocommerce-Price-currencySymbol">
                                                                         $
                                                                     </span>
-                                                                    40.00
+                                                                    {totalorder}
                                                                 </bdi>
                                                             </span>
                                                         </td>
@@ -239,31 +494,40 @@ function CheckOutCart() {
                                             <div id="payment" className="woocommerce-checkout-payment">
                                                 <ul className="wc_payment_methods payment_methods methods">
                                                     <li className="wc_payment_method payment_method_bacs">
-                                                        <input type="radio" id="payment_method_bacs" className="input-radio" />
+                                                        <input type="radio" id="payment_method_bacs" className="input-radio" checked={isselectedRadio} onChange={() => setisselectedRadio(!isselectedRadio)} />
                                                         <label htmlFor="">
                                                             Direct bank transfer 	</label>
-                                                            <div className="payment_box payment_method_bacs">
-                                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                                                            </div>
+                                                        <div className="payment_box payment_method_bacs" style={{ display: `${isselectedRadio ? '' : 'none'}` }}>
+                                                            <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
+                                                            <VNPayButtonComponent
+                                                                type="button"
+                                                                amount={`${total}`}
+                                                                Email={Email}
+                                                                FormData={FormData}
+                                                                onSuccess={handlePaypal}
+                                                                onError={handleVNPayError}
+                                                                setFormData={setFormData}
+                                                            />
+                                                        </div>
                                                     </li>
                                                     <li className="wc_payment_method payment_method_bacs">
-                                                        <input type="radio" id="payment_method_bacs" className="input-radio" />
+                                                        <input type="radio" id="payment_method_bacs" className="input-radio" checked={!isselectedRadio} onChange={() => setisselectedRadio(!isselectedRadio)} />
                                                         <label htmlFor="">
-                                                        Cash on delivery 	</label>
-                                                            <div className="payment_box payment_method_bacs">
-                                                                <p>Pay with cash upon delivery.</p>
-                                                            </div>
+                                                            Cash on delivery 	</label>
+                                                        <div className="payment_box payment_method_bacs" style={{ display: `${!isselectedRadio ? '' : 'none'}` }}>
+                                                            <p>Pay with cash upon delivery.</p>
+                                                        </div>
                                                     </li>
                                                 </ul>
                                                 <div className="form-row place-order">
                                                     <div className="woocommerce-terms-and-conditions-wrapper">
                                                         <div className="woocommerce-privacy-policy-text">
                                                             <p style={{ color: '#737373', fontFamily: 'Space Grotesk' }}>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our </p>
-                                                            <a href="" className="woocommerce-privacy-policy-link" style={{color:'#d96c2c',textDecoration:'none',background:'transparent'}}>privacy policy</a>
+                                                            <a className="woocommerce-privacy-policy-link" style={{ color: '#d96c2c', textDecoration: 'none', background: 'transparent' }}>privacy policy</a>
                                                             .
                                                         </div>
                                                     </div>
-                                                    <button id="place_order" className="button alt" style={{float:'right',backgroundColor:'#333'}} value={'Place order'}>Place order</button>
+                                                    <button type="button" id="place_order" className="button alt" onClick={handleUpdate} style={{ float: 'right', backgroundColor: '#333' }} value={'Place order'} >Place order</button>
                                                 </div>
                                             </div>
                                         </div>

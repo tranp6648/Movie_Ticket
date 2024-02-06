@@ -2,31 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 const PayPalButtonComponent = ({ amount, onSuccess, onError }) => {
-  const [userBalance, setUserBalance] = useState(0);
 
-  useEffect(() => {
-    // Make a request to get the user's account balance
-    // Replace the following line with your actual API request
-    const fetchUserBalance = async () => {
-      try {
-        // Make a request to get the user's balance from your backend
-        const response = await fetch('/api/getUserBalance');
-        const data = await response.json();
-        setUserBalance(data.balance);
-      } catch (error) {
-        console.error('Error fetching user balance:', error);
-      }
-    };
 
-    fetchUserBalance();
-  }, []);
+  const [formData, setFormData] = useState({
+    Email: 'ads',
+    // ... other form fields ...
+  });
+   const handleChange = (event) => {
+    // Update the Email field in FormData
+    setFormData({ ...formData, Email: event.target.value });
+  };
 
-  useEffect(() => {
-    // Check if the user's balance is less than or equal to the specified amount
-    if (userBalance !== null && userBalance <= amount) {
-      onError('Insufficient funds in your account.');
-    }
-  }, [userBalance, amount]);
 
   return (
     <PayPalScriptProvider options={{ 'client-id': 'AW0TVjvf0CnmXAgcA8R_4WvR188yiYKzv1vHy7DnyyqTMnPa9051afLMhGxzR026mAd6jqo9hFyJAJFE' }}>
@@ -42,6 +28,9 @@ const PayPalButtonComponent = ({ amount, onSuccess, onError }) => {
                 },
               },
             ],
+            payer: {
+              email_address: FormData.Email, // Include the Email prop in the order data
+            },
           });
         }}
         onApprove={(data, actions) => {
