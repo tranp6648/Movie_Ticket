@@ -1,0 +1,204 @@
+.elementor-38 .elementor-element.elementor-element-34407b9 {
+    margin-top: -10px;
+    margin-bottom: 0px;
+    padding: 0px 0px 65px 0px;
+}
+.elementor-38 .elementor-element.elementor-element-49147d5 .ova-heading {
+    text-align: center;
+}
+.elementor-38 .elementor-element.elementor-element-49147d5 > .elementor-widget-container {
+    margin: 0px 0px 30px 0px;
+}
+.ova-heading i, .ova-heading svg, .ova-heading path {
+    display: inline-block;
+    font-size: 24px;
+    width: 1em;
+    height: 1em;
+    color: #d96c2c;
+    fill: #d96c2c;
+    margin-bottom: 13px;
+}
+.ova-heading .sub-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #737373;
+    line-height: 1.2;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+.ova-heading .title {
+    margin: 0;
+    font-size: 50px;
+    line-height: 1.2;
+    white-space: pre-line;
+}
+.wpcf7 .screen-reader-response {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    word-wrap: normal !important;
+}
+.ova-ctform7 .two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.ova-ctform7 .ova_wrap_input {
+    width: 100%;
+}
+.ova-ctform7 .ova-submit {
+    display: flex;
+    /* display: inline-block; */
+    margin-top: 20px;
+    text-align: center;
+    justify-content: center;
+    
+}
+.ova-ctform7 .ova-submit input[type=submit]:hover {
+    border-color: #d96c2c !important;
+    background-color: transparent;
+    color: #d96c2c !important;
+}
+.ova-ctform7 .ova-submit input[type=submit] {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 18px 50px;
+    border: 2px solid transparent;
+    position: relative;
+    background-color: #d96c2c;
+}
+.elementor .elementor-background-overlay, .elementor .elementor-background-slideshow {
+    height: 100%;
+    width: 100%;
+    top: 116vh;
+    left: 0;
+    position: absolute;
+}
+.ova-contact-info .content .tittle {
+    font-size: 24px;
+    color: #000000 !important;
+    margin: 0 0 24px 0;
+}
+.ova-contact-info .content .info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.elementor-38 .elementor-element.elementor-element-12ef2eb .ova-contact-info .background {
+    opacity: 0.05;
+}
+.ova-contact-info .border-wrapper {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    border: 2px solid transparent;
+}
+.ova-contact-info .overlay1 {
+    transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    -webkit-transition: all 0.5s linear;
+    -o-transition: all 0.5s linear;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+}
+.ova-contact-info .background {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    opacity: 0.05;
+    background-position: center right;
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+.ova-contact-info .content .info .item a {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    color: #737373;
+    white-space: pre-line;
+    font-size: 16px;
+}
+.ova-contact-info .content .info .item a:hover {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    color: #d96c2c;
+}
+.ova-contact-info:hover .border-wrapper {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    border-color: #d96c2c;
+}
+.ova-contact-info .content .info .item p {
+    margin: 0;
+    white-space: pre-line;
+   
+    color: #737373;
+    font-family: 'Space Grotesk';
+}
+.elementor-column-gap-extended>.elementor-column>.elementor-element-populated {
+    padding: 15px;
+}
+
+.ova-contact-info {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    padding: 45px 50px;
+    box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.05);
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.elementor-38 .elementor-element.elementor-element-3e5e475 > .elementor-background-overlay {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/background-map-contact-page.jpg);
+    background-position: 0px 87px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.1;
+    mix-blend-mode: luminosity;
+}
+.elementor-38 .elementor-element.elementor-element-3e5e475 {
+    padding: 0px 0px 110px 0px;
+}
+.wpcf7-form-control {
+    font-size: 14px;
+    line-height: 1.2;
+    color: #737373;
+    width: 100%;
+    padding: 19px 30px;
+    background-color: #f3f3f3;
+    outline: none;
+}
