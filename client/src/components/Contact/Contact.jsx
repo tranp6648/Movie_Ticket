@@ -1,7 +1,82 @@
+import { useLocation } from "react-router-dom";
 import Menu from "../Menu/Menu";
 import FooterHome from "../footer/FooterHome";
 import './Contact.css';
+import Swal from 'sweetalert2';
+import { useEffect, useState } from "react";
 function Contact() {
+    const location = useLocation();
+    const ID = location.state?.IDAccount || '';
+    const [FormData,setFormData]=useState({
+        Name:'',
+        Email:'',
+        Phone:'',
+        Subject:'',
+        Comment:'',
+    })
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const response = await fetch(`http://localhost:5231/api/CheckOut/getAccount/${ID}`);
+                if (response.ok) {
+                    const data = await response.json();
+     
+                    setFormData({
+                        Name: data.fullName || '',
+                      
+                        Phone: data.phone || '',
+                        Email: data.email || '',
+                       
+                    })
+                   
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchdata();
+    }, [ID])
+    const handleSubmit=async(e)=>{
+        e.preventDefault();
+        if(FormData.Email==''|| FormData.Name=='' || FormData.Phone=='' || FormData.Comment=='' || FormData.Subject==''){
+            Swal.fire({
+                icon: 'error',
+                title: "Please complete all information",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+        }else{
+            try{
+                const response = await fetch('http://localhost:5231/api/Order/SendContact', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: FormData.Name, email: FormData.Email, phone: FormData.Phone, subject: FormData.Subject, comment: FormData.Comment}),
+                  })
+                  if(response.ok){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Add Genre success',
+                        showConfirmButton: false,
+                        timer: 1500,
+                      })
+                      FormData.Email=''
+                      setFormData({
+                        Name:'',
+                        Email:'',
+                        Phone:'',
+                        Subject:'',
+                        Comment:'',
+                      })
+                   
+                  }
+            }catch(error){
+                console.log(error);
+            }
+        }
+       
+    }
     return (
         <div>
             <Menu></Menu>
@@ -45,13 +120,13 @@ function Contact() {
                                                 <div className="screen-reader-response">
                                                     
                                                 </div>
-                                                <form action="" className="wpcf7-form init">
+                                                <form action="" onSubmit={handleSubmit} className="wpcf7-form init">
                                                     <div className="ova-ctform7">
                                                         <div className="two-column">
                                                             <div className="name ova_wrap_input">
                                                                 <p>
                                                                     <span className="wpcf7-form-control-wrap">
-                                                                        <input type="text" className="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" placeholder="Your Name" />
+                                                                        <input type="text" value={FormData.Name} onChange={(e) => setFormData({ ...FormData, Name: e.target.value })} className="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" placeholder="Your Name" />
                                                                        
                                                                     </span>
                                                                 </p>
@@ -59,7 +134,7 @@ function Contact() {
                                                             <div className="email ova_wrap_input">
                                                                 <p>
                                                                     <span className="wpcf7-form-control-wrap">
-                                                                    <input type="email" className="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email" placeholder="Email Adress" />
+                                                                    <input type="email" value={FormData.Email} onChange={(e) => setFormData({ ...FormData, Email: e.target.value })} className="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email" placeholder="Email Adress" />
                                                                     </span>
                                                                 </p>
                                                          
@@ -69,14 +144,14 @@ function Contact() {
                                                             <div className="phone ova_wrap_input">
                                                                 <p>
                                                                     <span className="wpcf7-form-control-wrap">
-                                                                        <input type="text" className="wpcf7-form-control wpcf7-tel wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-tel" placeholder="Phone" />
+                                                                        <input type="text" value={FormData.Phone} onChange={(e) => setFormData({ ...FormData, Phone: e.target.value })} className="wpcf7-form-control wpcf7-tel wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-tel" placeholder="Phone" />
                                                                     </span>
                                                                 </p>
                                                             </div>
                                                             <div className="subject ova_wrap_input">
                                                                 <p>
                                                                     <span className="wpcf7-form-control-wrap">
-                                                                        <input type="text" className="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" placeholder="Subject" />
+                                                                        <input type="text" value={FormData.Subject} onChange={(e) => setFormData({ ...FormData, Subject: e.target.value })} className="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" placeholder="Subject" />
                                                                     </span>
                                                                 </p>
                                                             </div>
@@ -84,7 +159,7 @@ function Contact() {
                                                         <div className="message ova_wrap_input">
                                                             <p>
                                                                 <span className="wpcf7-form-control-wrap">
-                                                                    <textarea name="" id="" cols="40" rows="10" className="wpcf7-form-control wpcf7-textarea wpcf7-validates-as-required" placeholder="Write a Comment"></textarea>
+                                                                    <textarea name="" value={FormData.Comment} onChange={(e) => setFormData({ ...FormData, Comment: e.target.value })}  id="" cols="40" rows="10" className="wpcf7-form-control wpcf7-textarea wpcf7-validates-as-required" placeholder="Write a Comment"></textarea>
                                                                 </span>
                                                             </p>
                                                         </div>

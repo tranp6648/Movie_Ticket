@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
+using System.Net;
 using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
@@ -76,7 +78,37 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpPost("SendContact")]
+        public IActionResult SendContact([FromBody] SendContact sendContact)
+        {
+            try
+            {
+                SendEmail(sendContact.Email, "Contact Information", $"Name:{sendContact.Name}\n Email:{sendContact.Email}\n Phone:{sendContact.Phone}\n Subject:{sendContact.subject}\n Comment:{sendContact.Comment}");
+                return Ok("Send Successfully");
+            }catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        private void SendEmail(string to, string subject, string body)
+        {
+            using (var client = new SmtpClient("smtp.gmail.com"))
+            {
+                client.Port = 587;
+                client.Credentials = new NetworkCredential("tranp6648@gmail.com", "czvy qzyc vpes whkj");
+                client.EnableSsl = true;
+                var message = new MailMessage
+                {
+                    From = new MailAddress("tranp6648@gmail.com"),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = false
+                };
+                message.To.Add(to);
+                client.Send(message);
 
+            }
+        }
         [HttpGet("ViewCard/{id}")]
         public async Task<ActionResult<IEnumerable<DetailOrder>>> ViewCard(int id)
         {
