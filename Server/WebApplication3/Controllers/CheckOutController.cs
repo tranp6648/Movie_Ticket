@@ -104,7 +104,7 @@ namespace WebApplication3.Controllers
                 var DetailVoucher = await _dbContext.UserVouchers.Select(m => new
                 {
                     IDAccount = m.IdAccount,
-                    IDvoucher = m.VoucherId,
+                    IDvoucher = m.IdVoucher,
                 }).ToListAsync();
                 return Ok(DetailVoucher);
             }catch(Exception ex)
@@ -112,8 +112,8 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
-        [HttpPost("PaymentByPaypal/{id}")]
-        public IActionResult PaymentByPaypal(int id, [FromBody] AddCheckout addCheckout)
+        [HttpPost("PaymentByPaypal/{id}/{idtime}")]
+        public IActionResult PaymentByPaypal(int id,int idtime, [FromBody] AddCheckout addCheckout)
         {
             try
             {
@@ -148,6 +148,7 @@ namespace WebApplication3.Controllers
                     {
                         Idorder = idorder,
                         Idseat = seatid,
+                        Idshowtime=idtime,
                     };
                     _dbContext.DetailOrders.Add(detailorder);
                 }
@@ -165,12 +166,13 @@ namespace WebApplication3.Controllers
                 {
                     foreach (int idvoucher in addCheckout.IdVoucher)
                     {
-                        if (_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.VoucherId == idvoucher))
+                        if (_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.IdVoucher == idvoucher))
                         {
                             var voucher = new UserVoucher()
                             {
                                 IdAccount = addCheckout.IdAccount,
-                                VoucherId = idvoucher,
+                                IdVoucher = idvoucher,
+                                IdOrder = idorder,
                             };
                             _dbContext.UserVouchers.Add(voucher);
                         }
@@ -178,7 +180,7 @@ namespace WebApplication3.Controllers
                     }
                     foreach (int idvoucher in addCheckout.IdVoucher)
                     {
-                        if (_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.VoucherId != idvoucher) || _dbContext.UserVouchers.Any(m => m.IdAccount != addCheckout.IdAccount && m.VoucherId != idvoucher))
+                        if (_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.IdVoucher != idvoucher) || _dbContext.UserVouchers.Any(m => m.IdAccount != addCheckout.IdAccount && m.IdVoucher != idvoucher))
                         {
                             var voucher = _dbContext.Vouchers.Find(idvoucher);
                             if (voucher.Quatity > 0)
@@ -191,6 +193,7 @@ namespace WebApplication3.Controllers
 
                     }
                 }
+                
                 _dbContext.SaveChanges();
                 return Ok("Add successfully");
             }
@@ -199,8 +202,8 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
-        [HttpPost("addOrder/{id}")]
-        public IActionResult Addorder(int id,[FromBody] AddCheckout addCheckout)
+        [HttpPost("addOrder/{id}/{idtime}")]
+        public IActionResult Addorder(int id,int idtime,[FromBody] AddCheckout addCheckout)
         {
             try
             {
@@ -235,6 +238,7 @@ namespace WebApplication3.Controllers
                     {
                         Idorder = idorder,
                         Idseat = seatid,
+                        Idshowtime = idtime,
                     };
                     _dbContext.DetailOrders.Add(detailorder);
                 }
@@ -252,12 +256,13 @@ namespace WebApplication3.Controllers
                 {
                     foreach(int idvoucher  in addCheckout.IdVoucher)
                     {
-                        if(_dbContext.UserVouchers.Any(m=>m.IdAccount==addCheckout.IdAccount && m.VoucherId == idvoucher))
+                        if(_dbContext.UserVouchers.Any(m=>m.IdAccount==addCheckout.IdAccount && m.IdVoucher == idvoucher))
                         {
                             var voucher = new UserVoucher()
                             {
                                 IdAccount = addCheckout.IdAccount,
-                                VoucherId = idvoucher,
+                                IdVoucher = idvoucher,
+                                IdOrder=idorder,
                             };
                             _dbContext.UserVouchers.Add(voucher);
                         }
@@ -265,7 +270,7 @@ namespace WebApplication3.Controllers
                     }
                     foreach (int idvoucher in addCheckout.IdVoucher)
                     {
-                        if(_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.VoucherId != idvoucher) || _dbContext.UserVouchers.Any(m => m.IdAccount != addCheckout.IdAccount && m.VoucherId != idvoucher)){
+                        if(_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.IdVoucher != idvoucher) || _dbContext.UserVouchers.Any(m => m.IdAccount != addCheckout.IdAccount && m.IdVoucher != idvoucher)){
                             var voucher = _dbContext.Vouchers.Find(idvoucher);
                             if (voucher.Quatity > 0)
                             {

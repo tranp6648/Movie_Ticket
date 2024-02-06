@@ -17,6 +17,8 @@ public partial class Showtime
 
     public virtual ICollection<DetailAccountSeat> DetailAccountSeats { get; set; } = new List<DetailAccountSeat>();
 
+    public virtual ICollection<DetailOrder> DetailOrders { get; set; } = new List<DetailOrder>();
+
     public virtual Auditorium IdAuditoriumsNavigation { get; set; } = null!;
 
     public virtual Movie IdMovieNavigation { get; set; } = null!;

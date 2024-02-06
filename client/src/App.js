@@ -35,6 +35,9 @@ import Forgot from './components/Forgot/Forgot';
 import Voucher from './components/Voucher/Voucher';
 import CheckOutCart from './components/Checkout/CheckOutCart';
 import Order from './components/Order';
+import DetailOrder from './components/DetailOrder';
+import Myorder from './components/MyAccount/Myorder';
+import Contact from './components/Contact/Contact';
 function App() {
   return (
    <Router>
@@ -74,6 +77,9 @@ function App() {
     <Route path='/Voucher' element={<Voucher/>}/>
     <Route path='/CheckOut' element={<CheckOutCart/>}/>
     <Route path='/Order' element={<Order/>}/>
+    <Route path='/DetailOrder' element={<DetailOrder/>}/>
+    <Route path='/Myorder' element={<Myorder/>}/>
+    <Route path='/Contact' element={<Contact/>}/>
      </Routes>
    </Router>
   );

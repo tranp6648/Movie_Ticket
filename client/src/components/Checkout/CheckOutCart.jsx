@@ -68,7 +68,7 @@ function CheckOutCart() {
 
         try {
 
-            const response = await fetch(`http://localhost:5231/api/CheckOut/addOrder/${IDAccount}`, {
+            const response = await fetch(`http://localhost:5231/api/CheckOut/addOrder/${IDAccount}/${IDTime}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -241,7 +241,7 @@ function CheckOutCart() {
                   // Log dữ liệu sau khi đã được cập nhật
                   try {
 
-                    const response = await fetch(`http://localhost:5231/api/CheckOut/PaymentByPaypal/${IDAccount}`, {
+                    const response = await fetch(`http://localhost:5231/api/CheckOut/PaymentByPaypal/${IDAccount}/${IDTime}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

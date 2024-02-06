@@ -290,6 +290,7 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Idorder).HasColumnName("IDorder");
             entity.Property(e => e.Idseat).HasColumnName("IDSeat");
+            entity.Property(e => e.Idshowtime).HasColumnName("IDshowtime");
 
             entity.HasOne(d => d.IdorderNavigation).WithMany(p => p.DetailOrders)
                 .HasForeignKey(d => d.Idorder)
@@ -300,6 +301,11 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.Idseat)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetailOrder_SeatMovie");
+
+            entity.HasOne(d => d.IdshowtimeNavigation).WithMany(p => p.DetailOrders)
+                .HasForeignKey(d => d.Idshowtime)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DetailOrder_Showtimes");
         });
 
         modelBuilder.Entity<Event>(entity =>
@@ -424,15 +430,20 @@ public partial class DatabaseContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdAccount).HasColumnName("idAccount");
-            entity.Property(e => e.VoucherId).HasColumnName("VoucherID");
+            entity.Property(e => e.IdOrder).HasColumnName("idOrder");
+            entity.Property(e => e.IdVoucher).HasColumnName("ID_Voucher");
 
             entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.UserVouchers)
                 .HasForeignKey(d => d.IdAccount)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserVoucher_Account");
 
-            entity.HasOne(d => d.Voucher).WithMany(p => p.UserVouchers)
-                .HasForeignKey(d => d.VoucherId)
+            entity.HasOne(d => d.IdOrderNavigation).WithMany(p => p.UserVouchers)
+                .HasForeignKey(d => d.IdOrder)
+                .HasConstraintName("FK_UserVoucher_Order");
+
+            entity.HasOne(d => d.IdVoucherNavigation).WithMany(p => p.UserVouchers)
+                .HasForeignKey(d => d.IdVoucher)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserVoucher_Vouchers");
         });
