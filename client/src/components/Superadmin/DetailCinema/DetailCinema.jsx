@@ -40,6 +40,7 @@ function DetailCinema() {
   const [IsClosingPopup, setIsClosingPopup] = useState(false);
   const [isPopupVisible, setPopupVisibility] = useState(false);
 
+  const [quantityRoom, setQuantityRoom] = useState(0);
   const [seatCounts, setSeatCounts] = useState({});
   const [roomDetails, setRoomDetails] = useState([]);
   const [vipSeats, setVipSeats] = useState({});
@@ -217,7 +218,7 @@ function DetailCinema() {
     setPopupVisibility(true);
   };
 
-  const [quantityRoom, setQuantityRoom] = useState(0);
+  
 
   const handleQuantityRoomChange = (e) => {
     const value = parseInt(e.target.value, 10);
@@ -264,21 +265,11 @@ function DetailCinema() {
     const newRoomSeats = Array.from({ length: quantityRoom }, () => []);
     setRoomSeats(newRoomSeats);
   }, [quantityRoom]);
-
-  // Hàm để tạo ra bố cục ghế
-//   const generateSeats = (index, seatCount) => {
-//     // Tạo ra một array mới với số lượng ghế đã nhập
-//     const newSeats = Array.from(
-//       { length: seatCount },
-//       (_, i) => ` ${i + 1}`
-//     );
-//     // Cập nhật state với array mới cho phòng hiện tại
-//     setRoomSeats((prevSeats) => {
-//       const updatedSeats = [...prevSeats];
-//       updatedSeats[index] = newSeats;
-//       return updatedSeats;
-//     });
-//   };
+  useEffect(() => {
+    setRoomDetails(Array.from({ length: quantityRoom }, (_, index) => roomDetails[index] || { seatCount: 0, roomName: '' }));
+  }, [quantityRoom]);
+  
+ 
   const generateSeats = (index, seatCount) => {
     // Ensure seatCount is a number
     if (!Number.isNaN(seatCount) && seatCount <= 80) {
@@ -289,7 +280,7 @@ function DetailCinema() {
         return updatedSeats;
       });
   
-      // Update the seat count for the room
+     
       setSeatCounts((prevCounts) => ({
         ...prevCounts,
         [index]: seatCount,
@@ -316,8 +307,7 @@ function DetailCinema() {
   const toggleSeatVip = (seatNumber, roomIndex) => {
     setVipSeats((prevSeats) => {
       const newVipSeats = { ...prevSeats, [seatNumber]: !prevSeats[seatNumber] };
-      // After updating vipSeats, you could calculate the number of VIP seats and update a state or context
-      // For now, just logging the change
+      
       console.log(newVipSeats);
       return newVipSeats;
     });
@@ -359,10 +349,7 @@ const handleRoomNameChange = (index, name) => {
     setRoomDetails(newRoomDetails);
   };
   
-useEffect(() => {
-    setRoomDetails(Array.from({ length: quantityRoom }, (_, index) => roomDetails[index] || { seatCount: 0, roomName: '' }));
-  }, [quantityRoom]);
-  
+
   const renderRoomSetupForm = (index) => {
     return (
       <div className="w-[200px]">
@@ -425,15 +412,52 @@ useEffect(() => {
       }
     }
   };
-  const handleSave = () => {
-    // Implement the logic to save all room configurations
-    console.log("Saving all room configurations...");
-    // Potentially send data to the backend or update the state accordingly
-    // ...
+  const handleSave = async () => {
+    // Step 1: Collect data from state
+    const roomData = roomDetails.map((room, index) => {
+      return {
+        name: room.roomName,
+        cinemaID: ID, // This should be the ID you get from the state or props
+        seats: roomSeats[index].map((seat, seatIndex) => {
+          const isVip = vipSeats[seat];
+          return {
+            name: `Seat ${seatIndex + 1}`,
+            type: isVip ? 1 : 2, // Assuming 1 is for VIP and 2 is for standard seats
+          };
+        }),
+      };
+    });
   
-    // After saving, you can close the setup popup if needed
-    setSetupRoomPopupVisible(false);
+    // Step 2: Create data structure for backend
+    const payload = {
+      cinemaID: ID, // Replace with actual cinemaID from state or props
+      rooms: roomData,
+    };
+  
+    // Log the payload to the console
+    console.log("Data being sent to saveSeats API:", payload);
+  
+    // Step 3: Send data to backend
+    try {
+      const response = await axios.post('http://localhost:5231/api/Seat/saveSeats', payload);
+      // Replace 'your-backend-api-endpoint' with your actual backend API endpoint
+  
+      // Step 4: Handle response
+      if (response.status === 200) {
+        // Assuming 200 is the status code for a successful operation
+        Swal.fire('Success', 'All configurations have been saved successfully!', 'success');
+        // Here you might also want to update your state to reflect the changes
+        // ...
+      } else {
+        Swal.fire('Error', 'Failed to save configurations.', 'error');
+      }
+    } catch (error) {
+      console.error('Error saving configurations:', error);
+      Swal.fire('Error', 'There was a problem saving the configurations.', 'error');
+    }
   };
+  
+  
   return (
     <div>
       <div className="wrapper">
@@ -606,7 +630,7 @@ useEffect(() => {
         {isPopupVisible && (
           <div className="popup-container ">
             <div
-              className="popup-content "
+              className="popup-content"
               style={
                 IsClosingPopup
                   ? { ...popupContentStyle, ...closingAnimation }
@@ -684,10 +708,10 @@ useEffect(() => {
     </div>
               </div>
               <button
-        onClick={handleOpenSetupRoom1}
+        onClick={handleSave}
         className="close-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
       >
-        {activeTab < quantityRoom - 1 ? 'Next' : 'Save'}
+       SAVE
       </button>
             </div>
           </div>
