@@ -12,17 +12,17 @@ function AllMovies() {
     const location = useLocation();
 
     const ID = location.state?.ID || '';
-
+    const [searchTerm, setSearchtem] = useState('');
     const [activeIndex, setActiveIndex] = useState(null);
     const [filteredMovies, setFilteredMovies] = useState([]);
-    useEffect(() => {
+    const filteredGender =filteredMovies.filter(gen =>
 
-        handleActive(null);
-    }, []);
+        gen.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     useEffect(() => {
         const fetchdata = async () => {
             try {
-                const response = await axios.get("http://localhost:5231/api/Movie/getMovie")
+                const response = await axios.get("http://localhost:5231/api/Movie/ShowMovie")
                 setFilteredMovies(response.data);
                 console.log(response.data)
             } catch (error) {
@@ -31,81 +31,19 @@ function AllMovies() {
         }
         fetchdata();
     }, [])
-    const handleActive = (index) => {
-        setActiveIndex(index === activeIndex ? null : index);
-
-        
-        const selectedDate = index !== activeIndex ? nextFiveDays[index] : null;
-        setFilteredMovies((prevMovies) => {
-            if (index === null) {
-                // "All" tab is selected, show all movies
-                return Movies;
-            }
-
-            // Filter movies based on the selected date
-            return prevMovies.filter((movie) => {
-                // Extracting year, month, and day from the movie's releaseDate
-                const movieYear = parseInt(movie.releaseDate.split('-')[0]);
-                const movieMonth = parseInt(movie.releaseDate.split('-')[1]);
-                const movieDay = parseInt(movie.releaseDate.split('-')[2]);
-
-                // Comparing year, month, and day
-                return (
-                    movieYear === selectedDate.year &&
-                    movieMonth === selectedDate.month &&
-                    movieDay === selectedDate.day
-                );
-            });
-        });
-    };
+   
 
     const [currentPage, setCurrentPage] = useState(0);
     const handlePageclick = (data) => {
         setCurrentPage(data.selected);
     };
-    const getNextFiveDays = () => {
-        const today = new Date();
-        const nextFiveDays = [];
-
-        for (let i = 0; i < 5; i++) {
-            const date = new Date(today);
-            date.setDate(today.getDate() + i);
-
-            // Format date to "yyyy/MM/dd" including day of the week
-            const formattedDate = `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')} ${['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()]}`;
-
-            nextFiveDays.push({
-                year: date.getFullYear(),
-                month: date.getMonth() + 1, // Adding 1 because getMonth() returns zero-based month (0-11)
-                day: date.getDate(),
-                dayOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()],
-            });
-        }
-
-        return nextFiveDays;
-    };
-    const nextFiveDays = getNextFiveDays();
-    const selectedDate = nextFiveDays[2]; // Replace with your selected date
-
-    // Extracting year, month, and day from the selected date
-    const selectedYear = selectedDate.year;
-    const selectedMonth = selectedDate.month;
-    const selectedDay = selectedDate.day;
-
-
-    function formatDate(date) {
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-
-        return `${year}-${month}-${day}`;
-    }
+  
 
 
     useEffect(() => {
         const fetchdata = async () => {
             try {
-                const response = await axios.get("http://localhost:5231/api/Movie/getMovie")
+                const response = await axios.get("http://localhost:5231/api/Movie/ShowMovie")
                 setMovies(response.data);
                 console.log(response.data)
             } catch (error) {
@@ -116,7 +54,7 @@ function AllMovies() {
     }, [])
     const indexOflastgen = (currentPage + 1) * perPage;
     const indexOfFirtgen = indexOflastgen - perPage;
-    const currentGender = Movies.slice(indexOfFirtgen, indexOflastgen)
+    const currentGender = filteredGender.slice(indexOfFirtgen, indexOflastgen)
 
 
     return (
@@ -142,39 +80,26 @@ function AllMovies() {
                 <section className="elementor-section elementor-top-section elementor-element elementor-element-9845cb1 elementor-section-boxed elementor-section-height-default elementor-section-height-default mb-[31px]">
                     <div className="elementor-container elementor-column-gap-default">
                         <div className="w-[100%]">
-                            <ul className="mb-button-filter-ajax mb-date-tabs">
-                                <li className={`button-filter-ajax ${activeIndex === null ? 'current' : ''}`} onClick={() => handleActive(null)} >
-                                    <div className="day">
-                                        <span className="D_m_day">
-                                            <span className="m_day" style={{ fontFamily: 'Space Grotesk' }}>All</span>
-                                            <span className="m_day" style={{ fontFamily: 'Space Grotesk' }}></span>
-                                        </span>
-                                        <span className="d_day">
+                        <ul className="mb-button-filter-ajax mb-date-tabs">
 
-                                        </span>
-                                    </div>
-                                </li>
-                                {Array.isArray(nextFiveDays) &&
-                                    nextFiveDays.map((day, index) => (
-                                        <li className={`button-filter-ajax ${index === activeIndex ? 'current' : ''}`} onClick={() => handleActive(index)} key={index}>
-                                            <div className="day">
-                                                <span className="D_m_day">
-                                                    <span className="m_day" style={{ fontFamily: 'Space Grotesk' }}>{day.day}</span>
-                                                    <span className="m_day" style={{ fontFamily: 'Space Grotesk' }}>{day.dayOfWeek}</span>
-                                                </span>
-                                                <span className="d_day">
-                                                    <strong>{day.day}</strong>
-                                                </span>
-                                            </div>
-                                        </li>
-                                    ))}
+<form>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="category1">Select Country:</label>
+           
+                  <input type="text" id="search" name="search" placeholder="Enter your search term"  className="border border-gray-300 px-3 py-1 rounded-md focus:outline-none focus:border-blue-500" value={searchTerm} onChange={(e) => setSearchtem(e.target.value)} />
+        </div>
 
-                            </ul>
+
+    </div>
+</form>
+
+</ul>
                             <div className="elementor-widget-wrap elementor-element-populated">
                                 <div>
                                     <div className="elementor-widget-container">
                                         <div className="mb-movie-list mb-movie-list-template1 four_column">
-                                            {filteredMovies.map((Movies, index) => (
+                                            {currentGender.map((Movies, index) => (
                                                 <div className="mb-movie-item item-template1">
                                                     <a onClick={()=>navigate(`/Detail/${Movies.id}`,{ state: { ID:Movies.id,IDAccount:ID } })} style={{ boxShadow: 'none', textDecoration: 'none' }}>
                                                         <div className="movie-image">

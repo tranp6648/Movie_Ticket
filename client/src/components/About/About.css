@@ -1,0 +1,646 @@
+.elementor-30 .elementor-element.elementor-element-b05f2a6:not(.elementor-motion-effects-element-type-background), .elementor-30 .elementor-element.elementor-element-b05f2a6 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/background-dot-about-about-page.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.elementor-30 .elementor-element.elementor-element-b05f2a6 > .elementor-background-overlay {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/background-camera-about-about-page.png);
+    background-position: 200px 230px;
+    background-repeat: no-repeat;
+    background-size: 20% auto;
+    opacity: 0.15;
+    mix-blend-mode: luminosity;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+}
+ .elementor-background-overlay, .elementor-background-slideshow {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+.elementor-30 .elementor-element.elementor-element-8e6a5fb {
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    padding: 110px 0px 220px 0px;
+}
+.elementor-30 .elementor-element.elementor-element-030c5f4 {
+    width: auto;
+    max-width: auto;
+    bottom: 0px;
+}
+.elementor-30 .elementor-element.elementor-element-030c5f4 {
+    right: -101px;
+}
+ .elementor-30 .elementor-element.elementor-element-dd138d8 {
+    right: -5px;
+}
+.elementor-30 .elementor-element.elementor-element-dd138d8 {
+    
+    width: auto;
+    max-width: auto;
+    top: 21px;
+    z-index: 2;
+}
+.ova-video .ova-modal-container {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10;
+}
+ .elementor-30 .elementor-element.elementor-element-a8a71ed {
+    left: -30px;
+}
+.elementor-30 .elementor-element.elementor-element-a8a71ed {
+    width: auto;
+    max-width: auto;
+    top: 50px;
+    z-index: 2;
+}
+.elementor-30 .elementor-element.elementor-element-a8a71ed .ova-counter {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/background-experience-about-page.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 60px 0px 65px 40px;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner, .odometer.odometer-theme-default .odometer-digit .odometer-digit-inner {
+    text-align: left;
+    display: block;
+    position: absolute;
+    top: 74px;
+    left: 52px;
+    bottom: 0;
+    overflow: hidden;
+}
+.elementor-30 .elementor-element.elementor-element-1dd128e .elementor-icon-box-wrapper {
+    text-align: left;
+}
+.elementor-widget-icon-box.elementor-position-left .elementor-icon-box-wrapper, .elementor-widget-icon-box.elementor-position-right .elementor-icon-box-wrapper {
+    display: flex;
+}.elementor-widget-icon-box.elementor-position-left .elementor-icon-box-wrapper {
+    text-align: left;
+    flex-direction: row;
+}
+.elementor-button-wrapper .elementor-button .elementor-button-content-wrapper {
+    align-items: center;
+}
+.ova-images-slider .customNavigation {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 0 0 70px 0;
+}
+.ova-images-slider .customNavigation:before {
+    left: 0;
+}
+.ova-images-slider .customNavigation .next {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    width: 28px;
+    height: 28px;
+    border-radius: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px 0 0;
+}
+.ova-images-slider .customNavigation a.prev {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    background: #f3f3f3;
+}
+.ova-images-slider .customNavigation a.next {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    background: #d96c2c;
+    margin: 0;
+}
+.ova-images-slider .customNavigation .prev {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    width: 28px;
+    height: 28px;
+    border-radius: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px 0 0;
+}
+.ova-images-slider .customNavigation:before {
+    position: absolute;
+    top: 50%;
+    /* left: 2px; */
+    content: "";
+    width: 117px;
+    height: 1px;
+    background-color: #E0E0E0;
+    transform: translateY(-50%);
+    margin-left: -119px;
+}
+.ova-images-slider .customNavigation .prev:hover {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    background-color: #000000;
+    color: white !important;
+    cursor: pointer;
+}
+.ova-images-slider .customNavigation .prev i {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    color: black;
+}
+.ova-heading .title span.word {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/themes/aovis/assets/img/underline-heading.png);
+}
+#drap {
+    border-style: solid;
+    border-width: 0px 0px 5px 0px;
+    border-color: #D26A2B;
+    box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.05);
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    padding: 0px 0px 60px 0px;
+}
+.elementor-background-overlay, .elementor-background-slideshow{
+    height: 100%;
+    width: 100%;
+    top: 156vh !important;
+    left: 0;
+    position: absolute;
+}
+.ova-heading .title span {
+    position: relative;
+   
+    background-position: left bottom;
+    background-repeat: no-repeat;
+}
+.ova-our-team .author-image {
+    position: relative;
+    padding: 0 20px 20px 20px;
+    margin: 0 0 18px 0;
+    z-index: 2;
+}
+.ova-our-team .author-image:before {
+    width: 10px;
+    height: 184px;
+}
+.ova-our-team .author-image:before, .ova-our-team .author-image:after {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    content: "";
+    background-color: #d96c2c;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+}
+.ova-our-team .author-image .background {
+    position: absolute;
+    top: 26px;
+    left: 0;
+    width: 50%;
+    height: 85%;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}.ova-our-team .author-image .author {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+.ova-our-team .author-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.ova-our-team .author-info .name-job {
+    line-height: 1;
+    margin: 0 20px 15px 0;
+}
+.ova-our-team .author-info .name-job .name {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    margin: 0;
+    font-size: 24px;
+}
+.ova-our-team:hover .author-image:before {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    height: 230px;
+}
+ .socials .icon:hover i {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    color: #D26A2B;
+}
+.ova-our-team:hover .author-image .author {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    filter: brightness(0.5);
+}
+.ova-our-team:hover .author-image:after {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    width: 230px;
+}
+.ova-our-team .author-info .socials .icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #f3f3f3;
+}
+.ova-our-team .author-info .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 15px 0;
+}
+.ova-our-team .author-image:after {
+    width: 194px;
+    height: 10px;
+}
+.elementor-30 .elementor-element.elementor-element-2b67610 {
+    margin-top: -125px;
+    margin-bottom: 0px;
+    padding: 235px 0px 86px 0px;
+}
+.ova-counter .icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: #f3f3f3;
+    min-width: 83px;
+}
+#over > .elementor-background-overlay {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/bg-discover-more.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.7;
+    mix-blend-mode: luminosity;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+}
+.ova-images-slider .slider-images.owl-carousel .owl-stage-outer .item-images-slider {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    padding: 30px;
+}
+.elementor-30 .elementor-element.elementor-element-8e6a5fb > .elementor-background-overlay {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/02/bg-discover-more.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.7;
+    mix-blend-mode: luminosity;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+}
+.elementor-30 .elementor-element.elementor-element-8e6a5fb:not(.elementor-motion-effects-element-type-background), .elementor-30 .elementor-element.elementor-element-8e6a5fb > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+    background-color: #000000;
+}
+.ova-images-slider .customNavigation a:hover i {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    color: #fff;
+}
+.ova-images-slider .customNavigation:after{
+    position: absolute;
+    top: 50%;
+    /* left: 2px; */
+    content: "";
+    width: 117px;
+    height: 1px;
+    background-color: #E0E0E0;
+    transform: translateY(-50%);
+    margin-left: 179px;
+}
+.elementor-button span {
+    text-decoration: inherit;
+}
+.elementor-30 .elementor-element.elementor-element-f8dfd57 .elementor-button:hover, .elementor-30 .elementor-element.elementor-element-f8dfd57 .elementor-button:focus {
+    background-color: #D96C2C !important;
+    color: white !important;
+}
+.elementor-button-content-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.elementor-button {
+    display: inline-block;
+    line-height: 1;
+    background-color: #69727d;
+    font-size: 15px;
+    padding: 12px 24px;
+    border-radius: 3px;
+    color: #fff;
+    fill: #fff;
+    text-align: center;
+    transition: all .3s;
+}
+.elementor-button-wrapper .elementor-button {
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 700;
+    background-color: #d96c2c;
+    border-radius: 0;
+    padding: 17px 51px;
+}
+.background-square-38-top-left:after {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 38px;
+    height: 38px;
+    background-color: #f3f3f3;
+    z-index: -1;
+}
+.elementor-widget-icon-box .elementor-icon-box-content {
+    flex-grow: 1;
+}
+.elementor-widget-icon-box.elementor-position-left .elementor-icon-box-icon {
+    margin-right:20px ;
+    margin-left: 0;
+    margin-bottom: unset;
+}
+@media (min-width: 768px){
+.elementor-widget-icon-box.elementor-vertical-align-bottom .elementor-icon-box-wrapper {
+    align-items: flex-end;
+}
+}
+.elementor-30 .elementor-element.elementor-element-259763b .ova-heading .description {
+    margin: 27px 0px 0px 0px;
+}
+.ova-counter .counter-content .content1 {
+    margin: 5px 0 0 0;
+    line-height: 1.2;
+    white-space: pre-line;
+}
+.ova-counter.template2 .counter-content .content1 {
+    margin: 0;
+}
+.counter-content .suffix {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 19px;
+    /* font-weight: 700; */
+    line-height: 1em;
+    color: #737373;
+    width: 99%;
+    margin-left: -40px;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer, .odometer.odometer-theme-default .odometer-digit .odometer-digit-spacer {
+    display: inline-block;
+    vertical-align: middle;
+    visibility: hidden;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner, .odometer.odometer-theme-default .odometer-digit .odometer-ribbon-inner {
+    display: block;
+    -webkit-backface-visibility: hidden;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-value, .odometer.odometer-theme-default .odometer-digit .odometer-value {
+    display: block;
+    -webkit-transform: translateZ(0);
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon, .odometer.odometer-theme-default .odometer-digit .odometer-ribbon {
+    display: block;
+}
+.odometer.odometer-auto-theme .odometer-value, .odometer.odometer-theme-default .odometer-value {
+    text-align: center;
+}
+.ova-counter.template2 .counter-content .odometer {
+    font-size: 45px;
+    color: #d96c2c;
+}
+.ova-counter.template2 .counter-content {
+    padding: 0;
+    text-align: center;
+    margin-bottom: 12px;
+    margin-left: 8px;
+}
+.ova-modal-container .modal1 .close {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 50%;
+    color: #FFFFFF;
+    top: -50px;
+    right: -45px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+.ova-video .ova-modal-container .modal1 .modal-video {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.ova-video .ova-modal-container .modal1 {
+    width: 900px;
+    height: 500px;
+    position: relative;
+}
+.ova-video .icon-content-view .video-btn:hover:before {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    background-color: #fff;
+}
+.elementor-30 .elementor-element.elementor-element-dd138d8 .ova-video .icon-content-view .content:hover i {
+    color: #000000 !important;
+}
+.elementor-30 .elementor-element.elementor-element-dd138d8 .ova-video .icon-content-view .content {
+    width: 90px;
+    height: 90px;
+    border-radius: 0px 0px 0px 0px;
+}
+.elementor-30 .elementor-element.elementor-element-dd138d8 .ova-video .icon-content-view .content:before {
+    border-radius: 0px 0px 0px 0px;
+}
+.ova-video .icon-content-view .video-btn:before {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    width: 106%;
+    height: 42%;
+    background-color: #d96c2c;
+    z-index: 1;
+  
+}
+.elementor-30 .elementor-element.elementor-element-dd138d8 .ova-video .icon-content-view .content:after {
+    border-radius: 0px 0px 0px 0px;
+    background-color: #05000045;
+}
+.ova-video .icon-content-view .video-btn:after {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    width: 134%;
+    height: 54%;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+
+}
+.ova-video .icon-content-view .video-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 140px;
+    height: 140px;
+}
+.ova-our-team .author-info .socials .icon i{
+    color: #000000;
+}
+.elementor-30 .elementor-element.elementor-element-16bf55d:not(.elementor-motion-effects-element-type-background), .elementor-30 .elementor-element.elementor-element-16bf55d > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+    background-color: #F3F3F3;
+}
+.ova-testimonial .slide-testimonials .item .author .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 131px;
+    height: 131px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 6px solid #D26A2B;
+}
+.ova-testimonial .slide-testimonials .item .author .info .rating i {
+    color: #D26A2B;
+    font-size: 14px;
+}
+ .elementor-background-overlay2 {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/bg-discount-for-student.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+}
+.elementor-30 .elementor-element.elementor-element-4103bbe.elementor-column.elementor-element[data-element_type="column"] > .elementor-widget-wrap.elementor-element-populated {
+    align-content: center;
+    align-items: center;
+}
+.elementor-30 .elementor-element.elementor-element-4103bbe:not(.elementor-motion-effects-element-type-background) > .elementor-widget-wrap, .elementor-30 .elementor-element.elementor-element-4103bbe > .elementor-widget-wrap > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+    background-image: url(https://demo.ovatheme.com/aovis/wp-content/uploads/2023/03/background-reel-cta-1.png);
+    background-position: -70px 0px;
+    background-repeat: no-repeat;
+}
+ .elementor-background-overlay2 {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+.elementor-30 .elementor-element.elementor-element-e509a60 {
+    margin-top: 110px;
+    margin-bottom: 0px;
+}
+.ova-testimonial .slide-testimonials .item .author .image img {
+    width: 106px;
+    height: 106px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 0 0;
+}
+.ova-testimonial .slide-testimonials .item .author {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    position: relative;
+    margin-right: 60px;
+}
+.ova-testimonial.template1 .owl-stage-outer .item .quote {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+.elementor-30 .elementor-element.elementor-element-16bf55d {
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    padding: 110px 0px 40px 0px;
+}
+.ova-our-team .author-info .socials .icon:hover i {
+    transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    color: #D26A2B;
+}
+.elementor-30 .elementor-element.elementor-element-609a474 {
+    text-align: left;
+    z-index: 2;
+}
+.elementor-widget-image img {
+    vertical-align: middle;
+    display: inline-block;
+}
+.elementor img {
+    height: auto;
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
