@@ -37,7 +37,7 @@
 
 /* Style của menu khi cuộn trang */
 .header_sticky.sticky_bg_dark {
-    background-color: rgba(0, 0, 0, 0.7); /* Đen với độ mờ */
+    background-color: black; /* Đen với độ mờ */
 }
 
 /* Style của menu khi không cuộn trang */

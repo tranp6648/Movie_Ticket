@@ -126,7 +126,7 @@ function Account() {
           navigate('/admin',{ state: { ID:id,username:username } });
          
         }else if(accountType==1){
-          navigate('/AllMovie',{ state: { ID:id,username:username } })
+          navigate('/layout',{ state: { IDAccount:id,username:username } })
         }
       
       });

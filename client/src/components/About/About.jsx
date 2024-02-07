@@ -262,7 +262,7 @@ function About() {
                     </div>
                 </section>
             </div>
-            <section className="elementor-section elementor-top-section elementor-element elementor-element-8e6a5fb elementor-section-boxed elementor-section-height-default elementor-section-height-default" style={{ backgroundColor: '#000', padding: '366px 0px 220px    ' }} id="over">
+            <section className="elementor-section elementor-top-section elementor-element elementor-element-8e6a5fb elementor-section-boxed elementor-section-height-default elementor-section-height-default" style={{ backgroundColor: '#000', padding: '482px 0px 220px    ' }} id="over">
                 <div className="elementor-background-overlay"></div>
                 <div className="elementor-container elementor-column-gap-default">
                     <div className="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-bf4ab17">

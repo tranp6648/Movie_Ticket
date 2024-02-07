@@ -84,7 +84,7 @@ function EventHome() {
 
                                             </div>
                                             <div className="ovaev-booking-btn">
-                                                    <a href="" >Visit</a>
+                                                    <a onClick={()=>navigate(`/DetailEvent/${event.id}`,{ state: { ID:event.id } })}  >Visit</a>
                                                 </div>
                                         </div>
                                         ))}

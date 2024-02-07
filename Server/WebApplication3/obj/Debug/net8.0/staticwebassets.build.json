@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DEQIErlF3CbrXBEaY6TT9+7nXCO71mUOhXn0ipdP7m0=",
+  "Hash": "Hs50XRY30h4c5fydof/jAO3NNTOrPJ6DxHyh71+IeUU=",
   "Source": "WebApplication3",
   "BasePath": "_content/WebApplication3",
   "Mode": "Default",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\image\\Actor_63_picture.png"
+    },
+    {
+      "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_1_picture.png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "image/Event_1_picture.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\image\\Event_1_picture.png"
     },
     {
       "Identity": "D:\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_3_picture.png",

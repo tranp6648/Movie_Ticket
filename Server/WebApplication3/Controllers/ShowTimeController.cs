@@ -92,7 +92,8 @@ namespace WebApplication3.Controllers
                     .Select(m => new
                     {
                         Time = m.Time,
-                    })
+                    }).GroupBy(a => new { a.Time.Year, a.Time.Month, a.Time.Day })
+                    .Select(group => group.First())
                     .ToListAsync();
                 return Ok(showtimes);
             }

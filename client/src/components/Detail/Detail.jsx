@@ -615,7 +615,7 @@ function Detail() {
                                                                     </div>
                                                                     <ul className="mb-tab-showtime">
                                                                         <li className="item">
-                                                                            <a onClick={()=>handleUpdate(info.id,IDAccount,info.idTime)}>
+                                                                            <a onClick={()=>`${IDAccount=='' ?navigate('/Account'):handleUpdate(info.id,IDAccount,info.idTime)}`}>
                                                                                 <span >{formatTime(info.time)}</span>
                                                                             </a>
                                                                         </li>
