@@ -20,4 +20,6 @@ public partial class Order
     public virtual ICollection<DetailOrder> DetailOrders { get; set; } = new List<DetailOrder>();
 
     public virtual Account IdAccountNavigation { get; set; } = null!;
+
+    public virtual ICollection<UserVoucher> UserVouchers { get; set; } = new List<UserVoucher>();
 }

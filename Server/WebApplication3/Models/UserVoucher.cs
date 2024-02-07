@@ -9,9 +9,13 @@ public partial class UserVoucher
 
     public int IdAccount { get; set; }
 
-    public int VoucherId { get; set; }
+    public int IdVoucher { get; set; }
+
+    public int? IdOrder { get; set; }
 
     public virtual Account IdAccountNavigation { get; set; } = null!;
 
-    public virtual Voucher Voucher { get; set; } = null!;
+    public virtual Order? IdOrderNavigation { get; set; }
+
+    public virtual Voucher IdVoucherNavigation { get; set; } = null!;
 }

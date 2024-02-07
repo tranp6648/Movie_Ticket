@@ -394,7 +394,7 @@ function Account() {
                       <h2>Login</h2>
                       <div className=" hiraola-tab_content">
                         <div id="Login" className={`tab-pane ${ActiveTab === 'Login' ? 'active show' : ''}`}>
-                          {renderTabContent()}
+                         
                         </div>
                         <div id="Register" className={`tab-pane ${ActiveTab === 'Register' ? 'active show' : ''}`}>
                           {renderTabContent()}

@@ -386,6 +386,7 @@ const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime"
                       <br />
                       <DatePicker 
         selected={selectedDate} 
+        minDate={new Date()}
         onChange={(date) => setSelectedDate(date)} 
         showTimeSelect
         timeFormat="HH:mm"

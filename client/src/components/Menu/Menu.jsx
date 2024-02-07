@@ -1,6 +1,11 @@
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Menu.css'
 import { useState,useEffect } from 'react';
 function Menu(){
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const IDAccount = location.state?.IDAccount || '';
     const [isSticky, setIsSticky] = useState(false);
 
     // Xử lý sự kiện cuộn trang
@@ -127,7 +132,7 @@ function Menu(){
                     <div className='elementor-element elementor-element-2f55708 elementor-widget__width-auto elementor-view-default elementor-widget elementor-widget-icon'>
                             <div className='elementor-widget-container'>
                                 <div className='elementor-icon-wrapper' style={{marginLeft:'32px'}}>
-                                    <a href="" className='elementor-icon'>
+                                    <a  className='elementor-icon' onClick={()=>navigate('/Myorder',{ state: {  IDAccount: IDAccount} })}>
                                     <i class="fa-solid fa-user" style={{color:'white',fontSize:'24pxx'}}></i>
                                     </a>
                                 </div>

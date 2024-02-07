@@ -11,7 +11,11 @@ public partial class DetailOrder
 
     public int Idseat { get; set; }
 
+    public int Idshowtime { get; set; }
+
     public virtual Order IdorderNavigation { get; set; } = null!;
 
     public virtual SeatMovie IdseatNavigation { get; set; } = null!;
+
+    public virtual Showtime IdshowtimeNavigation { get; set; } = null!;
 }

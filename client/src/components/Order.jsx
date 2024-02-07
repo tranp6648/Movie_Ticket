@@ -208,7 +208,7 @@ function Order() {
                                             <td>{order.user}</td>
                                             <td>{order.payment==0?'cash payment':'paypal payment'}</td>
                                             <td>{new Date(order.dateorder).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric' })}</td>
-                                            <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >Detail</button></td>
+                                            <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=>navigate('/DetailOrder',{ state: {  ID: order.id } })}>Detail</button></td>
                                         </tr>
                                        ))}
                                         </tbody>

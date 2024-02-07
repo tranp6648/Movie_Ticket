@@ -234,6 +234,50 @@ namespace WebApplication3.Controllers
                 // Map other properties as needed
             };
         }
+        [HttpGet("ShowMovie")]
+        public async Task<ActionResult<IEnumerable<Movie>>> ShowMovie()
+        {
+            try
+            {
+                var movies = await _dbContext.Showtimes.Where(d=>d.Time<=DateTime.Now && d.Endtime<=DateTime.Now)
+      .Include(m => m.IdMovieNavigation.DetailCategoryMovies)
+          .ThenInclude(d => d.IdCategoryNavigation)
+      .Select(m => new
+      {
+          // Specify the properties you want to include in the projection
+          id = m.IdMovieNavigation.Id,
+          Title = m.IdMovieNavigation.Title,
+          ReleaseDate = m.IdMovieNavigation.ReleaseDate,
+          duration = m.IdMovieNavigation.Duration,
+          director = m.IdMovieNavigation.Director,
+          description = m.IdMovieNavigation.Description,
+          idgenre = m.IdMovieNavigation.IdGenreNavigation.Id,
+          GenreName = m.IdMovieNavigation.IdGenreNavigation.Name,
+          DetailCategoryMovies = m.IdMovieNavigation.DetailCategoryMovies.Select(d => new
+          {
+
+              Id = d.Id,
+
+              IdCategoryNavigation = new
+              {
+                  Name = d.IdCategoryNavigation.Name,
+
+
+              },
+              Picture = d.Picture,
+              Trailer = d.Trailer
+          }),
+
+
+      })
+      .ToListAsync();
+                return Ok(movies);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpGet("getMovie")]
         public async Task<ActionResult<IEnumerable<Movie>>> getMovie()
         {
