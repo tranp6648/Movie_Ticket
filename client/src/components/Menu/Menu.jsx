@@ -74,6 +74,14 @@ function Menu(){
                                            
                                         </li>
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
+                                            <a href="" onClick={()=>  navigate('/UserVoucher',{ state: { IDAccount:IDAccount } })}>
+                                               Voucher
+                                                
+                                            
+                                            </a>
+                                           
+                                        </li>
+                                        <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
                                             <a href="" onClick={()=>  navigate('/EventHome',{ state: { IDAccount:IDAccount } })}>
                                                 Events
                                                 
