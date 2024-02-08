@@ -366,12 +366,32 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpGet("ShowMovie")]
+        [HttpGet("UserVoucher")]
+        public async Task<ActionResult<IEnumerable<Voucher>>> ShowVoucher()
+        {
+            try
+            {
+                var voucher = await _dbContext.Vouchers.Where(d => d.Quatity > 0 && DateTime.Now.Day <= d.ExpireDate.Day && DateTime.Now.Month <= d.ExpireDate.Month && DateTime.Now.Year <= d.ExpireDate.Year && DateTime.Now.Day>=d.StartDate.Day && DateTime.Now.Month >=d.StartDate.Month && DateTime.Now.Year>=d.StartDate.Year).Select(d => new
+                {
+                    VoucherCode=d.Code,
+                    DiscountPercent=d.DiscountPercent,
+                    ExpireDate=d.ExpireDate,
+                    Minprice=d.MinPrice,
+                    Quality=d.Quatity,
+                    startDate=d.StartDate,
+                }).ToListAsync();
+                return Ok(voucher);
+            }catch(Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+            [HttpGet("ShowMovie")]
         public async Task<ActionResult<IEnumerable<Movie>>> ShowMovie()
         {
             try
             {
-                var movies = await _dbContext.Movies.Where(d=>d.Showtimes.Any(e=>e.Time>=DateTime.Now))
+                var movies = await _dbContext.Movies.Where(d=>d.Showtimes.Any(e=>  DateTime.Now<e.Time))
       .Include(m => m.DetailCategoryMovies)
           .ThenInclude(d => d.IdCategoryNavigation)
       .Select(m => new
