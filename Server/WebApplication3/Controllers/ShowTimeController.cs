@@ -138,7 +138,7 @@ namespace WebApplication3.Controllers
                 {
                     return BadRequest("Invalid movie data");
                 }
-                if (_dbContext.Showtimes.Any(a => a.Time <= addshowtime.Time && a.Endtime>=addshowtime.Endtime && a.IdAuditoriums == addshowtime.IdAuditoriums))
+                if (_dbContext.Showtimes.Any(a => (vietnamTime<a.Endtime && Endtime>=a.Time) && a.IdAuditoriums == addshowtime.IdAuditoriums))
                 {
                     return BadRequest(new { message = "Show time is already exists" });
 

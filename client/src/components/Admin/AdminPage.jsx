@@ -7,17 +7,207 @@ import './admin.css'
 import { format } from 'date-fns';
 
 import axios from 'axios';
+import { Bar,Pie } from 'react-chartjs-2';
+import Chart from 'chart.js/auto'; // Import the Chart object from 'chart.js/auto'
+import { CategoryScale, LinearScale, BarController, Title } from 'chart.js';
+
 function AdminPage() {
   const canvasRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const username = location.state?.username || 'Default Username';
+  const [orderData, setOrderData] = useState([]);
   const ID = location.state?.ID || '';
   const [showDropdown, setShowDropdown] = useState(false);
-
+  const [Movie,setMovie]=useState(null);
+  const [Actor,setActor]=useState(null);
+  const [User,setUser]=useState(null);
+  const [Event,setEvent]=useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+ const[CategoryMovie,setCategoryMovie]=useState(null);
+ const [Genre,setGenre]=useState(null);
+ const [Username,setUsername]=useState([]);
+ const [Order,setOrder]=useState(null);
+const [showtime,setshowtime]=useState(null);
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
   };
+  useEffect(()=>{
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/CountCategoryMovie');
+        setCategoryMovie(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  },[])
+  useEffect(()=>{
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/Orderdesc');
+        setUsername(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  },[])
+  useEffect(()=>{
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/CountShowtime');
+        setshowtime(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  },[])
+  useEffect(()=>{
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/CountOrder');
+        setOrder(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  },[])
+  useEffect(()=>{
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/CountGenre');
+        setGenre(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  },[])
+  useEffect(()=>{
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/CountEvent');
+        setEvent(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  },[])
+  useEffect(()=>{
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/countUser');
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  },[])
+  useEffect(()=>{
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/CountActor');
+        setActor(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  },[])
+  useEffect(() => {
+    const fetchProductCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:5231/api/Movie/CountMovie');
+        setMovie(response.data);
+      } catch (error) {
+        console.error('Error fetching product count:', error);
+      }
+    };
+
+    fetchProductCount();
+  }, []);
+  const chartDataProduct = {
+    labels: ['Movie','Category','Actor','User'],
+    datasets: [{
+      data: [Movie,CategoryMovie,Actor,User],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.6)',
+        'rgba(54, 162, 235, 0.6)',
+        'rgba(255, 206, 86, 0.6)',
+        'rgba(75, 192, 192, 0.6)',
+        // Add more colors if you have more categories
+      ],
+    }],
+  };
+  useEffect(() => {
+    // Register required chart.js components
+    Chart.register(CategoryScale, LinearScale, BarController, Title);
+  }, []);
+
+  useEffect(() => {
+    const fetchOrderData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5231/api/Order/GetCoutorder/${selectedMonth}`);
+        setOrderData(response.data);
+
+      } catch (error) {
+        console.error('Error fetching order data', error);
+      }
+    };
+
+    fetchOrderData();
+  }, [selectedMonth]);
+
+  const chartOptions = {
+    scales: {
+      x: {
+        type: 'category', // Specify the scale type as 'category' for the x-axis
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  const generateChartData = () => {
+    const daysInMonth = new Date(new Date().getFullYear(), selectedMonth, 0).getDate();
+    const chartData = Array.from({ length: daysInMonth }, (_, index) => 0);
+
+    orderData.forEach((orderCount) => {
+      const orderDay = new Date(orderCount.orderDate).getDate();
+      chartData[orderDay - 1] = orderCount.orderCount;
+    });
+
+    return chartData;
+  };
+  
+  const chartData = {
+    labels: Array.from({ length: new Date(new Date().getFullYear(), selectedMonth, 0).getDate() }, (_, index) => index + 1),
+    datasets: [
+      {
+        label: 'Number of Unique Orders',
+        data: generateChartData(),
+        backgroundColor: 'rgba(75,192,192,0.6)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <div className="wrapper">
 
@@ -90,6 +280,43 @@ function AdminPage() {
               </a>
 
             </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
+              </a>
+
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
+              </a>
+
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
+              </a>
+
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
+              </a>
+
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
+              </a>
+
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
+              </a>
+
+            </li>
+
 
 
           </ul>
@@ -119,8 +346,8 @@ function AdminPage() {
 
               <div className="small-box bg-aqua">
                 <div className="inner">
-
-                  <p>Blog</p>
+                <h3>{Event}</h3>
+                  <p>Event</p>
                 </div>
                 <div className="icon">
                   <i className="ion ion-bag"></i>
@@ -132,7 +359,7 @@ function AdminPage() {
 
               <div className="small-box bg-green">
                 <div className="inner">
-
+                  <h3>{Order}</h3>
                   <p>Order</p>
                 </div>
                 <div className="icon">
@@ -145,8 +372,8 @@ function AdminPage() {
 
               <div className="small-box bg-yellow">
                 <div className="inner">
-
-                  <p>User Registrations</p>
+                  <h3>{Genre}</h3>
+                  <p>Genre</p>
                 </div>
                 <div className="icon">
                   <i className="ion ion-person-add"></i>
@@ -158,8 +385,8 @@ function AdminPage() {
 
               <div className="small-box bg-red">
                 <div className="inner">
-
-                  <p>Unique Visitors</p>
+                  <h3>{showtime}</h3>
+                  <p>Shotimes</p>
                 </div>
                 <div className="icon">
                   <i className="ion ion-pie-graph"></i>
@@ -181,8 +408,16 @@ function AdminPage() {
 
 
                   {/* Dropdown to select the month */}
+                  <Bar data={chartData}  options={chartOptions}/>
                   <label>Select Month:</label>
-
+                  <select id="selectMonth"
+                    className="form-select" value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+                    {[...Array(12).keys()].map((month) => (
+                      <option key={month + 1} value={month + 1}>
+                        {month + 1}
+                      </option>
+                    ))}
+                  </select>
 
                 </div>
                 <div className="box-footer">
@@ -257,7 +492,7 @@ function AdminPage() {
                 </div>
 
                 <div className="box-footer no-border">
-
+                <Pie data={chartDataProduct} />
 
                 </div>
               </div>
@@ -279,17 +514,25 @@ function AdminPage() {
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Product</th>
-
                         <th>Username</th>
-                        <th>Content</th>
 
-                        <th>Date</th>
+                        <th>Fullname</th>
+                        <th>OrderCount</th>
+
+                     
 
                       </tr>
                     </thead>
                     <tbody>
-
+                      {Username.map((user,index)=>(
+                        <tr>
+                          <td>{index+1}</td>
+                          <td>{user.username}</td>
+                          <td>{user.fullName}</td>
+                          <td>{user.ordercount}</td>
+                        </tr>
+                      ))}
+                      <tr></tr>
                     </tbody>
 
                   </table>
