@@ -10,6 +10,7 @@ import "../DetailCinema/DetailCinema.css";
 import Pagination from "react-paginate";
 import "react-paginate/theme/basic/react-paginate.css";
 import Select from "react-select";
+import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 function DetailCinema() {
   const location = useLocation();
@@ -256,9 +257,10 @@ function DetailCinema() {
 
   const handleTabClick = (index) => {
     setActiveTab(index);
+    
   };
   // State để lưu trữ thông tin về ghế của mỗi phòng
- 
+
   // Khi số lượng phòng thay đổi, cập nhật số ghế cho mỗi phòng
   useEffect(() => {
     const newRoomSeats = Array.from({ length: quantityRoom }, () => []);
@@ -266,19 +268,19 @@ function DetailCinema() {
   }, [quantityRoom]);
 
   // Hàm để tạo ra bố cục ghế
-//   const generateSeats = (index, seatCount) => {
-//     // Tạo ra một array mới với số lượng ghế đã nhập
-//     const newSeats = Array.from(
-//       { length: seatCount },
-//       (_, i) => ` ${i + 1}`
-//     );
-//     // Cập nhật state với array mới cho phòng hiện tại
-//     setRoomSeats((prevSeats) => {
-//       const updatedSeats = [...prevSeats];
-//       updatedSeats[index] = newSeats;
-//       return updatedSeats;
-//     });
-//   };
+  //   const generateSeats = (index, seatCount) => {
+  //     // Tạo ra một array mới với số lượng ghế đã nhập
+  //     const newSeats = Array.from(
+  //       { length: seatCount },
+  //       (_, i) => ` ${i + 1}`
+  //     );
+  //     // Cập nhật state với array mới cho phòng hiện tại
+  //     setRoomSeats((prevSeats) => {
+  //       const updatedSeats = [...prevSeats];
+  //       updatedSeats[index] = newSeats;
+  //       return updatedSeats;
+  //     });
+  //   };
   const generateSeats = (index, seatCount) => {
     // Ensure seatCount is a number
     if (!Number.isNaN(seatCount) && seatCount <= 80) {
@@ -288,7 +290,7 @@ function DetailCinema() {
         updatedSeats[index] = newSeats;
         return updatedSeats;
       });
-  
+
       // Update the seat count for the room
       setSeatCounts((prevCounts) => ({
         ...prevCounts,
@@ -312,8 +314,10 @@ function DetailCinema() {
     setRoomDetails(newRoomDetails);
     generateSeats(index, seatCount);
   };
-  
+
   const toggleSeatVip = (seatNumber, roomIndex) => {
+    roomIndex=activeTab;
+    console.log(roomIndex);
     setVipSeats((prevSeats) => {
       const newVipSeats = { ...prevSeats, [seatNumber]: !prevSeats[seatNumber] };
       // After updating vipSeats, you could calculate the number of VIP seats and update a state or context
@@ -322,92 +326,101 @@ function DetailCinema() {
       return newVipSeats;
     });
   };
+  const currentIndexMap = {};
   const renderSeats = (seats, roomIndex) => {
     const rows = [];
     for (let i = 0; i < seats.length; i += 10) {
       const currentRowSeats = seats.slice(i, i + 10);
       rows.push(
         <div key={`row-${i}`} className="seat-row">
-          {currentRowSeats.map((seat, index) => {
-            const seatNumber = i + index + 1; // Adjust seat number based on index
-            const isVip = vipSeats[seatNumber]; // Check if the seat is VIP
-            const seatClass = `seat-inDetail ${isVip ? 'vip' : ''}`;
-            return (
-              <div 
-                key={`seat-${index}`} 
-                className={seatClass}
-                onClick={() => toggleSeatVip(seatNumber, roomIndex)} // Update this function to handle VIP toggle
-              >
-                {seat}
-              </div>
-            );
-          })}
-        </div>
+{currentRowSeats.map((seat, index) => {
+  const seatNumber = i + index + 1; // Điều chỉnh số ghế dựa trên chỉ số
+   // Kiểm tra xem ghế có phải là VIP không
+  const vipCount = Object.values(vipSeats).filter((seat, index) => index === activeTab && seat).length;
+  const isVip = vipSeats[seatNumber] ;
+  console.log(vipSeats)
+  const seatClass = `seat-inDetail ${isVip? 'vip' : ''}`;
+  
+  currentIndexMap[`seat-${seatNumber}`] = seat;
+  currentIndexMap[`seatCategory-${seatNumber}`] = isVip ? 1 : 2;
+  currentIndexMap['seatCinema'] =activeTab || '';
+
+  return (
+    <div 
+      key={`seat-${index}`} 
+      className={seatClass}
+      onClick={() => toggleSeatVip(seatNumber, activeTab)} // Cập nhật hàm này để xử lý việc chuyển đổi VIP
+    >
+      {seat}
+    </div>
+  );
+})}
+</div>
+
       );
     }
+ 
     return <div>{rows}</div>;
   };
-  const vipCount = Object.values(vipSeats).filter(Boolean).length; 
-  const standardCount = seatCounts[activeTab] - vipCount; 
+
+  const vipCount = Object.values(vipSeats).filter((seat, index) => index === activeTab && seat).length;
 
   
-  
-const handleRoomNameChange = (index, name) => {
+  const standardCount = seatCounts[activeTab] - vipCount;
+
+
+
+  const handleRoomNameChange = (index, name) => {
     // Update the room name for the specific room
     const newRoomDetails = [...roomDetails];
     newRoomDetails[index].roomName = name;
     setRoomDetails(newRoomDetails);
   };
-  
-useEffect(() => {
+
+  useEffect(() => {
     setRoomDetails(Array.from({ length: quantityRoom }, (_, index) => roomDetails[index] || { seatCount: 0, roomName: '' }));
   }, [quantityRoom]);
-  
-  const renderRoomSetupForm = (index) => {
+
+  const renderRoomSetupForm = (activeTabIndex) => {
     return (
       <div className="w-[200px]">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label className="inputSeat text-white" htmlFor={`seatCount-room${index}`}>
-            Enter seat count for Room {index + 1}:
+         <label className="inputSeat text-white" htmlFor={`roomName-room${activeTabIndex}`}>
+            Enter name for Room {activeTabIndex + 1}:
           </label>
-          <br />
-          <input
+        <form onSubmit={(e) => e.preventDefault()}>
+        <input
             type="number"
             placeholder="Quantity seats"
-            value={roomDetails[index]?.seatCount || 0}
-            onChange={(e) => handleSeatCountChange(index, parseInt(e.target.value, 10))}
+            value={roomDetails[activeTabIndex]?.seatCount || 0}
+            onChange={(e) => handleSeatCountChange(activeTabIndex, parseInt(e.target.value, 10))}
             className="seat-count-input"
           />
-        </form>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label className="inputSeat text-white" htmlFor={`roomName-room${index}`}>
-            Enter name for Room {index + 1}:
+          <label className="inputSeat text-white" htmlFor={`roomName-room${activeTabIndex}`}>
+            Enter name for Room {activeTabIndex + 1}:
           </label>
           <br />
           <input
             type="text"
             placeholder="Name room"
-            value={roomDetails[index]?.roomName || ''}
-            onChange={(e) => handleRoomNameChange(index, e.target.value)}
+            value={roomDetails[activeTabIndex]?.roomName || ''}
+            onChange={(e) => handleRoomNameChange(activeTabIndex, e.target.value)}
             className="room-name-input"
           />
         </form>
+  
         <ul class="showcase mt-14">
-      <li>
-        <div class="seat-inDetail-icon"></div>
-        <small>Standard {standardCount}</small>
-      </li>
-      <li>
-        <div class="seat-inDetail1-icon"></div>
-        <small>Vip  {vipCount}</small>
-      </li>
-      
-    </ul>
-    
+          <li>
+            <div class="seat-inDetail-icon"></div>
+            <small>Standard {standardCount}</small>
+          </li>
+          <li>
+            <div class="seat-inDetail1-icon"></div>
+            <small>Vip {vipCount}</small>
+          </li>
+        </ul>
       </div>
     );
   };
-  
   const handleOpenSetupRoom1 = () => {
     if (quantityRoom < 1 || quantityRoom > 10) {
       Swal.fire({
@@ -430,7 +443,7 @@ useEffect(() => {
     console.log("Saving all room configurations...");
     // Potentially send data to the backend or update the state accordingly
     // ...
-  
+
     // After saving, you can close the setup popup if needed
     setSetupRoomPopupVisible(false);
   };
@@ -554,7 +567,7 @@ useEffect(() => {
                           <td>
                             {Cinema.detailCityBranch.length > 0
                               ? Cinema.detailCityBranch[0].idBranchNavigation
-                                  .city
+                                .city
                               : "No Category"}
                           </td>
                           <td>
@@ -676,19 +689,19 @@ useEffect(() => {
               {/* Nội dung tương ứng với rạp được chọn */}
               <div className="w-full border-[black] border-[1px]"></div>
               <div className="tab-content">
-              {renderRoomSetupForm(activeTab)}
+                {renderRoomSetupForm(activeTab)}
                 {/* Hiển thị bố cục ghế cho phòng active */}
                 <div className="room-seats-layout ">
-                    <div className="screen1"></div>
-      {roomSeats[activeTab] && renderSeats(roomSeats[activeTab])}
-    </div>
+                  <div className="screen1"></div>
+                  {roomSeats[activeTab] && renderSeats(roomSeats[activeTab])}
+                </div>
               </div>
               <button
-        onClick={handleOpenSetupRoom1}
-        className="close-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
-      >
-        {activeTab < quantityRoom - 1 ? 'Next' : 'Save'}
-      </button>
+                onClick={handleOpenSetupRoom1}
+                className="close-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+              >
+                {activeTab < quantityRoom - 1 ? 'Next' : 'Save'}
+              </button>
             </div>
           </div>
         )}

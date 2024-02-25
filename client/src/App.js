@@ -5,6 +5,7 @@ import HomePillDetail from './components/HomePillDetail';
 import AddPillDetail from './components/AddPillDetail';
 import Account from './components/Account/Account';
 import { useState, useEffect  } from 'react';
+import Category_Blog from './components/Category_Blog/Category_Blog';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Menu from './components/Menu/Menu';
 import Genre from './components/Genre/Genre';
@@ -86,6 +87,7 @@ function App() {
     <Route path='/About' element={<About/>}/>
     <Route path='/ThankYou' element={<ThankYou/>}/>
     <Route path='/UserVoucher' element={<UserVoucher/>}/>
+    <Route path='/Category_Blog' element={<Category_Blog/>}/>
      </Routes>
    </Router>
   );
