@@ -47,74 +47,91 @@ function Category_Blog() {
     const [errors, setErrors] = useState({});
     const validateInput = (filename, value) => {
         const newErrors = { ...errors }
+        if (filename == 'Name') {
+            newErrors[filename] = value.trim() === '' ? 'Name is required' : '';
+        } else if (filename == 'UpdateName') {
+            newErrors[filename] = value.trim() === '' ? 'Name is required' : '';
+        }
+
 
         setErrors(newErrors)
     }
     const [showDropdown, setShowDropdown] = useState(false);
-    const [categoryBlog,setcategoryBlog]=useState([]);
+    const [categoryBlog, setcategoryBlog] = useState([]);
     const handleDropdownToggle = () => {
         setShowDropdown(!showDropdown);
     };
-    useEffect(()=>{
-        const fetchdata=async()=>{
-            try{
-                const categoryBlog=await axios.get("http://localhost:5231/api/CategoryBlog/ShowCategoryBlog");
+    useEffect(() => {
+        const fetchdata = async () => {
+            try {
+                const categoryBlog = await axios.get("http://localhost:5231/api/CategoryBlog/ShowCategoryBlog");
                 setcategoryBlog(categoryBlog.data);
-            }catch(error){
+            } catch (error) {
                 console.log(error)
             }
         }
         fetchdata();
-    },[])
+    }, [])
 
     const [FormData, setFormData] = useState({
-  Name:'',
-id:'',
-UpdateName:''
+        Name: '',
+        id: '',
+        UpdateName: ''
     })
-    const handleUpdateCategory=async(event)=>{
+    const handleUpdateCategory = async (event) => {
         event.preventDefault();
-        try{
-            const response=await fetch(`http://localhost:5231/api/CategoryBlog/UpdateCategoryBlog/${FormData.id}`,{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name:FormData.UpdateName})
-            })
-            if(response.ok){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'update Category Blog success',
-                    showConfirmButton: false,
-                    timer: 1500,
+        if (FormData.UpdateName == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Name is required',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else {
+            try {
+                const response = await fetch(`http://localhost:5231/api/CategoryBlog/UpdateCategoryBlog/${FormData.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: FormData.UpdateName })
                 })
-                FormData.id='';
-                FormData.UpdateName='';
-                const categoryBlog=await axios.get("http://localhost:5231/api/CategoryBlog/ShowCategoryBlog");
-                setcategoryBlog(categoryBlog.data);
-                setPopupVisibility(false);
-            }else{
-                const responseBody = await response.json();
-                if (responseBody.message) {
+                if (response.ok) {
                     Swal.fire({
-                        icon: 'error',
-                        title: responseBody.message,
+                        icon: 'success',
+                        title: 'update Category Blog success',
                         showConfirmButton: false,
                         timer: 1500,
-                    });
+                    })
+                    FormData.id = '';
+                    FormData.UpdateName = '';
+                    const categoryBlog = await axios.get("http://localhost:5231/api/CategoryBlog/ShowCategoryBlog");
+                    setcategoryBlog(categoryBlog.data);
+                    setPopupVisibility(false);
+                    setErrors('')
+                } else {
+                    const responseBody = await response.json();
+                    if (responseBody.message) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: responseBody.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
                 }
+            } catch (error) {
+                console.log(error)
             }
-        }catch(error){
-            console.log(error)
         }
+
     }
     const handleEditClick = (MovieID) => {
         const selectedMovie = categoryBlog.find(Movie => Movie.id == MovieID)
         if (selectedMovie) {
             FormData.id = MovieID
             FormData.UpdateName = selectedMovie.name
-
+            setErrors('')
         }
 
         setPopupVisibility(true)
@@ -122,45 +139,55 @@ UpdateName:''
     }
     const handleupdate = async (event) => {
         event.preventDefault();
-        try {
-            const response = await fetch("http://localhost:5231/api/CategoryBlog/Add", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name:FormData.Name })
-            })
-            if(!response.ok){
-                const responseBody = await response.json();
-                if (responseBody.message) {
+        if (FormData.Name == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Name is required',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        } else {
+            try {
+                const response = await fetch("http://localhost:5231/api/CategoryBlog/Add", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name: FormData.Name })
+                })
+                if (!response.ok) {
+                    const responseBody = await response.json();
+                    if (responseBody.message) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: responseBody.message || 'Failed to add genre',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                } else {
                     Swal.fire({
-                        icon: 'error',
-                        title: responseBody.message || 'Failed to add genre',
+                        icon: 'success',
+                        title: 'Add Genre success',
                         showConfirmButton: false,
                         timer: 1500,
-                    });
+                    })
+                    FormData.Name = '';
+                    const categoryBlog = await axios.get("http://localhost:5231/api/CategoryBlog/ShowCategoryBlog");
+                    setcategoryBlog(categoryBlog.data);
                 }
-            }else{
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Add Genre success',
-                    showConfirmButton: false,
-                    timer: 1500,
-                })
-              FormData.Name='';
-              const categoryBlog=await axios.get("http://localhost:5231/api/CategoryBlog/ShowCategoryBlog");
-                setcategoryBlog(categoryBlog.data);
+
+            } catch (error) {
+                console.log(error);
             }
-          
-        } catch (error) {
-            console.log(error);
         }
-        
+
+
 
     }
-   
 
-    const filterActor =categoryBlog.filter(gen =>
+
+    const filterActor = categoryBlog.filter(gen =>
 
         gen.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -184,7 +211,7 @@ UpdateName:''
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                    const categoryBlog=await axios.get("http://localhost:5231/api/CategoryBlog/ShowCategoryBlog");
+                    const categoryBlog = await axios.get("http://localhost:5231/api/CategoryBlog/ShowCategoryBlog");
                     setcategoryBlog(categoryBlog.data);
                 } else {
                     Swal.fire({
@@ -202,14 +229,14 @@ UpdateName:''
     const handleClosepopup = () => {
         setIsClosingPopup(true);
         setTimeout(() => {
-           
+
             FormData.id = '';
             FormData.UpdateName = '';
             setPopupVisibility(false)
             setIsClosingPopup(false)
         }, 500);
     }
- 
+
     const handlePageclick = (data) => {
         setCurrentPage(data.selected);
     };
@@ -274,71 +301,77 @@ UpdateName:''
 
 
                         <ul className="sidebar-menu">
-            <li className="header">MAIN NAVIGATION</li>
-            <li className="active treeview">
-              <a href="" onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
-              </a>
+                            <li className="header">MAIN NAVIGATION</li>
+                            <li className="active treeview">
+                                <a href="" onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
+                                    <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
-                <i class="fas fa-film"></i> <span>Genre</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
+                                    <i class="fas fa-film"></i> <span>Genre</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Category_Blog', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Blog</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Category_Blog', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Blog</span>
+                                </a>
 
-            </li>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Blog', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span> Blog</span>
+                                </a>
+
+                            </li>
 
 
 
-          </ul>
+                        </ul>
                     </section>
 
                 </aside>
@@ -347,7 +380,7 @@ UpdateName:''
                 <div className="content-wrapper">
                     <section className="content-header">
                         <h1>
-                           Category Blog
+                            Category Blog
 
                         </h1>
                         <ol className="breadcrumb">
@@ -366,10 +399,12 @@ UpdateName:''
                                         {/* Form fields go here */}
                                         <div className="form-group" >
                                             <label >Name</label>
-                                            <input className="form-control"  id="exampleInputEmail1" placeholder="Enter Name Blog" value={FormData.Name} onChange={(e) => setFormData({ ...FormData, Name: e.target.value })} />
-                                         
+                                            <input className="form-control" id="exampleInputEmail1" placeholder="Enter Name Blog" value={FormData.Name} onChange={(e) => setFormData({ ...FormData, Name: e.target.value })} onBlur={() => validateInput('Name', FormData.Name)} />
+                                            {errors.Name && (
+                                                <p className="text-red-500 text-sm italic">{errors.Name}</p>
+                                            )}
                                         </div>
-                                   
+
                                     </div>
 
                                     <div className="box-footer">
@@ -395,21 +430,21 @@ UpdateName:''
                                             <tr>
                                                 <th>#</th>
                                                 <th>Name</th>
-                                               
+
                                                 <th>Edit</th>
                                                 <th>Remove</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {currentGender.map((categoryBlog,index)=>(
+                                            {currentGender.map((categoryBlog, index) => (
                                                 <tr>
-                                                    <td>{index+1}</td>
+                                                    <td>{index + 1}</td>
                                                     <td>{categoryBlog.name}</td>
-                                                    <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=>handleEditClick(categoryBlog.id)}>Edit</button></td>
-                                                    <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>deleteSubmit(categoryBlog.id)}>Remove</button></td>
+                                                    <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditClick(categoryBlog.id)}>Edit</button></td>
+                                                    <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => deleteSubmit(categoryBlog.id)}>Remove</button></td>
                                                 </tr>
                                             ))}
-                                          
+
 
                                         </tbody>
 
@@ -458,17 +493,19 @@ UpdateName:''
 
                             <div >
 
-                             
+
                             </div>
-                            <form role="form"  onSubmit={handleUpdateCategory}>
+                            <form role="form" onSubmit={handleUpdateCategory}>
                                 <div className="box-body">
                                     {/* Form fields go here */}
                                     <div className="form-group">
                                         <label className='float-left'>Name</label>
-                                        <input name='UpdateNameCategory' className="form-control" value={FormData.UpdateName} onChange={(e) => setFormData({ ...FormData, UpdateName: e.target.value })} />
-
+                                        <input name='UpdateNameCategory' className="form-control" value={FormData.UpdateName} onChange={(e) => setFormData({ ...FormData, UpdateName: e.target.value })} onBlur={() => validateInput('UpdateName', FormData.UpdateName)} />
+                                        {errors.UpdateName && (
+                                            <p className="text-red-500 text-sm italic">{errors.UpdateName}</p>
+                                        )}
                                     </div>
-                                    
+
 
 
                                 </div>
@@ -484,7 +521,7 @@ UpdateName:''
                         </div>
                     </div>
                 )}
-              
+
             </div>
 
 

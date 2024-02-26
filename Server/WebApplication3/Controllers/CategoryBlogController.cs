@@ -52,7 +52,7 @@ namespace WebApplication3.Controllers
                     return BadRequest(new { message = "Category Blog name already exists" });
                 }
                 existcategoryBlog.Name=addCategoryBlog.Name;
-                _dbContext.SaveChangesAsync();
+                _dbContext.SaveChanges();
                 return Ok("Update successfully");
             }
             catch(Exception ex)

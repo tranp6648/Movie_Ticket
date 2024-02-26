@@ -64,7 +64,7 @@ namespace WebApplication3.Controllers
                 {
                     return NotFound("Genre not found");
                 }
-                if (_dbContext.CategoryMovies.Any(a => a.Name == updateCategory.Name))
+                if (_dbContext.CategoryMovies.Any(a => a.Name == updateCategory.Name && a.Id!=id))
                 {
                     return BadRequest(new { message = "Category Movie name already exists" });
                 }

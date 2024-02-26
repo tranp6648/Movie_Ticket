@@ -42,6 +42,7 @@ import Contact from './components/Contact/Contact';
 import About from './components/About/About';
 import ThankYou from './components/ThankYou/ThankYou';
 import UserVoucher from './components/UserVoucher/UserVoucher';
+import Blog from './components/Blog/Blog';
 function App() {
   return (
    <Router>
@@ -88,6 +89,7 @@ function App() {
     <Route path='/ThankYou' element={<ThankYou/>}/>
     <Route path='/UserVoucher' element={<UserVoucher/>}/>
     <Route path='/Category_Blog' element={<Category_Blog/>}/>
+    <Route path='/Blog' element={<Blog/>}/>
      </Routes>
    </Router>
   );

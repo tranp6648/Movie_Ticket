@@ -52,7 +52,7 @@ function Event() {
             newErrors[fieldname] = value == null ? 'EndDate is required' : '';
         } else if (fieldname == 'Banner') {
             newErrors[fieldname] = value == null ? 'Banner is required' : '';
-        }else if(fieldname=='UpdateTittle'){
+        } else if (fieldname == 'UpdateTittle') {
             newErrors[fieldname] = value.trim() === '' ? 'Title is required' : '';
         }
         setErrors(newErrors)
@@ -180,7 +180,7 @@ function Event() {
     const handleSubmit = async (event) => {
 
         event.preventDefault();
-        if (FormData.Tittle === '' || FormData.Description == '' || FormData.StartDate == null || FormData.EndDate == null || FormData.Picture==null) {
+        if (FormData.Tittle === '' || FormData.Description == '' || FormData.StartDate == null || FormData.EndDate == null || FormData.Picture == null) {
             Swal.fire({
                 icon: 'error',
                 title: 'Please complete all information',
@@ -259,14 +259,14 @@ function Event() {
     }
     const handleUpdate = async (event) => {
         event.preventDefault();
-        if(FormData.Tittle==''){
+        if (FormData.Tittle == '') {
             Swal.fire({
                 icon: 'error',
                 title: 'Title is required',
                 showConfirmButton: false,
                 timer: 1500,
             });
-        }else{
+        } else {
             try {
                 const response = await fetch(`http://localhost:5231/api/Event/update/${FormData.id}`, {
                     method: 'POST',
@@ -275,13 +275,13 @@ function Event() {
                     },
                     body: JSON.stringify({
                         Title: FormData.UpdateTittle,
-    
+
                         StartDate: FormData.UpdateStartDay,
                         EndDate: FormData.updateEndDay,
-    
+
                     }),
                 });
-    
+
                 if (!response.ok) {
                     const responseBody = await response.json();
                     if (responseBody.message) {
@@ -304,7 +304,7 @@ function Event() {
                     FormData.UpdateTittle = "";
                     FormData.UpdateStartDay = null;
                     FormData.UpdateDescription = null;
-    
+
                     // Fetch and update event data after a successful update
                     const response = await axios.get("http://localhost:5231/api/Event/Show");
                     setEvent(response.data);
@@ -313,7 +313,7 @@ function Event() {
                 console.log(error);
             }
         }
-       
+
     };
 
     return (
@@ -373,65 +373,77 @@ function Event() {
 
 
                         <ul className="sidebar-menu">
-            <li className="header">MAIN NAVIGATION</li>
-            <li className="active treeview">
-              <a href="" onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
-                <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
-              </a>
+                            <li className="header">MAIN NAVIGATION</li>
+                            <li className="active treeview">
+                                <a href="" onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
+                                    <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
-                <i class="fas fa-film"></i> <span>Genre</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
+                                    <i class="fas fa-film"></i> <span>Genre</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
+                                </a>
 
-            </li>
-            <li className="active treeview">
-              <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
-                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
-              </a>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
+                                </a>
 
-            </li>
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Category_Blog', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Blog</span>
+                                </a>
+
+                            </li>
+                            <li className="active treeview">
+                                <a className='cursor-pointer' onClick={() => navigate('/Blog', { state: { username: username, ID: ID } })}>
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span> Blog</span>
+                                </a>
+
+                            </li>
 
 
 
-          </ul>
+                        </ul>
                     </section>
 
                 </aside>
@@ -627,8 +639,8 @@ function Event() {
                                         <label >Title</label>
                                         <input className="form-control" onBlur={() => validateInput('UpdateTittle', FormData.UpdateTittle)} value={FormData.UpdateTittle} onChange={(e) => setFormdata({ ...FormData, UpdateTittle: e.target.value })} id="exampleInputEmail1" placeholder="Enter Name Genre" />
                                         {errors.UpdateTittle && (
-                                                <p className="text-red-500 text-sm italic">{errors.UpdateTittle}</p>
-                                            )}
+                                            <p className="text-red-500 text-sm italic">{errors.UpdateTittle}</p>
+                                        )}
                                     </div>
 
                                     <div className="form-group">

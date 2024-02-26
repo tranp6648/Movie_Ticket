@@ -17,6 +17,8 @@ public partial class Blog
 
     public int IdAccount { get; set; }
 
+    public string ImageUrl { get; set; } = null!;
+
     public virtual Account IdAccountNavigation { get; set; } = null!;
 
     public virtual CategoryBlog IdCategoryNavigation { get; set; } = null!;

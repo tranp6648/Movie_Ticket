@@ -152,6 +152,9 @@ public partial class DatabaseContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.IdAccount).HasColumnName("id_Account");
             entity.Property(e => e.IdCategory).HasColumnName("id_Category");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(255)
+                .IsUnicode(false);
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .HasColumnName("title");
