@@ -37,6 +37,8 @@ D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Microsoft.Win32.SystemEv
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Mono.TextTemplating.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Newtonsoft.Json.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\PayPal.dll
+D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\SendGrid.dll
+D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\StarkbankEcdsa.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -134,11 +136,9 @@ D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\staticwebassets\msbuild.
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.WebApplication3.props
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\staticwebassets.pack.json
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\scopedcss\bundle\WebApplication3.styles.css
+D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebAppli.18867FDF.Up2Date
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.dll
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\refint\WebApplication3.dll
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.genruntimeconfig.cache
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\ref\WebApplication3.dll
-D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebAppli.18867FDF.Up2Date
-D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\SendGrid.dll
-D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\StarkbankEcdsa.dll

@@ -10,6 +10,8 @@ import voice from '../images/voice.png';
 import cinemaLogo from '../images/logoCinema.png';
 import tag from '../images/tag.png';
 import oclock from '../images/oclock.png';
+import ToddPhillip from '../images/ToddPhillips.png';
+import Joker_bg from '../images/joker4k.jpg';
 
 import underline from '../images/underline-heading-entire.png';
 import dotLine from '../images/line_dot.jpg';
@@ -206,12 +208,12 @@ function Homepage(){
   const MovieTrending = [
 {
   id: 1,
-  image: picture1,
+  image: Joker_bg,
   nameMovie: "  Joker The Movie of the Week",
   content: "Phasellus non cursus ligula, sed mattis urna. Aenean ac tor gravida, volutpat quam eget, consequat elit.",
   nameDirector: "Mike Hardson",
   position: "Film Director",
-  avatarDirector: picture2,
+  avatarDirector: ToddPhillip,
   prize: "Awards Nominations",
   quantityPrize: 30
 }
@@ -408,21 +410,41 @@ function Homepage(){
                 </div>
                 
               </div>
-                    <div className="bg-pink-500 w-full h-[110vh]">
+                    <div className=" w-full h-[100vh]">
                       {MovieTrending.map((slide)=>
                       <div className="relative" key={slide.id}>
-                          <img className="h-[110vh] w-full absolute object-cover" src={slide.image} alt="" />
+                          <img className="h-[100vh] w-full absolute object-cover" src={slide.image} alt="" />
                           <div className="flex w-full h-full absolute top-0">
-                          <div className="award-nomination-container bg-pink-400 ml-[22%] px-[20px] mt-11 w-[230px] h-[110px] flex">
+                          <div className="award-nomination-container bg-pink-400 ml-[22%] px-[20px]   w-[230px] h-[110px] flex">
                               <p className="award-nomination-quantity">{slide.quantityPrize}</p>
                               <p className="award-nomination-category">{slide.prize}</p>
                           </div>
-                          <div className="bg-pink-500 h-[810px] w-full ml-[19%] py-[8%]">
-                            <div><img className="w-[100px]" src={picture1} alt="" /></div>
+                          <div className="- h-[810px] w-full ml-[19%] py-[8%]">
+                          <div className="button-out">
+  <div className="button">
+    <i className='bx bxl-play-store play-icon'></i>
+  </div>
+</div>
+
                             <div className="flex flex-col">
-                              <p className="titleGenre">Trending Movie</p>
+                              <p className="titleGenre C]">Trending Movie</p>
                               <p className="nameMovie-1">{slide.nameMovie}</p>
                               <p className="content-1">{slide.content}</p>
+                              <div className="flex flex-row gap-4 mt-12">
+                                <a className="btn-gecticket" href="hskdvh">Get Ticket</a>
+                                
+                                <div className=" h-[60px] w-[300px] flex flex-row ">
+                                  <div className="img-ringDirector">
+                                    <img className="img-director" src={slide.avatarDirector} alt="" />
+                                  </div>
+                                  <div className=" justify-center w-full flex flex-col">
+                                    <h1 className="text-nameDirector">{slide.nameDirector}</h1>
+                                    <h1 className="text-position">{slide.position}</h1>
+
+                                  </div>
+
+                                </div>
+                              </div>
                             </div>
                           </div>
                           </div>

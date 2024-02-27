@@ -29,9 +29,9 @@ function DetailCinema() {
     UpdateLocation: "",
     UpdatePhone: "",
   });
-  const [updatename, setupdatename] = useState("");
+  
   const [id, setid] = useState("");
-  const [Gen, setGen] = useState([]);
+  
   const [perPage, setperPage] = useState(5);
   const [searchTerm, setSearchtem] = useState("");
   const [Branches, setBrancher] = useState([]);
@@ -41,10 +41,15 @@ function DetailCinema() {
   const [IsClosingPopup, setIsClosingPopup] = useState(false);
   const [isPopupVisible, setPopupVisibility] = useState(false);
 
+  const [quantityRoom, setQuantityRoom] = useState(0);
   const [seatCounts, setSeatCounts] = useState({});
   const [roomDetails, setRoomDetails] = useState([]);
   const [vipSeats, setVipSeats] = useState({});
   const [roomSeats, setRoomSeats] = useState([]);
+  const [selectedCinemaId, setSelectedCinemaId] = useState(null);
+  const [vipSeatsCountByRoom, setVipSeatsCountByRoom] = useState({});
+  
+
 
 
   const handlePageclick = (data) => {
@@ -118,54 +123,7 @@ function DetailCinema() {
     fetchdata();
   }, []);
 
-  const handleUpdate = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(
-        `http://localhost:5231/api/Cinema/update/${FormData.ID}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: FormData.UpdateName,
-            location: FormData.UpdateLocation,
-            phone: FormData.UpdatePhone,
-          }),
-        }
-      );
-      if (!response.ok) {
-        const responseBody = await response.json();
-        if (responseBody.message) {
-          Swal.fire({
-            icon: "error",
-            title: responseBody.message || "Failed to add Cinema",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      } else {
-        Swal.fire({
-          icon: "success",
-          title: "Update Cinema success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        FormData.UpdateName = "";
-        FormData.UpdateLocation = "";
-        FormData.UpdatePhone = "";
-        FormData.ID = "";
-        setPopupVisibility(false);
-        const response = await axios.get(
-          "http://localhost:5231/api/Cinema/getCinema"
-        );
-        setCinema(response.data);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  
 
   const filteredGender = Cinema.filter((Cinema) =>
     Cinema.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -173,52 +131,59 @@ function DetailCinema() {
   const indexOflastgen = (currentPage + 1) * perPage;
   const indexOfFirtgen = indexOflastgen - perPage;
   const currentGender = filteredGender.slice(indexOfFirtgen, indexOflastgen);
-  const deleteSubmit = async (CinemaID) => {
-    try {
-      const confirmation = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-      if (confirmation.isConfirmed) {
-        const response = await axios.post(
-          `http://localhost:5231/api/Cinema/Delete/${CinemaID}`
-        );
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Deletion successful",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          const response = await axios.get(
-            "http://localhost:5231/api/Cinema/getCinema"
-          );
-          setCinema(response.data);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Deletion failed",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const deleteSubmit = async (CinemaID) => {
+  //   try {
+  //     const confirmation = await Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "You won't be able to revert this!",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, delete it!",
+  //     });
+  //     if (confirmation.isConfirmed) {
+  //       const response = await axios.post(
+  //         `http://localhost:5231/api/Cinema/Delete/${CinemaID}`
+  //       );
+  //       if (response.status === 200) {
+  //         Swal.fire({
+  //           icon: "success",
+  //           title: "Deletion successful",
+  //           showConfirmButton: false,
+  //           timer: 1500,
+  //         });
+  //         const response = await axios.get(
+  //           "http://localhost:5231/api/Cinema/getCinema"
+  //         );
+  //         setCinema(response.data);
+  //       } else {
+  //         Swal.fire({
+  //           icon: "error",
+  //           title: "Deletion failed",
+  //           showConfirmButton: false,
+  //           timer: 1500,
+  //         });
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
-  const handleSetupClick = () => {
+  const handleSetupClick = (cinemaIdFromButton) => {
+    console.log(cinemaIdFromButton); // For debugging
+    setSelectedCinemaId(cinemaIdFromButton); // Store the selected cinema ID
+    const selectedCinema = Cinema.find(Movie => Movie.id === cinemaIdFromButton);
+    if (selectedCinema) {
+      setFormData({ ...FormData, ID: cinemaIdFromButton });
+    }
     setActiveTab(0);
     setPopupVisibility(true);
   };
+  
 
-  const [quantityRoom, setQuantityRoom] = useState(0);
+  
 
   const handleQuantityRoomChange = (e) => {
     const value = parseInt(e.target.value, 10);
@@ -308,7 +273,7 @@ function DetailCinema() {
       });
       return;
     }
-    // Update the seat count for the specific room
+    
     const newRoomDetails = [...roomDetails];
     newRoomDetails[index].seatCount = seatCount;
     setRoomDetails(newRoomDetails);
@@ -557,13 +522,13 @@ function DetailCinema() {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGender.map((Cinema, index) => (
-                        <tr key={Cinema.ID}>
+                      {currentGender.map((CinemaItem, index) => (
+                        <tr key={CinemaItem.ID}>
                           <td>{index + 1}</td>
-                          <td>{Cinema.name}</td>
-                          <td>{Cinema.location}</td>
-                          <td>{Cinema.phone}</td>
-                          <td>{Cinema.district}</td>
+                          <td>{CinemaItem.name}</td>
+                          <td>{CinemaItem.location}</td>
+                          <td>{CinemaItem.phone}</td>
+                          <td>{CinemaItem.district}</td>
                           <td>
                             {Cinema.detailCityBranch.length > 0
                               ? Cinema.detailCityBranch[0].idBranchNavigation
@@ -573,7 +538,7 @@ function DetailCinema() {
                           <td>
                             <button
                               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                              onClick={handleSetupClick}
+                              onClick={()=>handleSetupClick(CinemaItem.id)}
                             >
                               Setup
                             </button>
@@ -581,7 +546,7 @@ function DetailCinema() {
                           <td>
                             <button
                               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                              onClick={() => deleteSubmit(Cinema.id)}
+                              
                             >
                               Remove
                             </button>
@@ -619,7 +584,7 @@ function DetailCinema() {
         {isPopupVisible && (
           <div className="popup-container ">
             <div
-              className="popup-content "
+              className="popup-content"
               style={
                 IsClosingPopup
                   ? { ...popupContentStyle, ...closingAnimation }

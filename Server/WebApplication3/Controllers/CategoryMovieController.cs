@@ -85,6 +85,7 @@ namespace WebApplication3.Controllers
             {
                 if (addCategory == null)
                 {
+
                     return BadRequest("Invalid data");
                 }
                 if (_dbContext.CategoryMovies.Any(a => a.Name == addCategory.Name))

@@ -1844,6 +1844,27 @@
     ]
   },
   {
+    "ContainingType": "WebApplication3.Controllers.SeatController",
+    "Method": "SaveSeat",
+    "RelativePath": "api/Seat/saveSeats/{idCinema}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "addAuditoriums",
+        "Type": "System.Collections.Generic.List\u00601[[WebApplication3.Models.AddAuditorium, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      },
+      {
+        "Name": "idCinema",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebApplication3.Controllers.ShowTimeController",
     "Method": "AddShowtime",
     "RelativePath": "api/ShowTime/add",
