@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 using System.Net;
 using WebApplication3.Models;
-using PayPal.Api;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebApplication3.Controllers
 {
@@ -46,24 +44,6 @@ namespace WebApplication3.Controllers
                 var voucher = await _dbContext.Vouchers.Where(d => d.UserVouchers.Any(uv => uv.IdOrder == id)).SumAsync(d => d.DiscountPercent);
                 return Ok(voucher);
             }catch(Exception ex)
-            {
-                return StatusCode(500, "Internal server error");
-            }
-        }
-        [HttpGet("GetCoutorder/{datetime}")]
-        public async Task<ActionResult<IEnumerable<Models.Order>>> GetCoutorder(int datetime )
-        {
-            try
-            {
-                var orderCountByDate = await _dbContext.Orders.Where(p=>p.OrderDate.Month==datetime)
-            .GroupBy(o => o.OrderDate.Date)
-            
-            .Select(g => new { OrderDate = g.Key, OrderCount = g.Count() })
-            .OrderBy(x => x.OrderDate)
-            .ToListAsync();
-                return Ok(orderCountByDate);
-            }
-            catch(Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -147,7 +127,7 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpGet("ViewAccount/{id}")]
-        public async Task<ActionResult<IEnumerable<Models.Order>>> ViewAccount(int id)
+        public async Task<ActionResult<IEnumerable<Order>>> ViewAccount(int id)
         {
             try
             {
@@ -168,7 +148,7 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpGet("View")]
-        public async Task<ActionResult<IEnumerable<Models.Order>>> ShowOrder()
+        public async Task<ActionResult<IEnumerable<Order>>> ShowOrder()
         {
             try
             {
@@ -190,7 +170,7 @@ namespace WebApplication3.Controllers
         public IActionResult AddOrder(int id,[FromBody] Addorder order)
         {
             var random=new Random();
-            var orderTime = new Models.Order
+            var orderTime = new Order
             {
                 OrderCode = new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 4)
                                       .Select(s => s[random.Next(s.Length)]).ToArray()),

@@ -65,11 +65,10 @@ function Forgot() {
                                 <div className="woocommerce-notices-wrapper">
                                     <form onSubmit={handleForgot} action="" className="woocommerce-ResetPassword lost_reset_password">
                                         <p style={{ lineHeight: '1.86em', margin: '0 0 2em',color:'#737373',fontFamily:'Space Grotesk',fontSize:'16px' }}>Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.</p>
-                                        <p className="woocommerce-form-row woocommerce-form-row--first form-row form-row-first" style={{width:'95%'}}>
+                                        <p className="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
                                             <label htmlFor="" className="user_login" style={{color:'#737373',fontFamily:'Space Grotesk'}}>Username or email</label>
-                                            <input type="text" value={FormData.Title} onChange={(e) => setFormData({ ...FormData, AccoutForgot: e.target.value })}  className="woocommerce-Input woocommerce-Input--text input-text" id="user_login" />
+                                            <input type="text" value={FormData.Title} onChange={(e) => setFormData({ ...FormData, AccoutForgot: e.target.value })} className="woocommerce-Input woocommerce-Input--text input-text" id="user_login" />
                                         </p>
-                                        <br />
                                         <p className="woocommerce-form-row form-row">
                                             <button type="submit" className="woocommerce-Button button" value='Reset password' >Reset password</button>
                                         </p>

@@ -22,10 +22,6 @@ namespace WebApplication3.Controllers
             {
                 return NotFound();
             }
-            if (_dbContext.Movies.Any(a => a.IdGenre == id))
-            {
-                return BadRequest(new { message = "Can not Delete" });
-            }
             try
             {
                 _dbContext.Genres.Remove(gender);

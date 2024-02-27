@@ -134,12 +134,12 @@ D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\staticwebassets\msbuild.
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.WebApplication3.props
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\staticwebassets.pack.json
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\scopedcss\bundle\WebApplication3.styles.css
+D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.csproj.CopyComplete
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.dll
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\refint\WebApplication3.dll
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.genruntimeconfig.cache
 D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\ref\WebApplication3.dll
-<<<<<<< HEAD
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\appsettings.Development.json
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\appsettings.json
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\WebApplication3.staticwebassets.runtime.json
@@ -282,8 +282,3 @@ D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.pdb
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebApplication3.genruntimeconfig.cache
 D:\VisualStudioCode\movie_ticket2\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\ref\WebApplication3.dll
-=======
-D:\Movie_Ticket\Server\WebApplication3\obj\Debug\net8.0\WebAppli.18867FDF.Up2Date
-D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\SendGrid.dll
-D:\Movie_Ticket\Server\WebApplication3\bin\Debug\net8.0\StarkbankEcdsa.dll
->>>>>>> 087459c9a36b3818b70eaa617a8d57e06e35d4a6
