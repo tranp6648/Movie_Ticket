@@ -74,7 +74,12 @@ function Category_Movie() {
                 }
             }
         } catch (error) {
-            console.log(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Deletion failed',
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
     }
     const handleUpdateSubmit = async (e) => {
@@ -105,14 +110,14 @@ function Category_Movie() {
                             timer: 1500,
                         });
                     }
-                } else if(response.ok) {
+                } else if (response.ok) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Update Category Movie success',
                         showConfirmButton: false,
                         timer: 1500,
                     })
-                   
+
                     const categoryfrom = await axios.get('http://localhost:5231/api/CategoryMovie/getCategoryMovie');
                     setCategoryMovie(categoryfrom.data);
                     setPopupVisibility(false)
@@ -272,7 +277,7 @@ function Category_Movie() {
                                 <img src={image} className="img-circle" alt="User Image" />
                             </div>
                             <div className="pull-left info">
-                                <p className='text-white'>Alexander Pierce</p>
+                                <p className='text-white'>{username}</p>
 
                                 <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
                             </div>

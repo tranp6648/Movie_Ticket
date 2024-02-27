@@ -167,42 +167,7 @@ function ShowTimesMovie() {
   const handlePageclick = (data) => {
     setCurrentPage(data.selected);
   };
-  const deleteSubmit = async (CategoryID) => {
-    try {
-      const confirmation = await Swal.fire({
-        title: 'Are you sure?',
-        text: 'You won\'t be able to revert this!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-      });
-      if (confirmation.isConfirmed) {
-        const response = await axios.post(`http://localhost:5231/api/ShowTime/delete/${CategoryID}`);
-        if (response.status === 200) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Deletion successful',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          const response = await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
-          setShowTime(response.data)
 
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Deletion failed',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -332,7 +297,7 @@ function ShowTimesMovie() {
                 <img src={image} className="img-circle" alt="User Image" />
               </div>
               <div className="pull-left info">
-                <p className='text-white'>Alexander Pierce</p>
+                <p className='text-white'>{username}</p>
 
                 <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
               </div>
@@ -516,7 +481,7 @@ function ShowTimesMovie() {
                         <th>Cinema</th>
 
                         <th>Update</th>
-                        <th>Delete</th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -528,7 +493,7 @@ function ShowTimesMovie() {
                           <td>{show.nameMovie}</td>
                           <td>{show.cinema + " " + show.district}</td>
                           <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditClick(show.id)}>Edit</button></td>
-                          <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => deleteSubmit(show.id)}>Remove</button></td>
+
                         </tr>
                       ))}
                       <tr>

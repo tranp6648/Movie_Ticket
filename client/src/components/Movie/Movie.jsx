@@ -460,16 +460,16 @@ function Movie() {
 
           <section className="sidebar h-auto">
 
-            <div className="user-panel">
-              <div className="pull-left image">
-                <img src={image} className="img-circle" alt="User Image" />
-              </div>
-              <div className="pull-left info">
-                <p className='text-white'>Alexander Pierce</p>
-
-                <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
-              </div>
+          <div className="user-panel">
+            <div className="pull-left image">
+              <img src={image} className="img-circle" alt="User Image" />
             </div>
+            <div className="pull-left info">
+              <p className='text-white'>{username}</p>
+
+              <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
+            </div>
+          </div>
 
 
 

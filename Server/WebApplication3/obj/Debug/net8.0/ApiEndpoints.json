@@ -703,21 +703,11 @@
     "Parameters": [
       {
         "Name": "addCategory",
-        "Type": "WebApplication3.Models.CategoryMovie",
+        "Type": "WebApplication3.Models.AddCategoryMovie",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.CategoryMovie, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "WebApplication3.Controllers.CategoryMovieController",
@@ -733,17 +723,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.CategoryMovie, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "WebApplication3.Controllers.CategoryMovieController",
@@ -1874,22 +1854,6 @@
       {
         "Name": "addshowtime",
         "Type": "WebApplication3.Models.AddShowtime",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WebApplication3.Controllers.ShowTimeController",
-    "Method": "DeleteShowTime",
-    "RelativePath": "api/ShowTime/delete/{id}",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

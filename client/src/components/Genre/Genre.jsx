@@ -116,7 +116,12 @@ function Genre() {
         }
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Deletion failed',
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
   const handleUpdateSubmit = async (e) => {
@@ -274,16 +279,16 @@ function Genre() {
 
           <section className="sidebar h-auto">
 
-            <div className="user-panel">
-              <div className="pull-left image">
-                <img src={image} className="img-circle" alt="User Image" />
-              </div>
-              <div className="pull-left info">
-                <p className='text-white'>Alexander Pierce</p>
-
-                <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
-              </div>
+          <div className="user-panel">
+            <div className="pull-left image">
+              <img src={image} className="img-circle" alt="User Image" />
             </div>
+            <div className="pull-left info">
+              <p className='text-white'>{username}</p>
+
+              <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
+            </div>
+          </div>
 
 
 

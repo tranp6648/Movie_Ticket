@@ -15,18 +15,7 @@ namespace WebApplication3.Controllers
         {
             _dbContext = dbContext;
         }
-        [HttpPost("delete/{id}")]
-        public IActionResult DeleteShowTime(int id)
-        {
-            var Showtimes123 = _dbContext.Showtimes.Find(id);
-            if (Showtimes123 == null)
-            {
-                return NotFound("Show time not found");
-            }
-            _dbContext.Showtimes.Remove(Showtimes123);
-            _dbContext.SaveChanges();   
-            return Ok("Remove successfully");
-        }
+     
         [HttpPost("Update/{id}")]
         public IActionResult Update(int id, [FromBody] UpdateShowtime genre)
         {

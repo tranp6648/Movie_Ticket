@@ -199,6 +199,7 @@ namespace WebApplication3.Controllers
                 }
                 
                 _dbContext.SaveChanges();
+                SendEmail(addCheckout.Email, "Movie Ticket Shop", $"Thank you for booking our tickets");
                 return Ok("Add successfully");
             }
             catch (Exception ex)
@@ -287,6 +288,7 @@ namespace WebApplication3.Controllers
                     }
                 }
                 _dbContext.SaveChanges();
+                 SendEmail(addCheckout.Email, "Movie Ticket Shop", $"Thank you for booking our tickets");
                 return Ok("Add successfully");
             }
 
