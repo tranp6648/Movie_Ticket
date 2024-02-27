@@ -107,12 +107,7 @@ namespace WebApplication3.Controllers
                 var existingAccount = await _dbContext.Accounts
   .Where(a => a.Email == forgot || a.Username == forgot)
   .FirstOrDefaultAsync();
-              
-
-                
-
-                // Check if it's an email or username
-              
+       
                 if (existingAccount != null)
                 {
                     existingAccount.Password = HashPasswordMD5(existingAccount.Username);

@@ -28,9 +28,9 @@ function DetailCinema() {
     UpdateLocation: "",
     UpdatePhone: "",
   });
-  const [updatename, setupdatename] = useState("");
+  
   const [id, setid] = useState("");
-  const [Gen, setGen] = useState([]);
+  
   const [perPage, setperPage] = useState(5);
   const [searchTerm, setSearchtem] = useState("");
   const [Branches, setBrancher] = useState([]);
@@ -45,6 +45,10 @@ function DetailCinema() {
   const [roomDetails, setRoomDetails] = useState([]);
   const [vipSeats, setVipSeats] = useState({});
   const [roomSeats, setRoomSeats] = useState([]);
+  const [selectedCinemaId, setSelectedCinemaId] = useState(null);
+  const [vipSeatsCountByRoom, setVipSeatsCountByRoom] = useState({});
+  
+
 
 
   const handlePageclick = (data) => {
@@ -118,54 +122,7 @@ function DetailCinema() {
     fetchdata();
   }, []);
 
-  const handleUpdate = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(
-        `http://localhost:5231/api/Cinema/update/${FormData.ID}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: FormData.UpdateName,
-            location: FormData.UpdateLocation,
-            phone: FormData.UpdatePhone,
-          }),
-        }
-      );
-      if (!response.ok) {
-        const responseBody = await response.json();
-        if (responseBody.message) {
-          Swal.fire({
-            icon: "error",
-            title: responseBody.message || "Failed to add Cinema",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      } else {
-        Swal.fire({
-          icon: "success",
-          title: "Update Cinema success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        FormData.UpdateName = "";
-        FormData.UpdateLocation = "";
-        FormData.UpdatePhone = "";
-        FormData.ID = "";
-        setPopupVisibility(false);
-        const response = await axios.get(
-          "http://localhost:5231/api/Cinema/getCinema"
-        );
-        setCinema(response.data);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  
 
   const filteredGender = Cinema.filter((Cinema) =>
     Cinema.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -173,50 +130,57 @@ function DetailCinema() {
   const indexOflastgen = (currentPage + 1) * perPage;
   const indexOfFirtgen = indexOflastgen - perPage;
   const currentGender = filteredGender.slice(indexOfFirtgen, indexOflastgen);
-  const deleteSubmit = async (CinemaID) => {
-    try {
-      const confirmation = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-      if (confirmation.isConfirmed) {
-        const response = await axios.post(
-          `http://localhost:5231/api/Cinema/Delete/${CinemaID}`
-        );
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Deletion successful",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          const response = await axios.get(
-            "http://localhost:5231/api/Cinema/getCinema"
-          );
-          setCinema(response.data);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Deletion failed",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const deleteSubmit = async (CinemaID) => {
+  //   try {
+  //     const confirmation = await Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "You won't be able to revert this!",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, delete it!",
+  //     });
+  //     if (confirmation.isConfirmed) {
+  //       const response = await axios.post(
+  //         `http://localhost:5231/api/Cinema/Delete/${CinemaID}`
+  //       );
+  //       if (response.status === 200) {
+  //         Swal.fire({
+  //           icon: "success",
+  //           title: "Deletion successful",
+  //           showConfirmButton: false,
+  //           timer: 1500,
+  //         });
+  //         const response = await axios.get(
+  //           "http://localhost:5231/api/Cinema/getCinema"
+  //         );
+  //         setCinema(response.data);
+  //       } else {
+  //         Swal.fire({
+  //           icon: "error",
+  //           title: "Deletion failed",
+  //           showConfirmButton: false,
+  //           timer: 1500,
+  //         });
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
-  const handleSetupClick = () => {
+  const handleSetupClick = (cinemaIdFromButton) => {
+    console.log(cinemaIdFromButton); // For debugging
+    setSelectedCinemaId(cinemaIdFromButton); // Store the selected cinema ID
+    const selectedCinema = Cinema.find(Movie => Movie.id === cinemaIdFromButton);
+    if (selectedCinema) {
+      setFormData({ ...FormData, ID: cinemaIdFromButton });
+    }
     setActiveTab(0);
     setPopupVisibility(true);
   };
+  
 
   
 
@@ -258,9 +222,7 @@ function DetailCinema() {
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
-  // State để lưu trữ thông tin về ghế của mỗi phòng
- 
-  // Khi số lượng phòng thay đổi, cập nhật số ghế cho mỗi phòng
+  
   useEffect(() => {
     const newRoomSeats = Array.from({ length: quantityRoom }, () => []);
     setRoomSeats(newRoomSeats);
@@ -297,36 +259,57 @@ function DetailCinema() {
       });
       return;
     }
-    // Update the seat count for the specific room
+    
     const newRoomDetails = [...roomDetails];
     newRoomDetails[index].seatCount = seatCount;
     setRoomDetails(newRoomDetails);
     generateSeats(index, seatCount);
   };
   
-  const toggleSeatVip = (seatNumber, roomIndex) => {
-    setVipSeats((prevSeats) => {
-      const newVipSeats = { ...prevSeats, [seatNumber]: !prevSeats[seatNumber] };
+  // const toggleSeatVip = (seatNumber, roomIndex) => {
+  //   setVipSeats((prevSeats) => {
+  //     const newVipSeats = { ...prevSeats, [seatNumber]: !prevSeats[seatNumber] };
       
-      console.log(newVipSeats);
+  //     console.log("new vip seat" + newVipSeats);
+  //     return newVipSeats;
+  //   });
+  // };
+  const toggleSeatVip = (seatNumber) => {
+    setVipSeats(prevSeats => {
+      const seatKey = `Room${activeTab}Seat${seatNumber}`;
+      const newVipSeats = {
+        ...prevSeats,
+        [seatKey]: !prevSeats[seatKey],
+      };
+  
+      // Cập nhật số lượng ghế VIP cho phòng hiện tại
+      const currentVipCount = vipSeatsCountByRoom[`Room${activeTab}`] || 0;
+      setVipSeatsCountByRoom({
+        ...vipSeatsCountByRoom,
+        [`Room${activeTab}`]: newVipSeats[seatKey] ? currentVipCount + 1 : currentVipCount - 1,
+      });
+  
       return newVipSeats;
     });
   };
-  const renderSeats = (seats, roomIndex) => {
+  
+  
+  const renderSeats = (seats) => {
     const rows = [];
     for (let i = 0; i < seats.length; i += 10) {
       const currentRowSeats = seats.slice(i, i + 10);
       rows.push(
         <div key={`row-${i}`} className="seat-row">
           {currentRowSeats.map((seat, index) => {
-            const seatNumber = i + index + 1; // Adjust seat number based on index
-            const isVip = vipSeats[seatNumber]; // Check if the seat is VIP
+            const seatNumber = i + index + 1;
+            const seatKey = `Room${activeTab}Seat${seatNumber}`;
+            const isVip = vipSeats[seatKey];
             const seatClass = `seat-inDetail ${isVip ? 'vip' : ''}`;
             return (
               <div 
                 key={`seat-${index}`} 
-                className={seatClass}
-                onClick={() => toggleSeatVip(seatNumber, roomIndex)} // Update this function to handle VIP toggle
+                className={seatClass} 
+                onClick={() => toggleSeatVip(seatNumber)} // Update this function to handle VIP toggle
               >
                 {seat}
               </div>
@@ -337,9 +320,10 @@ function DetailCinema() {
     }
     return <div>{rows}</div>;
   };
-  const vipCount = Object.values(vipSeats).filter(Boolean).length; 
-  const standardCount = seatCounts[activeTab] - vipCount; 
-
+  const vipCount = vipSeatsCountByRoom[`Room${activeTab}`] || 0;
+const standardCount = seatCounts[activeTab] - vipCount;
+ 
+const isLastRoom = activeTab === quantityRoom - 1;
   
   
 const handleRoomNameChange = (index, name) => {
@@ -412,50 +396,70 @@ const handleRoomNameChange = (index, name) => {
       }
     }
   };
-  const handleSave = async () => {
-    // Step 1: Collect data from state
+ 
+
+
+const handleSave = async () => {
+    // Bước 1: Thu thập dữ liệu từ state
     const roomData = roomDetails.map((room, index) => {
-      return {
-        name: room.roomName,
-        cinemaID: ID, // This should be the ID you get from the state or props
-        seats: roomSeats[index].map((seat, seatIndex) => {
-          const isVip = vipSeats[seat];
-          return {
-            name: `Seat ${seatIndex + 1}`,
-            type: isVip ? 1 : 2, // Assuming 1 is for VIP and 2 is for standard seats
-          };
-        }),
-      };
+        const seats = roomSeats[index].map((_, seatIndex) => {
+            const seatKey = `Room${index}Seat${seatIndex}`;
+            const isVip = vipSeats[`Room${index}Seat${seatIndex + 1}`];
+            return {
+                name: `Seat ${seatIndex + 1}`,
+                type: isVip ? "1" : "2",
+            };
+        });
+
+        return {
+            name: room.roomName,
+            cinemaID: selectedCinemaId,
+            seats,
+        };
     });
-  
-    // Step 2: Create data structure for backend
-    const payload = {
-      cinemaID: ID, // Replace with actual cinemaID from state or props
-      rooms: roomData,
-    };
-  
-    // Log the payload to the console
-    console.log("Data being sent to saveSeats API:", payload);
-  
-    // Step 3: Send data to backend
+    const payload = roomData;
+    const bodyData = payload.map(room => ({
+      name: room.name,
+      seats: room.seats.map(seat => ({
+          seatName: seat.name,
+          type: seat.type
+      }))
+  }));
+
+    console.log("roomData:", roomData);
+    // Bước 2: Tạo cấu trúc dữ liệu cho backend
+    
+
+    payload.forEach(room => {
+      room.seats.forEach(seat => {
+          console.log(seat.name); // Access the name property of each seat
+      });
+  });
+
     try {
-      const response = await axios.post('http://localhost:5231/api/Seat/saveSeats', payload);
-      // Replace 'your-backend-api-endpoint' with your actual backend API endpoint
-  
-      // Step 4: Handle response
-      if (response.status === 200) {
-        // Assuming 200 is the status code for a successful operation
-        Swal.fire('Success', 'All configurations have been saved successfully!', 'success');
-        // Here you might also want to update your state to reflect the changes
-        // ...
-      } else {
-        Swal.fire('Error', 'Failed to save configurations.', 'error');
-      }
+        const response = await fetch(`http://localhost:5231/api/Seat/saveSeats/${selectedCinemaId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+          //   body: JSON.stringify({name:payload.forEach(a=>a.name),seats:payload.flatMap(room => room.seats.map(seat => ({
+          //     seatName: seat.name,
+          //     type: seat.type
+          // })))}), 
+          body: JSON.stringify(bodyData),
+        });
+
+        if (response.ok) {
+            // const responseData = await response.json();
+            Swal.fire('Success', 'All configurations have been saved successfully!', 'success');
+        } else {
+            Swal.fire('Error', 'Failed to save configurations.', 'error');
+        }
     } catch (error) {
-      console.error('Error saving configurations:', error);
-      Swal.fire('Error', 'There was a problem saving the configurations.', 'error');
+        console.error('Error saving configurations:', error);
+        Swal.fire('Error', 'There was a problem saving the configurations.', 'error');
     }
-  };
+};
   
   
   return (
@@ -568,23 +572,23 @@ const handleRoomNameChange = (index, name) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGender.map((Cinema, index) => (
-                        <tr key={Cinema.ID}>
+                      {currentGender.map((CinemaItem, index) => (
+                        <tr key={CinemaItem.ID}>
                           <td>{index + 1}</td>
-                          <td>{Cinema.name}</td>
-                          <td>{Cinema.location}</td>
-                          <td>{Cinema.phone}</td>
-                          <td>{Cinema.district}</td>
+                          <td>{CinemaItem.name}</td>
+                          <td>{CinemaItem.location}</td>
+                          <td>{CinemaItem.phone}</td>
+                          <td>{CinemaItem.district}</td>
                           <td>
-                            {Cinema.detailCityBranch.length > 0
-                              ? Cinema.detailCityBranch[0].idBranchNavigation
+                            {CinemaItem.detailCityBranch.length > 0
+                              ? CinemaItem.detailCityBranch[0].idBranchNavigation
                                   .city
                               : "No Category"}
                           </td>
                           <td>
                             <button
                               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                              onClick={handleSetupClick}
+                              onClick={()=>handleSetupClick(CinemaItem.id)}
                             >
                               Setup
                             </button>
@@ -592,7 +596,7 @@ const handleRoomNameChange = (index, name) => {
                           <td>
                             <button
                               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                              onClick={() => deleteSubmit(Cinema.id)}
+                              
                             >
                               Remove
                             </button>
@@ -667,55 +671,66 @@ const handleRoomNameChange = (index, name) => {
           </div>
         )}
 
-        {setupRoomPopupVisible && (
-          <div className="popup-container">
-            <div
-              className="popup-content1"
-              style={
-                IsClosingPopup
-                  ? { ...popupContentStyle1, ...closingAnimation }
-                  : popupContentStyle1
-              }
-            >
-              <div className="flex justify-end">
-                <button
-                  onClick={() => setSetupRoomPopupVisible(false)}
-                  className="close-btn"
-                >
-                  X
-                </button>
-              </div>
-              {/* Menu các rạp */}
-              <div className="tabs">
-                {Array.from({ length: quantityRoom }).map((_, i) => (
-                  <button
-                    key={i}
-                    className={`tab-item ${i === activeTab ? "active" : ""}`}
-                    onClick={() => handleTabClick(i)}
-                  >
-                    Room {i + 1}
-                  </button>
-                ))}
-              </div>
-              {/* Nội dung tương ứng với rạp được chọn */}
-              <div className="w-full border-[black] border-[1px]"></div>
-              <div className="tab-content">
-              {renderRoomSetupForm(activeTab)}
-                {/* Hiển thị bố cục ghế cho phòng active */}
-                <div className="room-seats-layout ">
-                    <div className="screen1"></div>
-      {roomSeats[activeTab] && renderSeats(roomSeats[activeTab])}
+{setupRoomPopupVisible && (
+  <div className="popup-container">
+    <div
+      className="popup-content1"
+      style={
+        IsClosingPopup
+          ? { ...popupContentStyle1, ...closingAnimation }
+          : popupContentStyle1
+      }
+    >
+      <div className="flex justify-end">
+        <button
+          onClick={() => setSetupRoomPopupVisible(false)}
+          className="close-btn"
+        >
+          X
+        </button>
+      </div>
+      {/* Tabs for rooms */}
+      <div className="tabs">
+        {Array.from({ length: quantityRoom }).map((_, i) => (
+          <button
+            key={i}
+            className={`tab-item ${i === activeTab ? "active" : ""}`}
+            onClick={() => handleTabClick(i)}
+          >
+            Room {i + 1}
+          </button>
+        ))}
+      </div>
+      
+      <div className="w-full border-[black] border-[1px]"></div>
+      <div className="tab-content">
+        {renderRoomSetupForm(activeTab)}
+        
+        <div className="room-seats-layout">
+          <div className="screen1"></div>
+          {roomSeats[activeTab] && renderSeats(roomSeats[activeTab])}
+        </div>
+      </div>
+      {/* Dynamically display Next or Save button */}
+      {activeTab < quantityRoom - 1 ? (
+        <button
+          onClick={() => setActiveTab(activeTab + 1)}
+          className="next-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+        >
+          Next
+        </button>
+      ) : (
+        <button
+          onClick={() => handleSave()}
+          className="save-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+        >
+          Save
+        </button>
+      )}
     </div>
-              </div>
-              <button
-        onClick={handleSave}
-        className="close-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
-      >
-       SAVE
-      </button>
-            </div>
-          </div>
-        )}
+  </div>
+)}
+
       </div>
     </div>
   );

@@ -180,7 +180,7 @@ function Event() {
     const handleSubmit = async (event) => {
 
         event.preventDefault();
-        if (FormData.Tittle === '' || FormData.Description == '' || FormData.StartDate == null || FormData.EndDate == null || FormData.Picture) {
+        if (FormData.Tittle === '' || FormData.Description == '' || FormData.StartDate == null || FormData.EndDate == null || FormData.Picture==null) {
             Swal.fire({
                 icon: 'error',
                 title: 'Please complete all information',

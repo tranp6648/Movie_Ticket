@@ -94,7 +94,7 @@ function CheckOutCart() {
                     title: "Add order successfully",
                     showConfirmButton: false,
                     timer: 1500,
-                });
+                }).then(navigate('/ThankYou',{ state: { IDAccount:IDAccount } }));
             }
         } catch (error) {
             console.log(error)
@@ -267,7 +267,8 @@ function CheckOutCart() {
                             title: "Add order successfully",
                             showConfirmButton: false,
                             timer: 1500,
-                        });
+                        }).then(navigate('/ThankYou',{ state: { IDAccount:IDAccount } }));
+                       
                     }
                 } catch (error) {
                     console.log(error)

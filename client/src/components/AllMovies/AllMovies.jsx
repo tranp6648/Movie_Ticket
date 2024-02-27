@@ -11,7 +11,7 @@ function AllMovies() {
     const [perPage, setperPage] = useState(5);
     const location = useLocation();
 
-    const ID = location.state?.ID || '';
+    const ID = location.state?.IDAccount || '';
     const [searchTerm, setSearchtem] = useState('');
     const [activeIndex, setActiveIndex] = useState(null);
     const [filteredMovies, setFilteredMovies] = useState([]);
@@ -99,7 +99,7 @@ function AllMovies() {
                                 <div>
                                     <div className="elementor-widget-container">
                                         <div className="mb-movie-list mb-movie-list-template1 four_column">
-                                            {currentGender.map((Movies, index) => (
+                                            {filteredGender.map((Movies, index) => (
                                                 <div className="mb-movie-item item-template1">
                                                     <a onClick={()=>navigate(`/Detail/${Movies.id}`,{ state: { ID:Movies.id,IDAccount:ID } })} style={{ boxShadow: 'none', textDecoration: 'none' }}>
                                                         <div className="movie-image">

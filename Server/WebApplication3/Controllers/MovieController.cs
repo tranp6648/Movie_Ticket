@@ -239,21 +239,21 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var movies = await _dbContext.Showtimes.Where(d=>d.Time<=DateTime.Now && d.Endtime<=DateTime.Now)
-      .Include(m => m.IdMovieNavigation.DetailCategoryMovies)
+                var movies = await _dbContext.Movies.Where(d=>d.Showtimes.Any(e=>e.Time>=DateTime.Now))
+      .Include(m => m.DetailCategoryMovies)
           .ThenInclude(d => d.IdCategoryNavigation)
       .Select(m => new
       {
           // Specify the properties you want to include in the projection
-          id = m.IdMovieNavigation.Id,
-          Title = m.IdMovieNavigation.Title,
-          ReleaseDate = m.IdMovieNavigation.ReleaseDate,
-          duration = m.IdMovieNavigation.Duration,
-          director = m.IdMovieNavigation.Director,
-          description = m.IdMovieNavigation.Description,
-          idgenre = m.IdMovieNavigation.IdGenreNavigation.Id,
-          GenreName = m.IdMovieNavigation.IdGenreNavigation.Name,
-          DetailCategoryMovies = m.IdMovieNavigation.DetailCategoryMovies.Select(d => new
+          id = m.Id,
+          Title = m.Title,
+          ReleaseDate = m.ReleaseDate,
+          duration = m.Duration,
+          director = m.Director,
+          description = m.Description,
+          idgenre = m.IdGenreNavigation.Id,
+          GenreName = m.IdGenreNavigation.Name,
+          DetailCategoryMovies = m.DetailCategoryMovies.Select(d => new
           {
 
               Id = d.Id,

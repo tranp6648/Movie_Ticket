@@ -47,9 +47,9 @@ function Menu(){
                                     <div className='primary-navigation'>
                                         <ul id='menu-primary-menu' className='menu'>
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
-                                            <a href="">
+                                            <a href="" onClick={()=>  navigate('/layout',{ state: { IDAccount:IDAccount } })}>
                                                 Home
-                                                <i class="fa fa-caret-down" id='icon' aria-hidden="true"></i>
+                                                
                                             </a>
                                         </li>
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
@@ -59,56 +59,38 @@ function Menu(){
                                             </a>
                                             <ul className='sub-menu' style={{listStyle:'none'}}>
                                                 <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56' id='menu-item-56'>
-                                                    <a href="" style={{color:'#737373',textDecoration:'none'}}>Movie All</a>
+                                                    <a href="" style={{color:'#737373',textDecoration:'none'}} onClick={()=>  navigate('/AllMovie',{ state: { IDAccount:IDAccount } })}>Movie All</a>
                                                 </li>
-                                                <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56' id='menu-item-56'>
-                                                    <a href="" style={{color:'#737373',textDecoration:'none'}}>Movie Now Playing</a>
-                                                </li>
-                                                <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56' id='menu-item-56'>
-                                                    <a href="" style={{color:'#737373',textDecoration:'none'}}>Movie Coming soon</a>
-                                                </li>
-                                                <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56' id='menu-item-56'>
-                                                    <a href="" style={{color:'#737373',textDecoration:'none'}}>Movie Category</a>
-                                                </li>
-                                                <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56' id='menu-item-56'>
-                                                    <a href="" style={{color:'#737373',textDecoration:'none'}}>Movie Feautured</a>
-                                                </li>
+                                              
+                                              
                                             </ul>
                                         </li>
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
-                                            <a href="">
-                                                Events
-                                                <i class="fa fa-caret-down" id='icon' aria-hidden="true"></i>
+                                            <a href="" onClick={()=>  navigate('/MovieActor',{ state: { IDAccount:IDAccount } })}>
+                                                Actor
+                                                
                                             
                                             </a>
-                                            <ul className='sub-menu' style={{listStyle:'none'}}>
-                                                <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56' id='menu-item-56'>
-                                                    <a href="" style={{color:'#737373',textDecoration:'none'}}>Event Grid</a>
-                                                </li> 
-                                                <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56' id='menu-item-56'>
-                                                    <a href="" style={{color:'#737373',textDecoration:'none'}}>Event List</a>
-                                                </li> 
-                                                <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56' id='menu-item-56'>
-                                                    <a href="" style={{color:'#737373',textDecoration:'none'}}>Event Details</a>
-                                                </li> 
-                                                </ul>
+                                           
+                                        </li>
+                                        <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
+                                            <a href="" onClick={()=>  navigate('/EventHome',{ state: { IDAccount:IDAccount } })}>
+                                                Events
+                                                
+                                            
+                                            </a>
+                                           
                                         </li>
                                     
+                                       
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
-                                            <a href="">
-                                                News
-                                                <i class="fa fa-caret-down" id='icon' aria-hidden="true"></i>
-                                            </a>
-                                          
-                                        </li>
-                                        <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
-                                            <a href="">
+                                            <a href="" onClick={()=>  navigate('/Contact',{ state: { IDAccount:IDAccount } })}>
                                                 Contact
                                                
                                             </a>
                                         </li>
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
-                                            <a href="">
+                                            <a href="" onClick={()=>  navigate('/About',{ state: { IDAccount:IDAccount } })}>
                                                 About
                                                
                                             </a>
@@ -132,12 +114,26 @@ function Menu(){
                     <div className='elementor-element elementor-element-2f55708 elementor-widget__width-auto elementor-view-default elementor-widget elementor-widget-icon'>
                             <div className='elementor-widget-container'>
                                 <div className='elementor-icon-wrapper' style={{marginLeft:'32px'}}>
-                                    <a  className='elementor-icon' onClick={()=>navigate('/Myorder',{ state: {  IDAccount: IDAccount} })}>
+                                    
+                                    <a  className='elementor-icon' onClick={()=>navigate(`${IDAccount=='' ?'/Account' :'/Myorder'}`,{ state: {  IDAccount: IDAccount} })}>
                                     <i class="fa-solid fa-user" style={{color:'white',fontSize:'24pxx'}}></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        {IDAccount!='' && (
+    <div className='elementor-element elementor-element-2f55708 elementor-widget__width-auto elementor-view-default elementor-widget elementor-widget-icon'>
+    <div className='elementor-widget-container'>
+        <div className='elementor-icon-wrapper' style={{marginLeft:'32px'}}>
+            
+            <a href=''  className='elementor-icon' onClick={()=>navigate(`/layout`)}>
+            <i class="fa fa-sign-out" style={{color:'white',fontSize:'24pxx'}}></i>
+            </a>
+        </div>
+    </div>
+</div>
+                        )}
+                
                 </div>
             </div>
             </section>
