@@ -10,6 +10,7 @@ import "../DetailCinema/DetailCinema.css";
 import Pagination from "react-paginate";
 import "react-paginate/theme/basic/react-paginate.css";
 import Select from "react-select";
+import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 function DetailCinema() {
   const location = useLocation();
@@ -221,17 +222,30 @@ function DetailCinema() {
 
   const handleTabClick = (index) => {
     setActiveTab(index);
+    
   };
-  
+  // State để lưu trữ thông tin về ghế của mỗi phòng
+
+  // Khi số lượng phòng thay đổi, cập nhật số ghế cho mỗi phòng
   useEffect(() => {
     const newRoomSeats = Array.from({ length: quantityRoom }, () => []);
     setRoomSeats(newRoomSeats);
   }, [quantityRoom]);
-  useEffect(() => {
-    setRoomDetails(Array.from({ length: quantityRoom }, (_, index) => roomDetails[index] || { seatCount: 0, roomName: '' }));
-  }, [quantityRoom]);
-  
- 
+
+  // Hàm để tạo ra bố cục ghế
+  //   const generateSeats = (index, seatCount) => {
+  //     // Tạo ra một array mới với số lượng ghế đã nhập
+  //     const newSeats = Array.from(
+  //       { length: seatCount },
+  //       (_, i) => ` ${i + 1}`
+  //     );
+  //     // Cập nhật state với array mới cho phòng hiện tại
+  //     setRoomSeats((prevSeats) => {
+  //       const updatedSeats = [...prevSeats];
+  //       updatedSeats[index] = newSeats;
+  //       return updatedSeats;
+  //     });
+  //   };
   const generateSeats = (index, seatCount) => {
     // Ensure seatCount is a number
     if (!Number.isNaN(seatCount) && seatCount <= 80) {
@@ -241,8 +255,8 @@ function DetailCinema() {
         updatedSeats[index] = newSeats;
         return updatedSeats;
       });
-  
-     
+
+      // Update the seat count for the room
       setSeatCounts((prevCounts) => ({
         ...prevCounts,
         [index]: seatCount,
@@ -265,120 +279,113 @@ function DetailCinema() {
     setRoomDetails(newRoomDetails);
     generateSeats(index, seatCount);
   };
-  
-  // const toggleSeatVip = (seatNumber, roomIndex) => {
-  //   setVipSeats((prevSeats) => {
-  //     const newVipSeats = { ...prevSeats, [seatNumber]: !prevSeats[seatNumber] };
-      
-  //     console.log("new vip seat" + newVipSeats);
-  //     return newVipSeats;
-  //   });
-  // };
-  const toggleSeatVip = (seatNumber) => {
-    setVipSeats(prevSeats => {
-      const seatKey = `Room${activeTab}Seat${seatNumber}`;
-      const newVipSeats = {
-        ...prevSeats,
-        [seatKey]: !prevSeats[seatKey],
-      };
-  
-      // Cập nhật số lượng ghế VIP cho phòng hiện tại
-      const currentVipCount = vipSeatsCountByRoom[`Room${activeTab}`] || 0;
-      setVipSeatsCountByRoom({
-        ...vipSeatsCountByRoom,
-        [`Room${activeTab}`]: newVipSeats[seatKey] ? currentVipCount + 1 : currentVipCount - 1,
-      });
-  
+
+  const toggleSeatVip = (seatNumber, roomIndex) => {
+    roomIndex=activeTab;
+    console.log(roomIndex);
+    setVipSeats((prevSeats) => {
+      const newVipSeats = { ...prevSeats, [seatNumber]: !prevSeats[seatNumber] };
+      // After updating vipSeats, you could calculate the number of VIP seats and update a state or context
+      // For now, just logging the change
+      console.log(newVipSeats);
       return newVipSeats;
     });
   };
-  
-  
-  const renderSeats = (seats) => {
+  const currentIndexMap = {};
+  const renderSeats = (seats, roomIndex) => {
     const rows = [];
     for (let i = 0; i < seats.length; i += 10) {
       const currentRowSeats = seats.slice(i, i + 10);
       rows.push(
         <div key={`row-${i}`} className="seat-row">
-          {currentRowSeats.map((seat, index) => {
-            const seatNumber = i + index + 1;
-            const seatKey = `Room${activeTab}Seat${seatNumber}`;
-            const isVip = vipSeats[seatKey];
-            const seatClass = `seat-inDetail ${isVip ? 'vip' : ''}`;
-            return (
-              <div 
-                key={`seat-${index}`} 
-                className={seatClass} 
-                onClick={() => toggleSeatVip(seatNumber)} // Update this function to handle VIP toggle
-              >
-                {seat}
-              </div>
-            );
-          })}
-        </div>
+{currentRowSeats.map((seat, index) => {
+  const seatNumber = i + index + 1; // Điều chỉnh số ghế dựa trên chỉ số
+   // Kiểm tra xem ghế có phải là VIP không
+  const vipCount = Object.values(vipSeats).filter((seat, index) => index === activeTab && seat).length;
+  const isVip = vipSeats[seatNumber] ;
+  console.log(vipSeats)
+  const seatClass = `seat-inDetail ${isVip? 'vip' : ''}`;
+  
+  currentIndexMap[`seat-${seatNumber}`] = seat;
+  currentIndexMap[`seatCategory-${seatNumber}`] = isVip ? 1 : 2;
+  currentIndexMap['seatCinema'] =activeTab || '';
+
+  return (
+    <div 
+      key={`seat-${index}`} 
+      className={seatClass}
+      onClick={() => toggleSeatVip(seatNumber, activeTab)} // Cập nhật hàm này để xử lý việc chuyển đổi VIP
+    >
+      {seat}
+    </div>
+  );
+})}
+</div>
+
       );
     }
+ 
     return <div>{rows}</div>;
   };
-  const vipCount = vipSeatsCountByRoom[`Room${activeTab}`] || 0;
-const standardCount = seatCounts[activeTab] - vipCount;
- 
-const isLastRoom = activeTab === quantityRoom - 1;
+
+  const vipCount = Object.values(vipSeats).filter((seat, index) => index === activeTab && seat).length;
+
   
-  
-const handleRoomNameChange = (index, name) => {
+  const standardCount = seatCounts[activeTab] - vipCount;
+
+
+
+  const handleRoomNameChange = (index, name) => {
     // Update the room name for the specific room
     const newRoomDetails = [...roomDetails];
     newRoomDetails[index].roomName = name;
     setRoomDetails(newRoomDetails);
   };
-  
 
-  const renderRoomSetupForm = (index) => {
+  useEffect(() => {
+    setRoomDetails(Array.from({ length: quantityRoom }, (_, index) => roomDetails[index] || { seatCount: 0, roomName: '' }));
+  }, [quantityRoom]);
+
+  const renderRoomSetupForm = (activeTabIndex) => {
     return (
       <div className="w-[200px]">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label className="inputSeat text-white" htmlFor={`seatCount-room${index}`}>
-            Enter seat count for Room {index + 1}:
+         <label className="inputSeat text-white" htmlFor={`roomName-room${activeTabIndex}`}>
+            Enter name for Room {activeTabIndex + 1}:
           </label>
-          <br />
-          <input
+        <form onSubmit={(e) => e.preventDefault()}>
+        <input
             type="number"
             placeholder="Quantity seats"
-            value={roomDetails[index]?.seatCount || 0}
-            onChange={(e) => handleSeatCountChange(index, parseInt(e.target.value, 10))}
+            value={roomDetails[activeTabIndex]?.seatCount || 0}
+            onChange={(e) => handleSeatCountChange(activeTabIndex, parseInt(e.target.value, 10))}
             className="seat-count-input"
           />
-        </form>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label className="inputSeat text-white" htmlFor={`roomName-room${index}`}>
-            Enter name for Room {index + 1}:
+          <label className="inputSeat text-white" htmlFor={`roomName-room${activeTabIndex}`}>
+            Enter name for Room {activeTabIndex + 1}:
           </label>
           <br />
           <input
             type="text"
             placeholder="Name room"
-            value={roomDetails[index]?.roomName || ''}
-            onChange={(e) => handleRoomNameChange(index, e.target.value)}
+            value={roomDetails[activeTabIndex]?.roomName || ''}
+            onChange={(e) => handleRoomNameChange(activeTabIndex, e.target.value)}
             className="room-name-input"
           />
         </form>
+  
         <ul class="showcase mt-14">
-      <li>
-        <div class="seat-inDetail-icon"></div>
-        <small>Standard {standardCount}</small>
-      </li>
-      <li>
-        <div class="seat-inDetail1-icon"></div>
-        <small>Vip  {vipCount}</small>
-      </li>
-      
-    </ul>
-    
+          <li>
+            <div class="seat-inDetail-icon"></div>
+            <small>Standard {standardCount}</small>
+          </li>
+          <li>
+            <div class="seat-inDetail1-icon"></div>
+            <small>Vip {vipCount}</small>
+          </li>
+        </ul>
       </div>
     );
   };
-  
   const handleOpenSetupRoom1 = () => {
     if (quantityRoom < 1 || quantityRoom > 10) {
       Swal.fire({
@@ -396,72 +403,15 @@ const handleRoomNameChange = (index, name) => {
       }
     }
   };
- 
+  const handleSave = () => {
+    // Implement the logic to save all room configurations
+    console.log("Saving all room configurations...");
+    // Potentially send data to the backend or update the state accordingly
+    // ...
 
-
-const handleSave = async () => {
-    // Bước 1: Thu thập dữ liệu từ state
-    const roomData = roomDetails.map((room, index) => {
-        const seats = roomSeats[index].map((_, seatIndex) => {
-            const seatKey = `Room${index}Seat${seatIndex}`;
-            const isVip = vipSeats[`Room${index}Seat${seatIndex + 1}`];
-            return {
-                name: `Seat ${seatIndex + 1}`,
-                type: isVip ? "1" : "2",
-            };
-        });
-
-        return {
-            name: room.roomName,
-            cinemaID: selectedCinemaId,
-            seats,
-        };
-    });
-    const payload = roomData;
-    const bodyData = payload.map(room => ({
-      name: room.name,
-      seats: room.seats.map(seat => ({
-          seatName: seat.name,
-          type: seat.type
-      }))
-  }));
-
-    console.log("roomData:", roomData);
-    // Bước 2: Tạo cấu trúc dữ liệu cho backend
-    
-
-    payload.forEach(room => {
-      room.seats.forEach(seat => {
-          console.log(seat.name); // Access the name property of each seat
-      });
-  });
-
-    try {
-        const response = await fetch(`http://localhost:5231/api/Seat/saveSeats/${selectedCinemaId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-          //   body: JSON.stringify({name:payload.forEach(a=>a.name),seats:payload.flatMap(room => room.seats.map(seat => ({
-          //     seatName: seat.name,
-          //     type: seat.type
-          // })))}), 
-          body: JSON.stringify(bodyData),
-        });
-
-        if (response.ok) {
-            // const responseData = await response.json();
-            Swal.fire('Success', 'All configurations have been saved successfully!', 'success');
-        } else {
-            Swal.fire('Error', 'Failed to save configurations.', 'error');
-        }
-    } catch (error) {
-        console.error('Error saving configurations:', error);
-        Swal.fire('Error', 'There was a problem saving the configurations.', 'error');
-    }
-};
-  
-  
+    // After saving, you can close the setup popup if needed
+    setSetupRoomPopupVisible(false);
+  };
   return (
     <div>
       <div className="wrapper">
@@ -580,9 +530,9 @@ const handleSave = async () => {
                           <td>{CinemaItem.phone}</td>
                           <td>{CinemaItem.district}</td>
                           <td>
-                            {CinemaItem.detailCityBranch.length > 0
-                              ? CinemaItem.detailCityBranch[0].idBranchNavigation
-                                  .city
+                            {Cinema.detailCityBranch.length > 0
+                              ? Cinema.detailCityBranch[0].idBranchNavigation
+                                .city
                               : "No Category"}
                           </td>
                           <td>
@@ -671,66 +621,55 @@ const handleSave = async () => {
           </div>
         )}
 
-{setupRoomPopupVisible && (
-  <div className="popup-container">
-    <div
-      className="popup-content1"
-      style={
-        IsClosingPopup
-          ? { ...popupContentStyle1, ...closingAnimation }
-          : popupContentStyle1
-      }
-    >
-      <div className="flex justify-end">
-        <button
-          onClick={() => setSetupRoomPopupVisible(false)}
-          className="close-btn"
-        >
-          X
-        </button>
-      </div>
-      {/* Tabs for rooms */}
-      <div className="tabs">
-        {Array.from({ length: quantityRoom }).map((_, i) => (
-          <button
-            key={i}
-            className={`tab-item ${i === activeTab ? "active" : ""}`}
-            onClick={() => handleTabClick(i)}
-          >
-            Room {i + 1}
-          </button>
-        ))}
-      </div>
-      
-      <div className="w-full border-[black] border-[1px]"></div>
-      <div className="tab-content">
-        {renderRoomSetupForm(activeTab)}
-        
-        <div className="room-seats-layout">
-          <div className="screen1"></div>
-          {roomSeats[activeTab] && renderSeats(roomSeats[activeTab])}
-        </div>
-      </div>
-      {/* Dynamically display Next or Save button */}
-      {activeTab < quantityRoom - 1 ? (
-        <button
-          onClick={() => setActiveTab(activeTab + 1)}
-          className="next-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
-        >
-          Next
-        </button>
-      ) : (
-        <button
-          onClick={() => handleSave()}
-          className="save-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
-        >
-          Save
-        </button>
-      )}
-    </div>
-  </div>
-)}
-
+        {setupRoomPopupVisible && (
+          <div className="popup-container">
+            <div
+              className="popup-content1"
+              style={
+                IsClosingPopup
+                  ? { ...popupContentStyle1, ...closingAnimation }
+                  : popupContentStyle1
+              }
+            >
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setSetupRoomPopupVisible(false)}
+                  className="close-btn"
+                >
+                  X
+                </button>
+              </div>
+              {/* Menu các rạp */}
+              <div className="tabs">
+                {Array.from({ length: quantityRoom }).map((_, i) => (
+                  <button
+                    key={i}
+                    className={`tab-item ${i === activeTab ? "active" : ""}`}
+                    onClick={() => handleTabClick(i)}
+                  >
+                    Room {i + 1}
+                  </button>
+                ))}
+              </div>
+              {/* Nội dung tương ứng với rạp được chọn */}
+              <div className="w-full border-[black] border-[1px]"></div>
+              <div className="tab-content">
+                {renderRoomSetupForm(activeTab)}
+                {/* Hiển thị bố cục ghế cho phòng active */}
+                <div className="room-seats-layout ">
+                  <div className="screen1"></div>
+                  {roomSeats[activeTab] && renderSeats(roomSeats[activeTab])}
+                </div>
+              </div>
+              <button
+                onClick={handleOpenSetupRoom1}
+                className="close-btn bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+              >
+                {activeTab < quantityRoom - 1 ? 'Next' : 'Save'}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -9,12 +9,21 @@
       "restore": {
         "projectUniqueName": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
         "projectName": "WebApplication3",
+<<<<<<< HEAD
         "projectPath": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
         "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
         "outputPath": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "projectPath": "D:\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Movie_Ticket\\Server\\WebApplication3\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> 087459c9a36b3818b70eaa617a8d57e06e35d4a6
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,6 +43,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -72,6 +86,10 @@
               "target": "Package",
               "version": "[1.9.1, )"
             },
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.29.2, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
@@ -96,7 +114,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+>>>>>>> 087459c9a36b3818b70eaa617a8d57e06e35d4a6
         }
       }
     }

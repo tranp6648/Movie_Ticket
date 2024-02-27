@@ -15,18 +15,7 @@ namespace WebApplication3.Controllers
         {
             _dbContext = dbContext;
         }
-        [HttpPost("delete/{id}")]
-        public IActionResult DeleteShowTime(int id)
-        {
-            var Showtimes123 = _dbContext.Showtimes.Find(id);
-            if (Showtimes123 == null)
-            {
-                return NotFound("Show time not found");
-            }
-            _dbContext.Showtimes.Remove(Showtimes123);
-            _dbContext.SaveChanges();   
-            return Ok("Remove successfully");
-        }
+     
         [HttpPost("Update/{id}")]
         public IActionResult Update(int id, [FromBody] UpdateShowtime genre)
         {
@@ -138,7 +127,7 @@ namespace WebApplication3.Controllers
                 {
                     return BadRequest("Invalid movie data");
                 }
-                if (_dbContext.Showtimes.Any(a => a.Time <= addshowtime.Time && a.Endtime>=addshowtime.Endtime && a.IdAuditoriums == addshowtime.IdAuditoriums))
+                if (_dbContext.Showtimes.Any(a => (vietnamTime<a.Endtime && Endtime>=a.Time) && a.IdAuditoriums == addshowtime.IdAuditoriums))
                 {
                     return BadRequest(new { message = "Show time is already exists" });
 

@@ -31,9 +31,9 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpPost("DeleteCategory/{id}")]
-        public async Task<ActionResult<IEnumerable<CategoryMovie>>>DeleteCategory(int id)
+        public IActionResult DeleteCategory(int id)
         {
-            var category = await _dbContext.CategoryMovies.FindAsync(id);
+            var category =  _dbContext.CategoryMovies.Find(id);
             if (category == null)
             {
                 return NotFound();
@@ -41,9 +41,9 @@ namespace WebApplication3.Controllers
             try
             {
                 _dbContext.CategoryMovies.Remove(category);
-                await _dbContext.SaveChangesAsync();
-                var allcategory = await _dbContext.CategoryMovies.ToListAsync();
-                return Ok(allcategory);
+                _dbContext.SaveChanges();
+               
+                return Ok("Delete Successfully");
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace WebApplication3.Controllers
                 {
                     return NotFound("Genre not found");
                 }
-                if (_dbContext.CategoryMovies.Any(a => a.Name == updateCategory.Name))
+                if (_dbContext.CategoryMovies.Any(a => a.Name == updateCategory.Name && a.Id!=id))
                 {
                     return BadRequest(new { message = "Category Movie name already exists" });
                 }
@@ -79,7 +79,7 @@ namespace WebApplication3.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<ActionResult<IEnumerable<CategoryMovie>>> AddCategoryMovie([FromBody] CategoryMovie addCategory)
+        public IActionResult AddCategoryMovie([FromBody] AddCategoryMovie addCategory)
         {
             try
             {
@@ -97,9 +97,9 @@ namespace WebApplication3.Controllers
                     Name = addCategory.Name
                 };
                 _dbContext.CategoryMovies.Add(CategoryEntity);
-                await _dbContext.SaveChangesAsync();
-                var allCategorymovies = await _dbContext.CategoryMovies.ToListAsync();
-                return Ok(allCategorymovies);
+               _dbContext.SaveChanges();
+                
+                return Ok("Add Successfully");
             }
             catch (Exception ex)
             {

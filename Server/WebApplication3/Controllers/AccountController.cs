@@ -154,7 +154,27 @@ namespace WebApplication3.Controllers
         return StatusCode(500, "Internal server error");
     }
 }
-
+        [HttpGet("Information/{id}")]
+        public async Task<ActionResult<IEnumerable<Account>>>ShowAccount(int id)
+        {
+            try
+            {
+                var Account=await _dbContext.Accounts.Where(d=>d.Id==id).Select(m => new
+                {
+                    Username=m.Username,
+                    Email=m.Email,
+                    
+                    FullName=m.FullName,
+                    Birthday=m.Birthday,
+                    Address=m.Address,
+                    Phone=m.Phone
+                }).ToListAsync();
+                return Ok(Account);
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
         [HttpPost("Add")]
         public async Task<ActionResult<Account>> AddBillDetail([FromBody] Account billDetail)
