@@ -116,12 +116,7 @@ function Genre() {
         }
       }
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Deletion failed',
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      console.log(error);
     }
   };
   const handleUpdateSubmit = async (e) => {
@@ -279,91 +274,34 @@ function Genre() {
 
           <section className="sidebar h-auto">
 
-          <div className="user-panel">
-            <div className="pull-left image">
-              <img src={image} className="img-circle" alt="User Image" />
-            </div>
-            <div className="pull-left info">
-              <p className='text-white'>{username}</p>
+            <div className="user-panel">
+              <div className="pull-left image">
+                <img src={image} className="img-circle" alt="User Image" />
+              </div>
+              <div className="pull-left info">
+                <p className='text-white'>Alexander Pierce</p>
 
-              <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
+                <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
+              </div>
             </div>
-          </div>
 
 
 
             <ul className="sidebar-menu">
-                            <li className="header">MAIN NAVIGATION</li>
-                            <li className="active treeview">
-                                <a href="" onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
-                                    <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
-                                </a>
+              <li className="header">MAIN NAVIGATION</li>
+              <li className="treeview text-white">
+                <a className='cursor-pointer' onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
+                  <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
+                </a>
+                <a className='cursor-pointer' onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
+                  <i class="fas fa-film"></i> <span>Genre</span>
+                </a>
+                <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
+                </a>
+              </li>
 
-                            </li>
-                            <li className="active treeview">
-                                <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
-                                    <i class="fas fa-film"></i> <span>Genre</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Category_Blog', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Blog</span>
-                                </a>
-
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Blog', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span> Blog</span>
-                                </a>
-
-                            </li>
-
-
-
-                        </ul>
+            </ul>
           </section>
 
         </aside>

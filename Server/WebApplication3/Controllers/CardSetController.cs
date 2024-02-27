@@ -127,7 +127,7 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount && d.IdShowtime==idshowtime ).Select(m => new
+                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount && d.IdShowtime==idshowtime && (d.Status==0 || d.Status == 1)).Select(m => new
                 {
                    
                    id=m.Id,
