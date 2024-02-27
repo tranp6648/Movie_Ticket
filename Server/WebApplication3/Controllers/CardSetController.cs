@@ -54,7 +54,7 @@ namespace WebApplication3.Controllers
                 {
                     // Check if the record already exists in DetailAccountSeats
                     bool recordExists = _dbContext.DetailAccountSeats
-                        .Any(das => das.IdSeat == seatId && das.IdAccountSeat == idseat);
+                        .Any(das => das.IdSeat == seatId && das.IdAccountSeat == idseat && das.IdShowtime==idshowtime);
 
                     if (!recordExists)
                     {
@@ -68,6 +68,7 @@ namespace WebApplication3.Controllers
                         };
                         _dbContext.DetailAccountSeats.Add(detailAccountSeat);
                     }
+                    
                 }
 
                 _dbContext.SaveChanges();
@@ -127,7 +128,7 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount && d.IdShowtime==idshowtime && (d.Status==0 || d.Status == 1)).Select(m => new
+                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount && d.IdShowtime==idshowtime).Select(m => new
                 {
                    
                    id=m.Id,

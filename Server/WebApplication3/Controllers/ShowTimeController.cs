@@ -62,11 +62,12 @@ namespace WebApplication3.Controllers
 
 
                 var Info = await _dbContext.Showtimes
-     .Where(a => a.Time.Year == datetime.Year && a.Time.Month == datetime.Month && a.Time.Day == datetime.Day && a.IdMovie==id).Select(m => new
+     .Where(a => a.Time.Year == datetime.Year && a.Time.Month == datetime.Month && a.Time.Day == datetime.Day && a.IdMovie==id && _dbContext.SeatMovies.Any(b=>b.IdAuditoriums==a.IdAuditoriums)).Select(m => new
      {
          id=m.IdAuditoriumsNavigation.Id,
          idTime=m.Id,
-         Auth=m.IdAuditoriumsNavigation.Name,
+         Auth=m.IdAuditoriumsNavigation.IdCinemaNavigation.Name,
+         Ditrict=m.IdAuditoriumsNavigation.IdCinemaNavigation.District,
          Time=m.Time,
          Cinema=m.IdAuditoriumsNavigation.IdCinemaNavigation.Name
      })

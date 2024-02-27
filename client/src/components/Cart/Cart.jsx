@@ -144,7 +144,7 @@ function Cart() {
         onMouseEnter={() => handleSeatHover(seatdata)}
         onMouseLeave={handleSeatLeave}
       >
-        <input type="checkbox" className={`${seatdata.status == 1 ? 'active unactive' : 'unactive'}`} onClick={() => handleUpdate(seatdata.id)} value={seatdata.id} />
+        <input type="checkbox" className={`${seatdata.status === 1 ? 'active unactive' : seatdata.status === 2 ? 'active iselected' : 'unactive'} ${seatdata.nameCategory === 'Vip' ? 'vip' : ''}`} disabled={seatdata.status === 2} onClick={() => handleUpdate(seatdata.id)} value={seatdata.id} />
         {hoveredSeat === seatdata && (
           <div className="popup">
             <p> {seatdata.nameCategory}</p>
