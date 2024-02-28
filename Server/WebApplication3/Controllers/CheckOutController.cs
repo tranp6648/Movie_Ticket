@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PayPal.Api;
 using System.Linq;
+using System.Net.Mail;
 using WebApplication3.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Net;
 
 namespace WebApplication3.Controllers
 {
@@ -195,6 +199,7 @@ namespace WebApplication3.Controllers
                 }
                 
                 _dbContext.SaveChanges();
+                SendEmail(addCheckout.Email, "Movie Ticket Shop", $"Thank you for booking our tickets");
                 return Ok("Add successfully");
             }
             catch (Exception ex)
@@ -283,11 +288,32 @@ namespace WebApplication3.Controllers
                     }
                 }
                 _dbContext.SaveChanges();
+                 SendEmail(addCheckout.Email, "Movie Ticket Shop", $"Thank you for booking our tickets");
                 return Ok("Add successfully");
             }
+
             catch(Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
+            }
+        }
+        private void SendEmail(string to, string subject, string body)
+        {
+            using (var client = new SmtpClient("smtp.gmail.com"))
+            {
+                client.Port = 587;
+                client.Credentials = new NetworkCredential("tranp6648@gmail.com", "czvy qzyc vpes whkj");
+                client.EnableSsl = true;
+                var message = new MailMessage
+                {
+                    From = new MailAddress("tranp6648@gmail.com"),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = false
+                };
+                message.To.Add(to);
+                client.Send(message);
+
             }
         }
         [HttpGet("city")]

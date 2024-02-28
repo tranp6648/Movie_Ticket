@@ -107,7 +107,12 @@ namespace WebApplication3.Controllers
                 var existingAccount = await _dbContext.Accounts
   .Where(a => a.Email == forgot || a.Username == forgot)
   .FirstOrDefaultAsync();
-       
+              
+
+                
+
+                // Check if it's an email or username
+              
                 if (existingAccount != null)
                 {
                     existingAccount.Password = HashPasswordMD5(existingAccount.Username);
@@ -154,7 +159,27 @@ namespace WebApplication3.Controllers
         return StatusCode(500, "Internal server error");
     }
 }
-
+        [HttpGet("Information/{id}")]
+        public async Task<ActionResult<IEnumerable<Account>>>ShowAccount(int id)
+        {
+            try
+            {
+                var Account=await _dbContext.Accounts.Where(d=>d.Id==id).Select(m => new
+                {
+                    Username=m.Username,
+                    Email=m.Email,
+                    
+                    FullName=m.FullName,
+                    Birthday=m.Birthday,
+                    Address=m.Address,
+                    Phone=m.Phone
+                }).ToListAsync();
+                return Ok(Account);
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
         [HttpPost("Add")]
         public async Task<ActionResult<Account>> AddBillDetail([FromBody] Account billDetail)

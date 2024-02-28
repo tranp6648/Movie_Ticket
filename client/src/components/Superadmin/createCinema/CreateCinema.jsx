@@ -212,7 +212,6 @@ function CreateCinema() {
         }
       }
       const handleEditClick=(CinemaID)=>{
-        console.log(CinemaID);
         const selectedCinema = Cinema.find(Movie => Movie.id == CinemaID)
         if(selectedCinema){
             FormData.ID=CinemaID;

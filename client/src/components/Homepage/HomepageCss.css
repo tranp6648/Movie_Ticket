@@ -1,558 +1,557 @@
 .social-share-bar {
   
-    width: 32px; 
-    
-    padding: 8px; 
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    position:absolute;
- top:50%;
-    transform: translateY(-50%); 
-    left: 15px; 
-    z-index: 100; 
-  }
+  width: 32px; 
   
-  .social-share-bar h4 {
-    writing-mode: vertical-rl; 
-    text-orientation: mixed; 
-    transform: rotate(0deg); 
-    color: #ffffff; 
-    margin-bottom: 20px; 
-    font-size: 1.2rem;
-  }
+  padding: 8px; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  position:absolute;
+top:50%;
+  transform: translateY(-50%); 
+  left: 15px; 
+  z-index: 100; 
+}
+
+.social-share-bar h4 {
+  writing-mode: vertical-rl; 
+  text-orientation: mixed; 
+  transform: rotate(0deg); 
+  color: #ffffff; 
+  margin-bottom: 20px; 
+  font-size: 1.2rem;
+}
+
+.line {
+  width: 0.5px; 
+  height: 50px; 
+  background-color: #ffffff; 
+  margin-bottom: 16px; 
+}
+
+.icons i {
+  font-size: 24px; 
+  margin-bottom: 8px; 
+}
+h3{
   
-  .line {
-    width: 0.5px; 
-    height: 50px; 
-    background-color: #ffffff; 
-    margin-bottom: 16px; 
-  }
+  z-index: 20;
+  font-family: Space Grotesk;
+  font-weight: 600;
+  color: white;
+ 
   
-  .icons i {
-    font-size: 24px; 
-    margin-bottom: 8px; 
-  }
-  h3{
-    
-    z-index: 20;
-    font-family: Space Grotesk;
-    font-weight: 600;
-    color: white;
-   
-    
-  }
-  h1{
-    font-family: Covered By Your Grace;
-    margin-left: 20% ;
-    color: #D96C2C;
-   
-  }
-  h2{
-    font-family: Space Grotesk;
-    font-weight: 400;
-    color: white;
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    
-  }
-  .button-1{
-    font-family: Space Grotesk;
-    font-weight: 500;
-  }
-  .inTheater{
-    font-family: Space Grotesk ;
-    margin-left: 0;
-    color: white;
-  }
-  .Scheduled{
-    font-family: Space Grotesk ;
-    margin-left: 0;
-    color: white;
-    font-size: 2rem;
-    font-weight: 600;
-    margin-top: 0.5rem;
-  }
-  /* customSliderStyles.css */
+}
+h1{
+  font-family: Covered By Your Grace;
+  margin-left: 20% ;
+  color: #D96C2C;
+ 
+}
+h2{
+  font-family: Space Grotesk;
+  font-weight: 400;
+  color: white;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  
+}
+.button-1{
+  font-family: Space Grotesk;
+  font-weight: 500;
+}
+.inTheater{
+  font-family: Space Grotesk ;
+  margin-left: 0;
+  color: white;
+}
+.Scheduled{
+  font-family: Space Grotesk ;
+  margin-left: 0;
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+/* customSliderStyles.css */
 .slick-slider .slick-dots {
-  bottom: auto; /* Move dots above the slider */
-  top: -42px; /* Adjust the value as needed */
-  right: -165px;
+bottom: auto; /* Move dots above the slider */
+top: -42px; /* Adjust the value as needed */
+right: -165px;
 }
 
 /* Hide the arrows */
 .slick-prev,
 .slick-next {
-  display: none !important;
+display: none !important;
 }
 .trailers-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px; /* Add padding as needed */
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 20px; /* Add padding as needed */
 }
 
 .trailers-title {
-  /* Adjust the width and other styles as needed */
-  flex: 1;
-  margin: 0;
- margin-left: 35px;
-  color: white;
+/* Adjust the width and other styles as needed */
+flex: 1;
+margin: 0;
+margin-left: 35px;
+color: white;
 }
 .thumbnail-slider .slick-slide {
-  margin-right: 5px; /* This adds space between the slides */
- 
+margin-right: 5px; /* This adds space between the slides */
+
 }
 .thumbnail-slider .slick-dots li button:before {
-  color: white; /* This is the color of the dots */
+color: white; /* This is the color of the dots */
 }
 .thumbnail-slider .slick-track {
-  display: flex;
-  gap: 15px; /* This creates space between the thumbnails */
+display: flex;
+gap: 15px; /* This creates space between the thumbnails */
 }
 
 .thumbnail-slider .slick-slide {
-  margin: 7px; /* Remove any default margin */
-  transition: transform 0.3s ease; /* Optional: adds transition for smooth scaling */
+margin: 7px; /* Remove any default margin */
+transition: transform 0.3s ease; /* Optional: adds transition for smooth scaling */
 }
 .thumbnail-slider .slick-dots li.slick-active button:before {
-  color: white; /* Color of the active dot */
+color: white; /* Color of the active dot */
 }
 .thumbnail-container {
-  border: 2px solid #D96C2C; /* White border */
-  margin-right: 50px;
-  position: relative; /* For absolute positioning of children */
+border: 2px solid #D96C2C; /* White border */
+margin-right: 50px;
+position: relative; /* For absolute positioning of children */
 }
 
 .play-button {
-  width: 50px; /* Size of the play button */
-  height: 50px;
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
-  border-radius: 50%; /* Circular button */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white; /* Icon color */
-  border: none; /* No border */
-  cursor: pointer; /* Clickable cursor style */
-  top: 28%;
-  left: 35%;
+width: 50px; /* Size of the play button */
+height: 50px;
+background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+border-radius: 50%; /* Circular button */
+display: flex;
+align-items: center;
+justify-content: center;
+color: white; /* Icon color */
+border: none; /* No border */
+cursor: pointer; /* Clickable cursor style */
+top: 28%;
+left: 35%;
 }
 
 .play-button i {
-  font-size: 20px; /* Icon size */
+font-size: 20px; /* Icon size */
 }
 .overlay {
-  position: fixed; /* or 'absolute' if the app has a single positioned ancestor */
-  
-  
+position: fixed; /* or 'absolute' if the app has a single positioned ancestor */
 
-  
+
+
+
 }
 .video-modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .video-modal iframe {
-  max-width: 900px; /* 80% of the viewport width */
-  max-height: 515px; /* 80% of the viewport height */
-  width: 900px; /* maintain aspect ratio */
-  height: 515px; /* maintain aspect ratio */
+max-width: 900px; /* 80% of the viewport width */
+max-height: 515px; /* 80% of the viewport height */
+width: 900px; /* maintain aspect ratio */
+height: 515px; /* maintain aspect ratio */
 }
 .container-1{
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.97)), url(../images/lineFilm.png);
-  background-repeat: no-repeat;
-  background-size: cover;
+background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.97)), url(../images/lineFilm.png);
+background-repeat: no-repeat;
+background-size: cover;
 }
 .imgFilmCard{
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  transition: transform 0.3s ease-in-out; /* Adjust the time as needed */
-  /* ... other styles ... */
+width: 100%;
+height: 220px;
+object-fit: cover;
+transition: transform 0.3s ease-in-out; /* Adjust the time as needed */
+/* ... other styles ... */
 }
 .titleContentFilm1{
-  color: grey;
-  font-family: Space Grotesk;
-  font-size: 1rem;
+color: grey;
+font-family: Space Grotesk;
+font-size: 1rem;
 }
 .titleContentFilm2{
-  font-family: Space Grotesk;
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin: 0;
-  padding: 0;
+font-family: Space Grotesk;
+font-size: 2.2rem;
+font-weight: 600;
+margin: 0;
+padding: 0;
 }
 .cardcontent:hover .imgFilmCard {
-  transform: scale(1.1); /* Adjust scale value as needed */
-  overflow: hidden;
+transform: scale(1.1); /* Adjust scale value as needed */
+overflow: hidden;
 }
 
 .watchNew{
-  font-family: Space Grotesk;
-  font-weight: 500;
-  color: grey;
+font-family: Space Grotesk;
+font-weight: 500;
+color: grey;
 }
 .MoviesNow{
-  font-family: Space Grotesk;
-  font-weight: 600;
-  color: black;
-  font-size: 3rem;
+font-family: Space Grotesk;
+font-weight: 600;
+color: black;
+font-size: 3rem;
 }
 .card-Movies{
-  
-  transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
-  /* ... other styles ... */
-  height: 380px;
-  object-fit: cover;
-  /* background-color: linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97)); */
+
+transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
+/* ... other styles ... */
+height: 380px;
+object-fit: cover;
+/* background-color: linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97)); */
 }
 .cardmain {
-  transition: box-shadow 0.3s ease-in-out; /* Smooth transition for shadow */
-  overflow: hidden; /* Ensure contents don't overflow */
-  /* ... other styles ... */
+transition: box-shadow 0.3s ease-in-out; /* Smooth transition for shadow */
+overflow: hidden; /* Ensure contents don't overflow */
+/* ... other styles ... */
 }
 .cardmain:hover {
- 
+
 }
 
 
 
 .cardmain:hover .card-Movies {
-  /* Slightly increase the size, adjust as needed */
+/* Slightly increase the size, adjust as needed */
 }
 .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:  linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6)); /* Màu nền với độ trong suốt */
-  z-index: 1; /* Đảm bảo lớp phủ hiển thị trên cùng */
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background:  linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6)); /* Màu nền với độ trong suốt */
+z-index: 1; /* Đảm bảo lớp phủ hiển thị trên cùng */
 }
 .card-content{
-  display: flex;
-  flex-direction: column;
-  z-index: 10;
-  padding-left: 20px;
-  padding-right: 20px;
+display: flex;
+flex-direction: column;
+z-index: 10;
+padding-left: 20px;
+padding-right: 20px;
 }
 .genre{
-  font-family: Space Grotesk;
-  font-weight: 400;
-  color: white;
-  font-size: 0.8rem;
-  padding-bottom: 5px;
+font-family: Space Grotesk;
+font-weight: 400;
+color: white;
+font-size: 0.8rem;
+padding-bottom: 5px;
 }
 .nameMovies{
-  font-family: Space Grotesk;
-  font-weight: 600;
-  color: white;
-  font-size: 1.3rem;
-  
+font-family: Space Grotesk;
+font-weight: 600;
+color: white;
+font-size: 1.3rem;
+
 }
 .button-getTicket{
-  color: grey;
-  background-color: white;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-radius: 2px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-top: 15px;
-  margin-bottom: 30px;
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Transition for background-color and transform */
-  border: 2px solid transparent;
+color: grey;
+background-color: white;
+padding-left: 25px;
+padding-right: 25px;
+padding-top: 8px;
+padding-bottom: 8px;
+border-radius: 2px;
+font-size: 0.9rem;
+font-weight: 600;
+margin-top: 15px;
+margin-bottom: 30px;
+transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Transition for background-color and transform */
+border: 2px solid transparent;
 }
 .button-getTicket:hover{
- 
-  
+
+
 }
 .cardmain{
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.7);
+box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.7);
 }
 .carousel-movie .slick-slider .slick-dots{
-  bottom: -25px; /* Adjust this value as needed to move the dots below the slider */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
+bottom: -25px; /* Adjust this value as needed to move the dots below the slider */
+left: 50%;
+transform: translateX(-50%);
+z-index: 20;
 }
 .container-featured-movie{
-  background-image: linear-gradient(to bottom, rgba(230, 228, 228, 0.93), rgba(255, 255, 255, 0.93)), url(../images/seat-bg.png);
-  background-repeat: no-repeat;
-  background-size: cover;
+background-image: linear-gradient(to bottom, rgba(230, 228, 228, 0.93), rgba(255, 255, 255, 0.93)), url(../images/seat-bg.png);
+background-repeat: no-repeat;
+background-size: cover;
 }
 .checkOutMovie{
-  font-family: Space Grotesk;
-  font-weight: 400;
-  color: grey;
-  font-size: 1rem;
-  padding-bottom: 4px;
-  padding-top: 8px;
+font-family: Space Grotesk;
+font-weight: 400;
+color: grey;
+font-size: 1rem;
+padding-bottom: 4px;
+padding-top: 8px;
 }
 .topFeatured{
-  font-family: Space Grotesk;
-  font-weight: 600;
-  color: black;
-  font-size: 3rem;
-  padding-bottom: 8px;
-  padding-top: 0px;
+font-family: Space Grotesk;
+font-weight: 600;
+color: black;
+font-size: 3rem;
+padding-bottom: 8px;
+padding-top: 0px;
 }
 .text-1{
-  font-family: Space Grotesk;
-  font-weight: 400;
-  color: grey;
-  font-size: 1rem;
-  
-  padding-top: 50px;
+font-family: Space Grotesk;
+font-weight: 400;
+color: grey;
+font-size: 1rem;
+
+padding-top: 50px;
 }
 .btn-watchtrailer{
-  color: grey;
-  background-color: #F3F3F3;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 2px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-top: 15px;
-  margin-bottom: 30px;
-  transition: background-color 0.3s ease ;
+color: grey;
+background-color: #F3F3F3;
+padding-left: 25px;
+padding-right: 25px;
+padding-top: 10px;
+padding-bottom: 10px;
+border-radius: 2px;
+font-size: 0.9rem;
+font-weight: 600;
+margin-top: 15px;
+margin-bottom: 30px;
+transition: background-color 0.3s ease ;
 }
 .btn-watchtrailer:hover{
-  background-color: #D96C2C;
-  color: #F3F3F3;
+background-color: #D96C2C;
+color: #F3F3F3;
 }
 .btn-getTicket{
-  color: grey;
-  background-color: #F3F3F3;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 2px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-top: 15px;
-  margin-bottom: 30px;
-  transition: background-color 0.3s ease ;
+color: grey;
+background-color: #F3F3F3;
+padding-left: 25px;
+padding-right: 25px;
+padding-top: 10px;
+padding-bottom: 10px;
+border-radius: 2px;
+font-size: 0.9rem;
+font-weight: 600;
+margin-top: 15px;
+margin-bottom: 30px;
+transition: background-color 0.3s ease ;
 }
 .btn-getTicket:hover{
-  background-color: #D96C2C;
-  color: #F3F3F3;
+background-color: #D96C2C;
+color: #F3F3F3;
 }
 .name-movie{
-  font-family: Space Grotesk;
-  font-weight: 600;
-  color: black;
-  font-size: 1.3rem;
+font-family: Space Grotesk;
+font-weight: 600;
+color: black;
+font-size: 1.3rem;
 }
 .text-2{
-  font-family: Space Grotesk;
-  font-weight: 400;
-  color: grey;
-  font-size: 0.9rem;
+font-family: Space Grotesk;
+font-weight: 400;
+color: grey;
+font-size: 0.9rem;
 }
 .slick-slide .button-getTicket:hover {
- 
+
 }
 .button-getTicket:hover {
- 
+
 }
 .image-featured{
-  transition: transform 0.3s ease;
+transition: transform 0.3s ease;
 }
 .image-featured:hover{
-  transform: translateY(10px);
+transform: translateY(10px);
 }
 
 .card-featured{
 
 }
 .count{
-  font-family: Space Grotesk;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #D96C2C;
+font-family: Space Grotesk;
+font-size: 1.4rem;
+font-weight: 600;
+color: #D96C2C;
 }
 .description-1{
-  font-family: Space Grotesk;
-  font-size: 1.1rem;
-  color: grey;
+font-family: Space Grotesk;
+font-size: 1.1rem;
+color: grey;
 }
 .btn-explore{
-  color: white;
-  background-color: #D96C2C;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 2px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  
-  transition: background-color 0.3s ease ;
+color: white;
+background-color: #D96C2C;
+padding-left: 25px;
+padding-right: 25px;
+padding-top: 10px;
+padding-bottom: 10px;
+border-radius: 2px;
+font-size: 0.9rem;
+font-weight: 600;
+
+transition: background-color 0.3s ease ;
 }
 .btn-explore:hover{
-  color: white;
-  background-color: #000000;
-  
+color: white;
+background-color: #000000;
+
 }
 .award-nomination-container {
-  background: #fff; /* This is a pink color similar to bg-pink-400 in TailwindCSS */
-  margin-left: 22%; /* ml-[22%] in TailwindCSS */
-  margin-top: 450px; /* mt-11 in TailwindCSS, assuming base size of 4px */
-  width: 230px;
-  height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative; /* For the speech bubble arrow */
-  font-family: Arial, sans-serif; /* Example font */
-  border: 4px solid #D96C2C;
+background: #fff; /* This is a pink color similar to bg-pink-400 in TailwindCSS */
+margin-left: 22%; /* ml-[22%] in TailwindCSS */
+margin-top: 450px; /* mt-11 in TailwindCSS, assuming base size of 4px */
+width: 230px;
+height: 110px;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative; /* For the speech bubble arrow */
+font-family: Arial, sans-serif; /* Example font */
+border: 4px solid #D96C2C;
 }
 
 .award-nomination-quantity {
-  color: #000000;
-  font-family: Space Grotesk;
-  font-size: 45px; /* Large font size for the quantity */
-  font-weight: bold;
-  margin-right: 10px; /* Space between quantity and category */
+color: #000000;
+font-family: Space Grotesk;
+font-size: 45px; /* Large font size for the quantity */
+font-weight: bold;
+margin-right: 10px; /* Space between quantity and category */
 }
 
 .award-nomination-category {
-  font-size: 18px; /* Smaller font size for the category */
-  color: #8A8A8A;
-  font-family: Space Grotesk;
-  margin-left: 10px;
+font-size: 18px; /* Smaller font size for the category */
+color: #8A8A8A;
+font-family: Space Grotesk;
+margin-left: 10px;
 }
 
 /* Speech bubble arrow */
 .award-nomination-container::after {
-  content: '';
-  position: absolute;
-  bottom: -24px; /* Position the arrow below the container. Adjust as needed */
-  right: 20px; /* Position the arrow to the right. Adjust as needed based on container width */
-  width: 0;
-  height: 0;
-  border-left: 24px solid transparent; /* Left side of the arrow is transparent */
-  border-right: 24px solid transparent; /* Right side of the arrow is transparent */
-  border-top: 24px solid #fff; 
-  
+content: '';
+position: absolute;
+bottom: -24px; /* Position the arrow below the container. Adjust as needed */
+right: 20px; /* Position the arrow to the right. Adjust as needed based on container width */
+width: 0;
+height: 0;
+border-left: 24px solid transparent; /* Left side of the arrow is transparent */
+border-right: 24px solid transparent; /* Right side of the arrow is transparent */
+border-top: 24px solid #fff; 
+
 }
 .titleGenre{
-  font-size: 18px; /* Smaller font size for the category */
-  color: #D96C2C;
-  font-family: Space Grotesk;
-  
-  margin-top: 40px;
+font-size: 18px; /* Smaller font size for the category */
+color: #D96C2C;
+font-family: Space Grotesk;
+
+margin-top: 40px;
 }
 .nameMovie-1{
-  font-size: 60px; /* Smaller font size for the category */
-  color: #fff;
-  font-family: Space Grotesk;
-  font-weight: 600;
-  margin-top: 10px;
-  line-height: 60px;
-  
-  
+font-size: 60px; /* Smaller font size for the category */
+color: #fff;
+font-family: Space Grotesk;
+font-weight: 600;
+margin-top: 10px;
+line-height: 60px;
+
+
 }
 .content-1{
-  font-family: Space Grotesk;
-  font-size: 18px;
-  color: grey;
-  margin-top: 25px;
+font-family: Space Grotesk;
+font-size: 18px;
+color: grey;
+margin-top: 25px;
 }
 @keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
+0% {
+  transform: scale(1);
+}
+50% {
+  transform: scale(1.1);
+}
+100% {
+  transform: scale(1);
+}
 }
 
 .button-out, .button {
-  display: inline-flex; /* Center content */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  border-radius: 50%; /* Makes the element round */
-  animation: pulse 2s infinite; /* Apply the animation */
+display: inline-flex; /* Center content */
+align-items: center; /* Center content vertically */
+justify-content: center; /* Center content horizontally */
+border-radius: 50%; /* Makes the element round */
+animation: pulse 2s infinite; /* Apply the animation */
 }
 
 .button-out {
-  padding: 14px; /* Spacing for the outer ring */
-  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white for outer ring */
+padding: 14px; /* Spacing for the outer ring */
+background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white for outer ring */
 }
 
 .button {
-  padding: 20px; /* Adjust padding for button size */
-  background-color: orange; /* Your button color */
-  position: relative; /* Stack elements */
-  z-index: 1; /* Stack above the outer ring */
-  transition: background-color 0.3s ease;
+padding: 20px; /* Adjust padding for button size */
+background-color: orange; /* Your button color */
+position: relative; /* Stack elements */
+z-index: 1; /* Stack above the outer ring */
+transition: background-color 0.3s ease;
 }
 
 .play-icon {
-  font-size: 40px; /* Size of the play icon */
-  color: #f5eded; /* Color of the play icon, as set in your inline style */
-  position: relative; /* Stack elements */
-  z-index: 2; /* Stack above the button and outer ring */
-  transition: color 0.3s ease;
+font-size: 40px; /* Size of the play icon */
+color: #f5eded; /* Color of the play icon, as set in your inline style */
+position: relative; /* Stack elements */
+z-index: 2; /* Stack above the button and outer ring */
+transition: color 0.3s ease;
 }
 .button:hover {
-  background-color: #fff;
+background-color: #fff;
 }
 .button:hover .play-icon {
-  color: #D96C2C;
-  
+color: #D96C2C;
+
 }
 .btn-gecticket{
-  text-decoration: none;
-  background-color: #fff;
-  padding-left: 50px;
-  padding-right: 50px;
-  display: inline-block;
-  text-align: center;
-  padding-top: 15px;
-  font-size: 18px;
-  color: #000000;
-  font-family: Space Grotesk;
-  font-weight: 600;
-  border-radius: 3px;
-  height: 60px;
-  transition: background-color 0.5s ease, color 0.5s ease;
+text-decoration: none;
+background-color: #fff;
+padding-left: 50px;
+padding-right: 50px;
+display: inline-block;
+text-align: center;
+padding-top: 15px;
+font-size: 18px;
+color: #000000;
+font-family: Space Grotesk;
+font-weight: 600;
+border-radius: 3px;
+height: 60px;
+transition: background-color 0.5s ease, color 0.5s ease;
 }
 .btn-gecticket:hover{
-  background-color: #D96C2C;
-  color: #fff;
+background-color: #D96C2C;
+color: #fff;
 }
 .text-nameDirector{
-  font-size: 1.5rem;
-  margin-left: 15px;
+font-size: 1.5rem;
+margin-left: 15px;
 }
 .text-position{
-  font-family: Space Grotesk;
-  margin-left: 15px;
-  color: #fff;
+font-family: Space Grotesk;
+margin-left: 15px;
+color: #fff;
 }
 .img-director {
- width: 80px;
- height: 60px;
-  border-radius: 50%; /* This creates the circular shape */
-  border: 3px solid orange; /* Adjust border size and color as needed */
-  object-fit: cover; /* This ensures the image covers the area without distortion */
+width: 80px;
+height: 60px;
+border-radius: 50%; /* This creates the circular shape */
+border: 3px solid orange; /* Adjust border size and color as needed */
+object-fit: cover; /* This ensures the image covers the area without distortion */
 }
 
 
-  
-  
-  
+
+

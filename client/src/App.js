@@ -5,6 +5,7 @@ import HomePillDetail from './components/HomePillDetail';
 import AddPillDetail from './components/AddPillDetail';
 import Account from './components/Account/Account';
 import { useState, useEffect  } from 'react';
+import Category_Blog from './components/Category_Blog/Category_Blog';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Menu from './components/Menu/Menu';
 import Genre from './components/Genre/Genre';
@@ -40,6 +41,8 @@ import Myorder from './components/MyAccount/Myorder';
 import Contact from './components/Contact/Contact';
 import About from './components/About/About';
 import ThankYou from './components/ThankYou/ThankYou';
+import UserVoucher from './components/UserVoucher/UserVoucher';
+import Blog from './components/Blog/Blog';
 function App() {
   return (
    <Router>
@@ -84,6 +87,9 @@ function App() {
     <Route path='/Contact' element={<Contact/>}/>
     <Route path='/About' element={<About/>}/>
     <Route path='/ThankYou' element={<ThankYou/>}/>
+    <Route path='/UserVoucher' element={<UserVoucher/>}/>
+    <Route path='/Category_Blog' element={<Category_Blog/>}/>
+    <Route path='/Blog' element={<Blog/>}/>
      </Routes>
    </Router>
   );

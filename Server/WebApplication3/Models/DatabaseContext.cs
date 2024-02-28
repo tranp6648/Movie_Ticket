@@ -21,6 +21,10 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<Auditorium> Auditoriums { get; set; }
 
+    public virtual DbSet<Blog> Blogs { get; set; }
+
+    public virtual DbSet<CategoryBlog> CategoryBlogs { get; set; }
+
     public virtual DbSet<CategoryMovie> CategoryMovies { get; set; }
 
     public virtual DbSet<CategorySeat> CategorySeats { get; set; }
@@ -61,11 +65,7 @@ public partial class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-
-
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=DESKTOP-KU1PU6V\\ASUS;Database=MovieTicket;user id=sa;password=123;trusted_connection=true;encrypt=false");
-
-      
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=DESKTOP-KU1PU6V;Database=MovieTicket;user id=sa;password=123456789;trusted_connection=true;encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -137,6 +137,45 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdCinema)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Auditoriums_Cinemas");
+        });
+
+        modelBuilder.Entity<Blog>(entity =>
+        {
+            entity.ToTable("Blog");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ContentBlog)
+                .HasColumnType("text")
+                .HasColumnName("Content_Blog");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.IdAccount).HasColumnName("id_Account");
+            entity.Property(e => e.IdCategory).HasColumnName("id_Category");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Title)
+                .HasMaxLength(255)
+                .HasColumnName("title");
+
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.Blogs)
+                .HasForeignKey(d => d.IdAccount)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Blog_Account");
+
+            entity.HasOne(d => d.IdCategoryNavigation).WithMany(p => p.Blogs)
+                .HasForeignKey(d => d.IdCategory)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Blog_Category_Blog");
+        });
+
+        modelBuilder.Entity<CategoryBlog>(entity =>
+        {
+            entity.ToTable("Category_Blog");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<CategoryMovie>(entity =>

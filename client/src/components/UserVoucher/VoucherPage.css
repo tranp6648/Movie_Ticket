@@ -1,0 +1,120 @@
+/* VoucherPage.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .breadcrumb-area {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+  }
+  
+  .breadcrumb-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .breadcrumb-content h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  .card {
+    position: relative;
+  }
+  
+  .copy-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .voucher-header {
+    color: #888; /* Light gray text color */
+    font-size: 36px; /* Set font size */
+    font-family: 'Arial', sans-serif; /* Choose a suitable font-family */
+    margin: 0; /* Remove margin to prevent unwanted space */
+    text-transform: uppercase; /* Uppercase text */
+  }
+  
+  .copy-button:hover {
+    background-color: #45a049;
+  }
+  .breadcrumb-content ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+  }
+  
+  .breadcrumb-content ul li {
+    margin-right: 10px;
+  }
+  
+  .card {
+    margin: 10px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card small {
+    display: block;
+    color: #888;
+  }
+  
+  .card h3 {
+    margin: 10px 0;
+    font-size: 20px;
+  }
+  
+  .card .even-date,
+  .card .even-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .card .even-date i,
+  .card .even-info i {
+    margin-right: 5px;
+  }
+  
+  .card a {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+  }
+  
+  .card.fl-left {
+    flex: 0 0 48%;
+    /* Adjust width as needed */
+  }
+  
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  @media (max-width: 768px) {
+    .card.fl-left {
+      flex: 0 0 100%;
+    }
+  }
+  

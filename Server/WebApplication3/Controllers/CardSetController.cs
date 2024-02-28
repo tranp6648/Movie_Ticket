@@ -15,7 +15,7 @@ namespace WebApplication3.Controllers
             _dbContext = dbContext;
         }
         [HttpPost("Addstatus/{id}/{idAccount}/{idshowtime}")]
-        public IActionResult AddStatus(int id, int idAccount,int idshowtime)
+        public IActionResult AddStatus(int id, int idAccount, int idshowtime)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace WebApplication3.Controllers
                     SeatAccount newSeatAccount = new SeatAccount
                     {
                         IdAccount = idAccount,
-                        
+
                         // Add other properties as needed
                     };
 
@@ -54,7 +54,7 @@ namespace WebApplication3.Controllers
                 {
                     // Check if the record already exists in DetailAccountSeats
                     bool recordExists = _dbContext.DetailAccountSeats
-                        .Any(das => das.IdSeat == seatId && das.IdAccountSeat == idseat && das.IdShowtime==idshowtime);
+                        .Any(das => das.IdSeat == seatId && das.IdAccountSeat == idseat && das.IdShowtime == idshowtime);
 
                     if (!recordExists)
                     {
@@ -63,12 +63,12 @@ namespace WebApplication3.Controllers
                         {
                             IdSeat = seatId,
                             IdAccountSeat = idseat,
-                           Status=0,
-                           IdShowtime= idshowtime,
+                            Status = 0,
+                            IdShowtime = idshowtime,
                         };
                         _dbContext.DetailAccountSeats.Add(detailAccountSeat);
                     }
-                    
+
                 }
 
                 _dbContext.SaveChanges();
@@ -81,65 +81,68 @@ namespace WebApplication3.Controllers
             }
         }
 
-         [HttpPost("updateSeat/{id}")]
-         public IActionResult Update(int id)
-         {
-             try
-             {
-                 var seat = _dbContext.DetailAccountSeats.Find(id);
-                 if (seat != null) {
-                     seat.Status = (seat.Status == 0) ? 1 : 0;
-                     _dbContext.SaveChanges();
-                     return Ok("seat status updated successfully");
-                 }
-                 else
-                 {
-
-                     return NotFound($"Seat {id} not found");
-                 }
-             }
-             catch(Exception ex)
-             {
-                 return StatusCode(500, "Internal server error");
-             }
-         }
-        
-        [HttpGet("ShowInfoCard/{id}/{idCinema}/{idShowtime}")]
-        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowInfoCard(int id,int idCinema,int idShowtime)
+        [HttpPost("updateSeat/{id}")]
+        public IActionResult Update(int id)
         {
             try
             {
-                var name = await _dbContext.DetailAccountSeats.Where(d => d.IdAccountSeatNavigation.IdAccount == id && d.Status==1 && d.IdSeatNavigation.IdAuditoriums==idCinema && d.IdShowtime==idShowtime).Select(m => new
+                var seat = _dbContext.DetailAccountSeats.Find(id);
+                if (seat != null)
                 {
-                    id=m.IdSeat,
+                    seat.Status = (seat.Status == 0) ? 1 : 0;
+                    _dbContext.SaveChanges();
+                    return Ok("seat status updated successfully");
+                }
+                else
+                {
+
+                    return NotFound($"Seat {id} not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("ShowInfoCard/{id}/{idCinema}/{idShowtime}")]
+        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowInfoCard(int id, int idCinema, int idShowtime)
+        {
+            try
+            {
+                var name = await _dbContext.DetailAccountSeats.Where(d => d.IdAccountSeatNavigation.IdAccount == id && d.Status == 1 && d.IdSeatNavigation.IdAuditoriums == idCinema && d.IdShowtime == idShowtime).Select(m => new
+                {
+                    id = m.IdSeat,
                     Name = m.IdSeatNavigation.SeatName,
-                    idtime=m.IdSeatNavigation.Id,
-                    Price=m.IdSeatNavigation.IdCategorySeatNavigation.Price,
+                    idtime = m.IdSeatNavigation.Id,
+                    Price = m.IdSeatNavigation.IdCategorySeatNavigation.Price,
                 }).ToListAsync();
                 return Ok(name);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
             }
         }
-       
+
         [HttpGet("ShowCard/{id}/{IDAccount}/{idshowtime}")]
-        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowCard(int id,int IDAccount,int idshowtime)
+        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowCard(int id, int IDAccount, int idshowtime)
         {
             try
             {
-                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount==IDAccount && d.IdShowtime==idshowtime).Select(m => new
+                var seat = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount == IDAccount && d.IdShowtime == idshowtime).Select(m => new
                 {
-                   
-                   id=m.Id,
-                    seatName=m.IdSeatNavigation.SeatName,
-                    categoryseat=m.IdSeatNavigation.IdCategorySeatNavigation.Price,
-                    NameCategory=m.IdSeatNavigation.IdCategorySeatNavigation.Name,
-                    status=m.Status
-                   
+
+                    id = m.Id,
+                    seatName = m.IdSeatNavigation.SeatName,
+                    categoryseat = m.IdSeatNavigation.IdCategorySeatNavigation.Price,
+                    NameCategory = m.IdSeatNavigation.IdCategorySeatNavigation.Name,
+                    status = m.Status
+
                 }).ToListAsync();
                 return Ok(seat);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
             }
