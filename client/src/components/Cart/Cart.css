@@ -145,7 +145,7 @@ ol [type=checkbox] {
 	&:checked { background: var(--AccentColor) var(--_icon) no-repeat 50% / 55%; }
 }
 .setlected{
-  background-color: yellow !important;
+  --ui-cinema-seat-bg: yellow !important;
 }
 .vip{
   --ui-cinema-seat-bg: var(--ColorError);

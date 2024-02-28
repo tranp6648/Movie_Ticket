@@ -18,26 +18,7 @@ namespace WebApplication3.Controllers
         {
             _dbContext = dbContext;
         }
-        [HttpGet("SeatMovie/{id}")]
-        public async Task<ActionResult<IEnumerable<DetailOrder>>> SeatMovie(int id)
-        {
-            try
-            {
-                var Card = await _dbContext.DetailOrders.Where(d => d.Idorder == id).Select(d => new
-                {
-                   SeatName=d.IdseatNavigation.SeatName,
-                   NameSeatCategory=d.IdseatNavigation.IdCategorySeatNavigation.Name,
-                   Price=d.IdseatNavigation.IdCategorySeatNavigation.Price
-
-                }).ToListAsync();
-                return Ok(Card);
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, "Internal server error");
-            }
-        }
+       
         [HttpGet("Voucherprice/{id}")]
         public async Task<ActionResult<IEnumerable<UserVoucher>>> Voucherprice(int id)
         {
@@ -69,35 +50,7 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpGet("Myorder/{id}")]
-        public async Task<ActionResult<IEnumerable<DetailOrder>>> Myorder(int id)
-        {
-            try
-            {
-                var orders = await _dbContext.DetailOrders
-                    .Include(d => d.IdshowtimeNavigation)
-                        .ThenInclude(st => st.IdMovieNavigation)
-                            .ThenInclude(m => m.DetailCategoryMovies)
-                    .Include(d => d.IdseatNavigation)
-                        .ThenInclude(s => s.IdCategorySeatNavigation)
-                    .Where(d => d.IdorderNavigation.IdAccount == id)
-                    .Select(m => new 
-                    {
-                        Title = m.IdshowtimeNavigation.IdMovieNavigation.Title,
-                        TotalPrice = m.IdseatNavigation.IdCategorySeatNavigation.Price,
-                        SeatName = m.IdseatNavigation.SeatName,
-                        Picture = m.IdshowtimeNavigation.IdMovieNavigation.DetailCategoryMovies.FirstOrDefault().Picture,
-                        Time=m.IdshowtimeNavigation.Time,
-                        CategoryName=m.IdseatNavigation.IdCategorySeatNavigation.Name
-                    })
-                    .ToListAsync();
-
-                return Ok(orders);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error");
-            }
-        }
+      
         [HttpPost("SendContact")]
         public IActionResult SendContact([FromBody] SendContact sendContact)
         {
@@ -129,23 +82,7 @@ namespace WebApplication3.Controllers
 
             }
         }
-        [HttpGet("ViewCard/{id}")]
-        public async Task<ActionResult<IEnumerable<DetailOrder>>> ViewCard(int id)
-        {
-            try
-            {
-                var Card=await _dbContext.DetailOrders.Where(d=>d.Idorder==id).Select(d=>new
-                {
-                    Movie=d.IdshowtimeNavigation.IdMovieNavigation.Title,
-                 Total=d.IdorderNavigation.TotalPrice,
-                }).FirstOrDefaultAsync();
-                return Ok(Card);
-            }catch (Exception ex)
-            {
-
-                return StatusCode(500, "Internal server error");
-            }
-        }
+       
         [HttpGet("ViewAccount/{id}")]
         public async Task<ActionResult<IEnumerable<Models.Order>>> ViewAccount(int id)
         {

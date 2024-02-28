@@ -209,7 +209,7 @@ function ShowTimesMovie() {
         setselectedAuth(null);
         FormData.duration = '';
         FormData.id = ''
-        const response = await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/ShowShowtime/${ID}`);
         setShowTime(response.data)
       }
 
@@ -252,7 +252,7 @@ function ShowTimesMovie() {
         setPopupVisibility(false)
         FormData.id = '';
         setUpdatedate(null)
-        const response = await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/ShowShowtime/${ID}`);
         setShowTime(response.data)
       }
 

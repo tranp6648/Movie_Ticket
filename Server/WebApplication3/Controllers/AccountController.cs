@@ -168,7 +168,7 @@ namespace WebApplication3.Controllers
                 {
                     Username=m.Username,
                     Email=m.Email,
-                    
+                    BirthDay=m.Birthday,
                     FullName=m.FullName,
                     Birthday=m.Birthday,
                     Address=m.Address,
