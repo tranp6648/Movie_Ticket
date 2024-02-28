@@ -63,7 +63,7 @@ public partial class DatabaseContext : DbContext
 
 
 
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=DESKTOP-KU1PU6V\\ASUS;Database=MovieTicket;user id=sa;password=123;trusted_connection=true;encrypt=false");
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=KYOS22;Database=Movie0802;user id=sa;password=123456;trusted_connection=true;encrypt=false");
 
       
 
