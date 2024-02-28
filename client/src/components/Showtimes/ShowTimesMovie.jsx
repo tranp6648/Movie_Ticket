@@ -75,7 +75,7 @@ function ShowTimesMovie() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/ShowShowtime/${ID}`);
         setShowTime(response.data)
 
       } catch (error) {
@@ -89,8 +89,9 @@ function ShowTimesMovie() {
       try {
         const response = await axios.get("http://localhost:5231/api/ShowTime/getBrance");
 
-        const filter = response.data.filter(district => district.iDcity[0] === selectedcity.value);
+        const filter = response.data.filter(district => district.iDcity === selectedcity.value);
         setBrancher(filter);
+    
         setIsselect(null);
         setselectedAuth(null)
       } catch (error) {
@@ -143,7 +144,7 @@ function ShowTimesMovie() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await axios.get("http://localhost:5231/api/ShowTime/getcity");
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/getcity/${ID}`);
         setcity(response.data)
       } catch (error) {
         console.log(error)

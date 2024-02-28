@@ -1919,11 +1919,17 @@
   {
     "ContainingType": "WebApplication3.Controllers.ShowTimeController",
     "Method": "getCityBrance",
-    "RelativePath": "api/ShowTime/getcity",
+    "RelativePath": "api/ShowTime/getcity/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.CinemaBranch, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
@@ -2016,11 +2022,17 @@
   {
     "ContainingType": "WebApplication3.Controllers.ShowTimeController",
     "Method": "getShow",
-    "RelativePath": "api/ShowTime/ShowShowtime",
+    "RelativePath": "api/ShowTime/ShowShowtime/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.Showtime, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",

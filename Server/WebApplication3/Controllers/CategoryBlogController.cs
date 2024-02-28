@@ -18,17 +18,18 @@ namespace WebApplication3.Controllers
         public IActionResult DeleteCategoryBlog(int id)
         {
             var CategoryBlog = _dbContext.CategoryBlogs.Find(id);
-            if(CategoryBlog == null)
+            if (CategoryBlog == null)
             {
                 return NotFound();
             }
             try
             {
                 _dbContext.CategoryBlogs.Remove(CategoryBlog);
-                 _dbContext.SaveChanges();
-               
+                _dbContext.SaveChanges();
+
                 return Ok("Delete Successfully");
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
@@ -38,24 +39,24 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                if(addCategoryBlog == null)
+                if (addCategoryBlog == null)
                 {
                     return BadRequest("Invalid data");
                 }
                 var existcategoryBlog = _dbContext.CategoryBlogs.Find(id);
-                if(existcategoryBlog == null)
+                if (existcategoryBlog == null)
                 {
                     return NotFound("CategoryBlog not found");
                 }
-                if(_dbContext.CategoryBlogs.Any(a=>a.Name==addCategoryBlog.Name && a.Id != id))
+                if (_dbContext.CategoryBlogs.Any(a => a.Name == addCategoryBlog.Name && a.Id != id))
                 {
                     return BadRequest(new { message = "Category Blog name already exists" });
                 }
-                existcategoryBlog.Name=addCategoryBlog.Name;
+                existcategoryBlog.Name = addCategoryBlog.Name;
                 _dbContext.SaveChanges();
                 return Ok("Update successfully");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -65,13 +66,14 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var categoryBlog=await _dbContext.CategoryBlogs.Select(d => new
+                var categoryBlog = await _dbContext.CategoryBlogs.Select(d => new
                 {
-                    Id=d.Id,
-                    Name=d.Name,
+                    Id = d.Id,
+                    Name = d.Name,
                 }).ToListAsync();
                 return Ok(categoryBlog);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -81,22 +83,25 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                if(categoryBlog == null)
+                if (categoryBlog == null)
                 {
                     return BadRequest("Invalid data");
                 }
-                if(_dbContext.CategoryBlogs.Any(a=>a.Name==categoryBlog.Name )) {
+                if (_dbContext.CategoryBlogs.Any(a => a.Name == categoryBlog.Name))
+                {
                     return BadRequest(new { message = "Category Blog already Exists" });
                 }
                 var categoryBlogEntity = new CategoryBlog
                 {
-                    Name= categoryBlog.Name,
+                    Name = categoryBlog.Name,
                 };
                 _dbContext.CategoryBlogs.Add(categoryBlogEntity);
-                 _dbContext.SaveChanges();
-               
-                return Ok("Add successfully");  
-            }catch(Exception ex) {
+                _dbContext.SaveChanges();
+
+                return Ok("Add successfully");
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(500, "Internal server error");
             }
         }

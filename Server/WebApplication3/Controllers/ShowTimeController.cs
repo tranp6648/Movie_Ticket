@@ -103,13 +103,13 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
-        [HttpGet("ShowShowtime")]
+        [HttpGet("ShowShowtime/{id}")]
 
-        public async Task<ActionResult<IEnumerable<Showtime>>> getShow()
+        public async Task<ActionResult<IEnumerable<Showtime>>> getShow(int id)
         {
             try
             {
-                var show = await _dbContext.Showtimes.Select(d => new
+                var show = await _dbContext.Showtimes.Where(a=>a.IdAuditoriumsNavigation.IdCinemaNavigation.Idaccount==id).Select(d => new
                 {
                     ID = d.Id,
                     Time = d.Time,
@@ -146,7 +146,7 @@ namespace WebApplication3.Controllers
                     return BadRequest(new { message = "Show time is already exists" });
 
                 }
-
+           
 
                 var showtimeAdd = new Showtime
                 {
@@ -189,12 +189,12 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var cinema = await _dbContext.Cinemas.Include(m => m.DetailCityBranches).ThenInclude(d => d.IdBranchNavigation).Select(m => new {
+                var cinema = await _dbContext.DetailCityBranches.Select(m => new {
 
-                    ID = m.Id,
-                    Name = m.Name,
-                    District = m.District,
-                    IDcity = m.DetailCityBranches.Select(d => d.IdBranch)
+                    ID = m.IdCinemaNavigation.Id,
+                    Name = m.IdCinemaNavigation.Name,
+                    District = m.IdCinemaNavigation.District,
+                    IDcity = m.IdBranchNavigation.Id,
                 }).ToListAsync();
                 return Ok(cinema);
             }
@@ -203,12 +203,12 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpGet("getcity")]
-        public async Task<ActionResult<IEnumerable<CinemaBranch>>> getCityBrance()
+        [HttpGet("getcity/{id}")]
+        public async Task<ActionResult<IEnumerable<CinemaBranch>>> getCityBrance(int id)
         {
             try
             {
-                var CineMaBrancher = await _dbContext.CinemaBranches.Select(m => new
+                var CineMaBrancher = await _dbContext.CinemaBranches.Where(d=>d.DetailCityBranches.Any(b=>b.IdCinemaNavigation.Idaccount==id)).Select(m => new
                 {
                     ID = m.Id,
                     City = m.City

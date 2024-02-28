@@ -65,7 +65,7 @@ public partial class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=DESKTOP-KU1PU6V;Database=MovieTicket;user id=sa;password=123456789;trusted_connection=true;encrypt=false");
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=DESKTOP-KU1PU6V\\ASUS;Database=MovieTicket;user id=sa;password=123;trusted_connection=true;encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -202,6 +202,7 @@ public partial class DatabaseContext : DbContext
         {
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.District).HasMaxLength(100);
+            entity.Property(e => e.Idaccount).HasColumnName("IDAccount");
             entity.Property(e => e.Location)
                 .HasMaxLength(100)
                 .IsUnicode(false)

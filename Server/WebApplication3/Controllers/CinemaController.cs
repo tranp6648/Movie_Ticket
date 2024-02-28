@@ -74,21 +74,14 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var cinema = await _dbContext.Cinemas.Include(m => m.DetailCityBranches).ThenInclude(d => d.IdBranchNavigation).Select(m =>new
+                var cinema = await _dbContext.DetailCityBranches.Select(m =>new
                 {
-                    ID=m.Id,
-                    Location=m.Location, 
-                    Name=m.Name,
-                    Phone=m.Phone,
-                    District=m.District,
-                    DetailCityBranch = m.DetailCityBranches.Select(d => new
-                    {
-                        Id = d.Id,
-                        IdBranchNavigation = new
-                        {
-                            City=d.IdBranchNavigation.City
-                        }
-                    })
+                    ID=m.IdCinemaNavigation.Id,
+                    Location=m.IdCinemaNavigation.Location, 
+                    Name=m.IdCinemaNavigation.Name,
+                    Phone=m.IdCinemaNavigation.Phone,
+                    District=m.IdCinemaNavigation.District,
+                   City=m.IdBranchNavigation.City,
                 }).ToListAsync();
                 return Ok(cinema);
             }catch(Exception ex)
