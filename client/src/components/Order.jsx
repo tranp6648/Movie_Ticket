@@ -22,7 +22,7 @@ function Order() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5231/api/Order/View`)
+        const response = await axios.get(`http://localhost:5231/api/Order/View/${ID}`)
         setOrder(response.data)
       } catch (error) {
         console.log(error)

@@ -160,26 +160,36 @@ namespace WebApplication3.Controllers
     }
 }
         [HttpGet("Information/{id}")]
-        public async Task<ActionResult<IEnumerable<Account>>>ShowAccount(int id)
+        public async Task<ActionResult<IEnumerable<Account>>> ShowAccount(int id)
         {
             try
             {
-                var Account=await _dbContext.Accounts.Where(d=>d.Id==id).Select(m => new
+                var accounts = await _dbContext.Accounts
+                    .Where(d => d.Id == id)
+                    .Select(m => new Account
+                    {
+                        Username = m.Username,
+                        Email = m.Email,
+                        Birthday= m.Birthday,
+                        FullName = m.FullName,
+                        Address = m.Address,
+                        Phone = m.Phone
+                    })
+                    .ToListAsync();
+
+                if (accounts == null || accounts.Count == 0)
                 {
-                    Username=m.Username,
-                    Email=m.Email,
-                    BirthDay=m.Birthday,
-                    FullName=m.FullName,
-                    Birthday=m.Birthday,
-                    Address=m.Address,
-                    Phone=m.Phone
-                }).ToListAsync();
-                return Ok(Account);
-            }catch(Exception ex)
+                    return NotFound();
+                }
+
+                return Ok(accounts);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         [HttpPost("Add")]
         public async Task<ActionResult<Account>> AddBillDetail([FromBody] Account billDetail)

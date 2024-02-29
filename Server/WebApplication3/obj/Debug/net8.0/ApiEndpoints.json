@@ -1659,24 +1659,55 @@
   },
   {
     "ContainingType": "WebApplication3.Controllers.OrderController",
-    "Method": "SendContact",
+    "Method": "Myorder",
     "RelativePath": "api/Order/Myorder/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "sendContact",
-        "Type": "WebApplication3.Models.SendContact",
-        "IsRequired": true
-      },
-      {
         "Name": "id",
-        "Type": "",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.DetailOrder, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplication3.Controllers.OrderController",
+    "Method": "SeatMovie",
+    "RelativePath": "api/Order/SeatMovie/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.DetailOrder, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "WebApplication3.Controllers.OrderController",
@@ -1697,11 +1728,17 @@
   {
     "ContainingType": "WebApplication3.Controllers.OrderController",
     "Method": "ShowOrder",
-    "RelativePath": "api/Order/View",
+    "RelativePath": "api/Order/View/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.Order, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",

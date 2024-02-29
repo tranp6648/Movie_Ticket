@@ -288,7 +288,17 @@ namespace WebApplication3.Controllers
                     }
                 }
                 _dbContext.SaveChanges();
-                 SendEmail(addCheckout.Email, "Movie Ticket Shop", $"Thank you for booking our tickets");
+                string emailBody = $"Total:{addCheckout.TotalPrice}$  \n";
+
+                foreach (int seatid in addCheckout.IdSeat)
+                {
+                    string Movies = _dbContext.DetailOrders.Where(d => d.Idshowtime == idtime).Select(a => a.IdshowtimeNavigation.IdMovieNavigation.Title).FirstOrDefault();
+                    List<string> seats = _dbContext.SeatMovies.Where(d => d.Id == seatid).Select(a => a.SeatName).ToList();
+                    string seat = string.Join(", ", seats);
+                    emailBody += $"Seats: {seat}\n,Movies:{Movies}";
+
+                }
+                SendEmail(addCheckout.Email, "Movie Ticket Shop", emailBody);
                 return Ok("Add successfully");
             }
 
