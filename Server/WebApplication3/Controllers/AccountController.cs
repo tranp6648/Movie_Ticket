@@ -152,7 +152,7 @@ namespace WebApplication3.Controllers
             return NotFound("Account not found");
         }
 
-                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype,username=existingAccount.Username });
+                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype,username=existingAccount.Username,Status=existingAccount.Status });
             }
     catch (Exception ex)
     {
@@ -190,7 +190,25 @@ namespace WebApplication3.Controllers
             }
         }
 
-
+        [HttpPost("ChangePassword/{id}/{Password}")]
+        public IActionResult UpdatePassword(int id,string Password)
+        {
+            try
+            {
+                var AccountExist = _dbContext.Accounts.Find(id);
+                if (AccountExist == null)
+                {
+                    return NotFound("Account not found");
+                }
+                AccountExist.Password = HashPasswordMD5(Password);
+                AccountExist.Status = true;
+                _dbContext.SaveChanges();
+                return Ok("Change Sucessfully");
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
         [HttpPost("Add")]
         public async Task<ActionResult<Account>> AddBillDetail([FromBody] Account billDetail)
         {

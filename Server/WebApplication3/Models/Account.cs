@@ -29,6 +29,8 @@ public partial class Account
 
     public string? OrderNote { get; set; }
 
+    public bool? Status { get; set; }
+
     public virtual ICollection<Blog> Blogs { get; set; } = new List<Blog>();
 
     public virtual City? IdCityNavigation { get; set; }

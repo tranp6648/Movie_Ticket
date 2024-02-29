@@ -127,7 +127,7 @@ console.log(seat.map(item => item.id))
                 (change.idAccount !== IDAccount && change.iDvoucher !== matchingCharge.id)
         );
         console.log(match)
-        if (matchingCharge.minprice <= totalorder && !selectedVouchers.includes(FormData.check) && match !== undefined) {
+        if (matchingCharge.minprice <= totalorder && !selectedVouchers.includes(FormData.check) && (DetailVoucher<=0 || match!==undefined )) {
             const discountAmount = (matchingCharge.discountPercent / 100) * totalorder;
             const updatedTotalOrder = totalorder - discountAmount;
 
@@ -152,6 +152,13 @@ console.log(seat.map(item => item.id))
             Swal.fire({
                 icon: 'error',
                 title: "Voucher has already been selected",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }else if(DetailVoucher>0 || match===undefined){
+            Swal.fire({
+                icon: 'error',
+                title: "you have used this voucher",
                 showConfirmButton: false,
                 timer: 1500,
             });

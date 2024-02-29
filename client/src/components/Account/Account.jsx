@@ -17,7 +17,7 @@ function Account() {
     setrememberMe(!rememberMe);
     setShowRememberMeMessage(false);
   };
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const [pillDetail, setPillDetail] = useState({
     Username: '',
@@ -26,16 +26,25 @@ function Account() {
     Phone: '',
     fullname: '',
     Birthday: null,
-    Accounttype:'',
+    Accounttype: '',
   })
+  const [showChangePasswordPopup, setShowChangePasswordPopup] = useState(false);
   const [AccLogin, setAccLogin] = useState({
     AccountLogin: '',
-    PasswordLogin: ''
+    PasswordLogin: '',
+    id: '',
+    username:''
   })
   const [loading, setloading] = useState(false);
   const [ActiveTab, setActiveTab] = useState('Login');
   const handleTabChange = (tabID) => {
     setActiveTab(tabID);
+  }
+
+  const handeleEdit = (id,username) => {
+    AccLogin.id = id;
+    AccLogin.username=username
+    setShowChangePasswordPopup(true)
   }
 
   const handleDateChange = (date) => {
@@ -79,6 +88,22 @@ function Account() {
       newErrors[fieldName] = !isValidDate(value) ? 'Invalid date format' : '';
     } else if (fieldName === 'FullName') {
       newErrors[fieldName] = value.trim() === '' ? 'FullName is required' : '';
+    }else if(fieldName==='Password'){
+      if(value.trim() === '') {
+        newErrors[fieldName] = 'New Password is required';
+      } else if (value.trim().length < 8 || /^[a-z]/.test(value.trim())) {
+        newErrors[fieldName] = 'Password must be at least 8 characters long and start with a Uppercase letter.';
+      } else {
+        newErrors[fieldName] = '';
+      }
+    }else if(fieldName=='Confirm'){
+      if(value.trim() === '') {
+        newErrors[fieldName] = 'Confirm Password is required';
+      } else if (value.trim().length < 8 || /^[a-z]/.test(value.trim())) {
+        newErrors[fieldName] = 'Confirm Password must be at least 8 characters long and start with a Uppercase letter.';
+      } else {
+        newErrors[fieldName] = '';
+      }
     }
     setErrors(newErrors)
   }
@@ -112,7 +137,7 @@ function Account() {
         throw new Error(responseData.message || 'Login failed');
       }
 
-      const {id, accountType,username } = responseData;
+      const { id, accountType, username, status } = responseData;
 
       // Additional actions after a successful response
       Swal.fire({
@@ -121,16 +146,20 @@ function Account() {
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        if(accountType==0){
-        
-          navigate('/admin',{ state: { ID:id,username:username } });
-         
-        }else if(accountType==1){
-          navigate('/layout',{ state: { IDAccount:id,username:username } })
+        if (accountType == 0) {
+
+
+          if (status == false) {
+            handeleEdit(id,username);
+          }
+          console.log(status)
+
+        } else if (accountType == 1) {
+          navigate('/layout', { state: { IDAccount: id, username: username } })
         }
-      
+
       });
-    
+
     } catch (error) {
       console.error('Error during login:', error);
       Swal.fire({
@@ -140,8 +169,67 @@ function Account() {
       });
     }
   };
-
-
+  const [FormData, setFormData] = useState({
+    NewPassword: '',
+    Password: ''
+  })
+  const changePassword = async (event) => {
+    event.preventDefault();
+    if(FormData.NewPassword=='' || FormData.Password==''){
+      Swal.fire({
+        icon: 'error',
+        title: 'New Password and Password is required',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }else if(FormData.NewPassword!=FormData.Password){
+      Swal.fire({
+        icon: 'error',
+        title: 'new password and Confirm Password must match',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }else if(FormData.Password.length<8 && FormData.NewPassword.length<8){
+      Swal.fire({
+        icon: 'error',
+        title: 'Password greater than or equal to 8 characters',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }else if(FormData.NewPassword[0] !== FormData.NewPassword[0].toUpperCase()){
+      Swal.fire({
+        icon: 'error',
+        title: 'Capitalize the first letter',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    else{
+      try {
+        const response = await fetch(`http://localhost:5231/api/Account/ChangePassword/${AccLogin.id}/${FormData.Password}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          
+        })
+        if(response.ok){
+          Swal.fire({
+            icon: 'success',
+            title: 'Change Password success',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            navigate('/Admin', { state: { IDAccount: AccLogin.id, username: AccLogin.username } })
+          });
+          setShowChangePasswordPopup(false)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+   
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -177,7 +265,7 @@ function Account() {
     }
     else {
       setloading(true);
-      pillDetail.Accounttype=1;
+      pillDetail.Accounttype = 1;
       pillDetail.Password = pillDetail.Username
       fetch('http://localhost:5231/api/Account/Add', {
         method: 'POST',
@@ -259,7 +347,7 @@ function Account() {
                   className='woocommerce-Input woocommerce-Input--text input-text'
                 /> <span
                   onClick={togglePasswordVisibility}
-                  className={`show-password-input ${showPassword ? 'visible' : 'hidden'}`}
+                  className={`show-password-input visible`}
                 >
                   {showPassword ? '🙈' : '👁️'}
                 </span>            </p>
@@ -276,7 +364,7 @@ function Account() {
               </p>
               <button type="submit" className='woocommerce-button button woocommerce-form-login__submit' >Log in</button>
               <p className='woocommerce-LostPassword lost_password'>
-                <a onClick={()=>navigate('/Forgot')}>Lost your password?</a>
+                <a onClick={() => navigate('/Forgot')}>Lost your password?</a>
               </p>
             </form>
           </>
@@ -358,21 +446,21 @@ function Account() {
       )}
       <Menu />
       <div style={{ height: '296px', marginTop: '5px' }}>
-                <div className="breadcrumb-area">
-                    <div className="container">
-                        <div className="breadcrumb-content">
-                            <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>Account</h2>
-                            <ul>
-                                <li>
-                                    <a href="" style={{ textDecoration: 'none' }}>Home</a>
-                                </li>
-                                <li className="active">Account</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
+        <div className="breadcrumb-area">
+          <div className="container">
+            <div className="breadcrumb-content">
+              <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>Account</h2>
+              <ul>
+                <li>
+                  <a href="" style={{ textDecoration: 'none' }}>Home</a>
+                </li>
+                <li className="active">Account</li>
+              </ul>
             </div>
+          </div>
+        </div>
+
+      </div>
 
 
       <div className='row_site' style={{ paddingTop: '160px', fontWeight: '600' }}>
@@ -394,7 +482,7 @@ function Account() {
                       <h2>Login</h2>
                       <div className=" hiraola-tab_content">
                         <div id="Login" className={`tab-pane ${ActiveTab === 'Login' ? 'active show' : ''}`}>
-                         
+
                         </div>
                         <div id="Register" className={`tab-pane ${ActiveTab === 'Register' ? 'active show' : ''}`}>
                           {renderTabContent()}
@@ -409,6 +497,49 @@ function Account() {
           </div>
         </div>
       </div>
+      {showChangePasswordPopup && (
+        <div className="popup-container">
+
+          <div className="popup-content" style={{ background: '#fff' }}>
+            
+
+            <div >
+
+              <h3 className="box-title" style={{ color: 'black' }}>Change Password</h3>
+            </div>
+            <form role="form" onSubmit={changePassword}>
+              <div className="box-body">
+                {/* Form fields go here */}
+                <div className="form-group">
+                  <label className='float-left'>New Password</label>
+                  <input type='password' name='UpdateNameCategory' onBlur={() => validateInput('Password', FormData.NewPassword)} value={FormData.NewPassword} onChange={(e) => setFormData({ ...FormData, NewPassword: e.target.value })} className="form-control" />
+                  {errors.Password && (
+                  <p className="text-red-500 text-sm italic">{errors.Password}</p>
+                )}
+                </div>
+                <div className="form-group">
+                  <label className='float-left'>Confirm Password</label>
+                  <input type='password' name='UpdateNameCategory' value={FormData.Password} onBlur={() => validateInput('Confirm', FormData.Password)} onChange={(e) => setFormData({ ...FormData, Password: e.target.value })} className="form-control" />
+                  {errors.Confirm && (
+                  <p className="text-red-500 text-sm italic">{errors.Confirm}</p>
+                )}
+                </div>
+
+
+
+              </div>
+
+              <div className="box-footer">
+                <button type="submit" className="btn btn-primary">
+                  Update
+                </button>
+              </div>
+            </form>
+
+
+          </div>
+        </div>
+      )}
     </div>
   );
 }
