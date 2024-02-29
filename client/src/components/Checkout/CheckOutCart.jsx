@@ -65,7 +65,7 @@ function CheckOutCart() {
     }, [])
 
     const handleUpdate = async () => {
-
+console.log(seat.map(item => item.id))
         try {
 
             const response = await fetch(`http://localhost:5231/api/CheckOut/addOrder/${IDAccount}/${IDTime}`, {

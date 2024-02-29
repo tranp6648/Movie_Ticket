@@ -580,10 +580,7 @@ const handleSave = async () => {
                           <td>{CinemaItem.phone}</td>
                           <td>{CinemaItem.district}</td>
                           <td>
-                            {CinemaItem.detailCityBranch.length > 0
-                              ? CinemaItem.detailCityBranch[0].idBranchNavigation
-                                  .city
-                              : "No Category"}
+                            {CinemaItem.city}
                           </td>
                           <td>
                             <button
