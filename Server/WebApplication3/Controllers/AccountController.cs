@@ -67,12 +67,16 @@ namespace WebApplication3.Controllers
         [HttpGet("getAccount/{id}")]
         public async Task<ActionResult<IEnumerable<Account>>> getAccount(int id)
         {
-            Account account = await _dbContext.Accounts.FindAsync(id);
-            if(account == null)
+            var Account =await _dbContext.Accounts.Where(a=>a.Id==id).Select(A => new
             {
-                return NotFound();  
-            }
-            return Ok(account);
+                username = A.Username,
+                fullName = A.FullName,
+                email = A.Email,
+                phone = A.Phone,
+                birthday = A.Birthday,
+            }).FirstOrDefaultAsync();
+            
+            return Ok(Account);
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAll()
