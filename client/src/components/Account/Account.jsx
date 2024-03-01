@@ -29,11 +29,15 @@ function Account() {
     Accounttype: '',
   })
   const [showChangePasswordPopup, setShowChangePasswordPopup] = useState(false);
+  const[showChangePassworUserPopup,setshowChangePassworUserPopup]=useState(false);
   const [AccLogin, setAccLogin] = useState({
     AccountLogin: '',
     PasswordLogin: '',
     id: '',
-    username:''
+    username:'',
+    Accounttype:'',
+    iduser:'',
+    usernameUser:''
   })
   const [loading, setloading] = useState(false);
   const [ActiveTab, setActiveTab] = useState('Login');
@@ -41,12 +45,21 @@ function Account() {
     setActiveTab(tabID);
   }
 
-  const handeleEdit = (id,username) => {
+  const handeleEdit = (id,username,Accounttype) => {
     AccLogin.id = id;
-    AccLogin.username=username
+    AccLogin.username=username;
+    AccLogin.Accounttype=Accounttype
     setShowChangePasswordPopup(true)
   }
-
+  const handleUserEdit=(id,username)=>{
+    AccLogin.iduser=id;
+    AccLogin.usernameUser=username;
+    setshowChangePassworUserPopup(true);
+  }
+  const handleBirthdayChange=(date)=>{
+    const formattedDate = date.toISOString().split('T')[0];
+    setFormData({...FormData,Birthday:formattedDate})
+  }
   const handleDateChange = (date) => {
 
     const formattedDate = date.toISOString().split('T')[0];
@@ -104,6 +117,22 @@ function Account() {
       } else {
         newErrors[fieldName] = '';
       }
+    }else if(fieldName==='PasswordUser'){
+      if(value.trim() === '') {
+        newErrors[fieldName] = 'New Password is required';
+      } else if (value.trim().length < 8 || /^[a-z]/.test(value.trim())) {
+        newErrors[fieldName] = 'Password must be at least 8 characters long and start with a Uppercase letter.';
+      } else {
+        newErrors[fieldName] = '';
+      }
+    }else if(fieldName==='ConfirmUser'){
+      if(value.trim() === '') {
+        newErrors[fieldName] = 'Confirm Password is required';
+      } else if (value.trim().length < 8 || /^[a-z]/.test(value.trim())) {
+        newErrors[fieldName] = 'Confirm Password must be at least 8 characters long and start with a Uppercase letter.';
+      } else {
+        newErrors[fieldName] = '';
+      }
     }
     setErrors(newErrors)
   }
@@ -150,14 +179,20 @@ function Account() {
 
 
           if (status == false) {
-            handeleEdit(id,username);
+            handeleEdit(id,username,accountType);
           }else{
             navigate('/Admin', { state: { ID: id, username: username } })
+       
           }
   
 
         } else if (accountType == 1) {
-          navigate('/layout', { state: { IDAccount: id, username: username } })
+          if(status==false){
+            handleUserEdit(id,username,accountType);
+          }else{
+            navigate('/layout', { state: { IDAccount: id, username: username } })
+          }
+       
         }
 
       });
@@ -173,18 +208,106 @@ function Account() {
   };
   const [FormData, setFormData] = useState({
     NewPassword: '',
-    Password: ''
+    Password: '',
+    FullName:'',
+    Phone:'',
+    Birthday:null,
+    NewPasswordUser:'',
+    PasswordUser:''
   })
-  const changePassword = async (event) => {
+  const changePasswordUser=async (event)=>{
     event.preventDefault();
-    if(FormData.NewPassword=='' || FormData.Password==''){
+    if(FormData.NewPasswordUser=='' || FormData.PasswordUser==''){
       Swal.fire({
         icon: 'error',
         title: 'New Password and Password is required',
         showConfirmButton: false,
         timer: 1500,
       });
-    }else if(FormData.NewPassword!=FormData.Password){
+    }else if(FormData.NewPasswordUser!=FormData.PasswordUser){
+      Swal.fire({
+        icon: 'error',
+        title: 'new password and Confirm Password must match',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }else if(FormData.PasswordUser.length<8 && FormData.NewPasswordUser.length<8){
+      Swal.fire({
+        icon: 'error',
+        title: 'Password greater than or equal to 8 characters',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }else if(FormData.NewPasswordUser[0] !== FormData.NewPasswordUser[0].toUpperCase()){
+      Swal.fire({
+        icon: 'error',
+        title: 'Capitalize the first letter',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }else{
+      try{
+        const response = await fetch(`http://localhost:5231/api/Account/ChangePassUser/${AccLogin.iduser}/${FormData.PasswordUser}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+         
+        })
+        if(response.ok){
+          Swal.fire({
+            icon: 'success',
+            title: 'Change Password success',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+         
+            navigate('/layout', { state: { IDAccount: AccLogin.iduser, username: AccLogin.usernameUser } })
+          
+          });
+          setshowChangePassworUserPopup(false)
+        }else{
+          const responseBody = await response.json();
+          if (responseBody.message) {
+              Swal.fire({
+                  icon: 'error',
+                  title: responseBody.message || 'Failed to add Blog',
+                  showConfirmButton: false,
+                  timer: 1500,
+              });
+          }
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
+  }
+  const changePassword = async (event) => {
+    event.preventDefault();
+    if(FormData.FullName=='' || FormData.Birthday==null || FormData.Birthday==''){
+      Swal.fire({
+        icon: 'error',
+        title: "Please complete all information",
+        showConfirmButton: false,
+        timer: 1500,
+    });
+  }else if(AccLogin.Phone.length<8){
+    Swal.fire({
+      icon: 'error',
+      title: 'Phone greater than or equal to 8 characters',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+    else if(FormData.NewPassword=='' || FormData.Password==''){
+      Swal.fire({
+        icon: 'error',
+        title: 'New Password and Password is required',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    else if(FormData.NewPassword!=FormData.Password){
       Swal.fire({
         icon: 'error',
         title: 'new password and Confirm Password must match',
@@ -213,7 +336,7 @@ function Account() {
           headers: {
             'Content-Type': 'application/json',
           },
-          
+          body: JSON.stringify({phone:FormData.Phone,birthday:FormData.Birthday,fullName:FormData.FullName})
         })
         if(response.ok){
           Swal.fire({
@@ -222,9 +345,21 @@ function Account() {
             showConfirmButton: false,
             timer: 1500
           }).then(() => {
+         
             navigate('/Admin', { state: { IDAccount: AccLogin.id, username: AccLogin.username } })
+          
           });
           setShowChangePasswordPopup(false)
+        }else{
+          const responseBody = await response.json();
+          if (responseBody.message) {
+              Swal.fire({
+                  icon: 'error',
+                  title: responseBody.message || 'Failed to add Blog',
+                  showConfirmButton: false,
+                  timer: 1500,
+              });
+          }
         }
       } catch (error) {
         console.log(error)
@@ -513,6 +648,21 @@ function Account() {
               <div className="box-body">
                 {/* Form fields go here */}
                 <div className="form-group">
+                  <label className='float-left'>Full Name</label>
+                  <input type='text' name='UpdateNameCategory' value={FormData.FullName} onChange={(e) => setFormData({ ...FormData, FullName: e.target.value })} className="form-control" />
+                  
+                </div>
+                <div className="form-group">
+                  <label className='float-left'>Phone</label>
+                  <input type='tel' name='UpdateNameCategory' value={FormData.Phone} onChange={(e) => setFormData({ ...FormData, Phone: e.target.value })} className="form-control" />
+                  
+                </div>
+                <div className="form-group">
+                  <label className='float-left'>Birthday</label>
+                  <DatePicker name='Birthday' selected={FormData.Birthday ? new Date(FormData.Birthday) : null}  onChange={handleBirthdayChange} className='woocommerce-Input woocommerce-Input--text input-text' dateFormat="dd/MM/yyyy" />
+                  
+                </div>
+                <div className="form-group">
                   <label className='float-left'>New Password</label>
                   <input type='password' name='UpdateNameCategory' onBlur={() => validateInput('Password', FormData.NewPassword)} value={FormData.NewPassword} onChange={(e) => setFormData({ ...FormData, NewPassword: e.target.value })} className="form-control" />
                   {errors.Password && (
@@ -542,6 +692,50 @@ function Account() {
           </div>
         </div>
       )}
+      {showChangePassworUserPopup&& (
+        <div className="popup-container">
+
+        <div className="popup-content" style={{ background: '#fff' }}>
+          
+
+          <div >
+
+            <h3 className="box-title" style={{ color: 'black' }}>Change Password</h3>
+          </div>
+          <form role="form" onSubmit={changePasswordUser}>
+            <div className="box-body">
+              {/* Form fields go here */}
+            
+              <div className="form-group">
+                <label className='float-left'>New Password</label>
+                <input type='password' name='UpdateNameCategory' onBlur={() => validateInput('PasswordUser', FormData.NewPasswordUser)} value={FormData.NewPasswordUser} onChange={(e) => setFormData({ ...FormData, NewPasswordUser: e.target.value })} className="form-control" />
+                {errors.PasswordUser && (
+                <p className="text-red-500 text-sm italic">{errors.PasswordUser}</p>
+              )}
+              </div>
+              <div className="form-group">
+                <label className='float-left'>Confirm Password</label>
+                <input type='password' name='UpdateNameCategory' value={FormData.PasswordUser} onBlur={() => validateInput('ConfirmUser', FormData.PasswordUser)} onChange={(e) => setFormData({ ...FormData, PasswordUser: e.target.value })} className="form-control" />
+                {errors.ConfirmUser && (
+                <p className="text-red-500 text-sm italic">{errors.ConfirmUser}</p>
+              )}
+              </div>
+
+
+
+            </div>
+
+            <div className="box-footer">
+              <button type="submit" className="btn btn-primary">
+                Update
+              </button>
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+         )}
     </div>
   );
 }

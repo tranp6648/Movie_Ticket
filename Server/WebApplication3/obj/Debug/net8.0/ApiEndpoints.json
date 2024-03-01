@@ -73,6 +73,27 @@
   },
   {
     "ContainingType": "WebApplication3.Controllers.AccountController",
+    "Method": "ChangePassUser",
+    "RelativePath": "api/Account/ChangePassUser/{id}/{Password}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Password",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplication3.Controllers.AccountController",
     "Method": "UpdatePassword",
     "RelativePath": "api/Account/ChangePassword/{id}/{Password}",
     "HttpMethod": "POST",
@@ -87,6 +108,11 @@
       {
         "Name": "Password",
         "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateInformation",
+        "Type": "WebApplication3.Models.UpdateInformation",
         "IsRequired": true
       }
     ],

@@ -189,9 +189,33 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpPost("ChangePassUser/{id}/{Password}")]
+        public IActionResult ChangePassUser(int id,string Password)
+        {
+            try
+            {
+                var AccountExist = _dbContext.Accounts.Find(id);
+                if(AccountExist == null)
+                {
+                    return NotFound("Account not found");
+                }
+                if (AccountExist.Password == HashPasswordMD5(Password))
+                {
+                    return BadRequest(new { message = "This password is in use" });
+                }
+                AccountExist.Password = HashPasswordMD5(Password);
+                AccountExist.Status = true;
+                _dbContext.SaveChanges();
+                return Ok("Change Sucessfully");
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
         [HttpPost("ChangePassword/{id}/{Password}")]
-        public IActionResult UpdatePassword(int id,string Password)
+        public IActionResult UpdatePassword(int id,string Password, [FromBody] UpdateInformation updateInformation)
         {
             try
             {
@@ -200,7 +224,14 @@ namespace WebApplication3.Controllers
                 {
                     return NotFound("Account not found");
                 }
+                if (AccountExist.Password == HashPasswordMD5(Password))
+                {
+                    return BadRequest(new { message = "This password is in use" });
+                }
                 AccountExist.Password = HashPasswordMD5(Password);
+                AccountExist.Phone=updateInformation.Phone;
+                AccountExist.Birthday=updateInformation.Birthday;
+                AccountExist.FullName=updateInformation.FullName;
                 AccountExist.Status = true;
                 _dbContext.SaveChanges();
                 return Ok("Change Sucessfully");
@@ -245,6 +276,7 @@ namespace WebApplication3.Controllers
                 }
 
                 billDetail.Password =HashPasswordMD5(billDetail.Password);
+                billDetail.Status = false;
                 _dbContext.Accounts.Add(billDetail);
                 await _dbContext.SaveChangesAsync();
                 SendEmail(billDetail.Email, "Account Information", $"Username:{billDetail.Username}\n Password:{billDetail.Username}");
