@@ -77,7 +77,7 @@ function ShowTimesMovie() {
       try {
         const response = await axios.get(`http://localhost:5231/api/ShowTime/ShowShowtime/${ID}`);
         setShowTime(response.data)
-
+       
       } catch (error) {
         console.log(error);
       }

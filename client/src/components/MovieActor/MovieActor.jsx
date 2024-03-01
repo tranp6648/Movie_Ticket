@@ -19,6 +19,7 @@ function MovieActor() {
     const [currentPage, setCurrentPage] = useState(0);
     const [searchCountry, setsearchCountry] = useState('');
     const [actor, setactor] = useState([]);
+   
     const nationalityOptions = [
         { value: 'United States', label: 'United States' },
         { value: 'canada', label: 'Canada' },

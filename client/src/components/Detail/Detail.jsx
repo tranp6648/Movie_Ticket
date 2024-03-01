@@ -585,23 +585,11 @@ function Detail() {
                         <dl className="collateral-tabs">
                             <dd className="tab-container current">
                                 <div className="tab-content1 mb-showtimes">
-                                    <div className="mb-tabs-cities">
-                                        <ul className="toggle-tabs">
-                                            <li className="mb-city-name current">
-                                                <span>New York</span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                   
                                     <div className="collateral-tabs">
                                         <dd className="tab-container current">
                                             <div className="tab-content1 mb-room-types">
-                                                <ul className="toggle-tabs">
-                                                    <li className="mb-room-type-name current">
-                                                        3D                                </li>
-                                                    <li className="mb-room-type-name">
-                                                        2D
-                                                    </li>
-                                                </ul>
+                                               
                                                 <dl className="collateral-tabs">
                                                     <dd className="tab-container current">
                                                         <div className="tab-content1 showtimes">

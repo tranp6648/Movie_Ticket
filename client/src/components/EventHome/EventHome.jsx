@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import Menu from "../Menu/Menu";
 import FooterHome from "../footer/FooterHome";
 import './EventHome.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 function EventHome() {
     const navigate=useNavigate();
     const [Event, setEvent] = useState([]);
+    const location = useLocation();
+    const IDAccount = location.state?.IDAccount || '';
     useEffect(() => {
         const response = async () => {
             try {
@@ -84,7 +86,7 @@ function EventHome() {
 
                                             </div>
                                             <div className="ovaev-booking-btn">
-                                                    <a onClick={()=>navigate(`/DetailEvent/${event.id}`,{ state: { ID:event.id } })}  >Visit</a>
+                                                    <a onClick={()=>navigate(`/DetailEvent/${event.id}`,{ state: { ID:event.id,IDAccount: IDAccount } })}  >Visit</a>
                                                 </div>
                                         </div>
                                         ))}

@@ -22,11 +22,13 @@ import Homepage from './components/Homepage/Homepage';
 import Actor from './components/Actor/Actor';
 import Detail from './components/Detail/Detail';
 import MovieActor from './components/MovieActor/MovieActor';
+import DetailBlog from './components/DetailBlog/DetailBlog';
 import DetailActor from './components/DetailActor/DetailActor';
 import Cart from './components/Cart/Cart';
 import ShowTimes from './components/Showtimes/ShowTimesMovie';
 import Event from './components/Event/Event';
 import EventHome from './components/EventHome/EventHome';
+import BlogHome from './components/BlogHome/BlogHome';
 import Superadmin from './components/Superadmin/Superadmin';
 import CreateCinema from './components/Superadmin/createCinema/CreateCinema';
 import HomeSuperadmin from './components/Superadmin/HomeSuperadmin';
@@ -73,6 +75,7 @@ function App() {
     <Route path='/Detail/:id' element={<Detail/>}/>
     <Route path='/MovieActor' element={<MovieActor/>}/>
     <Route path='/DetailActor/:id' element={<DetailActor/>}/>
+    <Route path='/DetailBlog/:id' element={<DetailBlog/>}/>
     <Route path='/Cart/:id' element={<Cart/>}/>
     <Route path='/Showtimes' element={<ShowTimes/>}/>
     <Route path='/Event' element={<Event/>}/>
@@ -90,6 +93,7 @@ function App() {
     <Route path='/UserVoucher' element={<UserVoucher/>}/>
     <Route path='/Category_Blog' element={<Category_Blog/>}/>
     <Route path='/Blog' element={<Blog/>}/>
+    <Route path='/BlogHome' element={<BlogHome/>}/>
      </Routes>
    </Router>
   );

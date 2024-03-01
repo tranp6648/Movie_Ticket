@@ -151,8 +151,10 @@ function Account() {
 
           if (status == false) {
             handeleEdit(id,username);
+          }else{
+            navigate('/Admin', { state: { ID: id, username: username } })
           }
-          console.log(status)
+  
 
         } else if (accountType == 1) {
           navigate('/layout', { state: { IDAccount: id, username: username } })
