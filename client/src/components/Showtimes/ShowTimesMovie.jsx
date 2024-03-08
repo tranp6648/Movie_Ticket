@@ -87,7 +87,7 @@ function ShowTimesMovie() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await axios.get("http://localhost:5231/api/ShowTime/getBrance");
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/getBrance/${ID}`);
 
         const filter = response.data.filter(district => district.iDcity === selectedcity.value);
         setBrancher(filter);

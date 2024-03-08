@@ -3,6 +3,7 @@ import Menu from "../Menu/Menu";
 import FooterHome from "../footer/FooterHome";
 import '../EventHome/EventHome.css'
 import { useLocation, useNavigate } from 'react-router-dom';
+import Pagination from 'react-paginate';
 import axios from "axios";
 function BlogHome() {
     const navigate = useNavigate();
@@ -76,12 +77,12 @@ function BlogHome() {
                 <div className="breadcrumb-area">
                     <div className="container">
                         <div className="breadcrumb-content">
-                            <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>My Order</h2>
+                            <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>Blog</h2>
                             <ul>
                                 <li>
                                     <a href="" style={{ textDecoration: 'none' }}>Home</a>
                                 </li>
-                                <li className="active">My Order</li>
+                                <li className="active">Blog</li>
                             </ul>
                         </div>
                     </div>
@@ -146,7 +147,26 @@ function BlogHome() {
 
 
                                         </div>
+                                        <Pagination
+                                        previousLabel={'previous'}
+                                        nextLabel={'next'}
+                                        breakLabel={'...'}
+                                        pageCount={Math.ceil(filteredGender.length / perPage)}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={5}
+                                        onPageChange={handlePageclick}
+                                        containerClassName={'pagination'}
+                                        activeClassName={'active'}
+                                        previousClassName={'page-item'}
+                                        previousLinkClassName={'page-link'}
+                                        nextClassName={'page-item'}
+                                        nextLinkClassName={'page-link'}
+                                        breakClassName={'page-item'}
+                                        breakLinkClassName={'page-link'}
+                                        pageClassName={'page-item'}
+                                        pageLinkClassName={'page-link'}
 
+                                    />
                                     </div>
                                 </div>
                             </div>

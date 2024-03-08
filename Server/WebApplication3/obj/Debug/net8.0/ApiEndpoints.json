@@ -1972,11 +1972,17 @@
   {
     "ContainingType": "WebApplication3.Controllers.ShowTimeController",
     "Method": "getCinema",
-    "RelativePath": "api/ShowTime/getBrance",
+    "RelativePath": "api/ShowTime/getBrance/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.Cinema, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
