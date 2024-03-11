@@ -4930,11 +4930,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
       "projectName": "WebApplication3",
       "projectPath": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
       "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
       "outputPath": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
+      "projectName": "WebApplication3",
+      "projectPath": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\obj\\",
+>>>>>>> 9a71d1d25c9a495615d48109db1121dca765bf41
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",

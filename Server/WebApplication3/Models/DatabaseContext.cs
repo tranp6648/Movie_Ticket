@@ -65,12 +65,16 @@ public partial class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
+<<<<<<< HEAD
 
 
         => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=KYOS22;Database=Movie2902;user id=sa;password=123456;trusted_connection=true;encrypt=false");
 
       
 
+=======
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=DESKTOP-KU1PU6V\\ASUS;Database=MovieTicket;user id=sa;password=123;trusted_connection=true;encrypt=false");
+>>>>>>> 9a71d1d25c9a495615d48109db1121dca765bf41
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -97,6 +101,7 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(12).HasDefaultValueSql("(NULL)")
                 .IsUnicode(false);
+            entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false);

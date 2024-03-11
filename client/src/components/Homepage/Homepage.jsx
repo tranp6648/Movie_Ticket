@@ -89,6 +89,18 @@ function Homepage(){
         },
         // ...add more slides
       ];
+      const [slidesMovies1,setslidesMovies1]=useState([]);
+      useEffect(()=>{
+        const fetchData=async ()=>{
+          try{
+            const response = await axios.get('http://localhost:5231/api/Movie/getMovie');
+            setslidesMovies1(response.data)
+          }catch(error){
+            console.log(error)
+          }
+        }
+        fetchData();
+      },[])
       const slidesMovies = [
         {
           id: 1,
@@ -261,9 +273,11 @@ useEffect(() => {
         <div className="">
             <div>
                 <Slider  {...settingsMain}>
-                    {slidesData.map((slide) =>
+                    {slidesMovies1.map((slide) =>
                     <div key={slide.id}>
-                    <img className="w-full h-[120vh] object-cover " src={slide.image} alt="" />           
+                    <img className="w-full h-[120vh] object-cover " src={slide.detailCategoryMovies.length > 0
+                            ? `http://localhost:5231/${slide.detailCategoryMovies[0].picture}`
+                            : 'No Category'} alt="" />           
                     <div className="overlay h-[120vh] absolute inset-0 bg-black opacity-50 z-[2]"></div>
                     <div className="absolute w-full h-[60%]  top-[25%] flex flex-col justify-center">
                         
@@ -277,7 +291,7 @@ useEffect(() => {
                             </div>
                         </div>
                 <div className="absolute  z-20 w-[600px]  ml-[150px]">
-                    <h1 className="text-[3rem] mb-0">Action Movie</h1>
+                    <h1 className="text-[3rem] mb-0">{slide.genreName} Movie</h1>
                     <h3 className=" text-[5.5rem] pb-0 mb-0">{slide.title}</h3>
                     <h2 className="mb-5 pt-0">Written and Directed by Aleesha Rose /Ireland 2023</h2>
                     <div className="button-1   h-[60px] w-[80%] flex gap-3">
@@ -289,7 +303,7 @@ useEffect(() => {
                     </div>
                     <div className=" absolute z-20 w-[300px] top-[30%] left-[77%] h-[50px] flex flex-col">
                         <h1 className="inTheater">In theater</h1>
-                        <h1 className="Scheduled">March 2023</h1>
+                        <h1 className="Scheduled">{new Date(slide.releaseDate).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</h1>
                         <img className="w-[200px]" src={underline} alt="" />
                     </div>
                     
@@ -305,10 +319,14 @@ useEffect(() => {
                     <div className="thumbnail-slider absolute  w-[42%] h-[260px] bottom-[-20%] right-0 pl-[90px] pr-20 pt-[30px]">
                     <h3 className="trailers-title text-white text-[1.2rem] mb-3 ">Trailers</h3>
         <Slider {...settingsThumbs} >
-          {slidesData.map((thumb) =>
+          {slidesMovies1.map((thumb) =>
             <div className="thumbnail-container relative top-[40%] bg-pink-400 border-[#D96C2C] border-[2px] h-[120px] w-[50%] flex gap-5" key={thumb.id}>
-              <img className="mr-[50px] w-[200px] h-[117px] object-cover" src={thumb.image} alt={thumb.title} />
-              <button onClick={() => openModal(thumb.videoUrl)} className="play-button absolute">
+              <img className="mr-[50px] w-[215px] h-[117px] object-cover" src={thumb.detailCategoryMovies.length > 0
+                            ? `http://localhost:5231/${thumb.detailCategoryMovies[0].picture}`
+                            : 'No Category'} alt={thumb.title} />
+              <button onClick={() => openModal(thumb.detailCategoryMovies.length > 0
+                            ? `http://localhost:5231/${thumb.detailCategoryMovies[0].trailer}`
+                            : 'No Category')} className="play-button absolute">
     {/* Icon for play button */}
     <i className="fas fa-play"></i> {/* Font Awesome play icon */}
   </button>
@@ -376,14 +394,16 @@ useEffect(() => {
                 </div>
               <div className="carousel-movie mt-10 w-full h-[380px] px-[8%]">
               <Slider {...settings1}>
-              {slidesMovies.map((slide) =>
+              {slidesMovies1.map((slide) =>
                     <div key={slide.id} className=" px-3">
                     <div className="cardmain bg-pink-200 w-full h-full relative">
-                      <img className="card-Movies" src={slide.image} alt="" />
+                      <img className="card-Movies w-[278px] h-[117px] object-cover" src={slide.detailCategoryMovies.length > 0
+                            ? `http://localhost:5231/${slide.detailCategoryMovies[0].picture}`
+                            : 'No Category'} alt="" />
                       
                       <div className="absolute card-content bottom-0">
-                        <p className="genre">{slide.Genre}</p>
-                        <p className="nameMovies">{slide.nameMovie}</p>
+                        <p className="genre">{slide.genreName}/ {slide.duration} Mins</p>
+                        <p className="nameMovies">{slide.title}</p>
                         <a href=""><button className="button-getTicket">Get Ticket</button></a>
 
                       </div>
@@ -409,20 +429,22 @@ useEffect(() => {
 </div>
                 </div>
                 <div className=" w-full grid grid-cols-3 gap-4 mt-7">
-                  {slidesMovies.slice(0,3).map((slide)=>
+                  {slidesMovies1.slice(0,3).map((slide)=>
                       <div key={slide.id} className=" relative">
-                        <img className="image-featured w-full h-[260px]" src={slide.image} alt="" />
+                        <img className="image-featured w-full h-[260px]" src={slide.detailCategoryMovies.length > 0
+                            ? `http://localhost:5231/${slide.detailCategoryMovies[0].picture}`
+                            : 'No Category'} alt="" />
                       <div className="">
                       <div className="cardmain absolute bg-white  w-[90%] h-[200px] left-5 top-[230px] px-[40px]">
-                      <p className="name-movie mt-9">{slide.nameMovie}</p>
+                      <p className="name-movie mt-9">{slide.title}</p>
                       <div className="flex gap-4 mt-2">
                         <div className="flex gap-1 items-center">
                           <img className="w-[20px] h-[20px]" src={oclock} alt="" />
-                          <p className="text-2">{slide.Genre1}</p>
+                          <p className="text-2">{slide.genreName}</p>
                         </div>
                         <div className="flex gap-1 items-center">
                           <img className="w-[20px] h-[20px]" src={tag} alt="" />
-                          <p className="text-2">{slide.time}</p>
+                          <p className="text-2">{new Date(slide.releaseDate).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                         </div>
                       </div>
                       <div className="flex gap-2 mt-2">

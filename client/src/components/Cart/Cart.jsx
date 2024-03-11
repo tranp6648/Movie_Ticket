@@ -249,24 +249,7 @@ function Cart() {
                                       ${totalPrice.toFixed(0)}
                                     </div>
                                   </div>
-                                  <div className="item-info area-item area-id-Area2">
-                                    <div className="info-type-ticket">
-                                      <span className="area-name">Area2</span>
-                                    </div>
-                                    <div className="info-qty-ticket">
-                                      <span className="area-minus">
-                                        <i className="flaticon-minus"></i>
-
-                                      </span>
-                                      <span className="area-qty">1</span>
-                                      <span className="area-plus">
-                                        <i className="flaticon-plus"></i>
-                                      </span>
-                                    </div>
-                                    <div className="info-sub-price">
-                                      10.000$
-                                    </div>
-                                  </div>
+                                  
                                 </div>
                               </div>
                             </div>
@@ -276,17 +259,7 @@ function Cart() {
                             <span className="total-price">  ${total}</span>
                           </div>
                         </div>
-                        <div className="cart-discount">
-                          <a className="cart-discount-btn cursor-pointer" style={{ display: `${Copon == true ? 'none' : ''}` }} onClick={() => OpenCopen()}>Enter Discount Code</a>
-                          <div className="form-discount" style={{ display: `${Copon == true ? 'flex' : ''}` }}>
-                            <div className="input-discount-code">
-                              <input type="text" className="discount-code" placeholder="DISCOUNT CODE" />
-                              <i className="dashicons-before dashicons-update-alt"></i>
-                            </div>
-                            <button className="cart-discount-submit-code">Apply</button>
-                            <i className="fas fa-times" id="cart-discount-close" onClick={() => setCopon(!Copon)}></i>
-                          </div>
-                        </div>
+                       
                         <div className={`cart-checkout ${Info.length > 0 ? '' : 'mb-disable'}`} style={{marginBottom:'161px'}}>
                           <div className="submit-load-more">
                             <div className="load-more" >

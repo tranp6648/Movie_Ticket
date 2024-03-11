@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import Menu from "../Menu/Menu";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../AllMovies/AllMovies.css';
 
 import Pagination from 'react-paginate';
@@ -12,10 +12,14 @@ import 'react-paginate/theme/basic/react-paginate.css';
 function MovieActor() {
     const navigate = useNavigate();
     const [Movies, setMovies] = useState([]);
+    const location = useLocation();
+    
+    const IDAccount = location.state?.IDAccount || '';
     const [perPage, setperPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
     const [searchCountry, setsearchCountry] = useState('');
     const [actor, setactor] = useState([]);
+   
     const nationalityOptions = [
         { value: 'United States', label: 'United States' },
         { value: 'canada', label: 'Canada' },
@@ -196,7 +200,7 @@ function MovieActor() {
                                         <div className="mb-movie-list mb-movie-list-template1 four_column">
                                             {currentGender.map((actor, index) => (
                                                 <div className="mb-movie-item item-template1">
-                                                    <a onClick={()=>navigate(`/DetailActor/${actor.id}`,{state:{ID:actor.id}})} style={{ boxShadow: 'none', textDecoration: 'none' }}>
+                                                    <a onClick={()=>navigate(`/DetailActor/${actor.id}`,{state:{ID:actor.id,IDAccount:IDAccount }})} style={{ boxShadow: 'none', textDecoration: 'none' }}>
                                                         <div className="movie-image">
                                                             <img src={`http://localhost:5231/${actor.image}`} alt="" />
                                                         </div>

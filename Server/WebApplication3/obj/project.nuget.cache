@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "tSRdZzFMHfnSzmEhzLl2hmhRqAUofpzAwcXbTHkvgy8RBk3gydt/3nwT5sIRhuHTfRv5RCA3qjo8OkHO9F7mSQ==",
   "success": true,
   "projectFilePath": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
+=======
+  "dgSpecHash": "amOJ4Lz1/IcYrwKVIZVQN1Q/1lVzez/Qam9PEXKui8GaJZTPzr/sfjpOiUx0oZqNiAzGextGewgK4ApLDD86+A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\WebApplication3.csproj",
+>>>>>>> 9a71d1d25c9a495615d48109db1121dca765bf41
   "expectedPackageFiles": [
     "C:\\Users\\LENOVO\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\LENOVO\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

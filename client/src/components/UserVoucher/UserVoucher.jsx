@@ -118,10 +118,7 @@ const groupedVouchersFreeship = voucherShip.reduce((acc, voucher, index) => {
                     </time>
                    
                   </div>
-                  <div className="even-info">
-                   <strong>Status:</strong>
-                    <p>{voucher.status}</p>
-                  </div>
+                 
                   <div className="even-date">
                     <i className="fa fa-calendar"></i>
                     <time>

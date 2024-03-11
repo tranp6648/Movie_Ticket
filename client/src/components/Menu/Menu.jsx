@@ -87,6 +87,14 @@ function Menu(){
                                             </a>
                                            
                                         </li>
+                                        <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
+                                            <a href="" onClick={()=>  navigate('/BlogHome',{ state: { IDAccount:IDAccount } })}>
+                                                Blog
+                                                
+                                            
+                                            </a>
+                                           
+                                        </li>
                                     
                                        
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
