@@ -67,14 +67,9 @@ namespace WebApplication3.Controllers
         [HttpGet("getAccount/{id}")]
         public async Task<ActionResult<IEnumerable<Account>>> getAccount(int id)
         {
-<<<<<<< HEAD
-            Account account = await _dbContext.Accounts.FindAsync(id);
-            if (account == null)
-            {
-                return NotFound();
-            }
-            return Ok(account);
-=======
+
+          
+
             var Account =await _dbContext.Accounts.Where(a=>a.Id==id).Select(A => new
             {
                 username = A.Username,
@@ -85,7 +80,7 @@ namespace WebApplication3.Controllers
             }).FirstOrDefaultAsync();
             
             return Ok(Account);
->>>>>>> 9a71d1d25c9a495615d48109db1121dca765bf41
+
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAll()
@@ -165,11 +160,9 @@ namespace WebApplication3.Controllers
                     return NotFound("Account not found");
                 }
 
-<<<<<<< HEAD
-                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype, username = existingAccount.Username });
-=======
+
                 return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype,username=existingAccount.Username,Status=existingAccount.Status });
->>>>>>> 9a71d1d25c9a495615d48109db1121dca765bf41
+
             }
             catch (Exception ex)
             {
@@ -285,12 +278,11 @@ namespace WebApplication3.Controllers
                     return BadRequest("Customer information is required");
                 }
 
-<<<<<<< HEAD
+
                 billDetail.Password = HashPasswordMD5(billDetail.Password);
-=======
-                billDetail.Password =HashPasswordMD5(billDetail.Password);
+
                 billDetail.Status = false;
->>>>>>> 9a71d1d25c9a495615d48109db1121dca765bf41
+
                 _dbContext.Accounts.Add(billDetail);
                 await _dbContext.SaveChangesAsync();
                 SendEmail(billDetail.Email, "Account Information", $"Username:{billDetail.Username}\n Password:{billDetail.Username}");
@@ -359,6 +351,7 @@ namespace WebApplication3.Controllers
                 FullName = admin.FullName, 
                 Birthday = admin.Birthday, 
                 Accounttype = admin.Accounttype, 
+                Status=false
             };
 
             _dbContext.Accounts.Add(newAdmin);
