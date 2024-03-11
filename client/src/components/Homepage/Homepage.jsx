@@ -22,6 +22,11 @@ import "slick-carousel/slick/slick-theme.css";
 import { useState,useEffect} from "react";
 import { useRef } from "react";
 import Modal from 'react-modal';
+import Movie from "../Movie/Movie";
+import Cinema from "../Cinema/Cinema";
+import axios from "axios";
+import Blog from "../Blog/Blog";
+import avatarAi from "../images/avatar_AI.webp";
 Modal.setAppElement('#root'); 
 
 function Homepage(){
@@ -29,6 +34,7 @@ function Homepage(){
     const [nav2, setNav2] = useState(null);
     const slider1 = useRef(null);
     const slider2 = useRef(null);
+    const [ViewBlog, setViewBlog] = useState([]);
 
     useEffect(() => {
         setNav1(slider1.current);
@@ -217,7 +223,40 @@ function Homepage(){
   prize: "Awards Nominations",
   quantityPrize: 30
 }
+
   ];
+  
+const [cinema,setCinema] = useState([]);
+useEffect(() => {
+  const fetchdata = async () => {
+      try {
+          const response = await axios.get("http://localhost:5231/api/Cinema/getCinema");
+          setCinema(response.data);
+
+      } catch (error) {
+          console.log(error);
+      }
+  }
+  fetchdata();
+}, [])
+
+
+useEffect(() => {
+    const fetchdata = async () => {
+        try {
+            const categoryBlog = await axios.get("http://localhost:5231/api/Blog/ShowBlog");
+            const sortData = categoryBlog.data.slice(0,3).sort((a,b)=> b.Id - a.Id);
+            setViewBlog(sortData);
+            console.error(sortData);
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    fetchdata();
+}, [])
+
+
     return(
         <div className="">
             <div>
@@ -453,6 +492,64 @@ function Homepage(){
 
                       };
 
+                    </div>
+                    <div className="bg-black w-full  px-[7.5%] ">
+                      
+                      <div className=" w-full h-[360px] flex flex-row gap-[50px]">
+                        <div className=" h-full w-full flex flex-col justify-center ">
+                          <div className="w-full h-[70px]"></div>
+                          <img className="w-[30px] h-[30px] mb-2" src={cinemaLogo} alt="" />
+                          <h1 className="subTitle mb-2">Sub Title</h1>
+                          <h1 className="blog-topicMain">Latest News & Articles from the Posts </h1>
+
+                        </div>
+                        <div className=" h-full w-full flex flex-col justify-center">
+                        <div className="w-full h-[70px]"></div>
+                         <p className="blog-textUpper">Phasellus non cursus ligula, sed mattis urna. Aenean ac tor gravida, volutpat quam eget, consequat elit.</p>
+                        </div>
+
+                      </div>
+                      <div className="bg-green-400 w-full h-[260px] grid grid-cols-3 gap-4">
+                        
+                        {ViewBlog.slice(0,3).map((ViewBlog, index) => (
+                                                <div>
+                                                  <img className="h-[260px] w-full object-cover" src={`http://localhost:5231/${ViewBlog.image}`}
+                                                         style={{ objectFit: 'cover' }} alt="" />
+                                                          
+                                                </div>  
+                                            ))}
+                        
+                      </div>
+
+                    </div>
+                    <div className="bg-white w-full h-[60vh] px-[7.5%]">
+                          <div className="w-full h-[210px] bg-red-500 grid grid-cols-3 gap-4">
+                            {/* {ViewBlog.slice(0,3).map((ViewBlog,index) => {
+                              <div className="Blog-card">
+                                  <div className="w-full h-[60px] bg-green-300 flex flex-row" >
+                                  <img className="h-[260px] w-full object-cover" src={`http://localhost:5231/${ViewBlog.image}`}
+                                                         style={{ objectFit: 'cover' }} alt="" />
+                                    <img className="avatar-Blog" src={avatarAi} alt="" />
+                                    <p className="text-black">haheah</p>
+
+                                  </div>
+                              </div>
+                              
+                            })} */}
+                             {ViewBlog.slice(0,3).map((ViewBlog, index) => (
+                                                
+                                                <div className="blog-card px-[8%]">
+                                                    <div className="w-full h-[40px] flex flex-row mt-7">
+                                                    
+                                                         <img className="avatar-Blog" src={avatarAi} alt="" />
+                                    <p className="text-black">haheah</p>
+                                    <div className="lineBlog"></div>
+                                    <h1 className="blog-category">{ViewBlog.category}</h1>
+                                                    </div>
+
+                                                </div>
+                                            ))}
+                          </div>
                     </div>
             <Modal
         isOpen={modalIsOpen}

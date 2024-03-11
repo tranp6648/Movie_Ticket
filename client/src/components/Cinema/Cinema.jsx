@@ -442,9 +442,7 @@ function Cinema() {
                                                 <td>{Cinema.location}</td>
                                                 <td>{Cinema.phone}</td>
                                                 <td>{Cinema.district}</td>
-                                                <td>{Cinema.detailCityBranch.length > 0
-                            ? Cinema.detailCityBranch[0].idBranchNavigation.city
-                            : 'No Category'}</td>
+                                                <td>{Cinema.city}</td>
                             <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditClick(Cinema.id)}>Edit</button></td>
                             <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>deleteSubmit(Cinema.id)}>Remove</button></td>
                                             </tr>

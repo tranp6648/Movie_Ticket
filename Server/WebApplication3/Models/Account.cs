@@ -13,13 +13,15 @@ public partial class Account
 
     public string Email { get; set; } = null!;
 
-    public string Phone { get; set; } = null!;
+    public string? Phone { get; set; } = null!;
 
-    public DateOnly Birthday { get; set; }
+    public DateOnly? Birthday { get; set; }
 
-    public string FullName { get; set; } = null!;
+    public string? FullName { get; set; } = null!;
 
     public int Accounttype { get; set; }
+
+    public bool Status { get; set; }
 
     public string? ZipCode { get; set; }
 
@@ -28,6 +30,8 @@ public partial class Account
     public int? IdCity { get; set; }
 
     public string? OrderNote { get; set; }
+
+    public virtual ICollection<Blog> Blogs { get; set; } = new List<Blog>();
 
     public virtual City? IdCityNavigation { get; set; }
 

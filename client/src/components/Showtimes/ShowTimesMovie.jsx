@@ -27,13 +27,13 @@ function ShowTimesMovie() {
   const navigate = useNavigate();
   const [nameMovie, setNameMovie] = useState(null);
   const [Movie, setMovie] = useState([]);
-  const [selectedcity,setselectedcity]=useState(null);
-  const[selectedAuth,setselectedAuth]=useState(null);
-  const [Auth,setAuth]=useState([]);
-  const [Bracnher,setBrancher]=useState([]);
-  const [Isselect,setIsselect]=useState([]);
-  const [IsMovie,setIsMovie]=useState(null);
-  const handleMovie=(selectedMovie)=>{
+  const [selectedcity, setselectedcity] = useState(null);
+  const [selectedAuth, setselectedAuth] = useState(null);
+  const [Auth, setAuth] = useState([]);
+  const [Bracnher, setBrancher] = useState([]);
+  const [Isselect, setIsselect] = useState([]);
+  const [IsMovie, setIsMovie] = useState(null);
+  const handleMovie = (selectedMovie) => {
     setIsMovie(selectedMovie);
   }
   const closingAnimation = {
@@ -42,82 +42,83 @@ function ShowTimesMovie() {
   const handleClosepopup = () => {
     setIsClosingPopup(true);
     setTimeout(() => {
-      FormData.id='';
-setUpdatedate(null)
-FormData.duration=''
+      FormData.id = '';
+      setUpdatedate(null)
+      FormData.duration = ''
       setPopupVisibility(false)
       setIsClosingPopup(false)
     }, 500);
   }
   const [isPopupVisible, setPopupVisibility] = useState(false);
-  const [UpdateDate,setUpdatedate]=useState(null);
+  const [UpdateDate, setUpdatedate] = useState(null);
   const handleEditClick = (MovieID) => {
     const selectedMovie = showTime.find(Movie => Movie.id == MovieID)
-if(selectedMovie){
-  FormData.id=selectedMovie.id;
-  FormData.duration=selectedMovie.duration;
+    if (selectedMovie) {
+      FormData.id = selectedMovie.id;
+      FormData.duration = selectedMovie.duration;
 
-  setUpdatedate(new Date(selectedMovie.time))
-}
+      setUpdatedate(new Date(selectedMovie.time))
+    }
     setPopupVisibility(true)
-   
+
   }
-  const handleAuth=(selectedAuth)=>{
+  const handleAuth = (selectedAuth) => {
     setselectedAuth(selectedAuth);
   }
-  const handleCity=(seletedcity)=>{
+  const handleCity = (seletedcity) => {
     setselectedcity(seletedcity)
   }
-  const handleselect=(seletedistrict)=>{
+  const handleselect = (seletedistrict) => {
     setIsselect(seletedistrict)
   }
-  const [showTime,setShowTime]=useState([]);
- useEffect(()=>{
-  const fetchdata=async()=>{
-    try{
-        const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
-     setShowTime(response.data)
-      
-    }catch(error){
+  const [showTime, setShowTime] = useState([]);
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/ShowShowtime/${ID}`);
+        setShowTime(response.data)
+
+      } catch (error) {
         console.log(error);
+      }
     }
-}
-fetchdata()
- },[])
-    useEffect(()=>{
-        const fetchdata=async()=>{
-            try{
-                const response=await axios.get("http://localhost:5231/api/ShowTime/getBrance");
-             
-                const filter=response.data.filter(district => district.iDcity[0] === selectedcity.value);
-                setBrancher(filter);
+    fetchdata()
+  }, [])
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await axios.get("http://localhost:5231/api/ShowTime/getBrance");
+
+        const filter = response.data.filter(district => district.iDcity === selectedcity.value);
+        setBrancher(filter);
+    
         setIsselect(null);
         setselectedAuth(null)
-            }catch(error){
-                console.log(error);
-            }
-        }
-        if (selectedcity) {
-          fetchdata();
+      } catch (error) {
+        console.log(error);
       }
-    
-    },[selectedcity])
-    useEffect(()=>{
-      const fetchdata=async()=>{
-        try{
-            const response=await axios.get("http://localhost:5231/api/ShowTime/getAudi");
-         
-            const filter=response.data.filter(district => district.iD_Cinema=== Isselect.value);
-           setAuth(filter);
-           setselectedAuth(null)
-        }catch(error){
-            console.log(error);
-        }
+    }
+    if (selectedcity) {
+      fetchdata();
+    }
+
+  }, [selectedcity])
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await axios.get("http://localhost:5231/api/ShowTime/getAudi");
+
+        const filter = response.data.filter(district => district.iD_Cinema === Isselect.value);
+        setAuth(filter);
+        setselectedAuth(null)
+      } catch (error) {
+        console.log(error);
+      }
     }
     if (Isselect) {
       fetchdata();
-  }
-    },[Isselect])
+    }
+  }, [Isselect])
   useEffect(() => {
     const fetchdata = async () => {
       try {
@@ -139,21 +140,21 @@ fetchdata()
     animation: 'flipleft 0.5s', // Default animation
   };
 
-  const [city,setcity]=useState([]);
-  useEffect(()=>{
-    const fetchdata=async ()=>{
-      try{
-        const response=await axios.get("http://localhost:5231/api/ShowTime/getcity");
+  const [city, setcity] = useState([]);
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/getcity/${ID}`);
         setcity(response.data)
-      }catch(error){
+      } catch (error) {
         console.log(error)
       }
     }
     fetchdata();
-  },[])
+  }, [])
   const [FormData, setFormData] = useState({
-    id:'',
-    duration:''
+    id: '',
+    duration: ''
   })
   const [perPage, setperPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
@@ -167,133 +168,98 @@ fetchdata()
   const handlePageclick = (data) => {
     setCurrentPage(data.selected);
   };
-  const deleteSubmit = async (CategoryID) => {
-    try {
-      const confirmation = await Swal.fire({
-        title: 'Are you sure?',
-        text: 'You won\'t be able to revert this!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-      });
-      if (confirmation.isConfirmed) {
-        const response = await axios.post(`http://localhost:5231/api/ShowTime/delete/${CategoryID}`);
-        if (response.status === 200) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Deletion successful',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
-     setShowTime(response.data)
 
-        } else {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const newDate = addMinutesOriginal(selectedDate, IsMovie.duration);
+    const formattedDate = format(selectedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+    const formattedDate1 = format(newDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+    try {
+      const response = await fetch('http://localhost:5231/api/ShowTime/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ time: new Date(formattedDate), idAuditoriums: selectedAuth.value, idCinema: Isselect.value, idMovie: IsMovie.value, endtime: new Date(formattedDate1) }),
+      })
+      if (!response.ok) {
+        const responseBody = await response.json();
+        if (responseBody.message) {
           Swal.fire({
             icon: 'error',
-            title: 'Deletion failed',
+            title: responseBody.message || 'Failed to add Showtime',
             showConfirmButton: false,
             timer: 1500,
           });
         }
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-  const handleSubmit=async (event) => {
-    event.preventDefault();
-   
-    const newDate = addMinutesOriginal(selectedDate, IsMovie.duration);
-    const formattedDate = format(selectedDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
-
-const formattedDate1=format(newDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
-
-   try{
-    const response = await fetch('http://localhost:5231/api/ShowTime/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ time:new Date(formattedDate),idAuditoriums:selectedAuth.value,idCinema:Isselect.value,idMovie:IsMovie.value,endtime:new Date(formattedDate1) }),
-    })
-    if(!response.ok){
-      const responseBody = await response.json();
-      if (responseBody.message) {
+      } else {
         Swal.fire({
-          icon: 'error',
-          title: responseBody.message || 'Failed to add Showtime',
+          icon: 'success',
+          title: 'Add Showtime success',
           showConfirmButton: false,
           timer: 1500,
-        });
+        })
+        setIsMovie(null)
+        setSelectedDate(null);
+        setselectedcity(null);
+        setIsselect(null);
+        setselectedAuth(null);
+        FormData.duration = '';
+        FormData.id = ''
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/ShowShowtime/${ID}`);
+        setShowTime(response.data)
       }
-    }else{
-      Swal.fire({
-        icon: 'success',
-        title: 'Add Showtime success',
-        showConfirmButton: false,
-        timer: 1500,
-      })
-      setIsMovie(null)
-      setSelectedDate(null);
-      setselectedcity(null);
-      setIsselect(null);
-      setselectedAuth(null);
-      FormData.duration='';
-      FormData.id=''
-      const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
-      setShowTime(response.data)
-    }
-    
-   }catch(error){
-    console.log(error)
-   }
-  }
- const handleUpdate=async(event)=>{
-  event.preventDefault();
-    
-  const formattedDate = format(UpdateDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
-  const newDate = addMinutesOriginal(UpdateDate, FormData.duration);
-  const formattedDate1 = format(newDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
-  
-  try{
-const response=await fetch(`http://localhost:5231/api/ShowTime/Update/${FormData.id}`,{
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body:JSON.stringify({time:new Date(formattedDate),endtime:new Date(formattedDate1)})
-})
-if(!response.ok){
-  const responseBody = await response.json();
-  if (responseBody.message) {
-    Swal.fire({
-      icon: 'error',
-      title: responseBody.message || 'Failed to add Showtime',
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
-}else{
-  Swal.fire({
-    icon: 'success',
-    title: 'Add Showtime success',
-    showConfirmButton: false,
-    timer: 1500,
-  })
-  setPopupVisibility(false)
-FormData.id='';
-setUpdatedate(null)
-const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime");
-      setShowTime(response.data)
-}
 
-  }catch(error){
-    console.log(error)
+    } catch (error) {
+      console.log(error)
+    }
   }
- }
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+
+    const formattedDate = format(UpdateDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
+    const newDate = addMinutesOriginal(UpdateDate, FormData.duration);
+    const formattedDate1 = format(newDate, 'yyyy-MM-dd HH:mm:ss', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+    try {
+      const response = await fetch(`http://localhost:5231/api/ShowTime/Update/${FormData.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ time: new Date(formattedDate), endtime: new Date(formattedDate1) })
+      })
+      if (!response.ok) {
+        const responseBody = await response.json();
+        if (responseBody.message) {
+          Swal.fire({
+            icon: 'error',
+            title: responseBody.message || 'Failed to add Showtime',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Add Showtime success',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        setPopupVisibility(false)
+        FormData.id = '';
+        setUpdatedate(null)
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/ShowShowtime/${ID}`);
+        setShowTime(response.data)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const [selectedDate, setSelectedDate] = useState(null);
 
   return (
@@ -332,7 +298,7 @@ const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime"
                 <img src={image} className="img-circle" alt="User Image" />
               </div>
               <div className="pull-left info">
-                <p className='text-white'>Alexander Pierce</p>
+                <p className='text-white'>{username}</p>
 
                 <a href="#" className='text-white'><i className="fa fa-circle text-green-500"></i> Online</a>
               </div>
@@ -342,12 +308,74 @@ const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime"
 
             <ul className="sidebar-menu">
               <li className="header">MAIN NAVIGATION</li>
-              <li className="treeview text-white">
-                <a className='cursor-pointer' onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
+              <li className="active treeview">
+                <a href="" onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
                   <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
                 </a>
 
               </li>
+              <li className="active treeview">
+                <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
+                  <i class="fas fa-film"></i> <span>Genre</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/Category_Blog', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Blog</span>
+                </a>
+
+              </li>
+              <li className="active treeview">
+                <a className='cursor-pointer' onClick={() => navigate('/Blog', { state: { username: username, ID: ID } })}>
+                  <i class="fa fa-list-alt" aria-hidden="true"></i> <span> Blog</span>
+                </a>
+
+              </li>
+
+
 
             </ul>
           </section>
@@ -377,47 +405,47 @@ const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime"
                     {/* Form fields go here */}
                     <div className="form-group">
                       <label >Movie</label>
-                      <Select options={Movie.map(movie => ({ value: movie.id, label: movie.name,duration:movie.duration }))}  onChange={(selectedOption) => handleMovie(selectedOption)}
-                      value={IsMovie}/>
+                      <Select options={Movie.map(movie => ({ value: movie.id, label: movie.name, duration: movie.duration }))} onChange={(selectedOption) => handleMovie(selectedOption)}
+                        value={IsMovie} />
 
                     </div>
                     <div className="form-group">
                       <label >Time</label>
                       <br />
-                      <DatePicker 
-        selected={selectedDate} 
-        minDate={new Date()}
-        onChange={(date) => setSelectedDate(date)} 
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        dateFormat="yyyy-MM-dd HH:mm"
-        className="form-control"
-        placeholderText="Select Release Date and Time"
-      />
+                      <DatePicker
+                        selected={selectedDate}
+                        minDate={new Date()}
+                        onChange={(date) => setSelectedDate(date)}
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        timeIntervals={15}
+                        dateFormat="yyyy-MM-dd HH:mm"
+                        className="form-control"
+                        placeholderText="Select Release Date and Time"
+                      />
 
                     </div>
                     <div className="form-group">
                       <label >City</label>
-                      <Select options={city.map(movie => ({ value: movie.id, label: movie.city }))} 
-                      onChange={(selectedOption) => handleCity(selectedOption)}
-                      value={selectedcity}
+                      <Select options={city.map(movie => ({ value: movie.id, label: movie.city }))}
+                        onChange={(selectedOption) => handleCity(selectedOption)}
+                        value={selectedcity}
                       />
 
                     </div>
                     <div className="form-group">
                       <label >Cinema</label>
-                      <Select options={Bracnher.map(movie => ({ value: movie.id, label: movie.name +" "+movie.district }))} 
-                      onChange={(selectedOption) => handleselect(selectedOption)}
-                      value={Isselect}
+                      <Select options={Bracnher.map(movie => ({ value: movie.id, label: movie.name + " " + movie.district }))}
+                        onChange={(selectedOption) => handleselect(selectedOption)}
+                        value={Isselect}
                       />
 
                     </div>
                     <div className="form-group">
                       <label >Auditoriums</label>
-                      <Select options={Auth.map(movie => ({ value: movie.id, label: movie.name }))} 
-                      onChange={(selectedOption) => handleAuth(selectedOption)}
-                      value={selectedAuth}
+                      <Select options={Auth.map(movie => ({ value: movie.id, label: movie.name }))}
+                        onChange={(selectedOption) => handleAuth(selectedOption)}
+                        value={selectedAuth}
                       />
 
                     </div>
@@ -452,21 +480,21 @@ const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime"
                         <th>Auditoriums</th>
                         <th>Movie</th>
                         <th>Cinema</th>
-                      
+
                         <th>Update</th>
-                        <th>Delete</th>
+
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGender.map((show,index)=>(
+                      {currentGender.map((show, index) => (
                         <tr>
-                          <td>{index+1}</td>
+                          <td>{index + 1}</td>
                           <td>{new Date(show.time).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric' })}</td>
                           <td>{show.nameAuthor}</td>
                           <td>{show.nameMovie}</td>
-                          <td>{show.cinema+" "+show.district}</td>
+                          <td>{show.cinema + " " + show.district}</td>
                           <td><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEditClick(show.id)}>Edit</button></td>
-                          <td><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={()=>deleteSubmit(show.id)}>Remove</button></td>
+
                         </tr>
                       ))}
                       <tr>
@@ -520,25 +548,25 @@ const response=await axios.get("http://localhost:5231/api/ShowTime/ShowShowtime"
 
                 <h3 className="box-title text-black">Edit Movie</h3>
               </div>
-              <form role="form"  onSubmit={handleUpdate}>
+              <form role="form" onSubmit={handleUpdate}>
                 <div className="box-body">
                   {/* Form fields go here */}
-                
-                  <div className="form-group">
-                      <label >Time</label>
-                  
-                      <DatePicker 
-        selected={new Date(UpdateDate)} 
-        onChange={(date) => setUpdatedate(date)} 
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        dateFormat="yyyy-MM-dd HH:mm"
-        className="form-control"
-        placeholderText="Select Release Date and Time"
-      />
 
-                    </div>
+                  <div className="form-group">
+                    <label >Time</label>
+
+                    <DatePicker
+                      selected={new Date(UpdateDate)}
+                      onChange={(date) => setUpdatedate(date)}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={15}
+                      dateFormat="yyyy-MM-dd HH:mm"
+                      className="form-control"
+                      placeholderText="Select Release Date and Time"
+                    />
+
+                  </div>
                 </div>
 
                 <div className="box-footer">

@@ -41,9 +41,7 @@ function Menu(){
                         <div className='elementor-element elementor-element-0bbfee0 elementor-view-primary-menu elementor-widget__width-auto elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-aovis_elementor_menu_nav'>
                             <div className='elementor-widget-container'>
                                 <nav className='main-navigation'>
-                                    <button className='menu-toggle'>
-                                        <span>Menu</span>
-                                    </button>
+                                   
                                     <div className='primary-navigation'>
                                         <ul id='menu-primary-menu' className='menu'>
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
@@ -68,6 +66,14 @@ function Menu(){
                                         <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
                                             <a href="" onClick={()=>  navigate('/MovieActor',{ state: { IDAccount:IDAccount } })}>
                                                 Actor
+                                                
+                                            
+                                            </a>
+                                           
+                                        </li>
+                                        <li id='menu-item-56' className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
+                                            <a href="" onClick={()=>  navigate('/UserVoucher',{ state: { IDAccount:IDAccount } })}>
+                                               Voucher
                                                 
                                             
                                             </a>
@@ -100,6 +106,7 @@ function Menu(){
                                 </nav>
                             </div>
                         </div>
+                    
                     </div>
                 </div>
                 <div className='elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-e24734f elementor-hidden-tablet elementor-hidden-mobile'>
@@ -121,8 +128,30 @@ function Menu(){
                                 </div>
                             </div>
                         </div>
+                        <div className='elementor-element elementor-element-9108b98 elementor-widget__width-auto elementor-hidden-desktop elementor-view-primary-menu elementor-widget elementor-widget-aovis_elementor_menu_canvas'>
+<div className="elementor-widget-container">
+    <nav className="menu-canvas">
+        <button className="menu-toggle">
+            <span></span>
+        </button>
+        <nav className='container-menu dir_left'>
+            <div className="close-menu"></div>
+            <div className="primary-navigation">
+                <ul className="menu" id='menu-primary-menu-1'>
+                    <li className='menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-56'>
+                        <a href="">Home</a>
+                        <button className='dropdown-toggle'></button>
+                        ul.
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </nav>
+</div>
+</div>
                         {IDAccount!='' && (
-    <div className='elementor-element elementor-element-2f55708 elementor-widget__width-auto elementor-view-default elementor-widget elementor-widget-icon'>
+                            <div>
+ <div className='elementor-element elementor-element-2f55708 elementor-widget__width-auto elementor-view-default elementor-widget elementor-widget-icon'>
     <div className='elementor-widget-container'>
         <div className='elementor-icon-wrapper' style={{marginLeft:'32px'}}>
             
@@ -132,6 +161,11 @@ function Menu(){
         </div>
     </div>
 </div>
+<div className='elementor-element elementor-element-9108b98 elementor-widget__width-auto elementor-hidden-desktop elementor-view-primary-menu elementor-widget elementor-widget-aovis_elementor_menu_canvas'>
+
+</div>
+                            </div>
+   
                         )}
                 
                 </div>

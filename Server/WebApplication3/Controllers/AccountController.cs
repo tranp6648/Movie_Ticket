@@ -36,7 +36,7 @@ namespace WebApplication3.Controllers
                 }
 
                 // Check if the updated username already exists in other accounts
-                if (_dbContext.Accounts.Any(g => g.Username == account.Username ))
+                if (_dbContext.Accounts.Any(g => g.Username == account.Username))
                 {
                     return BadRequest(new { message = "Username already exists" });
                 }
@@ -68,9 +68,9 @@ namespace WebApplication3.Controllers
         public async Task<ActionResult<IEnumerable<Account>>> getAccount(int id)
         {
             Account account = await _dbContext.Accounts.FindAsync(id);
-            if(account == null)
+            if (account == null)
             {
-                return NotFound();  
+                return NotFound();
             }
             return Ok(account);
         }
@@ -81,7 +81,7 @@ namespace WebApplication3.Controllers
             {
                 var billDetails = await _dbContext.Accounts.ToListAsync();
 
-               
+
 
                 return new JsonResult(billDetails);
             }
@@ -93,10 +93,10 @@ namespace WebApplication3.Controllers
         }
         public static string HashPasswordMD5(string password)
         {
-            using(var md5 = MD5.Create())
+            using (var md5 = MD5.Create())
             {
-                byte[]hashedBytes=md5.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return BitConverter.ToString(hashedBytes).Replace("-","").ToLower();
+                byte[] hashedBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
             }
         }
         [HttpPost("Forgot/{forgot}")]
@@ -107,7 +107,12 @@ namespace WebApplication3.Controllers
                 var existingAccount = await _dbContext.Accounts
   .Where(a => a.Email == forgot || a.Username == forgot)
   .FirstOrDefaultAsync();
-       
+
+
+
+
+                // Check if it's an email or username
+
                 if (existingAccount != null)
                 {
                     existingAccount.Password = HashPasswordMD5(existingAccount.Username);
@@ -120,40 +125,70 @@ namespace WebApplication3.Controllers
                 }
                 return Ok(new { message = "Password reset instructions sent successfully" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
         }
         [HttpPost("Login")]
-       public async Task<ActionResult<int>> Login([FromBody] LoginAccount account)
-{
-    try
-    {
-        if (account == null || string.IsNullOrEmpty(account.PasswordLogin))
+        public async Task<ActionResult<int>> Login([FromBody] LoginAccount account)
         {
-            return BadRequest("Invalid login data");
-        }
+            try
+            {
+                if (account == null || string.IsNullOrEmpty(account.PasswordLogin))
+                {
+                    return BadRequest("Invalid login data");
+                }
 
-        string enteredPasswordHash = HashPasswordMD5(account.PasswordLogin);
+                string enteredPasswordHash = HashPasswordMD5(account.PasswordLogin);
 
-        // Check if it's an email or username
-        var existingAccount = await _dbContext.Accounts
-            .Where(a => (a.Email == account.AccountLogin|| a.Username == account.AccountLogin) && a.Password == enteredPasswordHash)
-            .FirstOrDefaultAsync();
+                // Check if it's an email or username
+                var existingAccount = await _dbContext.Accounts
+                    .Where(a => (a.Email == account.AccountLogin || a.Username == account.AccountLogin) && a.Password == enteredPasswordHash)
+                    .FirstOrDefaultAsync();
 
-        if (existingAccount == null)
-        {
-            return NotFound("Account not found");
-        }
+                if (existingAccount == null)
+                {
+                    return NotFound("Account not found");
+                }
 
-                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype,username=existingAccount.Username });
+                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype, username = existingAccount.Username });
             }
-    catch (Exception ex)
-    {
-        return StatusCode(500, "Internal server error");
-    }
-}
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("Information/{id}")]
+        public async Task<ActionResult<IEnumerable<Account>>> ShowAccount(int id)
+        {
+            try
+            {
+                var accounts = await _dbContext.Accounts
+                    .Where(d => d.Id == id)
+                    .Select(m => new Account
+                    {
+                        Username = m.Username,
+                        Email = m.Email,
+                        Birthday = m.Birthday,
+                        FullName = m.FullName,
+                        Address = m.Address,
+                        Phone = m.Phone
+                    })
+                    .ToListAsync();
+
+                if (accounts == null || accounts.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(accounts);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
 
         [HttpPost("Add")]
@@ -174,24 +209,17 @@ namespace WebApplication3.Controllers
                 {
                     return BadRequest(new { message = "Email already exists" });
                 }
-                if (_dbContext.Accounts.Any(a => a.FullName == billDetail.FullName))
-                {
-                    return BadRequest(new { message = "Fullname already exists" });
-                }
-                if (_dbContext.Accounts.Any(a => a.Phone == billDetail.Phone))
-                {
-                    return BadRequest(new { message = "Phone already exists" });
-                }
 
-                // Additional properties
+
+
                 if (string.IsNullOrEmpty(billDetail.Email) ||
                     string.IsNullOrEmpty(billDetail.Username) ||
-                    string.IsNullOrEmpty(billDetail.Password) )
+                    string.IsNullOrEmpty(billDetail.Password))
                 {
                     return BadRequest("Customer information is required");
                 }
 
-                billDetail.Password =HashPasswordMD5(billDetail.Password);
+                billDetail.Password = HashPasswordMD5(billDetail.Password);
                 _dbContext.Accounts.Add(billDetail);
                 await _dbContext.SaveChangesAsync();
                 SendEmail(billDetail.Email, "Account Information", $"Username:{billDetail.Username}\n Password:{billDetail.Username}");
@@ -202,9 +230,9 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        private void SendEmail(string to,string subject,string body)
+        private void SendEmail(string to, string subject, string body)
         {
-            using(var client=new SmtpClient("smtp.gmail.com"))
+            using (var client = new SmtpClient("smtp.gmail.com"))
             {
                 client.Port = 587;
                 client.Credentials = new NetworkCredential("tranp6648@gmail.com", "czvy qzyc vpes whkj");
@@ -224,8 +252,8 @@ namespace WebApplication3.Controllers
         [HttpPost("{id}")]
         public async Task<ActionResult<Account>> DeleteBillDetail(int id)
         {
-            var billDetail=await _dbContext.Accounts.FindAsync(id);
-            if(billDetail== null)
+            var billDetail = await _dbContext.Accounts.FindAsync(id);
+            if (billDetail == null)
             {
                 return NotFound();
             }
@@ -234,9 +262,46 @@ namespace WebApplication3.Controllers
                 _dbContext.Accounts.Remove(billDetail);
                 await _dbContext.SaveChangesAsync();
                 return billDetail;
-            }catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPost("AddAdmin")]
+        public async Task<ActionResult<Account>> AddAdmin([FromBody] Account admin, [FromQuery] int IdCinema)
+        {
+            // Validation checks
+            if (admin == null)
+            {
+                return BadRequest("Invalid data");
+            }
+
+           
+            Account newAdmin = new Account
+            {
+                Username = admin.Username,
+                Email = admin.Email,
+                Password = HashPasswordMD5(admin.Password), 
+                Phone = admin.Phone,
+                FullName = admin.FullName, 
+                Birthday = admin.Birthday, 
+                Accounttype = admin.Accounttype, 
+            };
+
+            _dbContext.Accounts.Add(newAdmin);
+            await _dbContext.SaveChangesAsync();
+
+            var cinema = _dbContext.Cinemas.FirstOrDefault(c => c.Id == IdCinema);
+            if (cinema == null) {
+                return BadRequest("null data");
+            }
+            cinema.Idaccount = newAdmin.Id;
+            await _dbContext.SaveChangesAsync();
+            SendEmail(admin.Email, "Account Information", $"Username:{admin.Username}\n Password:{admin.Password}");
+
+            return CreatedAtAction(nameof(GetAll), new { id = newAdmin.Id }, newAdmin);
+        }
     }
-}
+    }

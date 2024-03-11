@@ -35,10 +35,13 @@ function DetailCinema() {
   const [searchTerm, setSearchtem] = useState("");
   const [Branches, setBrancher] = useState([]);
   const [Cinema, setCinema] = useState([]);
+  const [Auditorium,setAuditorium] = useState([]);
   const [selectedBrancher, setselectedBrancher] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [IsClosingPopup, setIsClosingPopup] = useState(false);
   const [isPopupVisible, setPopupVisibility] = useState(false);
+  const [isPopupDetailSeat, setPopupDetailSeat] = useState(false);
+
 
   const [quantityRoom, setQuantityRoom] = useState(0);
   const [seatCounts, setSeatCounts] = useState({});
@@ -60,9 +63,7 @@ function DetailCinema() {
   const [selectedQuan, setSelectedQuan] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleDropdownToggle = () => {
-    setShowDropdown(!showDropdown);
-  };
+  
   const handleQuan = (selectedOption) => {
     setSelectedQuan(selectedOption);
   };
@@ -121,7 +122,30 @@ function DetailCinema() {
     };
     fetchdata();
   }, []);
-
+  useEffect(()=>{
+    let isMounted = true;
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5231/api/Seat/getAuditorium"
+        );
+       if(isMounted){
+        setAuditorium(response.data);
+        console.log("auditorium full: " , response.data);
+       }
+      } catch (error) {
+        console.log("failed" + error);
+        
+      }
+    };
+fetchData();
+return () => {
+  isMounted = false;
+};
+  },[]);
+const existAuditorium = (cinemaId) => {
+  return Auditorium.some(auditorium => auditorium.idCinema === cinemaId);
+}
   
 
   const filteredGender = Cinema.filter((Cinema) =>
@@ -130,48 +154,17 @@ function DetailCinema() {
   const indexOflastgen = (currentPage + 1) * perPage;
   const indexOfFirtgen = indexOflastgen - perPage;
   const currentGender = filteredGender.slice(indexOfFirtgen, indexOflastgen);
-  // const deleteSubmit = async (CinemaID) => {
-  //   try {
-  //     const confirmation = await Swal.fire({
-  //       title: "Are you sure?",
-  //       text: "You won't be able to revert this!",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, delete it!",
-  //     });
-  //     if (confirmation.isConfirmed) {
-  //       const response = await axios.post(
-  //         `http://localhost:5231/api/Cinema/Delete/${CinemaID}`
-  //       );
-  //       if (response.status === 200) {
-  //         Swal.fire({
-  //           icon: "success",
-  //           title: "Deletion successful",
-  //           showConfirmButton: false,
-  //           timer: 1500,
-  //         });
-  //         const response = await axios.get(
-  //           "http://localhost:5231/api/Cinema/getCinema"
-  //         );
-  //         setCinema(response.data);
-  //       } else {
-  //         Swal.fire({
-  //           icon: "error",
-  //           title: "Deletion failed",
-  //           showConfirmButton: false,
-  //           timer: 1500,
-  //         });
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
+ 
 
   const handleSetupClick = (cinemaIdFromButton) => {
-    console.log(cinemaIdFromButton); // For debugging
+    if(existAuditorium(cinemaIdFromButton)){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Auditorium already exist',
+        text: 'This cinema already has an auditorium setup'
+      })
+    }else{
+      console.log(cinemaIdFromButton); // For debugging
     setSelectedCinemaId(cinemaIdFromButton); // Store the selected cinema ID
     const selectedCinema = Cinema.find(Movie => Movie.id === cinemaIdFromButton);
     if (selectedCinema) {
@@ -179,10 +172,19 @@ function DetailCinema() {
     }
     setActiveTab(0);
     setPopupVisibility(true);
+    }
   };
-  
-
-  
+  const handleDetailAuditorium = (cinemaIdFromButton) => {
+      if(existAuditorium(cinemaIdFromButton)){
+          setPopupVisibility(true);
+      }else{
+        Swal.fire({
+          icon: 'info',
+          title:"Cinema hasn't been created",
+          text:"please created auditorium before click"
+        })
+      }
+  }
 
   const handleQuantityRoomChange = (e) => {
     const value = parseInt(e.target.value, 10);
@@ -199,6 +201,7 @@ function DetailCinema() {
   };
 
   const [setupRoomPopupVisible, setSetupRoomPopupVisible] = useState(false);
+const[setupRoomPopupVisibleDetail,setSetupRoomPopupVisibleDetail] = useState(false);
 
   const handleOpenSetupRoom = () => {
     if (quantityRoom < 1 || quantityRoom > 10) {
@@ -211,12 +214,7 @@ function DetailCinema() {
       setSetupRoomPopupVisible(true);
     }
   };
-  const handleSubmitRooms = (e) => {
-    e.preventDefault();
-    // Xử lý logic để lưu thông tin của các phòng vào đây...
-    // Ví dụ: Gửi dữ liệu đến server hoặc cập nhật state
-    console.log("Room information submitted");
-  };
+ 
   const [activeTab, setActiveTab] = useState(0);
 
   const handleTabClick = (index) => {
@@ -233,7 +231,7 @@ function DetailCinema() {
   
  
   const generateSeats = (index, seatCount) => {
-    // Ensure seatCount is a number
+  
     if (!Number.isNaN(seatCount) && seatCount <= 80) {
       const newSeats = Array.from({ length: seatCount }, (_, i) => ` ${i + 1}`);
       setRoomSeats((prevSeats) => {
@@ -266,14 +264,7 @@ function DetailCinema() {
     generateSeats(index, seatCount);
   };
   
-  // const toggleSeatVip = (seatNumber, roomIndex) => {
-  //   setVipSeats((prevSeats) => {
-  //     const newVipSeats = { ...prevSeats, [seatNumber]: !prevSeats[seatNumber] };
-      
-  //     console.log("new vip seat" + newVipSeats);
-  //     return newVipSeats;
-  //   });
-  // };
+  
   const toggleSeatVip = (seatNumber) => {
     setVipSeats(prevSeats => {
       const seatKey = `Room${activeTab}Seat${seatNumber}`;
@@ -282,7 +273,7 @@ function DetailCinema() {
         [seatKey]: !prevSeats[seatKey],
       };
   
-      // Cập nhật số lượng ghế VIP cho phòng hiện tại
+      
       const currentVipCount = vipSeatsCountByRoom[`Room${activeTab}`] || 0;
       setVipSeatsCountByRoom({
         ...vipSeatsCountByRoom,
@@ -323,11 +314,11 @@ function DetailCinema() {
   const vipCount = vipSeatsCountByRoom[`Room${activeTab}`] || 0;
 const standardCount = seatCounts[activeTab] - vipCount;
  
-const isLastRoom = activeTab === quantityRoom - 1;
+
   
   
 const handleRoomNameChange = (index, name) => {
-    // Update the room name for the specific room
+   
     const newRoomDetails = [...roomDetails];
     newRoomDetails[index].roomName = name;
     setRoomDetails(newRoomDetails);
@@ -379,28 +370,10 @@ const handleRoomNameChange = (index, name) => {
     );
   };
   
-  const handleOpenSetupRoom1 = () => {
-    if (quantityRoom < 1 || quantityRoom > 10) {
-      Swal.fire({
-        icon: "error",
-        title: "Invalid Quantity",
-        text: "Please enter a number greater than 0 and less than 10",
-      });
-    } else {
-      // Check if it's not the last room setup
-      if (activeTab < quantityRoom - 1) {
-        setActiveTab(activeTab + 1); // Move to next tab
-      } else {
-        // If it's the last room setup, trigger the save function
-        handleSave();
-      }
-    }
-  };
+  
  
-
-
 const handleSave = async () => {
-    // Bước 1: Thu thập dữ liệu từ state
+   
     const roomData = roomDetails.map((room, index) => {
         const seats = roomSeats[index].map((_, seatIndex) => {
             const seatKey = `Room${index}Seat${seatIndex}`;
@@ -427,12 +400,10 @@ const handleSave = async () => {
   }));
 
     console.log("roomData:", roomData);
-    // Bước 2: Tạo cấu trúc dữ liệu cho backend
-    
-
+  
     payload.forEach(room => {
       room.seats.forEach(seat => {
-          console.log(seat.name); // Access the name property of each seat
+          console.log(seat.name); 
       });
   });
 
@@ -442,10 +413,7 @@ const handleSave = async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-          //   body: JSON.stringify({name:payload.forEach(a=>a.name),seats:payload.flatMap(room => room.seats.map(seat => ({
-          //     seatName: seat.name,
-          //     type: seat.type
-          // })))}), 
+         
           body: JSON.stringify(bodyData),
         });
 
@@ -461,6 +429,28 @@ const handleSave = async () => {
     }
 };
   
+const [cinemaDetails, setCinemaDetails] = useState({ auditoriums: [],seats: {} });
+
+
+const handleDetailAuditoriums = async (cinemaIdFromButton) => {
+
+  try {
+    const auditoriumResponse = await axios.get(`http://localhost:5231/api/Seat/getAuditorium/${cinemaIdFromButton}`);
+    const seatsResponse = await axios.get(`http://localhost:5231/api/Seat/getSeatsByAuditoriumId/${cinemaIdFromButton}`);
+
+console.log("auditorium: " + auditoriumResponse.data);
+
+
+    setCinemaDetails(auditoriumResponse.data);
+    
+    setPopupDetailSeat(true);
+  } catch (error) {
+    console.error('Failed to fetch auditorium details: ', error);
+    Swal.fire('Error', 'Could not load auditorium details.', 'error');
+  }
+};
+
+
   
   return (
     <div>
@@ -580,10 +570,7 @@ const handleSave = async () => {
                           <td>{CinemaItem.phone}</td>
                           <td>{CinemaItem.district}</td>
                           <td>
-                            {CinemaItem.detailCityBranch.length > 0
-                              ? CinemaItem.detailCityBranch[0].idBranchNavigation
-                                  .city
-                              : "No Category"}
+                            {CinemaItem.city}
                           </td>
                           <td>
                             <button
@@ -595,10 +582,10 @@ const handleSave = async () => {
                           </td>
                           <td>
                             <button
-                              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                              
+                              className="bg-yellow-300 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded"
+                              onClick={()=> handleDetailAuditoriums(CinemaItem.id)}
                             >
-                              Remove
+                             Details
                             </button>
                           </td>
                         </tr>
@@ -630,6 +617,73 @@ const handleSave = async () => {
             </div>
           </section>
         </div>
+
+        {/* {isPopupDetailSeat && (
+  <div className="popup-container" 
+  style={
+    IsClosingPopup
+      ? { ...popupContentStyle, ...closingAnimation }
+      : popupContentStyle
+  }> 
+    
+    <div className="tabs">
+      {cinemaDetails.map((auditorium, index) => (
+        <button key={auditorium.id} onClick={() => setActiveTab(index)}>
+          {auditorium.name}
+        </button>
+      ))}
+    </div> */}
+    {/* {cinemaDetails.auditoriums.length > 0 && (
+      <div className="seats-container">
+        {cinemaDetails.seats[cinemaDetails.auditoriums[activeTab].id].map((seat) => (
+          <div key={seat.id} className={`seat ${seat.isVip ? 'vip-seat' : ''}`}>
+            {seat.number}
+          </div>
+        ))}
+      </div>
+    )} */}
+  {/* </div>
+)} */}
+
+{isPopupDetailSeat && (
+  <div className="popup-container">
+    <div
+      className="popup-content1"
+      style={
+        IsClosingPopup
+          ? { ...popupContentStyle1, ...closingAnimation }
+          : popupContentStyle1
+      }
+    >
+      <div className="flex justify-end">
+        <button
+          onClick={() => setPopupDetailSeat(false)}
+          className="close-btn"
+        >
+          X
+        </button>
+      </div>
+    
+      <div className="tabs">
+      {cinemaDetails.map((auditorium, index) => (
+        <button key={auditorium.id} onClick={() => setActiveTab(index)}>
+          {auditorium.name}
+        </button>
+      ))}
+    </div>
+      
+      <div className="w-full border-[black] border-[1px]"></div>
+      <div className="tab-content">
+        
+        
+        
+      </div>
+     
+      
+    </div>
+  </div>
+)}
+
 
         {isPopupVisible && (
           <div className="popup-container ">
@@ -689,7 +743,7 @@ const handleSave = async () => {
           X
         </button>
       </div>
-      {/* Tabs for rooms */}
+    
       <div className="tabs">
         {Array.from({ length: quantityRoom }).map((_, i) => (
           <button
@@ -711,7 +765,7 @@ const handleSave = async () => {
           {roomSeats[activeTab] && renderSeats(roomSeats[activeTab])}
         </div>
       </div>
-      {/* Dynamically display Next or Save button */}
+     
       {activeTab < quantityRoom - 1 ? (
         <button
           onClick={() => setActiveTab(activeTab + 1)}
@@ -730,6 +784,8 @@ const handleSave = async () => {
     </div>
   </div>
 )}
+
+
 
       </div>
     </div>

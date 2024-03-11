@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PayPal.Api;
 using System.Linq;
+using System.Net.Mail;
 using WebApplication3.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Net;
 
 namespace WebApplication3.Controllers
 {
@@ -21,7 +25,7 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var account = _dbContext.Accounts.Where(d=>d.Id==id).Select(m => new
+                var account = _dbContext.Accounts.Where(d => d.Id == id).Select(m => new
                 {
                     FullName = m.FullName,
                     Zipcode = m.ZipCode,
@@ -31,24 +35,25 @@ namespace WebApplication3.Controllers
                     streetAddress = m.Address
                 }).FirstOrDefault();
                 return Ok(account);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
             }
         }
         [HttpGet("ShowSeat/{id}/{IDAccount}/{idshowtime}")]
-        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>>ShowSeat(int id, int IDAccount, int idshowtime)
+        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowSeat(int id, int IDAccount, int idshowtime)
         {
             try
             {
                 var card = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount == IDAccount && d.IdShowtime == idshowtime && d.Status == 1).Select(m => new
                 {
-                    id=m.IdSeatNavigation.Id,
+                    id = m.IdSeatNavigation.Id,
                     Name = m.IdSeatNavigation.SeatName,
                 }).ToListAsync();
                 return Ok(card);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
             }
@@ -62,21 +67,21 @@ namespace WebApplication3.Controllers
                 var vouchers = await _dbContext.Vouchers
            .Where(d => d.ExpireDate >= currentDate && d.Quatity > 0).Select(d => new
            {
-               id=d.Id,
-               code=d.Code,
-               Minprice=d.MinPrice,
-               DiscountPercent=d.DiscountPercent,
+               id = d.Id,
+               code = d.Code,
+               Minprice = d.MinPrice,
+               DiscountPercent = d.DiscountPercent,
            })
            .ToListAsync();
                 return Ok(vouchers);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
             }
         }
         [HttpGet("showInFoCard/{id}/{IDAccount}/{idshowtime}")]
-        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowInfoCard(int id,int IDAccount,int idshowtime)
+        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowInfoCard(int id, int IDAccount, int idshowtime)
         {
             try
             {
@@ -84,17 +89,17 @@ namespace WebApplication3.Controllers
                 {
                     Movie = d.IdShowtimeNavigation.IdMovieNavigation.Title,
                     Date = d.IdShowtimeNavigation.Time,
-                    Room=d.IdSeatNavigation.IdAuditoriumsNavigation.Name,
-                    Address=d.IdSeatNavigation.IdAuditoriumsNavigation.IdCinemaNavigation.Location+ ' '+ d.IdSeatNavigation.IdAuditoriumsNavigation.IdCinemaNavigation.District
+                    Room = d.IdSeatNavigation.IdAuditoriumsNavigation.Name,
+                    Address = d.IdSeatNavigation.IdAuditoriumsNavigation.IdCinemaNavigation.Location + ' ' + d.IdSeatNavigation.IdAuditoriumsNavigation.IdCinemaNavigation.District
 
                 }).FirstOrDefaultAsync();
                 return Ok(Card);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
             }
-            
+
         }
         [HttpGet("GetVoucherAccount")]
         public async Task<ActionResult<IEnumerable<UserVoucher>>> ShowUserVoucher()
@@ -107,13 +112,14 @@ namespace WebApplication3.Controllers
                     IDvoucher = m.IdVoucher,
                 }).ToListAsync();
                 return Ok(DetailVoucher);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
             }
         }
         [HttpPost("PaymentByPaypal/{id}/{idtime}")]
-        public IActionResult PaymentByPaypal(int id,int idtime, [FromBody] AddCheckout addCheckout)
+        public IActionResult PaymentByPaypal(int id, int idtime, [FromBody] AddCheckout addCheckout)
         {
             try
             {
@@ -137,7 +143,7 @@ namespace WebApplication3.Controllers
                     TotalPrice = addCheckout.TotalPrice,
                     IdAccount = addCheckout.IdAccount,
                     Payment = 1,
-                    OrderDate=DateTime.Now,
+                    OrderDate = DateTime.Now,
                 };
                 _dbContext.Orders.Add(orderTime);
                 _dbContext.SaveChanges();
@@ -148,7 +154,7 @@ namespace WebApplication3.Controllers
                     {
                         Idorder = idorder,
                         Idseat = seatid,
-                        Idshowtime=idtime,
+                        Idshowtime = idtime,
                     };
                     _dbContext.DetailOrders.Add(detailorder);
                 }
@@ -193,8 +199,9 @@ namespace WebApplication3.Controllers
 
                     }
                 }
-                
+
                 _dbContext.SaveChanges();
+                SendEmail(addCheckout.Email, "Movie Ticket Shop", $"Thank you for booking our tickets");
                 return Ok("Add successfully");
             }
             catch (Exception ex)
@@ -203,22 +210,22 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpPost("addOrder/{id}/{idtime}")]
-        public IActionResult Addorder(int id,int idtime,[FromBody] AddCheckout addCheckout)
+        public IActionResult Addorder(int id, int idtime, [FromBody] AddCheckout addCheckout)
         {
             try
             {
                 var exist = _dbContext.Accounts.Find(id);
 
-                
-              
-                
-                    exist.Address = addCheckout.Address;
-                    exist.ZipCode = addCheckout.ZipCode;
-                    exist.IdCity = addCheckout.IdCity;
-                    exist.OrderNote = addCheckout.OrderNote;
-                    exist.Phone = addCheckout.Phone;
-                    exist.Email = addCheckout.Email;
-                    exist.FullName = addCheckout.FullName;
+
+
+
+                exist.Address = addCheckout.Address;
+                exist.ZipCode = addCheckout.ZipCode;
+                exist.IdCity = addCheckout.IdCity;
+                exist.OrderNote = addCheckout.OrderNote;
+                exist.Phone = addCheckout.Phone;
+                exist.Email = addCheckout.Email;
+                exist.FullName = addCheckout.FullName;
                 var random = new Random();
                 var orderTime = new Models.Order
                 {
@@ -226,7 +233,7 @@ namespace WebApplication3.Controllers
                                           .Select(s => s[random.Next(s.Length)]).ToArray()),
                     TotalPrice = addCheckout.TotalPrice,
                     IdAccount = addCheckout.IdAccount,
-                    Payment=0,
+                    Payment = 0,
                     OrderDate = DateTime.Now,
                 };
                 _dbContext.Orders.Add(orderTime);
@@ -252,25 +259,26 @@ namespace WebApplication3.Controllers
                         seat.Status = 2;
                     }
                 }
-                if(addCheckout.IdVoucher != null || addCheckout.IdVoucher.Count != 0 )
+                if (addCheckout.IdVoucher != null || addCheckout.IdVoucher.Count != 0)
                 {
-                    foreach(int idvoucher  in addCheckout.IdVoucher)
+                    foreach (int idvoucher in addCheckout.IdVoucher)
                     {
-                        if(_dbContext.UserVouchers.Any(m=>m.IdAccount==addCheckout.IdAccount && m.IdVoucher == idvoucher))
+                        if (_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.IdVoucher == idvoucher))
                         {
                             var voucher = new UserVoucher()
                             {
                                 IdAccount = addCheckout.IdAccount,
                                 IdVoucher = idvoucher,
-                                IdOrder=idorder,
+                                IdOrder = idorder,
                             };
                             _dbContext.UserVouchers.Add(voucher);
                         }
-                       
+
                     }
                     foreach (int idvoucher in addCheckout.IdVoucher)
                     {
-                        if(_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.IdVoucher != idvoucher) || _dbContext.UserVouchers.Any(m => m.IdAccount != addCheckout.IdAccount && m.IdVoucher != idvoucher)){
+                        if (_dbContext.UserVouchers.Any(m => m.IdAccount == addCheckout.IdAccount && m.IdVoucher != idvoucher) || _dbContext.UserVouchers.Any(m => m.IdAccount != addCheckout.IdAccount && m.IdVoucher != idvoucher))
+                        {
                             var voucher = _dbContext.Vouchers.Find(idvoucher);
                             if (voucher.Quatity > 0)
                             {
@@ -279,15 +287,46 @@ namespace WebApplication3.Controllers
                                 _dbContext.SaveChanges();
                             }
                         }
-                        
+
                     }
                 }
                 _dbContext.SaveChanges();
+                string emailBody = $"Total:{addCheckout.TotalPrice}$  \n";
+
+                foreach (int seatid in addCheckout.IdSeat)
+                {
+                    string Movies = _dbContext.DetailOrders.Where(d => d.Idshowtime == idtime).Select(a => a.IdshowtimeNavigation.IdMovieNavigation.Title).FirstOrDefault();
+                    List<string> seats = _dbContext.SeatMovies.Where(d => d.Id == seatid).Select(a => a.SeatName).ToList();
+                    string seat = string.Join(", ", seats);
+                    emailBody += $"Seats: {seat}\n,Movies:{Movies}";
+
+                }
+                SendEmail(addCheckout.Email, "Movie Ticket Shop", emailBody);
                 return Ok("Add successfully");
             }
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
+            }
+        }
+        private void SendEmail(string to, string subject, string body)
+        {
+            using (var client = new SmtpClient("smtp.gmail.com"))
+            {
+                client.Port = 587;
+                client.Credentials = new NetworkCredential("tranp6648@gmail.com", "czvy qzyc vpes whkj");
+                client.EnableSsl = true;
+                var message = new MailMessage
+                {
+                    From = new MailAddress("tranp6648@gmail.com"),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = false
+                };
+                message.To.Add(to);
+                client.Send(message);
+
             }
         }
         [HttpGet("city")]
@@ -297,11 +336,12 @@ namespace WebApplication3.Controllers
             {
                 var city = _dbContext.Cities.Select(m => new
                 {
-                    ID=m.Id,
-                    Name=m.Name,
+                    ID = m.Id,
+                    Name = m.Name,
                 });
                 return Ok(city);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
             }

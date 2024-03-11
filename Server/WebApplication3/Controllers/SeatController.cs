@@ -68,5 +68,61 @@ namespace WebApplication3.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while saving the auditoriums.");
             }
         }
+        [HttpGet("getAuditorium/{id}")]
+        public async Task<ActionResult<IEnumerable<Auditorium>>> getIdAuditorium(int id)
+        {
+            try
+            {
+                var auditorium = await _dbContext.Auditoriums.Where(p=> p.IdCinema == id).Select(m => new
+                {
+                    id = m.Id,
+                    Name = m.Name,
+                    
+                }).ToListAsync();
+                return Ok(auditorium);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("getSeatsByAuditoriumId/{id}")]
+        public async Task<ActionResult> GetAuditoriumWithSeats(int id)
+        {
+            try
+            {
+              
+                var auditoriums = await _dbContext.Auditoriums
+                                                  .Where(a => a.IdCinema == id)
+                                                  .ToListAsync();
+
+                // For each auditorium, fetch the seats and construct the result2
+                var auditoriumsWithSeats = new List<object>();
+
+                foreach (var auditorium in auditoriums)
+                {
+                    var seats = await _dbContext.SeatMovies
+                                                .Where(sm => sm.IdAuditoriums == auditorium.Id)
+                                                .ToListAsync();
+
+                    auditoriumsWithSeats.Add(new
+                    {
+                        AuditoriumDetails = auditorium,
+                        Seats = seats
+                    });
+                }
+
+                return Ok(auditoriumsWithSeats);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
+
     }
 }

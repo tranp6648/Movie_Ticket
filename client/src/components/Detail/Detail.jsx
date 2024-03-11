@@ -605,24 +605,37 @@ function Detail() {
                                                 <dl className="collateral-tabs">
                                                     <dd className="tab-container current">
                                                         <div className="tab-content1 showtimes">
-                                                            {Info.map((info, index) => (
-                                                                <div className="mb-venue">
-                                                                    <div className="venue-name mb-[11px]">
-                                                                        <h3>{info.auth}</h3>
-                                                                    </div>
-                                                                    <div className="mb-room-name mb-[11px]  ">
-                                                                        <h4>IMAX</h4>
-                                                                    </div>
-                                                                    <ul className="mb-tab-showtime">
-                                                                        <li className="item">
-                                                                            <a onClick={()=>`${IDAccount=='' ?navigate('/Account'):handleUpdate(info.id,IDAccount,info.idTime)}`}>
-                                                                                <span >{formatTime(info.time)}</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            ))}
-
+                                                        {Info.reduce((acc, info, index) => {
+    // Check if the current info.auth has already been rendered
+    const authRendered = acc.auths.includes(info.auth);
+    // If it hasn't been rendered, add it to the accumulator array
+    if (!authRendered) {
+        acc.auths.push(info.auth);
+        // Find all info entries with the same auth and accumulate their times
+        const times = Info.filter(item => item.auth === info.auth).map(item => (
+            <li key={item.id} className="item">
+                <a onClick={() => `${IDAccount === '' ? navigate('/Account') : handleUpdate(item.id, IDAccount, item.idTime)}`}>
+                    <span>{formatTime(item.time)}</span>
+                </a>
+            </li>
+        ));
+        // Render the info.auth and its associated times
+        acc.elements.push(
+            <div key={index} className="mb-venue">
+                <div className="venue-name mb-[11px]">
+                    <h3>{info.auth + " " +info.ditrict}</h3>
+                </div>
+                <div className="mb-room-name mb-[11px]  ">
+                    <h4>IMAX</h4>
+                </div>
+                <ul className="mb-tab-showtime">
+                    {times}
+                </ul>
+            </div>
+        );
+    }
+    return acc;
+}, { auths: [], elements: [] }).elements}
                                                         </div>
                                                     </dd>
                                                 </dl>

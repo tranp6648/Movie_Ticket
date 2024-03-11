@@ -21,6 +21,10 @@ public partial class DatabaseContext : DbContext
 
     public virtual DbSet<Auditorium> Auditoriums { get; set; }
 
+    public virtual DbSet<Blog> Blogs { get; set; }
+
+    public virtual DbSet<CategoryBlog> CategoryBlogs { get; set; }
+
     public virtual DbSet<CategoryMovie> CategoryMovies { get; set; }
 
     public virtual DbSet<CategorySeat> CategorySeats { get; set; }
@@ -63,9 +67,10 @@ public partial class DatabaseContext : DbContext
 
 
 
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=KYOS22;Database=Movie0802;user id=sa;password=123456;trusted_connection=true;encrypt=false");
+        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=KYOS22;Database=Movie2902;user id=sa;password=123456;trusted_connection=true;encrypt=false");
 
       
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -80,7 +85,7 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.FullName).HasMaxLength(250);
+            entity.Property(e => e.FullName).HasMaxLength(250).HasDefaultValueSql("(NULL)");
             entity.Property(e => e.IdCity).HasColumnName("id_city");
             entity.Property(e => e.OrderNote)
                 .HasMaxLength(255)
@@ -90,7 +95,7 @@ public partial class DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Phone)
-                .HasMaxLength(12)
+                .HasMaxLength(12).HasDefaultValueSql("(NULL)")
                 .IsUnicode(false);
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
@@ -98,6 +103,7 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.ZipCode)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasOne(d => d.IdCityNavigation).WithMany(p => p.Accounts)
                 .HasForeignKey(d => d.IdCity)
@@ -139,6 +145,45 @@ public partial class DatabaseContext : DbContext
                 .HasConstraintName("FK_Auditoriums_Cinemas");
         });
 
+        modelBuilder.Entity<Blog>(entity =>
+        {
+            entity.ToTable("Blog");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ContentBlog)
+                .HasColumnType("text")
+                .HasColumnName("Content_Blog");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.IdAccount).HasColumnName("id_Account");
+            entity.Property(e => e.IdCategory).HasColumnName("id_Category");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Title)
+                .HasMaxLength(255)
+                .HasColumnName("title");
+
+            entity.HasOne(d => d.IdAccountNavigation).WithMany(p => p.Blogs)
+                .HasForeignKey(d => d.IdAccount)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Blog_Account");
+
+            entity.HasOne(d => d.IdCategoryNavigation).WithMany(p => p.Blogs)
+                .HasForeignKey(d => d.IdCategory)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Blog_Category_Blog");
+        });
+
+        modelBuilder.Entity<CategoryBlog>(entity =>
+        {
+            entity.ToTable("Category_Blog");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(255);
+        });
+
         modelBuilder.Entity<CategoryMovie>(entity =>
         {
             entity.ToTable("Category_Movie");
@@ -163,6 +208,7 @@ public partial class DatabaseContext : DbContext
         {
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.District).HasMaxLength(100);
+            entity.Property(e => e.Idaccount).HasColumnName("IDAccount");
             entity.Property(e => e.Location)
                 .HasMaxLength(100)
                 .IsUnicode(false)

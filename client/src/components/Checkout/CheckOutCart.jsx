@@ -65,7 +65,7 @@ function CheckOutCart() {
     }, [])
 
     const handleUpdate = async () => {
-
+console.log(seat.map(item => item.id))
         try {
 
             const response = await fetch(`http://localhost:5231/api/CheckOut/addOrder/${IDAccount}/${IDTime}`, {
@@ -121,13 +121,15 @@ function CheckOutCart() {
     const [unactive, setunactive] = useState(false);
     const handleCheck = async () => {
         const matchingCharge = voucher.find((charge) => charge.code === FormData.check);
-        const match = DetailVoucher.find(
-            (change) =>
-                (change.idAccount === IDAccount && change.iDvoucher !== matchingCharge.id) ||
-                (change.idAccount !== IDAccount && change.iDvoucher !== matchingCharge.id)
-        );
-        console.log(match)
-        if (matchingCharge.minprice <= totalorder && !selectedVouchers.includes(FormData.check) && match !== undefined) {
+        
+        // const match = DetailVoucher.find(
+        //     (change) =>
+        //         (change.idAccount === IDAccount && change.iDvoucher !== matchingCharge.id) ||
+        //         (change.idAccount !== IDAccount && change.iDvoucher !== matchingCharge.id) ||
+        //         (change.idAccount===null && change.iDvoucher===null)
+        // );
+        // console.log(match)
+        if (matchingCharge.minprice <= totalorder && !selectedVouchers.includes(FormData.check) ) {
             const discountAmount = (matchingCharge.discountPercent / 100) * totalorder;
             const updatedTotalOrder = totalorder - discountAmount;
 
