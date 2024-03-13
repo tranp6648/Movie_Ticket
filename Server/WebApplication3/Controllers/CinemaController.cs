@@ -82,6 +82,9 @@ namespace WebApplication3.Controllers
                     Phone=m.IdCinemaNavigation.Phone,
                     District=m.IdCinemaNavigation.District,
                    City=m.IdBranchNavigation.City,
+                   IdAccount = m.IdCinemaNavigation.Idaccount
+                   
+                   
                 }).ToListAsync();
                 return Ok(cinema);
             }catch(Exception ex)

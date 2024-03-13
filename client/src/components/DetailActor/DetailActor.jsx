@@ -10,6 +10,8 @@ function DetailActor() {
     const [Detail,setDetail]=useState([]);
     const [DetailProduct,setDetailProduct]=useState([]);
     const ID = location.state?.ID || '';
+    const IDAccount = location.state?.IDAccount || '';
+   
     useEffect(()=>{
         const fetchdata=async()=>{
             try{
@@ -138,7 +140,7 @@ function DetailActor() {
                             <div className="mb-movie-list mb-movie-list-template1 four_column">
                                 {DetailProduct.map((detail,index)=>(
                                     <div className="mb-movie-item item-template1">
-                                    <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
+                                    <a href="" onClick={()=>navigate(`/Detail/${detail.id}`,{ state: { ID:detail.id,IDAccount:IDAccount } })} style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
                                         <div className="movie-image">
                                             <img src={detail.detailCategoryMovies.length > 0
                             ? `http://localhost:5231/${detail.detailCategoryMovies[0].picture}`

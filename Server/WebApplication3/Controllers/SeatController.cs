@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
 using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
@@ -87,40 +88,60 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        [HttpGet("getSeatsByAuditoriumId/{id}")]
-        public async Task<ActionResult> GetAuditoriumWithSeats(int id)
-        {
-            try
+            [HttpGet("getAuditoriumWithSeats/{cinemaId}")]
+            public async Task<ActionResult<List<AuditoriumDetailDTO>>> GetAllAuditoriumsWithSeats(int cinemaId)
             {
-              
-                var auditoriums = await _dbContext.Auditoriums
-                                                  .Where(a => a.IdCinema == id)
-                                                  .ToListAsync();
+            var cinema = await _dbContext.Cinemas.Where(p => p.Id == cinemaId).FirstOrDefaultAsync();
+            if (cinema == null)
+            {
+                return NotFound("Cinema not found.");
+            }
 
-                // For each auditorium, fetch the seats and construct the result2
-                var auditoriumsWithSeats = new List<object>();
+            var adminName = await _dbContext.Accounts.Where(p=> p.Id == cinema.Idaccount).Select(p=>p.FullName).FirstOrDefaultAsync();
+
+
+                var auditoriums = await _dbContext.Auditoriums
+                                                  .Where(a => a.IdCinema == cinemaId)
+                                                  .ToListAsync();
+            var nameAuditorium = auditoriums.Select(m => m.Name);
+
+                if (!auditoriums.Any())
+                {
+                    return NotFound("No auditoriums found for the given cinema.");
+                }
+
+                var auditoriumDetailsList = new List<AuditoriumDetailDTO>();
 
                 foreach (var auditorium in auditoriums)
                 {
                     var seats = await _dbContext.SeatMovies
-                                                .Where(sm => sm.IdAuditoriums == auditorium.Id)
-                                                .ToListAsync();
+                                                .Where(seat => seat.IdAuditoriums == auditorium.Id)
+                                                .Select(seat => new SeatDTO
+                                                {
+                                                    Id = seat.Id,
+                                                    Name = seat.SeatName,
+                                                    Category = seat.IdCategorySeat == 1 ? "Vip" : "Normal"
+                                                }).ToListAsync();
 
-                    auditoriumsWithSeats.Add(new
+                    var auditoriumDetailDto = new AuditoriumDetailDTO
                     {
-                        AuditoriumDetails = auditorium,
-                        Seats = seats
-                    });
+                        AuditoriumId = auditorium.Id,
+                        Seats = seats,
+                        VipSeatsCount = seats.Count(seat => seat.Category == "Vip"),
+                        NormalSeatsCount = seats.Count(seat => seat.Category == "Normal"),
+                        NameAuditorium = auditorium.Name,
+                        AdminName = adminName ?? "Admin not found"
+                    };
+
+                    auditoriumDetailsList.Add(auditoriumDetailDto);
                 }
 
-                return Ok(auditoriumsWithSeats);
+                return Ok(auditoriumDetailsList);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return StatusCode(500, "Internal server error");
-            }
-        }
+
+
+
+
 
 
 

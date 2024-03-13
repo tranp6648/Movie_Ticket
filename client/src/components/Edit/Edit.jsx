@@ -33,6 +33,9 @@ function Edit() {
             Phone:response.data.phone,
             Birthday:response.data.birthday,
           })
+          
+        
+          
         }catch(error){
 
         }

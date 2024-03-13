@@ -310,7 +310,7 @@ function Detail() {
                             <div className="mb-movie-list mb-movie-list-template1 four_column">
                                 {Detail.map((De, index) => (
                                     <div className="mb-movie-item item-template1">
-                                        <a href="" style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
+                                        <a href="" onClick={()=>navigate(`/Detail/${De.id}`,{ state: { ID:De.id,IDAccount:IDAccount } })} style={{ textDecoration: 'none', backgroundColor: 'transparent', color: '#d96c2c' }}>
                                             <div className="movie-image">
                                                 <img src={De.detailMovie.length > 0
                             ? `http://localhost:5231/${De.detailMovie[0].picture}`
@@ -320,12 +320,12 @@ function Detail() {
                                         <div className="movie-info">
                                             <div className="categories-and-time">
                                                 <div className="movie-category">
-                                                    <a href="">{De.nameGenre}</a>
+                                                    <a onClick={()=>navigate(`/Detail/${De.id}`,{ state: { ID:De.id,IDAccount:ID } })}>{De.nameGenre}</a>
                                                 </div>
                                                 <div className="separator">/</div>
                                                 <span className="running-time">{De.duration} mins</span>
                                             </div>
-                                            <a href="">
+                                            <a onClick={()=>navigate(`/Detail/${De.id}`,{ state: { ID:De.id,IDAccount:ID } })}>
                                                 <h3 className="movie-title font-bold">
                                                     {De.name}			</h3>
                                             </a>
@@ -585,23 +585,11 @@ function Detail() {
                         <dl className="collateral-tabs">
                             <dd className="tab-container current">
                                 <div className="tab-content1 mb-showtimes">
-                                    <div className="mb-tabs-cities">
-                                        <ul className="toggle-tabs">
-                                            <li className="mb-city-name current">
-                                                <span>New York</span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                   
                                     <div className="collateral-tabs">
                                         <dd className="tab-container current">
                                             <div className="tab-content1 mb-room-types">
-                                                <ul className="toggle-tabs">
-                                                    <li className="mb-room-type-name current">
-                                                        3D                                </li>
-                                                    <li className="mb-room-type-name">
-                                                        2D
-                                                    </li>
-                                                </ul>
+                                               
                                                 <dl className="collateral-tabs">
                                                     <dd className="tab-container current">
                                                         <div className="tab-content1 showtimes">

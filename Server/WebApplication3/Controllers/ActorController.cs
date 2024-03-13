@@ -175,6 +175,7 @@ namespace WebApplication3.Controllers
             {
                 var actor = await _dbContext.Movies.Include(m => m.DetailCategoryMovies).ThenInclude(d => d.IdCategoryNavigation).Include(m => m.DetailActorMovies).ThenInclude(d => d.IdActorNavigation).Where(a => a.DetailActorMovies.Any(d => d.IdActor == id)).Select(m => new
                 {
+                    ID=m.Id,
                     Title = m.Title,
                     duration = m.Duration,
                     GenreName = m.IdGenreNavigation.Name,

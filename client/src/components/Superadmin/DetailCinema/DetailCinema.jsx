@@ -430,25 +430,61 @@ const handleSave = async () => {
 };
   
 const [cinemaDetails, setCinemaDetails] = useState({ auditoriums: [],seats: {} });
-
+const [selectedAuditorium, setSelectedAuditorium] = useState(null);
 
 const handleDetailAuditoriums = async (cinemaIdFromButton) => {
-
   try {
-    const auditoriumResponse = await axios.get(`http://localhost:5231/api/Seat/getAuditorium/${cinemaIdFromButton}`);
-    const seatsResponse = await axios.get(`http://localhost:5231/api/Seat/getSeatsByAuditoriumId/${cinemaIdFromButton}`);
+    const seatsResponse = await axios.get(`http://localhost:5231/api/Seat/getAuditoriumWithSeats/${cinemaIdFromButton}`);
+    console.log("Auditoriums and Seats Details: ", seatsResponse.data);
 
-console.log("auditorium: " + auditoriumResponse.data);
+    setCinemaDetails({
+      auditoriums: seatsResponse.data,
+      seats: seatsResponse.data.reduce((acc, auditoriumDetail) => {
+        acc[auditoriumDetail.AuditoriumId] = auditoriumDetail.Seats;
+        return acc;
+      }, {})
+    });
 
-
-    setCinemaDetails(auditoriumResponse.data);
-    
-    setPopupDetailSeat(true);
+    setPopupDetailSeat(true); // Giả định rằng bạn đã định nghĩa hook này để quản lý trạng thái của popup
   } catch (error) {
     console.error('Failed to fetch auditorium details: ', error);
     Swal.fire('Error', 'Could not load auditorium details.', 'error');
   }
 };
+
+// ... previous code
+
+const generateSeatLayout = () => {
+  const seats = [];
+  const totalSeats = selectedAuditorium.normalSeatsCount + selectedAuditorium.vipSeatsCount;
+  
+ 
+  const numberOfRows = Math.ceil(totalSeats / 10);
+  
+  for (let i = 0; i < numberOfRows; i++) {
+   
+    const rowSeats = [];
+    for (let j = 0; j < 10; j++) {
+      const seatNumber = i * 10 + j;
+      if (seatNumber < totalSeats) {
+        const isVip = seatNumber < selectedAuditorium.vipSeatsCount;
+        rowSeats.push(
+          <div
+            key={`seat-${seatNumber}`}
+            className={`seat ${isVip ? 'vip' : 'standard'}`}
+            // You can add onClick handler here if you need to toggle VIP status or other actions
+          >
+            {isVip ? 'V' : 'S'}{seatNumber + 1}
+          </div>
+        );
+      }
+    }
+    seats.push(<div key={`row-${i}`} className="seat-row">{rowSeats}</div>);
+  }
+  return seats;
+};
+
+// ... rest of your component code
 
 
   
@@ -553,6 +589,7 @@ console.log("auditorium: " + auditoriumResponse.data);
                       <tr>
                         <th>#</th>
                         <th>Name</th>
+                        <th>Manager</th>
                         <th>Location</th>
                         <th>Phone</th>
                         <th>District</th>
@@ -566,6 +603,7 @@ console.log("auditorium: " + auditoriumResponse.data);
                         <tr key={CinemaItem.ID}>
                           <td>{index + 1}</td>
                           <td>{CinemaItem.name}</td>
+                          <td>{CinemaItem.idAccount}</td>
                           <td>{CinemaItem.location}</td>
                           <td>{CinemaItem.phone}</td>
                           <td>{CinemaItem.district}</td>
@@ -649,40 +687,41 @@ console.log("auditorium: " + auditoriumResponse.data);
   <div className="popup-container">
     <div
       className="popup-content1"
-      style={
-        IsClosingPopup
-          ? { ...popupContentStyle1, ...closingAnimation }
-          : popupContentStyle1
-      }
+      style={IsClosingPopup ? { ...popupContentStyle1, ...closingAnimation } : popupContentStyle1}
     >
       <div className="flex justify-end">
-        <button
-          onClick={() => setPopupDetailSeat(false)}
-          className="close-btn"
-        >
+        <button onClick={() => setPopupDetailSeat(false)} className="close-btn">
           X
         </button>
       </div>
-    
       <div className="tabs">
-      {cinemaDetails.map((auditorium, index) => (
-        <button key={auditorium.id} onClick={() => setActiveTab(index)}>
-          {auditorium.name}
-        </button>
-      ))}
-    </div>
-      
-      <div className="w-full border-[black] border-[1px]"></div>
-      <div className="tab-content">
-        
-        
-        
+        {cinemaDetails.auditoriums.map((auditorium) => (
+          <button
+            key={auditorium.AuditoriumId}
+            onClick={() => setSelectedAuditorium(auditorium)}
+            className={`tab-item ${selectedAuditorium && selectedAuditorium.AuditoriumId === auditorium.AuditoriumId ? 'active' : ''}`}
+          >
+            Room {auditorium.nameAuditorium}
+          </button>
+        ))}
       </div>
-     
-      
+      <div className="w-full border-[black] border-[1px]"></div>
+
+      {selectedAuditorium && (
+        <div className="tab-content1">
+          <h3>{selectedAuditorium.nameAuditorium}</h3>
+          <p>Total Seats: {selectedAuditorium.normalSeatsCount + selectedAuditorium.vipSeatsCount}</p>
+          <p>VIP Seats: {selectedAuditorium.vipSeatsCount}</p>
+          <p>Normal Seats: {selectedAuditorium.normalSeatsCount}</p>
+        </div>
+      )}
+      <div className="seats-layout">
+        {selectedAuditorium && generateSeatLayout()}
+      </div>
     </div>
   </div>
 )}
+
 
 
         {isPopupVisible && (

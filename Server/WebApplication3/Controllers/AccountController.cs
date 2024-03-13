@@ -67,12 +67,20 @@ namespace WebApplication3.Controllers
         [HttpGet("getAccount/{id}")]
         public async Task<ActionResult<IEnumerable<Account>>> getAccount(int id)
         {
-            Account account = await _dbContext.Accounts.FindAsync(id);
-            if (account == null)
+
+          
+
+            var Account =await _dbContext.Accounts.Where(a=>a.Id==id).Select(A => new
             {
-                return NotFound();
-            }
-            return Ok(account);
+                username = A.Username,
+                fullName = A.FullName,
+                email = A.Email,
+                phone = A.Phone,
+                birthday = A.Birthday,
+            }).FirstOrDefaultAsync();
+            
+            return Ok(Account);
+
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAll()
@@ -152,7 +160,9 @@ namespace WebApplication3.Controllers
                     return NotFound("Account not found");
                 }
 
-                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype, username = existingAccount.Username });
+
+                return Ok(new { Id = existingAccount.Id, AccountType = existingAccount.Accounttype,username=existingAccount.Username,Status=existingAccount.Status });
+
             }
             catch (Exception ex)
             {
@@ -189,8 +199,57 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpPost("ChangePassUser/{id}/{Password}")]
+        public IActionResult ChangePassUser(int id,string Password)
+        {
+            try
+            {
+                var AccountExist = _dbContext.Accounts.Find(id);
+                if(AccountExist == null)
+                {
+                    return NotFound("Account not found");
+                }
+                if (AccountExist.Password == HashPasswordMD5(Password))
+                {
+                    return BadRequest(new { message = "This password is in use" });
+                }
+                AccountExist.Password = HashPasswordMD5(Password);
+                AccountExist.Status = true;
+                _dbContext.SaveChanges();
+                return Ok("Change Sucessfully");
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
-
+        [HttpPost("ChangePassword/{id}/{Password}")]
+        public IActionResult UpdatePassword(int id,string Password, [FromBody] UpdateInformation updateInformation)
+        {
+            try
+            {
+                var AccountExist = _dbContext.Accounts.Find(id);
+                if (AccountExist == null)
+                {
+                    return NotFound("Account not found");
+                }
+                if (AccountExist.Password == HashPasswordMD5(Password))
+                {
+                    return BadRequest(new { message = "This password is in use" });
+                }
+                AccountExist.Password = HashPasswordMD5(Password);
+                AccountExist.Phone=updateInformation.Phone;
+                AccountExist.Birthday=updateInformation.Birthday;
+                AccountExist.FullName=updateInformation.FullName;
+                AccountExist.Status = true;
+                _dbContext.SaveChanges();
+                return Ok("Change Sucessfully");
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
         [HttpPost("Add")]
         public async Task<ActionResult<Account>> AddBillDetail([FromBody] Account billDetail)
         {
@@ -219,7 +278,11 @@ namespace WebApplication3.Controllers
                     return BadRequest("Customer information is required");
                 }
 
+
                 billDetail.Password = HashPasswordMD5(billDetail.Password);
+
+                billDetail.Status = false;
+
                 _dbContext.Accounts.Add(billDetail);
                 await _dbContext.SaveChangesAsync();
                 SendEmail(billDetail.Email, "Account Information", $"Username:{billDetail.Username}\n Password:{billDetail.Username}");
@@ -288,6 +351,7 @@ namespace WebApplication3.Controllers
                 FullName = admin.FullName, 
                 Birthday = admin.Birthday, 
                 Accounttype = admin.Accounttype, 
+                Status=false
             };
 
             _dbContext.Accounts.Add(newAdmin);

@@ -65,12 +65,7 @@ public partial class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-
-
-        => optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=KYOS22;Database=Movie2902;user id=sa;password=123456;trusted_connection=true;encrypt=false");
-
-      
-
+        => optionsBuilder.UseSqlServer("Server=KYOS22;Database=Movie2902;user id=sa;password=123456;trusted_connection=true;encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -85,7 +80,7 @@ public partial class DatabaseContext : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.FullName).HasMaxLength(250).HasDefaultValueSql("(NULL)");
+            entity.Property(e => e.FullName).HasMaxLength(250);
             entity.Property(e => e.IdCity).HasColumnName("id_city");
             entity.Property(e => e.OrderNote)
                 .HasMaxLength(255)
@@ -95,15 +90,15 @@ public partial class DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Phone)
-                .HasMaxLength(12).HasDefaultValueSql("(NULL)")
+                .HasMaxLength(12)
                 .IsUnicode(false);
+            entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.ZipCode)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasOne(d => d.IdCityNavigation).WithMany(p => p.Accounts)
                 .HasForeignKey(d => d.IdCity)

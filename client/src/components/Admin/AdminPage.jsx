@@ -7,7 +7,7 @@ import './admin.css'
 import { format } from 'date-fns';
 
 import axios from 'axios';
-import { Bar,Pie } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 import Chart from 'chart.js/auto'; // Import the Chart object from 'chart.js/auto'
 import { CategoryScale, LinearScale, BarController, Title } from 'chart.js';
 
@@ -19,20 +19,20 @@ function AdminPage() {
   const [orderData, setOrderData] = useState([]);
   const ID = location.state?.ID || '';
   const [showDropdown, setShowDropdown] = useState(false);
-  const [Movie,setMovie]=useState(null);
-  const [Actor,setActor]=useState(null);
-  const [User,setUser]=useState(null);
-  const [Event,setEvent]=useState(null);
+  const [Movie, setMovie] = useState(null);
+  const [Actor, setActor] = useState(null);
+  const [User, setUser] = useState(null);
+  const [Event, setEvent] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
- const[CategoryMovie,setCategoryMovie]=useState(null);
- const [Genre,setGenre]=useState(null);
- const [Username,setUsername]=useState([]);
- const [Order,setOrder]=useState(null);
-const [showtime,setshowtime]=useState(null);
+  const [CategoryMovie, setCategoryMovie] = useState(null);
+  const [Genre, setGenre] = useState(null);
+  const [Username, setUsername] = useState([]);
+  const [Order, setOrder] = useState(null);
+  const [showtime, setshowtime] = useState(null);
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
   };
-  useEffect(()=>{
+  useEffect(() => {
     const fetchProductCount = async () => {
       try {
         const response = await axios.get('http://localhost:5231/api/Movie/CountCategoryMovie');
@@ -43,8 +43,8 @@ const [showtime,setshowtime]=useState(null);
     };
 
     fetchProductCount();
-  },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     const fetchProductCount = async () => {
       try {
         const response = await axios.get('http://localhost:5231/api/Movie/Orderdesc');
@@ -55,8 +55,8 @@ const [showtime,setshowtime]=useState(null);
     };
 
     fetchProductCount();
-  },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     const fetchProductCount = async () => {
       try {
         const response = await axios.get('http://localhost:5231/api/Movie/CountShowtime');
@@ -67,8 +67,8 @@ const [showtime,setshowtime]=useState(null);
     };
 
     fetchProductCount();
-  },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     const fetchProductCount = async () => {
       try {
         const response = await axios.get('http://localhost:5231/api/Movie/CountOrder');
@@ -79,8 +79,8 @@ const [showtime,setshowtime]=useState(null);
     };
 
     fetchProductCount();
-  },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     const fetchProductCount = async () => {
       try {
         const response = await axios.get('http://localhost:5231/api/Movie/CountGenre');
@@ -91,8 +91,8 @@ const [showtime,setshowtime]=useState(null);
     };
 
     fetchProductCount();
-  },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     const fetchProductCount = async () => {
       try {
         const response = await axios.get('http://localhost:5231/api/Movie/CountEvent');
@@ -103,8 +103,8 @@ const [showtime,setshowtime]=useState(null);
     };
 
     fetchProductCount();
-  },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     const fetchProductCount = async () => {
       try {
         const response = await axios.get('http://localhost:5231/api/Movie/countUser');
@@ -115,8 +115,8 @@ const [showtime,setshowtime]=useState(null);
     };
 
     fetchProductCount();
-  },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     const fetchProductCount = async () => {
       try {
         const response = await axios.get('http://localhost:5231/api/Movie/CountActor');
@@ -127,7 +127,7 @@ const [showtime,setshowtime]=useState(null);
     };
 
     fetchProductCount();
-  },[])
+  }, [])
   useEffect(() => {
     const fetchProductCount = async () => {
       try {
@@ -141,9 +141,9 @@ const [showtime,setshowtime]=useState(null);
     fetchProductCount();
   }, []);
   const chartDataProduct = {
-    labels: ['Movie','Category','Actor','User'],
+    labels: ['Movie', 'Category', 'Actor', 'User'],
     datasets: [{
-      data: [Movie,CategoryMovie,Actor,User],
+      data: [Movie, CategoryMovie, Actor, User],
       backgroundColor: [
         'rgba(255, 99, 132, 0.6)',
         'rgba(54, 162, 235, 0.6)',
@@ -194,7 +194,7 @@ const [showtime,setshowtime]=useState(null);
 
     return chartData;
   };
-  
+
   const chartData = {
     labels: Array.from({ length: new Date(new Date().getFullYear(), selectedMonth, 0).getDate() }, (_, index) => index + 1),
     datasets: [
@@ -233,7 +233,7 @@ const [showtime,setshowtime]=useState(null);
               <a href="#" onClick={() => navigate('/Account')}>
                 <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
               </a>
-              <a onClick={() => navigate('/Edit', { state: { username: username, ID: ID } })}>
+              <a href="#"  onClick={() => navigate('/Edit', { state: { username: username, ID: ID } })}>
                 <i className="fa fa-user" aria-hidden="true"></i> Account
               </a>
 
@@ -261,77 +261,77 @@ const [showtime,setshowtime]=useState(null);
 
 
           <ul className="sidebar-menu">
-                            <li className="header">MAIN NAVIGATION</li>
-                            <li className="active treeview">
-                                <a href="" onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
-                                    <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
-                                </a>
+            <li className="header">MAIN NAVIGATION</li>
+            <li className="active treeview">
+              <a href="" onClick={() => navigate('/admin', { state: { username: username, ID: ID } })}>
+                <i className="fa fa-dashboard" ></i> <span>Dashboard</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
-                                    <i class="fas fa-film"></i> <span>Genre</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a href="" onClick={() => navigate('/Genre', { state: { username: username, ID: ID } })}>
+                <i class="fas fa-film"></i> <span>Genre</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Category_Movie', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Movie</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Movie', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Movie</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/actor', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Actor</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Showtimes', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Showtimes</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Event', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Event</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Voucher', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Voucher</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Order', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Order</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Category_Blog', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Blog</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Category_Blog', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span>Category Blog</span>
+              </a>
 
-                            </li>
-                            <li className="active treeview">
-                                <a className='cursor-pointer' onClick={() => navigate('/Blog', { state: { username: username, ID: ID } })}>
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i> <span> Blog</span>
-                                </a>
+            </li>
+            <li className="active treeview">
+              <a className='cursor-pointer' onClick={() => navigate('/Blog', { state: { username: username, ID: ID } })}>
+                <i class="fa fa-list-alt" aria-hidden="true"></i> <span> Blog</span>
+              </a>
 
-                            </li>
+            </li>
 
 
 
-                        </ul>
+          </ul>
         </section>
 
       </aside>
@@ -358,7 +358,7 @@ const [showtime,setshowtime]=useState(null);
 
               <div className="small-box bg-aqua">
                 <div className="inner">
-                <h3>{Event}</h3>
+                  <h3>{Event}</h3>
                   <p>Event</p>
                 </div>
                 <div className="icon">
@@ -420,7 +420,7 @@ const [showtime,setshowtime]=useState(null);
 
 
                   {/* Dropdown to select the month */}
-                  <Bar data={chartData}  options={chartOptions}/>
+                  <Bar data={chartData} options={chartOptions} />
                   <label>Select Month:</label>
                   <select id="selectMonth"
                     className="form-select" value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
@@ -504,7 +504,7 @@ const [showtime,setshowtime]=useState(null);
                 </div>
 
                 <div className="box-footer no-border">
-                <Pie data={chartDataProduct} />
+                  <Pie data={chartDataProduct} />
 
                 </div>
               </div>
@@ -531,14 +531,14 @@ const [showtime,setshowtime]=useState(null);
                         <th>Fullname</th>
                         <th>OrderCount</th>
 
-                     
+
 
                       </tr>
                     </thead>
                     <tbody>
-                      {Username.map((user,index)=>(
+                      {Username.map((user, index) => (
                         <tr>
-                          <td>{index+1}</td>
+                          <td>{index + 1}</td>
                           <td>{user.username}</td>
                           <td>{user.fullName}</td>
                           <td>{user.ordercount}</td>

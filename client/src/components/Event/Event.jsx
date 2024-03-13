@@ -220,7 +220,7 @@ function Event() {
                         Description: '',
                         Tittle: ''
                     })
-
+                    FormData.Tittle=''
 
 
 

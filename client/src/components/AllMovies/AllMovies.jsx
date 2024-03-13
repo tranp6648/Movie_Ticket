@@ -64,12 +64,12 @@ function AllMovies() {
         <div className="breadcrumb-area">
           <div className="container">
             <div className="breadcrumb-content">
-              <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>My Order</h2>
+              <h2 className="font-bold" style={{ color: '#ffffff', textTransform: 'uppercase', textAlign: 'center', fontSize: '36px', marginBottom: '0', paddingBottom: '20px', fontFamily: '"Lato", sans-serif' }}>Movie</h2>
               <ul>
                 <li>
                   <a href="" style={{ textDecoration: 'none' }}>Home</a>
                 </li>
-                <li className="active">My Order</li>
+                <li className="active">Movie</li>
               </ul>
             </div>
           </div>
@@ -99,7 +99,7 @@ function AllMovies() {
                                 <div>
                                     <div className="elementor-widget-container">
                                         <div className="mb-movie-list mb-movie-list-template1 four_column">
-                                            {filteredGender.map((Movies, index) => (
+                                            {currentGender.map((Movies, index) => (
                                                 <div className="mb-movie-item item-template1">
                                                     <a onClick={()=>navigate(`/Detail/${Movies.id}`,{ state: { ID:Movies.id,IDAccount:ID } })} style={{ boxShadow: 'none', textDecoration: 'none' }}>
                                                         <div className="movie-image">
@@ -134,7 +134,7 @@ function AllMovies() {
                                             previousLabel={'previous'}
                                             nextLabel={'next'}
                                             breakLabel={'...'}
-                                            pageCount={Math.ceil(Movies.length / perPage)}
+                                            pageCount={Math.ceil(filteredGender.length / perPage)}
                                             marginPagesDisplayed={2}
                                             pageRangeDisplayed={5}
                                             onPageChange={handlePageclick}

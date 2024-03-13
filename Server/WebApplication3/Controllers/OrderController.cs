@@ -174,7 +174,7 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpPost("Add")]
-        public IActionResult AddOrder(int id,[FromBody] Addorder order)
+        public IActionResult AddOrder([FromBody] Addorder order)
         {
             var random=new Random();
             var orderTime = new Models.Order

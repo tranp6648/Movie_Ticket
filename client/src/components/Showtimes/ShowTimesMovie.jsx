@@ -77,7 +77,7 @@ function ShowTimesMovie() {
       try {
         const response = await axios.get(`http://localhost:5231/api/ShowTime/ShowShowtime/${ID}`);
         setShowTime(response.data)
-
+       
       } catch (error) {
         console.log(error);
       }
@@ -87,7 +87,7 @@ function ShowTimesMovie() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await axios.get("http://localhost:5231/api/ShowTime/getBrance");
+        const response = await axios.get(`http://localhost:5231/api/ShowTime/getBrance/${ID}`);
 
         const filter = response.data.filter(district => district.iDcity === selectedcity.value);
         setBrancher(filter);
@@ -156,8 +156,12 @@ function ShowTimesMovie() {
     id: '',
     duration: ''
   })
+  const handleDropdownToggle = () => {
+    setShowDropdown(!showDropdown);
+  };
   const [perPage, setperPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(0);
+  const [showDropdown, setShowDropdown] = useState(false);
   const filteredGender = showTime.filter(gen =>
 
     gen.nameMovie.toLowerCase().includes(searchTerm.toLowerCase())
@@ -274,18 +278,31 @@ function ShowTimesMovie() {
 
           <a href="index2.html" className="logo"><b>Admin</b>LTE</a>
 
-          <nav className="navbar navbar-static-top" role="navigation">
+          <nav className="navbar navbar-static-top" role="navigation" >
             <a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button">
               <span className="sr-only">Toggle navigation</span>
             </a>
 
             {/* Logo */}
-            <a className="navbar-brand">
-              <img src={image} className="user-image" alt="Logo" />
-              {/* You can also add text or other elements alongside the logo */}
-              {username}
-            </a>
+            <a className="navbar-brand cursor-pointer" onClick={handleDropdownToggle}>
+            <img src={image} className="user-image" alt="Logo" />
+            {/* You can also add text or other elements alongside the logo */}
+            {username}
+            &nbsp;
+            <i className="fa fa-chevron-circle-down"></i>
+          </a>
+          {showDropdown && (
+            <div className="dropdown">
+              <a href="#" onClick={() => navigate('/Account')}>
+                <i className="fa fa-sign-out" aria-hidden="true"></i> Logout
+              </a>
+              <a href="#"  onClick={() => navigate('/Edit', { state: { username: username, ID: ID } })}>
+                <i className="fa fa-user" aria-hidden="true"></i> Account
+              </a>
 
+              {/* Các mục khác của dropdown có thể được thêm vào đây */}
+            </div>
+          )}
           </nav>
         </header>
 

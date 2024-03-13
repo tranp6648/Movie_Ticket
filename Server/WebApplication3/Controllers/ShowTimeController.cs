@@ -184,12 +184,12 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpGet("getBrance")]
-        public async Task<ActionResult<IEnumerable<Cinema>>> getCinema()
+        [HttpGet("getBrance/{id}")]
+        public async Task<ActionResult<IEnumerable<Cinema>>> getCinema(int id)
         {
             try
             {
-                var cinema = await _dbContext.DetailCityBranches.Select(m => new {
+                var cinema = await _dbContext.DetailCityBranches.Where(d=>d.IdCinemaNavigation.Idaccount==id).Select(m => new {
 
                     ID = m.IdCinemaNavigation.Id,
                     Name = m.IdCinemaNavigation.Name,

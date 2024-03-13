@@ -121,15 +121,13 @@ console.log(seat.map(item => item.id))
     const [unactive, setunactive] = useState(false);
     const handleCheck = async () => {
         const matchingCharge = voucher.find((charge) => charge.code === FormData.check);
-        
-        // const match = DetailVoucher.find(
-        //     (change) =>
-        //         (change.idAccount === IDAccount && change.iDvoucher !== matchingCharge.id) ||
-        //         (change.idAccount !== IDAccount && change.iDvoucher !== matchingCharge.id) ||
-        //         (change.idAccount===null && change.iDvoucher===null)
-        // );
-        // console.log(match)
-        if (matchingCharge.minprice <= totalorder && !selectedVouchers.includes(FormData.check) ) {
+        const match = DetailVoucher.find(
+            (change) =>
+                (change.idAccount === IDAccount && change.iDvoucher !== matchingCharge.id) ||
+                (change.idAccount !== IDAccount && change.iDvoucher !== matchingCharge.id)
+        );
+        console.log(match)
+        if (matchingCharge.minprice <= totalorder && !selectedVouchers.includes(FormData.check) && (DetailVoucher<=0 || match!==undefined )) {
             const discountAmount = (matchingCharge.discountPercent / 100) * totalorder;
             const updatedTotalOrder = totalorder - discountAmount;
 
@@ -154,6 +152,13 @@ console.log(seat.map(item => item.id))
             Swal.fire({
                 icon: 'error',
                 title: "Voucher has already been selected",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }else if(DetailVoucher>0 || match===undefined){
+            Swal.fire({
+                icon: 'error',
+                title: "you have used this voucher",
                 showConfirmButton: false,
                 timer: 1500,
             });

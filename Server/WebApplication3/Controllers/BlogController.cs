@@ -60,6 +60,38 @@ namespace WebApplication3.Controllers
                 System.IO.File.Delete(imagePath);
             }
         }
+        [HttpGet("Showcate")]
+        public async Task<ActionResult<IEnumerable<CategoryBlog>>> Showcate()
+        {
+            try
+            {
+                var CategoryBlog = await _dbContext.CategoryBlogs.Select(x => new
+                {
+                    ID=x.Id,
+                    Name=x.Name,
+                }).ToListAsync();
+                return Ok(CategoryBlog);
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("DetailBlog/{id}")]
+        public async Task<ActionResult<IEnumerable<Blog>>> DetailBlog(int id)
+        {
+            try
+            {
+                var Blog = await _dbContext.Blogs.Where(d => d.Id == id).Select(d => new
+                {
+                    id=d.Title,
+                    name=d.ContentBlog,
+                }).ToListAsync();
+                return Ok(Blog);
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
         [HttpGet("ShowBlog")]
         public async Task<ActionResult<IEnumerable<Blog>>> ShowBlog()
         {
@@ -75,6 +107,7 @@ namespace WebApplication3.Controllers
                     Category=x.IdCategoryNavigation.Name,
                     Image=x.ImageUrl,
                     idAccount=x.IdAccount,
+                    Account=x.IdAccountNavigation.Username
                 }).ToListAsync();
                 return Ok(Blog);
             }catch(Exception ex)
@@ -82,6 +115,8 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+    
+
         [HttpPost("Delete/{id}")]
         public IActionResult DeleteBlog(int id)
         {
