@@ -331,6 +331,32 @@ namespace WebApplication3.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [HttpGet("GetAccountAdmin")]
+        public async Task<ActionResult<IEnumerable<Account>>> GetAccountAdmin()
+        {
+            try
+            {
+
+                var cinema = await _dbContext.Accounts.Where(d => _dbContext.Cinemas.Any(a => a.Idaccount == d.Id)).Select(d => new
+                {
+                    id = d.Id,
+                    Email = d.Email,
+                    Username = d.Username,
+                    Phone = d.Phone,
+                    BirthDay = d.Birthday,
+                    FullName = d.FullName,
+                    Accountype = d.Accounttype,
+                    Address = d.Address,
+                    Cinema = _dbContext.Cinemas.Where(a => a.Idaccount == d.Id).Select(a=>new{
+                    Name=a.Name,
+                    }).FirstOrDefault()
+                }).ToListAsync() ;
+                return Ok(cinema);
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
         [HttpPost("AddAdmin")]
         public async Task<ActionResult<Account>> AddAdmin([FromBody] Account admin, [FromQuery] int IdCinema)

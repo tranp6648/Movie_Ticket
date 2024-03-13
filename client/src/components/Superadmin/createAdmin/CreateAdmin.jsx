@@ -64,7 +64,7 @@ const handleCinemaChange = (selectedOption) => {
     Username: usernameInput ? `${usernameInput}_${selectedOption.label}` : '',
   }));
 };
-
+const [Account,setAccount]=useState([]);
 const [usernameInput, setUsernameInput] = useState('');
 const handleUsernameInputChange = (event) => {
   const input = event.target.value;
@@ -153,6 +153,12 @@ const handleUsernameInputChange = (event) => {
 
         Cinema.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
+
+      const filterAdmin= Account.filter(Cinema =>
+
+        Cinema.username.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
       const indexOflastgen = (currentPage + 1) * perPage;
   const indexOfFirtgen = indexOflastgen - perPage;
   const currentGender = filteredGender.slice(indexOfFirtgen, indexOflastgen)
@@ -163,6 +169,9 @@ const handleUsernameInputChange = (event) => {
   };
   
  
+  const indexOfAccount = (currentPage + 1) * perPage;
+  const indexOfFirAcount= indexOfAccount - perPage;
+  const currentAccount = filterAdmin.slice(indexOfFirAcount, indexOfAccount);
   
 //==================================================================================================
 const [FormData, setFormData] = useState({
@@ -176,6 +185,18 @@ const [FormData, setFormData] = useState({
   iDCinema: '',
  
 })
+
+useEffect(()=>{
+  const fetchdata=async()=>{
+    try{
+      const response=await axios.get("http://localhost:5231/api/Account/GetAccountAdmin");
+      setAccount(response.data)
+    }catch(error){
+      console.log(error)
+    }
+  }
+  fetchdata();
+},[])
 const handleSubmit = (event) => {
   event.preventDefault();
 
@@ -382,11 +403,74 @@ const handleSubmit = (event) => {
                                     </div>
                                 </form>
                             </div>
-                           
+                            <div className="box">
+                <div className="box-header">
+                  <h3 className="box-title">List Category</h3>
+                </div>
+                <div className="flex items-center space-x-4 float-left flex-1 mb-2 ml-2">
+                  <label for="search" className="text-gray-600">Search</label>
+                  <input type="text" id="search" name="search" placeholder="Enter your search term" value={searchTerm} onChange={(e) => setSearchtem(e.target.value)} className="border border-gray-300 px-3 py-1 rounded-md focus:outline-none focus:border-blue-500" />
+
+                </div>
+
+
+                <div className="box-body">
+                  <table id="example1" className="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Birthday</th>
+                        <th>FullName</th>
+                        
+                        <th>Cinema</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {currentAccount.map((account,index)=>(
+                      <tr>
+                        <td>{index+1}</td>
+                        <td>{account.username}</td>
+                        <td>{account.email}</td>
+                        <td>{account.phone}</td>
+                        <td>{new Date(account.birthDay).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric'})}</td>
+                        <td>{account.fullName}</td>
+                        <td>{account.cinema.name}</td>
+                      </tr>
+                    ))}
+                
+                    </tbody>
+
+                  </table>
+                  <Pagination
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    pageCount={Math.ceil(filterAdmin.length / perPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageclick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+
+                  />
+                  
+                </div>
+              </div>
                         </div>
                     </section>
                 </div>
-
+             
                 <footer className="main-footer">
                     <div className="pull-right hidden-xs">
                         <b>Version</b> 2.0

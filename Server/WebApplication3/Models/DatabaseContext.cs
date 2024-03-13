@@ -65,7 +65,7 @@ public partial class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseSqlServer("Server=KYOS22;Database=Movie2902;user id=sa;password=123456;trusted_connection=true;encrypt=false");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-KU1PU6V\\ASUS;Database=MovieTicket;user id=sa;password=123;trusted_connection=true;encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
