@@ -143,9 +143,7 @@ return () => {
   isMounted = false;
 };
   },[]);
-const existAuditorium = (cinemaId) => {
-  return Auditorium.some(auditorium => auditorium.idCinema === cinemaId);
-}
+
   
 
   const filteredGender = Cinema.filter((Cinema) =>
@@ -174,17 +172,8 @@ const existAuditorium = (cinemaId) => {
     setPopupVisibility(true);
     }
   };
-  const handleDetailAuditorium = (cinemaIdFromButton) => {
-      if(existAuditorium(cinemaIdFromButton)){
-          setPopupVisibility(true);
-      }else{
-        Swal.fire({
-          icon: 'info',
-          title:"Cinema hasn't been created",
-          text:"please created auditorium before click"
-        })
-      }
-  }
+  
+  
 
   const handleQuantityRoomChange = (e) => {
     const value = parseInt(e.target.value, 10);
@@ -311,6 +300,8 @@ const[setupRoomPopupVisibleDetail,setSetupRoomPopupVisibleDetail] = useState(fal
     }
     return <div>{rows}</div>;
   };
+  
+  
   const vipCount = vipSeatsCountByRoom[`Room${activeTab}`] || 0;
 const standardCount = seatCounts[activeTab] - vipCount;
  
@@ -379,7 +370,7 @@ const handleSave = async () => {
             const seatKey = `Room${index}Seat${seatIndex}`;
             const isVip = vipSeats[`Room${index}Seat${seatIndex + 1}`];
             return {
-                name: `Seat ${seatIndex + 1}`,
+                name: `${seatIndex + 1}`,
                 type: isVip ? "1" : "2",
             };
         });
@@ -428,61 +419,80 @@ const handleSave = async () => {
         Swal.fire('Error', 'There was a problem saving the configurations.', 'error');
     }
 };
-  
+const existAuditorium = (cinemaId) => {
+  return Auditorium.some(auditorium => auditorium.idCinema === cinemaId);
+}
 const [cinemaDetails, setCinemaDetails] = useState({ auditoriums: [],seats: {} });
 const [selectedAuditorium, setSelectedAuditorium] = useState(null);
 
 const handleDetailAuditoriums = async (cinemaIdFromButton) => {
+  if(existAuditorium(cinemaIdFromButton)){
   try {
-    const seatsResponse = await axios.get(`http://localhost:5231/api/Seat/getAuditoriumWithSeats/${cinemaIdFromButton}`);
-    console.log("Auditoriums and Seats Details: ", seatsResponse.data);
+      const seatsResponse = await axios.get(`http://localhost:5231/api/Seat/getAuditoriumWithSeats/${cinemaIdFromButton}`);
+      console.log("Auditoriums and Seats Details: ", seatsResponse.data);
+  
+      setCinemaDetails({
+        auditoriums: seatsResponse.data,
+        seats: seatsResponse.data.reduce((acc, auditoriumDetail) => {
+          acc[auditoriumDetail.AuditoriumId] = auditoriumDetail.Seats;
+          return acc;
+        }, {})
+      });
+  
+      if (seatsResponse.data && seatsResponse.data.length > 0) {
+        setSelectedAuditorium(seatsResponse.data[0]);
+      }
 
-    setCinemaDetails({
-      auditoriums: seatsResponse.data,
-      seats: seatsResponse.data.reduce((acc, auditoriumDetail) => {
-        acc[auditoriumDetail.AuditoriumId] = auditoriumDetail.Seats;
-        return acc;
-      }, {})
-    });
-
-    setPopupDetailSeat(true); // Giả định rằng bạn đã định nghĩa hook này để quản lý trạng thái của popup
-  } catch (error) {
-    console.error('Failed to fetch auditorium details: ', error);
-    Swal.fire('Error', 'Could not load auditorium details.', 'error');
-  }
+      setPopupDetailSeat(true); // Giả định rằng bạn đã định nghĩa hook này để quản lý trạng thái của popup
+    } catch (error) {
+      console.error('Failed to fetch auditorium details: ', error);
+      Swal.fire('Error', 'Could not load auditorium details.', 'error');
+    }
+}else{
+  Swal.fire({
+    icon: 'info',
+    title:"Cinema hasn't been created",
+    text:"please created auditorium before click"
+  })
+}
+  
 };
 
 // ... previous code
 
+// Generate a layout for seats within the selected auditorium
 const generateSeatLayout = () => {
-  const seats = [];
-  const totalSeats = selectedAuditorium.normalSeatsCount + selectedAuditorium.vipSeatsCount;
-  
- 
-  const numberOfRows = Math.ceil(totalSeats / 10);
-  
-  for (let i = 0; i < numberOfRows; i++) {
-   
-    const rowSeats = [];
-    for (let j = 0; j < 10; j++) {
-      const seatNumber = i * 10 + j;
-      if (seatNumber < totalSeats) {
-        const isVip = seatNumber < selectedAuditorium.vipSeatsCount;
-        rowSeats.push(
-          <div
-            key={`seat-${seatNumber}`}
-            className={`seat ${isVip ? 'vip' : 'standard'}`}
-            // You can add onClick handler here if you need to toggle VIP status or other actions
-          >
-            {isVip ? 'V' : 'S'}{seatNumber + 1}
-          </div>
-        );
-      }
-    }
-    seats.push(<div key={`row-${i}`} className="seat-row">{rowSeats}</div>);
+  // Ensure selectedAuditorium and its seats are defined
+  if (!selectedAuditorium || !selectedAuditorium.seats) {
+    return null; // Return nothing or a placeholder if there's no data
   }
-  return seats;
+
+  // Use the seats data directly from selectedAuditorium
+  const seats = selectedAuditorium.seats;
+  const rows = [];
+
+  // Assuming that seats are sorted in the order they should be displayed
+  for (let i = 0; i < seats.length; i += 10) {
+    const rowSeats = seats.slice(i, i + 10); // Get seats for the current row
+    const rowSeatsJSX = rowSeats.map(seat => {
+      const seatClass = seat.category === 'Vip' ? 'vip' : '';
+      return (
+        <div key={seat.id} className={`seat-inDetail ${seatClass}`}>
+          {seat.name}
+        </div>
+      );
+    });
+    rows.push(
+      <div key={`row-${i}`} className="seat-row">
+        {rowSeatsJSX}
+      </div>
+    );
+  }
+
+  return <div className="seats-layout">{rows}</div>;
 };
+
+
 
 // ... rest of your component code
 
@@ -589,7 +599,7 @@ const generateSeatLayout = () => {
                       <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Manager</th>
+                        
                         <th>Location</th>
                         <th>Phone</th>
                         <th>District</th>
@@ -603,7 +613,7 @@ const generateSeatLayout = () => {
                         <tr key={CinemaItem.ID}>
                           <td>{index + 1}</td>
                           <td>{CinemaItem.name}</td>
-                          <td>{CinemaItem.idAccount}</td>
+                          
                           <td>{CinemaItem.location}</td>
                           <td>{CinemaItem.phone}</td>
                           <td>{CinemaItem.district}</td>
@@ -697,10 +707,10 @@ const generateSeatLayout = () => {
       <div className="tabs">
         {cinemaDetails.auditoriums.map((auditorium) => (
           <button
-            key={auditorium.AuditoriumId}
-            onClick={() => setSelectedAuditorium(auditorium)}
-            className={`tab-item ${selectedAuditorium && selectedAuditorium.AuditoriumId === auditorium.AuditoriumId ? 'active' : ''}`}
-          >
+          key={auditorium.AuditoriumId}
+          onClick={() => setSelectedAuditorium(auditorium)}
+          className={`tab-item ${selectedAuditorium && selectedAuditorium.AuditoriumId === auditorium.AuditoriumId ? 'active' : ''}`}
+        >
             Room {auditorium.nameAuditorium}
           </button>
         ))}
@@ -715,8 +725,21 @@ const generateSeatLayout = () => {
           <p>Normal Seats: {selectedAuditorium.normalSeatsCount}</p>
         </div>
       )}
-      <div className="seats-layout">
+      <div className="seats-layout  flex justify-center">
         {selectedAuditorium && generateSeatLayout()}
+      </div>
+      <div>
+      <ul class="showcase1">
+      <li>
+        <div class="seat-inDetail-icon"></div>
+        <small>Standard</small>
+      </li>
+      <li>
+        <div class="seat-inDetail1-icon"></div>
+        <small>Vip </small>
+      </li>
+      
+    </ul>
       </div>
     </div>
   </div>

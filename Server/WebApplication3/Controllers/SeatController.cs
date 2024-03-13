@@ -69,15 +69,16 @@ namespace WebApplication3.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while saving the auditoriums.");
             }
         }
-        [HttpGet("getAuditorium/{id}")]
-        public async Task<ActionResult<IEnumerable<Auditorium>>> getIdAuditorium(int id)
+        [HttpGet("getAuditorium")]
+        public async Task<ActionResult<IEnumerable<Auditorium>>> getIdAuditorium()
         {
             try
             {
-                var auditorium = await _dbContext.Auditoriums.Where(p=> p.IdCinema == id).Select(m => new
+                var auditorium = await _dbContext.Auditoriums.Select(m => new
                 {
                     id = m.Id,
                     Name = m.Name,
+                    IdCinema = m.IdCinema
                     
                 }).ToListAsync();
                 return Ok(auditorium);
