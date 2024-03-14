@@ -85,6 +85,7 @@ namespace WebApplication3.Controllers
                 {
                     id=d.Title,
                     name=d.ContentBlog,
+                    ImageUrl=d.ImageUrl,
                 }).ToListAsync();
                 return Ok(Blog);
             }catch(Exception ex)

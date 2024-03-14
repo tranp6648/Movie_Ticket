@@ -58,6 +58,8 @@ function DetailBlog() {
                                                         {DetailEv.map((detail, index) => (
                                 <div className="elementor-element elementor-element-29bf31d elementor-widget elementor-widget-ova_event_content">
                                     <div className="elementor-widget-container">
+                                    <img src={`http://localhost:5231/${detail.imageUrl}`}
+                                                        width="770" height="500" style={{ objectFit: 'cover' }} alt="" />
                                         <div className="ovaev-event-content">
                                             <div dangerouslySetInnerHTML={{ __html: detail.name }} />
                                       

@@ -1945,17 +1945,11 @@
   {
     "ContainingType": "WebApplication3.Controllers.SeatController",
     "Method": "getIdAuditorium",
-    "RelativePath": "api/Seat/getAuditorium/{id}",
+    "RelativePath": "api/Seat/getAuditorium",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApplication3.Models.Auditorium, WebApplication3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",

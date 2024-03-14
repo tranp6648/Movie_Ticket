@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4vh+Q8h56cTnoW3wBy7nmXEbMH5UC4ArtdncStudo1c=",
+  "Hash": "N/4aGnp6DtOLAzz9PzRYW9igaMQ/neQYXui5YV8NUBY=",
   "Source": "WebApplication3",
   "BasePath": "_content/WebApplication3",
   "Mode": "Default",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\image\\Actor_63_picture.png"
+    },
+    {
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_1004_picture.png",
+      "SourceId": "WebApplication3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "BasePath": "_content/WebApplication3",
+      "RelativePath": "image/Blog_1004_picture.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\image\\Blog_1004_picture.png"
     },
     {
       "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_4_picture.png",
@@ -302,25 +321,6 @@
       "OriginalItemSpec": "wwwroot\\image\\movie_3_picture.png"
     },
     {
-      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_4_picture.png",
-      "SourceId": "WebApplication3",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
-      "BasePath": "_content/WebApplication3",
-      "RelativePath": "image/movie_4_picture.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\image\\movie_4_picture.png"
-    },
-    {
       "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_61_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
@@ -414,25 +414,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\videos\\movie_3_picture.mp4"
-    },
-    {
-      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_4_picture.mp4",
-      "SourceId": "WebApplication3",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
-      "BasePath": "_content/WebApplication3",
-      "RelativePath": "videos/movie_4_picture.mp4",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\videos\\movie_4_picture.mp4"
     },
     {
       "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_61_picture.mp4",

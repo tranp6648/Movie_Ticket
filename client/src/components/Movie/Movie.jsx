@@ -126,17 +126,12 @@ function Movie() {
     setFormData({ ...FormData, updateReleaseDate: formattedDate });
   }
   const handleDescriptionChange = (value) => {
-    if (value.length <= MAX_DESCRIPTION_LENGTH) {
+    
       setFormData({
         ...FormData,
         DescriptionL: value
       })
-    } else {
-      setFormData({
-        ...FormData,
-        DescriptionL: value.substring(0, MAX_DESCRIPTION_LENGTH),
-      })
-    }
+    
 
   };
   const handlepudateDescriptionChange = (value) => {
@@ -619,7 +614,7 @@ function Movie() {
                       <DatePicker name='Birthday' selected={FormData.ReleaseDate ? new Date(FormData.ReleaseDate) : null} onChange={handleDateChange} dateFormat="dd/MM/yyyy"
                         onBlur={() => validateInput('ReleaseDate', FormData.ReleaseDate)}
                         className="form-control"
-                        minDate={new Date()}
+                        
                         placeholderText="Select Release Date"
                       // Cannot select a date before startDate
                       />
