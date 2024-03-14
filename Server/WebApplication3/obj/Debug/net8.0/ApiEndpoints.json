@@ -1424,15 +1424,15 @@
   {
     "ContainingType": "WebApplication3.Controllers.MovieController",
     "Method": "AddMovie",
-    "RelativePath": "api/Movie/AddMovie",
+    "RelativePath": "api/Movie/add",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
+        "Name": "addMovie",
+        "Type": "WebApplication3.Models.AddMovie",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

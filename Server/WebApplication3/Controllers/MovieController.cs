@@ -76,7 +76,7 @@ namespace WebApplication3.Controllers
             existMovie.Duration = addMovie.Duration;
             existMovie.IdGenre = addMovie.IdGenre;
             existMovie.Director = addMovie.Director;
-           
+
             try
             {
                 _dbContext.SaveChanges();
@@ -107,11 +107,11 @@ namespace WebApplication3.Controllers
                 {
                     _dbContext.DetailCategoryMovies.Remove(categoryMovie);
                 }
-                if(detailActor != null)
+                if (detailActor != null)
                 {
                     return BadRequest(new { message = "Movie Delete Failed" });
                 }
-                if(showtime != null)
+                if (showtime != null)
                 {
                     return BadRequest(new { message = "Movie Delete Failed" });
                 }
@@ -127,7 +127,7 @@ namespace WebApplication3.Controllers
             }
 
         }
-        private void DeleteMovie(int movieID,string webRootPath)
+        private void DeleteMovie(int movieID, string webRootPath)
         {
             string imagePath = Path.Combine(webRootPath, "videos", $"movie_{movieID}_picture.mp4");
             if (System.IO.File.Exists(imagePath))
@@ -231,7 +231,7 @@ namespace WebApplication3.Controllers
                 ReleaseDate = addMovie.ReleaseDate,
                 Duration = addMovie.Duration,
                 IdGenre = addMovie.IdGenre,
-                Director=addMovie.Director
+                Director = addMovie.Director
                 // Map other properties as needed
             };
         }
@@ -240,21 +240,21 @@ namespace WebApplication3.Controllers
         {
             try
             {
-              
 
-                var topThreeUsers = await _dbContext.Accounts.Where(a => a.Accounttype==1)
+
+                var topThreeUsers = await _dbContext.Accounts.Where(a => a.Accounttype == 1)
                     .OrderByDescending(a => a.Orders.Count)
                     .Take(3)
                     .Select(d => new
                     {
-                        Username=d.Username,
-                        Ordercount=d.Orders.Count,
-                        FullName=d.FullName
+                        Username = d.Username,
+                        Ordercount = d.Orders.Count,
+                        FullName = d.FullName
                     })
                     .ToListAsync();
 
                 // Serialize the data using JsonSerializerOptions
-             
+
 
                 return Ok(topThreeUsers);
             }
@@ -268,7 +268,7 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var Movie = await _dbContext.Showtimes.Where(d=>d.Time>=DateTime.Now).CountAsync();
+                var Movie = await _dbContext.Showtimes.Where(d => d.Time >= DateTime.Now).CountAsync();
                 return Ok(Movie);
             }
             catch (Exception ex)
@@ -320,7 +320,7 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var Movie = await _dbContext.Accounts.Where(d=>d.Accounttype==1).CountAsync();
+                var Movie = await _dbContext.Accounts.Where(d => d.Accounttype == 1).CountAsync();
                 return Ok(Movie);
             }
             catch (Exception ex)
@@ -361,7 +361,8 @@ namespace WebApplication3.Controllers
             {
                 var Movie = await _dbContext.Movies.CountAsync();
                 return Ok(Movie);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
@@ -371,27 +372,28 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var voucher = await _dbContext.Vouchers.Where(d => d.Quatity > 0 && DateTime.Now.Day <= d.ExpireDate.Day && DateTime.Now.Month <= d.ExpireDate.Month && DateTime.Now.Year <= d.ExpireDate.Year && DateTime.Now.Day>=d.StartDate.Day && DateTime.Now.Month >=d.StartDate.Month && DateTime.Now.Year>=d.StartDate.Year).Select(d => new
+                var voucher = await _dbContext.Vouchers.Where(d => d.Quatity > 0 && DateTime.Now.Day <= d.ExpireDate.Day && DateTime.Now.Month <= d.ExpireDate.Month && DateTime.Now.Year <= d.ExpireDate.Year && DateTime.Now.Day >= d.StartDate.Day && DateTime.Now.Month >= d.StartDate.Month && DateTime.Now.Year >= d.StartDate.Year).Select(d => new
                 {
-                    VoucherCode=d.Code,
-                    DiscountPercent=d.DiscountPercent,
-                    ExpireDate=d.ExpireDate,
-                    Minprice=d.MinPrice,
-                    Quality=d.Quatity,
-                    startDate=d.StartDate,
+                    VoucherCode = d.Code,
+                    DiscountPercent = d.DiscountPercent,
+                    ExpireDate = d.ExpireDate,
+                    Minprice = d.MinPrice,
+                    Quality = d.Quatity,
+                    startDate = d.StartDate,
                 }).ToListAsync();
                 return Ok(voucher);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-            [HttpGet("ShowMovie")]
+        [HttpGet("ShowMovie")]
         public async Task<ActionResult<IEnumerable<Movie>>> ShowMovie()
         {
             try
             {
-                var movies = await _dbContext.Movies.Where(d=>d.Showtimes.Any(e=>  DateTime.Now<e.Time))
+                var movies = await _dbContext.Movies.Where(d => d.Showtimes.Any(e => DateTime.Now < e.Time))
       .Include(m => m.DetailCategoryMovies)
           .ThenInclude(d => d.IdCategoryNavigation)
       .Select(m => new
@@ -446,7 +448,7 @@ namespace WebApplication3.Controllers
           ReleaseDate = m.ReleaseDate,
           duration = m.Duration,
           director = m.Director,
-          description=m.Description,
+          description = m.Description,
           idgenre = m.IdGenreNavigation.Id,
           GenreName = m.IdGenreNavigation.Name,
           DetailCategoryMovies = m.DetailCategoryMovies.Select(d => new
