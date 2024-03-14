@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "BiLWIOuG9lJmSQjMlxAz2EqNdAkm92KuFH3VxBWprCI=",
+=======
+  "Hash": "N/4aGnp6DtOLAzz9PzRYW9igaMQ/neQYXui5YV8NUBY=",
+>>>>>>> 735948ec41a67291bd67361270cdd28920b036d3
   "Source": "WebApplication3",
   "BasePath": "_content/WebApplication3",
   "Mode": "Default",
@@ -10,17 +14,17 @@
     {
       "Name": "WebApplication3\\wwwroot",
       "Source": "WebApplication3",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Actor_62_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Actor_62_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Actor_62_picture.png",
       "AssetKind": "All",
@@ -36,10 +40,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Actor_62_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Actor_63_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Actor_63_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Actor_63_picture.png",
       "AssetKind": "All",
@@ -55,10 +59,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Actor_63_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_1004_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_1004_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Blog_1004_picture.png",
       "AssetKind": "All",
@@ -74,10 +78,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Blog_1004_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_4_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_4_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Blog_4_picture.png",
       "AssetKind": "All",
@@ -93,10 +97,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Blog_4_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_5_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_5_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Blog_5_picture.png",
       "AssetKind": "All",
@@ -112,10 +116,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Blog_5_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_6_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_6_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Blog_6_picture.png",
       "AssetKind": "All",
@@ -131,10 +135,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Blog_6_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_7_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Blog_7_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Blog_7_picture.png",
       "AssetKind": "All",
@@ -150,10 +154,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Blog_7_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_1_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_1_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Event_1_picture.png",
       "AssetKind": "All",
@@ -169,10 +173,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Event_1_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_2_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_2_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Event_2_picture.png",
       "AssetKind": "All",
@@ -188,10 +192,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Event_2_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_3_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_3_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Event_3_picture.png",
       "AssetKind": "All",
@@ -207,10 +211,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Event_3_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_4_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_4_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Event_4_picture.png",
       "AssetKind": "All",
@@ -226,10 +230,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Event_4_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_5_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_5_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Event_5_picture.png",
       "AssetKind": "All",
@@ -245,10 +249,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Event_5_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_6_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_6_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Event_6_picture.png",
       "AssetKind": "All",
@@ -264,10 +268,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Event_6_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_9_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\Event_9_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/Event_9_picture.png",
       "AssetKind": "All",
@@ -283,10 +287,10 @@
       "OriginalItemSpec": "wwwroot\\image\\Event_9_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_2_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_2_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/movie_2_picture.png",
       "AssetKind": "All",
@@ -302,10 +306,10 @@
       "OriginalItemSpec": "wwwroot\\image\\movie_2_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_3_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_3_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/movie_3_picture.png",
       "AssetKind": "All",
@@ -321,10 +325,10 @@
       "OriginalItemSpec": "wwwroot\\image\\movie_3_picture.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_61_picture.png",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_61_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "image/movie_61_picture.png",
       "AssetKind": "All",
@@ -340,6 +344,7 @@
       "OriginalItemSpec": "wwwroot\\image\\movie_61_picture.png"
     },
     {
+<<<<<<< HEAD
       "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_7_picture.png",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
@@ -379,9 +384,12 @@
     },
     {
       "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\2024-01-13 15-07-06.mkv",
+=======
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\2024-01-13 15-07-06.mkv",
+>>>>>>> 735948ec41a67291bd67361270cdd28920b036d3
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "videos/2024-01-13 15-07-06.mkv",
       "AssetKind": "All",
@@ -397,10 +405,10 @@
       "OriginalItemSpec": "wwwroot\\videos\\2024-01-13 15-07-06.mkv"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_1_picture.mp4",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_1_picture.mp4",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "videos/movie_1_picture.mp4",
       "AssetKind": "All",
@@ -416,10 +424,10 @@
       "OriginalItemSpec": "wwwroot\\videos\\movie_1_picture.mp4"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_2_picture.mp4",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_2_picture.mp4",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "videos/movie_2_picture.mp4",
       "AssetKind": "All",
@@ -435,10 +443,10 @@
       "OriginalItemSpec": "wwwroot\\videos\\movie_2_picture.mp4"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_3_picture.mp4",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_3_picture.mp4",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "videos/movie_3_picture.mp4",
       "AssetKind": "All",
@@ -454,10 +462,10 @@
       "OriginalItemSpec": "wwwroot\\videos\\movie_3_picture.mp4"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_61_picture.mp4",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_61_picture.mp4",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "videos/movie_61_picture.mp4",
       "AssetKind": "All",
@@ -473,10 +481,10 @@
       "OriginalItemSpec": "wwwroot\\videos\\movie_61_picture.mp4"
     },
     {
-      "Identity": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_64_picture.mp4",
+      "Identity": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_64_picture.mp4",
       "SourceId": "WebApplication3",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
+      "ContentRoot": "D:\\VisualStudioCode\\movie_ticket2\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\",
       "BasePath": "_content/WebApplication3",
       "RelativePath": "videos/movie_64_picture.mp4",
       "AssetKind": "All",
