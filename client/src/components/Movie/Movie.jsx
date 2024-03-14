@@ -126,17 +126,10 @@ function Movie() {
     setFormData({ ...FormData, updateReleaseDate: formattedDate });
   }
   const handleDescriptionChange = (value) => {
-    if (value.length <= MAX_DESCRIPTION_LENGTH) {
-      setFormData({
-        ...FormData,
-        DescriptionL: value
-      })
-    } else {
-      setFormData({
-        ...FormData,
-        DescriptionL: value.substring(0, MAX_DESCRIPTION_LENGTH),
-      })
-    }
+    setFormData({
+      ...FormData,
+      DescriptionL: value
+    })
 
   };
   const handlepudateDescriptionChange = (value) => {
@@ -582,29 +575,13 @@ function Movie() {
                       <ReactQuill
                         theme="snow"
                         onBlur={() => validateInput('Description', FormData.DescriptionL)}
-                        value={FormData.DescriptionL}
-                        onChange={handleDescriptionChange}
                         placeholder='Enter Description'
-                        modules={{
-                          toolbar: [
-                            [{ 'header': [1, 2, false] }],
-                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-                            ['link', 'image'],
-                            ['clean']
-                          ],
-                        }}
-                        formats={[
-                          'header',
-                          'bold', 'italic', 'underline', 'strike', 'blockquote',
-                          'list', 'bullet', 'indent',
-                          'link', 'image'
-                        ]}
+                                                onChange={handleDescriptionChange}
+                                                value={FormData.DescriptionL}
 
+                       
                       />
-                      {errors.Description && (
-                        <p className="text-red-500 text-sm italic">{errors.Description}</p>
-                      )}
+                   
                     </div>
                     <div className="form-group">
                       <label >Director</label>

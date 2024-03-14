@@ -61,10 +61,6 @@
       "PackagePath": "staticwebassets\\image\\movie_3_picture.png"
     },
     {
-      "Id": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_4_picture.png",
-      "PackagePath": "staticwebassets\\image\\movie_4_picture.png"
-    },
-    {
       "Id": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\image\\movie_61_picture.png",
       "PackagePath": "staticwebassets\\image\\movie_61_picture.png"
     },
@@ -83,10 +79,6 @@
     {
       "Id": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_3_picture.mp4",
       "PackagePath": "staticwebassets\\videos\\movie_3_picture.mp4"
-    },
-    {
-      "Id": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_4_picture.mp4",
-      "PackagePath": "staticwebassets\\videos\\movie_4_picture.mp4"
     },
     {
       "Id": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\wwwroot\\videos\\movie_61_picture.mp4",

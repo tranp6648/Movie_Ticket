@@ -160,3 +160,24 @@
   margin-left: 2px;
   color: #9e9c9c;
 }
+.showcase1 {
+  
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #777;
+  font-size: 1.2rem;
+  list-style-type: none;
+  display: flex;
+  margin-left: 260px;
+}
+.showcase1 li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.showcase1 li small {
+  margin-left: 2px;
+  color: #9e9c9c;
+}
