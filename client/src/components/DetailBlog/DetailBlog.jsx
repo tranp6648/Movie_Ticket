@@ -3,6 +3,7 @@ import Menu from "../Menu/Menu";
 import { useLocation, useNavigate } from "react-router-dom";
 import '../DetailEvent/DetailEvent.css'
 import axios from "axios";
+import FooterHome from "../footer/FooterHome";
 function DetailBlog() {
     const location = useLocation();
 
@@ -39,7 +40,7 @@ function DetailBlog() {
                 </div>
 
             </div>
-            <section className="elementor-section elementor-top-section elementor-element elementor-element-3929839 elementor-section-boxed elementor-section-height-default elementor-section-height-default mt-[141px]">
+            <section className="elementor-section elementor-top-section elementor-element elementor-element-3929839 elementor-section-boxed elementor-section-height-default elementor-section-height-default mt-[141px] mb-[100px]">
                 <div className="elementor-container elementor-column-gap-default">
                     <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-19202dd">
                         <div className="elementor-widget-wrap elementor-element-populated">
@@ -85,6 +86,7 @@ function DetailBlog() {
                 </div>
                
             </section>
+            <FooterHome></FooterHome>
         
         </div>
 

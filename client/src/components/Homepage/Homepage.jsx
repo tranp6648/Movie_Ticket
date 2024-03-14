@@ -17,6 +17,7 @@ import popCorn from '../images/popcorn.png';
 import backGroundPopcorn from '../images/background-popcorn.png';
 import FooterHome from "../footer/FooterHome";
 
+
 import underline from '../images/underline-heading-entire.png';
 import dotLine from '../images/line_dot.jpg';
 import '../Homepage/HomepageCss.css';
@@ -31,6 +32,7 @@ import Cinema from "../Cinema/Cinema";
 import axios from "axios";
 import Blog from "../Blog/Blog";
 import avatarAi from "../images/avatar_AI.webp";
+import { useLocation, useNavigate } from "react-router-dom";
 Modal.setAppElement('#root'); 
 
 function Homepage(){
@@ -71,7 +73,9 @@ function Homepage(){
     asNavFor: nav1,
     ref:slider2
       };
-    
+      const navigate = useNavigate();
+      const location = useLocation();
+      const ID = location.state?.ID || '';
       const slidesData = [
         {
           id: 1,
@@ -299,7 +303,7 @@ useEffect(() => {
                     <h3 className=" text-[5.5rem] pb-0 mb-0">{slide.title}</h3>
                     <h2 className="mb-5 pt-0">Written and Directed by Aleesha Rose /Ireland 2023</h2>
                     <div className="button-1   h-[60px] w-[80%] flex gap-3">
-                        <a href="" className="px-12 py-3 bg-white text-black">More Info</a>
+                        <a href="" className="btn-slider-moreInfo px-12 py-3 bg-white text-black">More Info</a>
                         <a href="" className=" px-12 py-3  text-white bg-[#D96C2C]">Get Ticket</a>
                     </div>
                 </div>
@@ -440,7 +444,7 @@ useEffect(() => {
                             : 'No Category'} alt="" />
                       <div className="">
                       <div className="cardmain absolute bg-white  w-[90%] h-[200px] left-5 top-[230px] px-[40px]">
-                      <p className="name-movie mt-9">{slide.title}</p>
+                      <p onClick={()=>navigate(`/Detail/${slide.id}`,{ state: { ID:slide.id,IDAccount:ID } })} className="name-movie mt-9 cursor-pointer">{slide.title}</p>
                       <div className="flex gap-4 mt-2">
                         <div className="flex gap-1 items-center">
                           <img className="w-[20px] h-[20px]" src={oclock} alt="" />
@@ -453,7 +457,7 @@ useEffect(() => {
                       </div>
                       <div className="flex gap-2 mt-2">
                           <a className="btn-watchtrailer" href=""><button>Watch Trailer</button></a>
-                          <a className="btn-getTicket" href=""><button>Get Ticket</button></a>
+                          <a className="btn-getTicket" onClick={()=>navigate(`/Detail/${slide.id}`,{ state: { ID:slide.id,IDAccount:ID } })} href=""><button>Get Ticket</button></a>
                       </div>
 </div>
 
