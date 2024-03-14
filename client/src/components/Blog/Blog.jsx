@@ -83,7 +83,7 @@ function Blog() {
         Name: '',
         id: '',
         updateName: '',
-        UpdateContent: '',
+    
 
     })
 
@@ -140,12 +140,7 @@ function Blog() {
         }
 
     }
-    const handleUpdateDescription = (value) => {
-        setFormData({
-            ...FormData,
-            UpdateContent: value
-        })
-    }
+
     const handleDescriptionChange = (value) => {
         setFormData({
             ...FormData,
@@ -237,7 +232,7 @@ function Blog() {
     const handleUpdate = async (event) => {
 
         event.preventDefault();
-        if (FormData.updateName == '' || FormData.UpdateContent=='') {
+        if (FormData.updateName == '' ) {
             Swal.fire({
                 icon: 'error',
                 title: "Please complete all information",
@@ -251,7 +246,7 @@ function Blog() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ title: FormData.updateName, contentBlog: FormData.UpdateContent, idCategory: updateselectedcategory.value || (updateselectedcategory.hasOwnProperty('value') ? updateselectedcategory.value : updateselectedcategory) })
+                    body: JSON.stringify({ title: FormData.updateName, idCategory: updateselectedcategory.value || (updateselectedcategory.hasOwnProperty('value') ? updateselectedcategory.value : updateselectedcategory) })
                 })
                 if (response.ok) {
                     Swal.fire({
@@ -261,7 +256,7 @@ function Blog() {
                         timer: 1500,
                     })
                     FormData.updateName = '';
-                    FormData.UpdateContent = '';
+       
                     setupdateselectedcategory(null);
                     setPopupVisibility(false);
                     const categoryBlog = await axios.get("http://localhost:5231/api/Blog/ShowBlog");
@@ -646,20 +641,7 @@ function Blog() {
 
                                     </div>
 
-                                    <div className="form-group">
-                                        <label className='float-left'>Description</label>
-                                        <br />
-                                        <ReactQuill
-                                            theme="snow"
-                                            onChange={handleUpdateDescription}
-                                            value={FormData.UpdateContent}
-
-                                            placeholder='Enter Description'
-
-
-                                        />
-
-                                    </div>
+                                
 
                                     <div className="form-group">
                                         <label className='float-left'>Category</label>

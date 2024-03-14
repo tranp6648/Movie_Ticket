@@ -366,7 +366,7 @@ namespace WebApplication3.Controllers
             {
                 return BadRequest("Invalid data");
             }
-
+            
            
             Account newAdmin = new Account
             {
