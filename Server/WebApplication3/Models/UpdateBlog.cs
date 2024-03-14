@@ -4,7 +4,7 @@
     {
         public string Title { get; set; } = null!;
 
-        public string ContentBlog { get; set; } = null!;
+       
 
 
 

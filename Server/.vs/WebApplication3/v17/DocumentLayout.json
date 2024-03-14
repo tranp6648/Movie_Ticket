@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\blogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\blogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\models\\updateblog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\models\\updateblog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -38,14 +54,6 @@
       "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\blogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\blogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\showtimecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\showtimecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -64,10 +72,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\cinemacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\cinemacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\controllers\\vouchercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -119,10 +123,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\models\\addcategoryblog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\models\\addcategoryblog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\models\\updateblog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|solutionrelative:webapplication3\\models\\updateblog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C696FE07-686A-4651-95EB-D83704BB620F}|WebApplication3\\WebApplication3.csproj|c:\\users\\admin\\downloads\\compressed\\movie\\movie_ticket\\server\\webapplication3\\models\\addblog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -179,7 +179,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -203,44 +203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "UpdateInformation.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\UpdateInformation.cs",
-              "RelativeDocumentMoniker": "WebApplication3\\Models\\UpdateInformation.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\UpdateInformation.cs",
-              "RelativeToolTip": "WebApplication3\\Models\\UpdateInformation.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-01T12:32:43.528Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "CinemaController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CinemaController.cs",
-              "RelativeDocumentMoniker": "WebApplication3\\Controllers\\CinemaController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CinemaController.cs",
-              "RelativeToolTip": "WebApplication3\\Controllers\\CinemaController.cs",
-              "ViewState": "AQIAADEAAAAAAAAAAAAIwDcAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T12:26:43.807Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MovieController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\MovieController.cs",
-              "RelativeDocumentMoniker": "WebApplication3\\Controllers\\MovieController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\MovieController.cs",
-              "RelativeToolTip": "WebApplication3\\Controllers\\MovieController.cs",
-              "ViewState": "AQIAAPABAAAAAAAAAAAwwP4BAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T12:34:37.366Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Program.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Program.cs",
@@ -252,19 +215,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 0,
               "Title": "BlogController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\BlogController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\BlogController.cs",
               "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\BlogController.cs",
               "RelativeToolTip": "WebApplication3\\Controllers\\BlogController.cs",
-              "ViewState": "AQIAAE0AAAAAAAAAAAAYwFcAAAAoAAAA",
+              "ViewState": "AQIAAJoAAAAAAAAAAAAqwKMAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-26T05:23:37.58Z"
+              "WhenOpened": "2024-02-26T05:23:37.58Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "ActorController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\ActorController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\ActorController.cs",
@@ -276,7 +240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "DatabaseContext.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\DatabaseContext.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Models\\DatabaseContext.cs",
@@ -284,12 +248,36 @@
               "RelativeToolTip": "WebApplication3\\Models\\DatabaseContext.cs",
               "ViewState": "AQIAAD4AAAAAAAAAAAAswEMAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-06T03:33:28.616Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-06T03:33:28.616Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "CheckOutController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CheckOutController.cs",
+              "RelativeDocumentMoniker": "WebApplication3\\Controllers\\CheckOutController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CheckOutController.cs",
+              "RelativeToolTip": "WebApplication3\\Controllers\\CheckOutController.cs",
+              "ViewState": "AQIAAOEAAAAAAAAAAAAqwCwBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-06T03:36:14.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "UpdateInformation.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\UpdateInformation.cs",
+              "RelativeDocumentMoniker": "WebApplication3\\Models\\UpdateInformation.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\UpdateInformation.cs",
+              "RelativeToolTip": "WebApplication3\\Models\\UpdateInformation.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-01T12:32:43.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Microsoft.NET.Sdk.StaticWebAssets.targets",
               "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\8.0.200\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
@@ -301,7 +289,58 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "WebApplication3\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "WebApplication3\\Controllers\\AccountController.cs",
+              "ViewState": "AQIAAGsBAAAAAAAAAAD4v3ABAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T14:17:25.059Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UpdateBlog.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\UpdateBlog.cs",
+              "RelativeDocumentMoniker": "WebApplication3\\Models\\UpdateBlog.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\UpdateBlog.cs",
+              "RelativeToolTip": "WebApplication3\\Models\\UpdateBlog.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAxwAYAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-26T08:41:21.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MovieController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\MovieController.cs",
+              "RelativeDocumentMoniker": "WebApplication3\\Controllers\\MovieController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\MovieController.cs",
+              "RelativeToolTip": "WebApplication3\\Controllers\\MovieController.cs",
+              "ViewState": "AQIAALoAAAAAAAAAAAAwwL4AAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T12:34:37.366Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CinemaController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CinemaController.cs",
+              "RelativeDocumentMoniker": "WebApplication3\\Controllers\\CinemaController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CinemaController.cs",
+              "RelativeToolTip": "WebApplication3\\Controllers\\CinemaController.cs",
+              "ViewState": "AQIAADEAAAAAAAAAAAAIwDcAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-28T12:26:43.807Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "CategoryBlogController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CategoryBlogController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\CategoryBlogController.cs",
@@ -313,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "OrderController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\OrderController.cs",
@@ -325,7 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "CategoryMovieController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CategoryMovieController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\CategoryMovieController.cs",
@@ -337,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "Account.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\Account.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Models\\Account.cs",
@@ -349,7 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "DetailAccountSeat.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\DetailAccountSeat.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Models\\DetailAccountSeat.cs",
@@ -361,7 +400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "WeatherForecast.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\WeatherForecast.cs",
               "RelativeDocumentMoniker": "WebApplication3\\WeatherForecast.cs",
@@ -373,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "ShowTimeController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\ShowTimeController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\ShowTimeController.cs",
@@ -385,31 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "WebApplication3\\Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "WebApplication3\\Controllers\\AccountController.cs",
-              "ViewState": "AQIAAFcBAAAAAAAAAAAAAF8BAAAnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T14:17:25.059Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "CheckOutController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CheckOutController.cs",
-              "RelativeDocumentMoniker": "WebApplication3\\Controllers\\CheckOutController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CheckOutController.cs",
-              "RelativeToolTip": "WebApplication3\\Controllers\\CheckOutController.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAADwvzsAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-06T03:36:14.949Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "SeatController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\SeatController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\SeatController.cs",
@@ -421,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "DetailCityBranch.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\DetailCityBranch.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Models\\DetailCityBranch.cs",
@@ -433,7 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "VoucherController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\VoucherController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\VoucherController.cs",
@@ -445,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "EventController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\EventController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\EventController.cs",
@@ -457,7 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "Cinema.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\Cinema.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Models\\Cinema.cs",
@@ -469,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "DetailMovieController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\DetailMovieController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\DetailMovieController.cs",
@@ -481,7 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "GenreController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\GenreController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\GenreController.cs",
@@ -493,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "CinemaBranch.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\CinemaBranch.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Models\\CinemaBranch.cs",
@@ -505,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "AddCinema.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\AddCinema.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Models\\AddCinema.cs",
@@ -517,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\WeatherForecastController.cs",
@@ -529,7 +544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "CardSetController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\CardSetController.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Controllers\\CardSetController.cs",
@@ -541,7 +556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "AddCategoryBlog.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\AddCategoryBlog.cs",
               "RelativeDocumentMoniker": "WebApplication3\\Models\\AddCategoryBlog.cs",
@@ -574,18 +589,6 @@
               "ViewState": "AQIAAAsAAAAAAAAAAAA3wBMAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-26T05:34:13.521Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "UpdateBlog.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\UpdateBlog.cs",
-              "RelativeDocumentMoniker": "WebApplication3\\Models\\UpdateBlog.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\Compressed\\Movie\\Movie_Ticket\\Server\\WebApplication3\\Models\\UpdateBlog.cs",
-              "RelativeToolTip": "WebApplication3\\Models\\UpdateBlog.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-26T08:41:21.217Z"
             },
             {
               "$type": "Document",
@@ -709,7 +712,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "OrderController.cs",
               "DocumentMoniker": "D:\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\OrderController.cs",
               "ToolTip": "D:\\Movie_Ticket\\Server\\WebApplication3\\Controllers\\OrderController.cs",

@@ -161,7 +161,7 @@ namespace WebApplication3.Controllers
                     return BadRequest(new { message = "Title already exists" });
                 }
                 existBlog.Title = updateBlog.Title;
-                existBlog.ContentBlog=updateBlog.ContentBlog;
+       
                 existBlog.IdCategory=updateBlog.IdCategory;
                 _dbContext.SaveChanges();
                 return Ok("Update successfully");
