@@ -12,6 +12,10 @@ import tag from '../images/tag.png';
 import oclock from '../images/oclock.png';
 import ToddPhillip from '../images/ToddPhillips.png';
 import Joker_bg from '../images/joker4k.jpg';
+import comment_logo from '../images/commet-logo.png'
+import popCorn from '../images/popcorn.png';
+import backGroundPopcorn from '../images/background-popcorn.png';
+import FooterHome from "../footer/FooterHome";
 
 import underline from '../images/underline-heading-entire.png';
 import dotLine from '../images/line_dot.jpg';
@@ -428,10 +432,10 @@ useEffect(() => {
 
 </div>
                 </div>
-                <div className=" w-full grid grid-cols-3 gap-4 mt-7">
+                <div className=" w-full grid grid-cols-3 gap-5 mt-7">
                   {slidesMovies1.slice(0,3).map((slide)=>
                       <div key={slide.id} className=" relative">
-                        <img className="image-featured w-full h-[260px]" src={slide.detailCategoryMovies.length > 0
+                        <img className="image-featured w-full h-[260px] object-cover" src={slide.detailCategoryMovies.length > 0
                             ? `http://localhost:5231/${slide.detailCategoryMovies[0].picture}`
                             : 'No Category'} alt="" />
                       <div className="">
@@ -531,7 +535,7 @@ useEffect(() => {
                         </div>
 
                       </div>
-                      <div className="bg-green-400 w-full h-[260px] grid grid-cols-3 gap-4">
+                      <div className=" w-full h-[260px] grid grid-cols-3 gap-4">
                         
                         {ViewBlog.slice(0,3).map((ViewBlog, index) => (
                                                 <div>
@@ -544,35 +548,60 @@ useEffect(() => {
                       </div>
 
                     </div>
-                    <div className="bg-white w-full h-[60vh] px-[7.5%]">
-                          <div className="w-full h-[210px] bg-red-500 grid grid-cols-3 gap-4">
-                            {/* {ViewBlog.slice(0,3).map((ViewBlog,index) => {
-                              <div className="Blog-card">
-                                  <div className="w-full h-[60px] bg-green-300 flex flex-row" >
-                                  <img className="h-[260px] w-full object-cover" src={`http://localhost:5231/${ViewBlog.image}`}
-                                                         style={{ objectFit: 'cover' }} alt="" />
-                                    <img className="avatar-Blog" src={avatarAi} alt="" />
-                                    <p className="text-black">haheah</p>
-
-                                  </div>
-                              </div>
-                              
-                            })} */}
+                    <div className="bg-white w-full h-[45vh] px-[7.5%]">
+                          <div className="w-full h-[210px]   grid grid-cols-3 gap-4">
+                           
                              {ViewBlog.slice(0,3).map((ViewBlog, index) => (
                                                 
-                                                <div className="blog-card px-[8%]">
-                                                    <div className="w-full h-[40px] flex flex-row mt-7">
+                                                <div className="blog-card px-[8%]" >
+                                                    <div className="w-[300px]  h-[40px] flex flex-row mt-7">
                                                     
                                                          <img className="avatar-Blog" src={avatarAi} alt="" />
-                                    <p className="text-black">haheah</p>
-                                    <div className="lineBlog"></div>
-                                    <h1 className="blog-category">{ViewBlog.category}</h1>
+                                                         <div className="flex flex-col  ml-3 justify-center" >
+                                                         <p className="text-nameAdmin-blog">by</p>
+                                                         <p className=" text-nameAdmin-blog">{ViewBlog.account}</p>
+                                                         </div>
+                                                         <div className="lineBlog ml-7"></div>
+                                                         
+                                                         <div className="flex text-center items-center ml-6">
+                                                         <img className="w-[20px] h-[20px]" src={comment_logo} alt="" />
+                                                         <p className="category-blog">{ViewBlog.category}</p>
+                                                         </div>
+                                                    
+                                    
+                                                    </div>
+                                                    <div className=" w-full">
+                                                      <h1 className="topic-blog">{ViewBlog.title}</h1>
+                                                    </div>
+                                                    <div className="mt-2">
+                                                      
+                                                      <button class="button-89" role="button">Read me</button>
+                                                    </div>
+                                                    <div className="absolute bg-[#D96C2C] text-center top-[572vh] flex justify-center w-[100px] h-[30px]">
+                                                                
+                                                                <h1 className="created-Blog">{new Date(ViewBlog.createdAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</h1>
+
                                                     </div>
 
                                                 </div>
                                             ))}
+                                            
                           </div>
                     </div>
+                    <div className="relative h-[80vh] w-full">
+                    
+                    <img className="h-[70vh] absolute bottom-0 object-cover" src={backGroundPopcorn} alt="" />
+                    <img className="popcorn-1 absolute top-0  right-[250px]" src={popCorn} alt="" />
+                    <div className="box-popcorn absolute  left-[10%] top-[220px] w-[50%]">
+                              <div className="w-full flex justify-center">
+                              <h1 className="Selected-movies">Selected Movies</h1>
+                              </div>
+                              <h1 className="topic-Popcorn">Enjoy 30% Discount on Tickets</h1>
+                              <button className="btn-get-ticket">Get Ticket</button>
+                    </div>
+                    </div>
+                    <FooterHome></FooterHome>
+                    
             <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
