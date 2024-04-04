@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3.Models;
+using WebApplication3.Services;
 
 namespace WebApplication3.Controllers
 {
@@ -12,9 +13,11 @@ namespace WebApplication3.Controllers
     {
          private IWebHostEnvironment _webHostEnvironment;
         private readonly DatabaseContext _dbContext;
-        public BlogController(DatabaseContext dbContext, IWebHostEnvironment webHostEnvironment)
+        private readonly BlogService blogService;
+        public BlogController(DatabaseContext dbContext, IWebHostEnvironment webHostEnvironment,BlogService blogService)
         {
             _dbContext = dbContext;
+            this.blogService= blogService;
             _webHostEnvironment = webHostEnvironment;
         }
         private string SavePictureToFolder(string pictureBase64, string webRootBath, int id)
@@ -61,33 +64,24 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpGet("Showcate")]
-        public async Task<ActionResult<IEnumerable<CategoryBlog>>> Showcate()
+        public IActionResult Showcate()
         {
             try
             {
-                var CategoryBlog = await _dbContext.CategoryBlogs.Select(x => new
-                {
-                    ID=x.Id,
-                    Name=x.Name,
-                }).ToListAsync();
-                return Ok(CategoryBlog);
+               
+                return Ok(blogService.Showcate());
             }catch(Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
         }
         [HttpGet("DetailBlog/{id}")]
-        public async Task<ActionResult<IEnumerable<Blog>>> DetailBlog(int id)
+        public IActionResult DetailBlog(int id)
         {
             try
             {
-                var Blog = await _dbContext.Blogs.Where(d => d.Id == id).Select(d => new
-                {
-                    id=d.Title,
-                    name=d.ContentBlog,
-                    ImageUrl=d.ImageUrl,
-                }).ToListAsync();
-                return Ok(Blog);
+               
+                return Ok(blogService.DetailBlog(id));
             }catch(Exception ex)
             {
                 return StatusCode(500, "Internal server error");
@@ -98,19 +92,8 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var Blog = await _dbContext.Blogs.Select(x => new
-                {
-                    ID=x.Id,
-                    Title=x.Title,
-                    Content_Blog=x.ContentBlog,
-                    CreatedAt = x.CreatedAt,
-                    idCategory=x.IdCategory,
-                    Category=x.IdCategoryNavigation.Name,
-                    Image=x.ImageUrl,
-                    idAccount=x.IdAccount,
-                    Account=x.IdAccountNavigation.Username
-                }).ToListAsync();
-                return Ok(Blog);
+                
+                return Ok(blogService.ShowBlog());
             }catch(Exception ex)
             {
                 return StatusCode(500, "Internal server error");
@@ -210,15 +193,11 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpGet("ShowCategory")]
-        public async Task<ActionResult<IEnumerable<CategoryBlog>>> ShowCategory()
+        public IActionResult ShowCategory()
         {
             try
             {
-                var categoryMovies = await _dbContext.CategoryBlogs
-             .Select(x => new  { Id = x.Id, Name = x.Name })
-             .ToListAsync();
-
-                return Ok(categoryMovies);
+                return Ok(blogService.ShowCategoryBlog());
             }
             catch (Exception ex)
             {

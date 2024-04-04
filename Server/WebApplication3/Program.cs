@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication3.Models;
+using WebApplication3.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddScoped<AccountService, AccountServiceImpl>();
+builder.Services.AddScoped<ActorService, ActorServiceImpl>();   
+builder.Services.AddScoped<BlogService, BlogServiceImpl>();
 
 // Enable CORS
 builder.Services.AddCors(options =>

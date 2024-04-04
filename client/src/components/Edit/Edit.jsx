@@ -15,6 +15,7 @@ function Edit() {
     const handleDropdownToggle = () => {
         setShowDropdown(!showDropdown);
     };
+    console.log(ID)
    const [userData,setUserData]=useState({
     Username:'',
     FullName:'',
