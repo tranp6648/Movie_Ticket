@@ -8,6 +8,7 @@ using WebApplication3.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Net;
+using WebApplication3.Services;
 
 namespace WebApplication3.Controllers
 {
@@ -16,9 +17,11 @@ namespace WebApplication3.Controllers
     public class CheckOutController : ControllerBase
     {
         private readonly DatabaseContext _dbContext;
-        public CheckOutController(DatabaseContext dbContext)
+        private readonly CheckOutService checkOutService;
+        public CheckOutController(DatabaseContext dbContext,CheckOutService checkOutService)
         {
             _dbContext = dbContext;
+           this.checkOutService=checkOutService;
         }
         [HttpGet("getAccount/{id}")]
         public async Task<ActionResult<IEnumerable<Account>>> getAccount(int id)
@@ -63,17 +66,11 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-                var vouchers = await _dbContext.Vouchers
-           .Where(d => d.ExpireDate >= currentDate && d.Quatity > 0).Select(d => new
-           {
-               id = d.Id,
-               code = d.Code,
-               Minprice = d.MinPrice,
-               DiscountPercent = d.DiscountPercent,
-           })
-           .ToListAsync();
-                return Ok(vouchers);
+             
+                return Ok(new
+                {
+                    result=checkOutService.getVoucher()
+                });
             }
             catch (Exception ex)
             {
@@ -81,19 +78,12 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpGet("showInFoCard/{id}/{IDAccount}/{idshowtime}")]
-        public async Task<ActionResult<IEnumerable<DetailAccountSeat>>> ShowInfoCard(int id, int IDAccount, int idshowtime)
+        public IActionResult ShowInfoCard(int id, int IDAccount, int idshowtime)
         {
             try
             {
-                var Card = await _dbContext.DetailAccountSeats.Where(d => d.IdSeatNavigation.IdAuditoriums == id && d.IdAccountSeatNavigation.IdAccount == IDAccount && d.IdShowtime == idshowtime && d.Status == 1).Select(d => new
-                {
-                    Movie = d.IdShowtimeNavigation.IdMovieNavigation.Title,
-                    Date = d.IdShowtimeNavigation.Time,
-                    Room = d.IdSeatNavigation.IdAuditoriumsNavigation.Name,
-                    Address = d.IdSeatNavigation.IdAuditoriumsNavigation.IdCinemaNavigation.Location + ' ' + d.IdSeatNavigation.IdAuditoriumsNavigation.IdCinemaNavigation.District
-
-                }).FirstOrDefaultAsync();
-                return Ok(Card);
+                
+                return Ok(checkOutService.ShowInfoCard(id,IDAccount,idshowtime));
             }
             catch (Exception ex)
             {
@@ -102,16 +92,11 @@ namespace WebApplication3.Controllers
 
         }
         [HttpGet("GetVoucherAccount")]
-        public async Task<ActionResult<IEnumerable<UserVoucher>>> ShowUserVoucher()
+        public IActionResult  ShowUserVoucher()
         {
             try
             {
-                var DetailVoucher = await _dbContext.UserVouchers.Select(m => new
-                {
-                    IDAccount = m.IdAccount,
-                    IDvoucher = m.IdVoucher,
-                }).ToListAsync();
-                return Ok(DetailVoucher);
+                return Ok(checkOutService.ShowUserVoucher());
             }
             catch (Exception ex)
             {

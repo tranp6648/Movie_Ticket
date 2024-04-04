@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3.Models;
+using WebApplication3.Services;
 
 namespace WebApplication3.Controllers
 {
@@ -10,20 +11,18 @@ namespace WebApplication3.Controllers
     public class CategoryMovieController : ControllerBase
     {
         private readonly DatabaseContext _dbContext;
-        public CategoryMovieController(DatabaseContext dbContext)
+        private readonly CategoryMovieService _categoryMovieService;
+        public CategoryMovieController(DatabaseContext dbContext, CategoryMovieService categoryMovieService)
         {
             _dbContext = dbContext;
+            _categoryMovieService = categoryMovieService;
         }
         [HttpGet("getCategoryMovie")]
-        public async Task<ActionResult<IEnumerable<CategoryMovie>>> GetCategoryMovies()
+        public IActionResult GetCategoryMovies()
         {
             try
             {
-                var categoryMovies = await _dbContext.CategoryMovies
-             .Select(x => new CategoryMovie { Id = x.Id, Name = x.Name })
-             .ToListAsync();
-
-                return Ok(categoryMovies);
+                return Ok(_categoryMovieService.GetCategoryMovie());
             }
             catch (Exception ex)
             {
@@ -33,17 +32,14 @@ namespace WebApplication3.Controllers
         [HttpPost("DeleteCategory/{id}")]
         public IActionResult DeleteCategory(int id)
         {
-            var category =  _dbContext.CategoryMovies.Find(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+
             try
             {
-                _dbContext.CategoryMovies.Remove(category);
-                _dbContext.SaveChanges();
-               
-                return Ok("Delete Successfully");
+
+                return Ok(new
+                {
+                    result = _categoryMovieService.DeleteCategoryMovie(id)
+                });
             }
             catch (Exception ex)
             {
@@ -51,28 +47,21 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpPost("updateCategory/{id}")]
-        public IActionResult UpdateCategory(int id,[FromBody]  CategoryMovie updateCategory)
+        public IActionResult UpdateCategory(int id, [FromBody] CategoryMovie updateCategory)
         {
             try
             {
-                if (updateCategory == null)
-                {
-                    return BadRequest("Invalid data");
-                }
-                var existCategory =  _dbContext.CategoryMovies.Find(id);
-                if (existCategory == null)
-                {
-                    return NotFound("Genre not found");
-                }
-                if (_dbContext.CategoryMovies.Any(a => a.Name == updateCategory.Name && a.Id!=id))
+
+                if (_dbContext.CategoryMovies.Any(a => a.Name == updateCategory.Name && a.Id != id))
                 {
                     return BadRequest(new { message = "Category Movie name already exists" });
                 }
-                existCategory.Name = updateCategory.Name;
-                 _dbContext.SaveChangesAsync();
-              
-                return Ok("Update successfully");
-            }catch (Exception ex)
+                return Ok(new
+                {
+                    result = _categoryMovieService.UpdateCategory(id, updateCategory)
+                });
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
@@ -83,29 +72,24 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                if (addCategory == null)
-                {
-                    return BadRequest("Invalid data");
-                }
+
                 if (_dbContext.CategoryMovies.Any(a => a.Name == addCategory.Name))
                 {
                     return BadRequest(new { message = "Category Movie already Exists" });
                 }
-                var CategoryEntity = new CategoryMovie
+
+
+                return Ok(new
                 {
-                    Name = addCategory.Name
-                };
-                _dbContext.CategoryMovies.Add(CategoryEntity);
-               _dbContext.SaveChanges();
-                
-                return Ok("Add Successfully");
+                    result = _categoryMovieService.AddCategoryMovie(addCategory)
+                });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error");
             }
         }
-        
+
 
     }
 }

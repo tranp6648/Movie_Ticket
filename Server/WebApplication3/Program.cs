@@ -9,6 +9,10 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<AccountService, AccountServiceImpl>();
 builder.Services.AddScoped<ActorService, ActorServiceImpl>();   
 builder.Services.AddScoped<BlogService, BlogServiceImpl>();
+builder.Services.AddScoped<CartSetService, CartSetServiceImpl>();
+builder.Services.AddScoped<CategoryBlogService,CategoryBlogServiceImpl>();
+builder.Services.AddScoped<CategoryMovieService, CategoryMovieServiceImpl>();
+builder.Services.AddScoped<CheckOutService, CheckOutServiceImpl>();
 
 // Enable CORS
 builder.Services.AddCors(options =>
