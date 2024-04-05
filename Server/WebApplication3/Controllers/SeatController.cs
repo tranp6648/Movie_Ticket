@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Mail;
 using WebApplication3.Models;
+using WebApplication3.Services;
 
 namespace WebApplication3.Controllers
 {
@@ -12,54 +13,56 @@ namespace WebApplication3.Controllers
     public class SeatController : ControllerBase
     {
         private readonly DatabaseContext _dbContext;
-        public SeatController(DatabaseContext databaseContext)
+        private readonly SeatService seatService;
+        public SeatController(DatabaseContext databaseContext,SeatService seatService)
         {
             _dbContext = databaseContext;
+            this.seatService = seatService;
         }
         [HttpPost]
         [Route("saveSeats/{idCinema}")]
-        public async Task<IActionResult> SaveSeat([FromBody] List<AddAuditorium> addAuditoriums,int idCinema)
+        public IActionResult SaveSeat([FromBody] List<AddAuditorium> addAuditoriums,int idCinema)
         {
-            var cinemaExists = _dbContext.Cinemas.Any(c =>  c.Id == idCinema);
-            if(!cinemaExists)
-            {
-                return BadRequest("invalid");
-            }
+        //    var cinemaExists = _dbContext.Cinemas.Any(c =>  c.Id == idCinema);
+        //    if(!cinemaExists)
+        //    {
+        //        return BadRequest("invalid");
+        //    }
 
-            if (addAuditoriums == null || addAuditoriums.Any(a => string.IsNullOrWhiteSpace(a.Name)))
-            {
-                return BadRequest("Invalid auditorium data.");
-            }
+        //    if (addAuditoriums == null || addAuditoriums.Any(a => string.IsNullOrWhiteSpace(a.Name)))
+        //    {
+        //        return BadRequest("Invalid auditorium data.");
+        //    }
            
             
             try
             {
-                foreach (var addAuditorium in addAuditoriums)
-                {
-                    var auditoriumEntity = new Auditorium
-                    {
-                        Name = addAuditorium.Name,
-                        IdCinema = idCinema,
-                    };
+                //foreach (var addAuditorium in addAuditoriums)
+                //{
+                //    var auditoriumEntity = new Auditorium
+                //    {
+                //        Name = addAuditorium.Name,
+                //        IdCinema = idCinema,
+                //    };
 
-                    _dbContext.Auditoriums.Add(auditoriumEntity);
-                    await _dbContext.SaveChangesAsync();
-                    foreach (var seat in addAuditorium.Seats)
-                    {
+                //    _dbContext.Auditoriums.Add(auditoriumEntity);
+                //    await _dbContext.SaveChangesAsync();
+                //    foreach (var seat in addAuditorium.Seats)
+                //    {
                         
-                        var seatMovie = new SeatMovie
-                        {
-                            SeatName = seat.SeatName,
-                            IdCategorySeat = seat.Type == "1" ? 1 : 2,
-                            IdAuditoriums = auditoriumEntity.Id
-                        };
-                        _dbContext.SeatMovies.Add(seatMovie);
-                    }
+                //        var seatMovie = new SeatMovie
+                //        {
+                //            SeatName = seat.SeatName,
+                //            IdCategorySeat = seat.Type == "1" ? 1 : 2,
+                //            IdAuditoriums = auditoriumEntity.Id
+                //        };
+                //        _dbContext.SeatMovies.Add(seatMovie);
+                //    }
                    
 
-                }
-                await _dbContext.SaveChangesAsync();
-                return Ok(new { message = "Auditoriums and seats have been added successfully." });
+                //}
+                //await _dbContext.SaveChangesAsync();
+                return Ok(new { result=seatService.SaveSeat(addAuditoriums,idCinema)});
             
             }
             catch (Exception ex)
@@ -70,18 +73,12 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpGet("getAuditorium")]
-        public async Task<ActionResult<IEnumerable<Auditorium>>> getIdAuditorium()
+        public IActionResult getIdAuditorium()
         {
             try
             {
-                var auditorium = await _dbContext.Auditoriums.Select(m => new
-                {
-                    id = m.Id,
-                    Name = m.Name,
-                    IdCinema = m.IdCinema
-                    
-                }).ToListAsync();
-                return Ok(auditorium);
+               
+                return Ok(seatService.getAuditorium());
             }
             catch (Exception ex)
             {

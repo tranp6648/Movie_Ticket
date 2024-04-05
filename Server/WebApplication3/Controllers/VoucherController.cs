@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication3.Models;
+using WebApplication3.Services;
 
 namespace WebApplication3.Controllers
 {
@@ -9,30 +10,22 @@ namespace WebApplication3.Controllers
     public class VoucherController : ControllerBase
     {
         private readonly DatabaseContext _dbContext;
-        public VoucherController(DatabaseContext dbContext)
+        private readonly VoucherService voucherService;
+        public VoucherController(DatabaseContext dbContext,VoucherService voucherService)
         {
             _dbContext = dbContext;
+            this.voucherService = voucherService;
         }
         [HttpPost("Add")]
         public IActionResult AddVoucher([FromBody] AddVoucher addVoucher)
         {
             try
             {
-                Random random = new Random();
-                const string chars= "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                string vouchercode=new string(Enumerable.Repeat(chars, 8).Select(s => s[random.Next(chars.Length)]).ToArray());
-                var VoucherAdd = new Voucher
+               
+                return Ok(new
                 {
-                    Code = vouchercode,
-                    DiscountPercent = addVoucher.DiscountPercent,
-                    ExpireDate = addVoucher.ExpireDate,
-                    MinPrice = addVoucher.MinPrice,
-                    Quatity = addVoucher.Quatity,
-                    StartDate = addVoucher.StartDate,
-                };
-                _dbContext.Vouchers.Add(VoucherAdd);
-                _dbContext.SaveChanges();
-                return Ok("Add Voucher successfully");
+                    result=voucherService.AddVoucher(addVoucher)
+                });
             }catch(Exception ex)
             {
                 return BadRequest($"Error adding Voucher: {ex.Message}");
@@ -43,10 +36,11 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var voucher = _dbContext.Vouchers.Find(id);
-                _dbContext.Vouchers.Remove(voucher);
-                _dbContext.SaveChanges();
-                return Ok("Remove Voucher successfully");
+                
+                return Ok(new
+                {
+                    result=voucherService.DeleteVoucher(id)
+                });
             }catch(Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");
@@ -57,39 +51,29 @@ namespace WebApplication3.Controllers
         {
             try
             {
-                var voucher=_dbContext.Vouchers.Find(id);
+              
                 if(_dbContext.Vouchers.Any(d=>d.StartDate==updateVoucher.StartDate && d.DiscountPercent==updateVoucher.DiscountPercent && d.ExpireDate==updateVoucher.ExpireDate && d.MinPrice==updateVoucher.MinPrice && d.Quatity == updateVoucher.Quatity))
                 {
                     return BadRequest(new { message = "Voucher Code is exists" });
                 }
-                voucher.StartDate=updateVoucher.StartDate;
-                voucher.ExpireDate=updateVoucher.ExpireDate;
-                voucher.Quatity=updateVoucher.Quatity;
-                voucher.MinPrice=updateVoucher.MinPrice;
-                voucher.ExpireDate= updateVoucher.ExpireDate;
-                _dbContext.SaveChanges();
-                return Ok("Update successfully");
+               
+                
+                return Ok(new
+                {
+                    result=voucherService.UpdateVoucher(id, updateVoucher)
+                });
             }catch( Exception ex )
             {
                 return StatusCode(500, "Internal Server Error");
             }
         }
         [HttpGet("ShowVoucher")]
-        public async Task<ActionResult<IEnumerable<Voucher>>> ShowVoucher()
+        public IActionResult ShowVoucher()
         {
             try
             {
-                var voucher = _dbContext.Vouchers.Select(m => new
-                {
-                    ID = m.Id,
-                    voucherCode=m.Code,
-                    DiscountPercent = m.DiscountPercent,
-                    ExpireDate = m.ExpireDate,
-                    MinPrice = m.MinPrice,
-                    Quatity = m.Quatity,
-                    startDate = m.StartDate,
-                });
-                return Ok(voucher);
+                
+                return Ok(voucherService.ShowVoucher());
             }catch(Exception ex)
             {
                 return StatusCode(500, "Internal Server Error");

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3.Models;
+using WebApplication3.Services;
 
 
 namespace WebApplication3.Controllers
@@ -10,55 +11,46 @@ namespace WebApplication3.Controllers
     public class GenreController : Controller
     {
         private readonly DatabaseContext _dbContext;
-        public GenreController(DatabaseContext dbContext)
+        private readonly GenreServicecs genreServicecs;
+        public GenreController(DatabaseContext dbContext,GenreServicecs genreServicecs)
         {
             _dbContext = dbContext;
+            this.genreServicecs = genreServicecs;
         }
         [HttpPost("DeleteGender/{id}")]
-        public async Task<ActionResult<IEnumerable<Genre>>>DeleteGender(int id)
+        public IActionResult DeleteGender(int id)
         {
-            var gender=await _dbContext.Genres.FindAsync(id);
-            if(gender == null)
-            {
-                return NotFound();
-            }
+            
             if (_dbContext.Movies.Any(a => a.IdGenre == id))
             {
                 return BadRequest(new { message = "Can not Delete" });
             }
             try
             {
-                _dbContext.Genres.Remove(gender);
-                await _dbContext.SaveChangesAsync();
-                var allGenres = await _dbContext.Genres.ToListAsync();
-                return Ok(allGenres);
+                return Ok(new
+                {
+                    result = genreServicecs.DeleteGende(id)
+                });
             }catch(Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
         [HttpPost("updateGender/{id}")]
-        public async Task<ActionResult<IEnumerable<Genre>>>UpdateGenre(int id, [FromBody] Genre genre)
+        public IActionResult UpdateGenre(int id, [FromBody] Genre genre)
         {
             try
             {
-                if (genre == null)
-                {
-                    return BadRequest("Invalid data");
-                }
-                var existingGenre=await _dbContext.Genres.FindAsync(id);
-                if (existingGenre == null)
-                {
-                    return NotFound("Genre not found");
-                }
+                
                 if (_dbContext.Genres.Any(g => g.Name == genre.Name ))
                 {
                     return BadRequest(new { message = "Genre name already exists" });
                 }
-                existingGenre.Name=genre.Name;
-                await _dbContext.SaveChangesAsync();
-                var allGenres = await _dbContext.Genres.ToListAsync();
-                return Ok(allGenres);
+                
+                return Ok(new
+                {
+                    result=genreServicecs.UpdateGenre(id,genre)
+                });
             }
             catch(Exception ex)
             {
@@ -66,14 +58,12 @@ namespace WebApplication3.Controllers
             }
         }
         [HttpGet("getGenerate")]
-        public async Task<ActionResult<IEnumerable<Genre>>> GetGenres()
+        public IActionResult GetGenres()
         {
             try
             {
-               var genres=await _dbContext.Genres.ToListAsync();
-                var genreNames=genres.Select(x=>new Genre { Id = x.Id,Name=x.Name }).ToList();
-
-                return Ok(genreNames);
+              
+                return Ok(genreServicecs.getGenerate());
             }
             catch (Exception ex)
             {
@@ -82,26 +72,19 @@ namespace WebApplication3.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<Genre>>> AddGenre([FromBody] Genre genreToAdd)
+        public IActionResult AddGenre([FromBody] Genre genreToAdd)
         {
             try
             {
-                if (genreToAdd == null)
-                {
-                    return BadRequest("Invalid data");
-                }
+              
                 if(_dbContext.Genres.Any(a=>a.Name==genreToAdd.Name)) {
                     return BadRequest(new { message = "Genre already exists" });
                 }
-
-                var genereEntity = new Genre
+               
+                return Ok(new
                 {
-                    Name = genreToAdd.Name,
-                };
-                _dbContext.Genres.Add(genereEntity);
-                await _dbContext.SaveChangesAsync();
-                var allGenres = await _dbContext.Genres.ToListAsync();
-                return Ok(allGenres);
+                    result=genreServicecs.AddGenre(genreToAdd)
+                });
 
             }
             catch (Exception ex)

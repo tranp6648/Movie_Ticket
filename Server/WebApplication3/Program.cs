@@ -13,6 +13,14 @@ builder.Services.AddScoped<CartSetService, CartSetServiceImpl>();
 builder.Services.AddScoped<CategoryBlogService,CategoryBlogServiceImpl>();
 builder.Services.AddScoped<CategoryMovieService, CategoryMovieServiceImpl>();
 builder.Services.AddScoped<CheckOutService, CheckOutServiceImpl>();
+builder.Services.AddScoped<CinemaService, CinemaServiceImpl>();
+builder.Services.AddScoped<DetailMovieService, DetailMovieServiceImpl>();
+builder.Services.AddScoped<EventService,EventServiceImpl>();
+builder.Services.AddScoped<GenreServicecs,GenreServiceImpl>();
+builder.Services.AddScoped<MovieService,MovieServiceImpl>();
+builder.Services.AddScoped<OrderService,OrderServiceImpl>();
+builder.Services.AddScoped<SeatService, SeatServiceImpl>();
+builder.Services.AddScoped<ShowTimeService,ShowTimeServiceImpl>();
 
 // Enable CORS
 builder.Services.AddCors(options =>
